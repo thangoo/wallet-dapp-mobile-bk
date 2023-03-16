@@ -9,19 +9,18 @@ export const createStyles = (colors: any) =>
       backgroundColor: colors.background.default,
     },
     container: {
-      position: 'relative',
-      marginTop: 20,
-      marginBottom: 30,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginTop: 24,
     },
     label: {
+      marginLeft: 16,
       flex: 1,
-      fontSize: 16,
+      fontSize: 14,
+      fontWeight: '400',
       color: colors.text.default,
       ...fontStyles.normal,
     },
-    switch: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-    },
+    switch: {},
   });
