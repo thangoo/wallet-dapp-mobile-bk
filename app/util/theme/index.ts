@@ -11,6 +11,7 @@ import { AppThemeKey, Theme } from './models';
 import { useSelector } from 'react-redux';
 import { lightTheme, darkTheme } from '@metamask/design-tokens';
 import Device from '../device';
+import { thangoDark, thangoLight } from '../../styles/common.thango';
 
 /**
  * This is needed to make our unit tests pass since Enzyme doesn't support contextType
@@ -70,7 +71,8 @@ export const getAssetFromTheme = (
 const useColorSchemeCustom = (
   delay = Platform.select({ android: 0, ios: 350 }),
 ) => {
-  const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+  // const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+  const [colorScheme, setColorScheme] = useState<ColorSchemeName>('dark');
   const onColorSchemeChange = useCallback(
     throttle(
       ({ colorScheme }) => {
@@ -125,40 +127,40 @@ export const useAppTheme = (): Theme => {
     /* eslint-disable no-fallthrough */
     case AppThemeKey.os: {
       if (osThemeName === AppThemeKey.light) {
-        colors = lightTheme.colors;
+        colors = { ...lightTheme.colors, ...thangoLight };
         typography = lightTheme.typography;
         shadows = lightTheme.shadows;
         setLightStatusBar();
         break;
       } else if (osThemeName === AppThemeKey.dark) {
-        colors = darkTheme.colors;
+        colors = { ...darkTheme.colors, ...thangoDark };
         typography = darkTheme.typography;
         shadows = darkTheme.shadows;
         setDarkStatusBar();
         break;
       } else {
         // Cover cases where OS returns undefined
-        colors = lightTheme.colors;
+        colors = { ...lightTheme.colors, ...thangoLight };
         typography = lightTheme.typography;
         shadows = lightTheme.shadows;
         setLightStatusBar();
       }
     }
     case AppThemeKey.light:
-      colors = lightTheme.colors;
+      colors = { ...lightTheme.colors, ...thangoLight };
       typography = lightTheme.typography;
       shadows = lightTheme.shadows;
       setLightStatusBar();
       break;
     case AppThemeKey.dark:
-      colors = darkTheme.colors;
+      colors = { ...darkTheme.colors, ...thangoDark };
       typography = darkTheme.typography;
       shadows = darkTheme.shadows;
       setDarkStatusBar();
       break;
     default:
       // Default uses light theme
-      colors = lightTheme.colors;
+      colors = { ...lightTheme.colors, ...thangoLight };
       typography = lightTheme.typography;
       shadows = lightTheme.shadows;
       setLightStatusBar();
