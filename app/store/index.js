@@ -1,4 +1,4 @@
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import {
   persistStore,
   persistReducer,
@@ -123,7 +123,16 @@ const persistConfig = {
 
 const pReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = createStore(pReducer);
+const middlewares = [
+  /* other middlewares */
+];
+
+if (__DEV__) {
+  const createDebugger = require('redux-flipper').default;
+  middlewares.push(createDebugger());
+}
+
+export const store = createStore(pReducer, applyMiddleware(...middlewares));
 
 /**
  * Initialize services after persist is completed
