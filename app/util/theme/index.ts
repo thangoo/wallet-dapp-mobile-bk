@@ -71,6 +71,7 @@ export const getAssetFromTheme = (
 const useColorSchemeCustom = (
   delay = Platform.select({ android: 0, ios: 350 }),
 ) => {
+  // const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
   const [colorScheme, setColorScheme] = useState<ColorSchemeName>('dark');
   const onColorSchemeChange = useCallback(
     throttle(
