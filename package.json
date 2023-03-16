@@ -3,6 +3,8 @@
   "version": "6.1.1",
   "private": true,
   "scripts": {
+    "c": "cd android && ./gradlew clean && cd ..",
+    "apk": "cd android && ./gradlew app:assembleRelease && open app/build/outputs/apk/release",
     "audit:ci": "./scripts/yarn-audit.sh",
     "watch": "./scripts/build.sh watcher watch",
     "watch:clean": "./scripts/build.sh watcher clean",
@@ -256,7 +258,7 @@
     "react-native-emoji": "1.3.1",
     "react-native-fade-in-image": "1.4.1",
     "react-native-flash-message": "0.1.11",
-    "react-native-flipper": "0.182.0",
+    "react-native-flipper": "0.93.0",
     "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-get-random-values": "^1.8.0",
@@ -517,6 +519,7 @@
       "chromedriver": false,
       "canvas": false,
       "react-native-webrtc": true,
+      "react-native-flipper": false,
       "node-hid": false,
       "usb": false
     }
