@@ -672,17 +672,17 @@ export function getOnboardingNavbarOptions(
       height: 15,
       tintColor: themeColors.text.default,
     },
+    paymeName: {
+      fontWeight: 400,
+      fontSize: 18,
+    },
   });
 
   return {
     headerStyle: innerStyles.headerStyle,
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Image
-          source={metamask_name}
-          style={innerStyles.metamaskName}
-          resizeMethod={'auto'}
-        />
+        <Text style={styles.paymeName}>PAYME</Text>
       </View>
     ),
     headerBackTitle: strings('navigation.back'),
@@ -709,15 +709,15 @@ export function getTransparentOnboardingNavbarOptions(themeColors) {
       height: 15,
       tintColor: themeColors.text.default,
     },
+    paymeName: {
+      fontWeight: 400,
+      fontSize: 18,
+    },
   });
   return {
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Image
-          source={metamask_name}
-          style={innerStyles.metamaskName}
-          resizeMethod={'auto'}
-        />
+        <Text style={styles.paymeName}>PAYME</Text>
       </View>
     ),
     headerLeft: () => <View />,
@@ -743,15 +743,15 @@ export function getTransparentBackOnboardingNavbarOptions(themeColors) {
       height: 15,
       tintColor: themeColors.text.default,
     },
+    paymeName: {
+      fontWeight: 400,
+      fontSize: 18,
+    },
   });
   return {
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Image
-          source={metamask_name}
-          style={innerStyles.metamaskName}
-          resizeMethod={'auto'}
-        />
+        <Text style={styles.paymeName}>PAYME</Text>
       </View>
     ),
     headerBackTitle: strings('navigation.back'),
@@ -780,6 +780,10 @@ export function getOptinMetricsNavbarOptions(themeColors) {
       height: 15,
       tintColor: themeColors.text.default,
     },
+    paymeName: {
+      fontWeight: 400,
+      fontSize: 18,
+    },
   });
 
   return {
@@ -788,19 +792,15 @@ export function getOptinMetricsNavbarOptions(themeColors) {
     headerLeft: () => (
       <View style={styles.optinHeaderLeft}>
         <View style={styles.metamaskNameWrapper}>
-          <Image
-            source={metamask_fox}
-            style={styles.metamaskFox}
-            resizeMethod={'auto'}
-          />
+          <Text style={styles.paymeName}>PAYME</Text>
         </View>
-        <View style={styles.metamaskNameWrapper}>
+        {/* <View style={styles.metamaskNameWrapper}>
           <Image
             source={metamask_name}
             style={innerStyles.metamaskName}
             resizeMethod={'auto'}
           />
-        </View>
+        </View> */}
       </View>
     ),
     headerTintColor: themeColors.primary.default,

@@ -367,27 +367,12 @@ const App = ({ selectedAddress, userLoggedIn }) => {
     }
   };
 
-  const onAnimationFinished = useCallback(() => {
-    Animated.timing(opacity, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true,
-      isInteraction: false,
-    }).start(() => {
-      setAnimationPlayed(true);
-    });
-  }, [opacity]);
-
   const renderSplash = () => {
     if (!animationPlayed) {
-      return (
-        <MetaMaskAnimation
-          animationRef={animationRef}
-          animationName={animationNameRef}
-          opacity={opacity}
-          onAnimationFinish={onAnimationFinished}
-        />
-      );
+      setTimeout(() => {
+        setAnimationPlayed(true);
+      }, 1500);
+      return <MetaMaskAnimation />;
     }
     return null;
   };
