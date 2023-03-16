@@ -177,7 +177,7 @@
     "remember_me": "Remember me",
     "security_alert_title": "Security Alert",
     "security_alert_message": "In order to proceed, you need to turn Passcode on or any biometrics authentication method supported in your device (FaceID, TouchID or Fingerprint)",
-    "i_understand": "I understand that MetaMask cannot recover this password for me.",
+    "i_understand": "I understand that Payme cannot recover this password for me.",
     "learn_more": "Learn more.",
     "secure": "Secure wallet",
     "confirm": "Confirm Secret Recovery Phrase",
