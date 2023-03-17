@@ -8,6 +8,7 @@ export const thangoLight = {
   ['tvn.primary.default']: '#277EFF',
   ['tvn.innerBackground.default']: '#222222', // colors.innerBackground.default
   ['tvn.text.muted']: '#FFFFFF',
+  ['tvn.text.default']: '#FFFFFF',
 };
 export const thangoDark = {
   ['tvn.black']: '#222222',
@@ -19,4 +20,5 @@ export const thangoDark = {
   ['tvn.primary.default']: '#277EFF',
   ['tvn.innerBackground.default']: '#222222', // colors.innerBackground.default
   ['tvn.text.muted']: '#FFFFFF',
+  ['tvn.text.default']: '#FFFFFF',
 };
