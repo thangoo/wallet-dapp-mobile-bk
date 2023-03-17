@@ -76,7 +76,8 @@ const useColorSchemeCustom = (
   const onColorSchemeChange = useCallback(
     throttle(
       ({ colorScheme }) => {
-        setColorScheme(colorScheme);
+        // setColorScheme(colorScheme);
+        setColorScheme('dark');
       },
       delay,
       {
