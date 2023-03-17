@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     width: 122,
     height: 15,
   },
+
   metamaskFox: {
     width: 40,
     height: 40,
@@ -663,14 +664,14 @@ export function getOnboardingNavbarOptions(
   const headerLeftHide = headerLeft || route.params?.headerLeft;
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors.background.default,
+      backgroundColor: themeColors['tvn.innerBackground.default'],
       shadowColor: importedColors.transparent,
       elevation: 0,
     },
-    metamaskName: {
-      width: 122,
-      height: 15,
-      tintColor: themeColors.text.default,
+    paymeName: {
+      fontWeight: '400',
+      fontSize: 18,
+      color: themeColors['tvn.text.default'],
     },
   });
 
@@ -678,17 +679,13 @@ export function getOnboardingNavbarOptions(
     headerStyle: innerStyles.headerStyle,
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Image
-          source={metamask_name}
-          style={innerStyles.metamaskName}
-          resizeMethod={'auto'}
-        />
+        <Text style={innerStyles.paymeName}>PAYME</Text>
       </View>
     ),
-    headerBackTitle: strings('navigation.back'),
+    headerBackTitle: <View />,
     headerRight: () => <View />,
     headerLeft: headerLeftHide,
-    headerTintColor: themeColors.primary.default,
+    headerTintColor: themeColors['tvn.text.default'],
   };
 }
 
@@ -700,24 +697,20 @@ export function getOnboardingNavbarOptions(
 export function getTransparentOnboardingNavbarOptions(themeColors) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors.background.default,
+      backgroundColor: themeColors['tvn.innerBackground.default'],
       shadowColor: importedColors.transparent,
       elevation: 0,
     },
-    metamaskName: {
-      width: 122,
-      height: 15,
-      tintColor: themeColors.text.default,
+    paymeName: {
+      fontWeight: '400',
+      fontSize: 18,
+      color: themeColors['tvn.text.default'],
     },
   });
   return {
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Image
-          source={metamask_name}
-          style={innerStyles.metamaskName}
-          resizeMethod={'auto'}
-        />
+        <Text style={innerStyles.paymeName}>PAYME</Text>
       </View>
     ),
     headerLeft: () => <View />,
@@ -734,30 +727,27 @@ export function getTransparentOnboardingNavbarOptions(themeColors) {
 export function getTransparentBackOnboardingNavbarOptions(themeColors) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors.background.default,
+      backgroundColor: themeColors['tvn.innerBackground.default'],
       shadowColor: importedColors.transparent,
       elevation: 0,
     },
-    metamaskName: {
-      width: 122,
-      height: 15,
-      tintColor: themeColors.text.default,
+
+    paymeName: {
+      fontWeight: '400',
+      fontSize: 18,
+      color: themeColors['tvn.text.default'],
     },
   });
   return {
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Image
-          source={metamask_name}
-          style={innerStyles.metamaskName}
-          resizeMethod={'auto'}
-        />
+        <Text style={innerStyles.paymeName}>PAYME</Text>
       </View>
     ),
-    headerBackTitle: strings('navigation.back'),
+    headerBackTitle: <View />,
     headerRight: () => <View />,
     headerStyle: innerStyles.headerStyle,
-    headerTintColor: themeColors.primary.default,
+    headerTintColor: themeColors['tvn.text.default'],
   };
 }
 
@@ -770,15 +760,15 @@ export function getTransparentBackOnboardingNavbarOptions(themeColors) {
 export function getOptinMetricsNavbarOptions(themeColors) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors.background.default,
+      backgroundColor: themeColors['tvn.innerBackground.default'],
       shadowColor: importedColors.transparent,
       elevation: 0,
       height: 100,
     },
-    metamaskName: {
-      width: 122,
-      height: 15,
-      tintColor: themeColors.text.default,
+    paymeName: {
+      fontWeight: '400',
+      fontSize: 18,
+      color: themeColors['tvn.text.default'],
     },
   });
 
@@ -788,19 +778,15 @@ export function getOptinMetricsNavbarOptions(themeColors) {
     headerLeft: () => (
       <View style={styles.optinHeaderLeft}>
         <View style={styles.metamaskNameWrapper}>
-          <Image
-            source={metamask_fox}
-            style={styles.metamaskFox}
-            resizeMethod={'auto'}
-          />
+          <Text style={innerStyles.paymeName}>PAYME</Text>
         </View>
-        <View style={styles.metamaskNameWrapper}>
+        {/* <View style={styles.metamaskNameWrapper}>
           <Image
             source={metamask_name}
             style={innerStyles.metamaskName}
             resizeMethod={'auto'}
           />
-        </View>
+        </View> */}
       </View>
     ),
     headerTintColor: themeColors.primary.default,

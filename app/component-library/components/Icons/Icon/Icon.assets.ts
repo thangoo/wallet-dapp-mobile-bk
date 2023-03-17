@@ -20,6 +20,7 @@ import BankToken from './assets/bank-token.svg';
 import Bank from './assets/bank.svg';
 import Book from './assets/book.svg';
 import Bookmark from './assets/bookmark.svg';
+import Biometrics from './assets/biometrics.svg';
 import Calculator from './assets/calculator.svg';
 import CardPos from './assets/card-pos.svg';
 import CardToken from './assets/card-token.svg';
@@ -52,6 +53,7 @@ import Explore from './assets/explore.svg';
 import Export from './assets/export.svg';
 import EyeSlash from './assets/eye-slash.svg';
 import Eye from './assets/eye.svg';
+import EyeShow from './assets/eye-show.svg';
 import Filter from './assets/filter.svg';
 import Flag from './assets/flag.svg';
 import FlashSlash from './assets/flash-slash.svg';
@@ -161,6 +163,7 @@ export const assetByIconName: AssetByIconName = {
   [IconName.Bank]: Bank,
   [IconName.Book]: Book,
   [IconName.Bookmark]: Bookmark,
+  [IconName.Biometrics]: Biometrics,
   [IconName.Calculator]: Calculator,
   [IconName.CardPos]: CardPos,
   [IconName.CardToken]: CardToken,
@@ -192,8 +195,9 @@ export const assetByIconName: AssetByIconName = {
   [IconName.Explore]: Explore,
   [IconName.Export]: Export,
   [IconName.EyeSlash]: EyeSlash,
-  [IconName.Eye]: Eye,
   [IconName.Filter]: Filter,
+  [IconName.Eye]: Eye,
+  [IconName.EyeShow]: EyeShow,
   [IconName.Flag]: Flag,
   [IconName.FlashSlash]: FlashSlash,
   [IconName.Flash]: Flash,

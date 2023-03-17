@@ -11,6 +11,7 @@ import {
   Image,
   InteractionManager,
   Platform,
+  Switch,
 } from 'react-native';
 import zxcvbn from 'zxcvbn';
 import CheckBox from '@react-native-community/checkbox';
@@ -35,7 +36,13 @@ import {
 import { fontStyles } from '../../../styles/common';
 import { strings } from '../../../../locales/i18n';
 import { getOnboardingNavbarOptions } from '../../UI/Navbar';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+
+import Icon, {
+  IconName,
+  IconSize,
+} from '../../../component-library/components/Icons/Icon';
+
 import AppConstants from '../../../core/AppConstants';
 import OnboardingProgress from '../../UI/OnboardingProgress';
 import Logger from '../../../util/Logger';
@@ -73,13 +80,17 @@ import { scale } from 'react-native-size-matters';
 const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors.background.default,
+      backgroundColor: colors['tvn.background.default'],
       flex: 1,
     },
     wrapper: {
       flex: 1,
       marginBottom: 10,
     },
+    wrapperStep: {
+      marginTop: 30,
+    },
+
     scrollableWrapper: {
       flex: 1,
       paddingHorizontal: 32,
@@ -107,20 +118,21 @@ const createStyles = (colors) =>
     content: {
       textAlign: 'center',
       alignItems: 'center',
+      marginBottom: 20,
     },
     title: {
       fontSize: Device.isAndroid() ? 20 : 25,
       marginTop: 20,
       marginBottom: 20,
-      color: colors.text.default,
       justifyContent: 'center',
       textAlign: 'center',
       ...fontStyles.bold,
+      color: colors['tvn.grayLight'],
     },
     subtitle: {
       fontSize: 16,
       lineHeight: 23,
-      color: colors.text.default,
+      color: colors['tvn.grayLight'],
       textAlign: 'center',
       ...fontStyles.normal,
     },
@@ -146,28 +158,45 @@ const createStyles = (colors) =>
     label: {
       ...fontStyles.normal,
       fontSize: 14,
-      color: colors.text.default,
+      color: colors['tvn.text.muted'],
       paddingHorizontal: 10,
       lineHeight: 18,
     },
     learnMore: {
-      color: colors.primary.default,
-      textDecorationLine: 'underline',
-      textDecorationColor: colors.primary.default,
+      color: colors['tvn.blue'],
+      textDecorationLine: 'none',
     },
     field: {
       marginVertical: 5,
       position: 'relative',
     },
     input: {
-      borderWidth: 1,
-      borderColor: colors.border.default,
+      borderColor: colors['tvn.grayLight'],
       padding: 10,
+      paddingRight: 50,
       borderRadius: 6,
       fontSize: 14,
       height: 50,
       ...fontStyles.normal,
-      color: colors.text.default,
+      color: colors['tvn.text.default'],
+      position: 'relative',
+
+      borderBottomWidth: 1,
+      borderTopWidth: 0,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+    },
+    passwordSection: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    icon: {
+      padding: 16,
+      color: colors.icon.alternative,
+      position: 'absolute',
+      right: 10,
+      zIndex: 2,
     },
     ctaWrapper: {
       flex: 1,
@@ -195,7 +224,7 @@ const createStyles = (colors) =>
       right: 0,
     },
     hintLabel: {
-      color: colors.text.default,
+      color: colors['tvn.text.default'],
       fontSize: 16,
       marginBottom: 12,
       ...fontStyles.normal,
@@ -204,7 +233,7 @@ const createStyles = (colors) =>
       height: 20,
       marginTop: 10,
       fontSize: scale(10),
-      color: colors.text.default,
+      color: colors['tvn.text.default'],
       ...fontStyles.normal,
     },
     showPassword: {
@@ -229,6 +258,21 @@ const createStyles = (colors) =>
       top: 52,
       right: 17,
       alignSelf: 'flex-end',
+    },
+    biometricsSection: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingTop: 10,
+      paddingBottom: 15,
+    },
+    biometricsItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    switch: {
+      width: 50,
+      height: 30,
     },
   });
 
@@ -285,6 +329,7 @@ class ChoosePassword extends PureComponent {
     loading: false,
     error: null,
     inputWidth: { width: '99%' },
+    isEnabled: false,
   };
 
   mounted = true;
@@ -587,6 +632,12 @@ class ChoosePassword extends PureComponent {
     this.setState((state) => ({ secureTextEntry: !state.secureTextEntry }));
   };
 
+  toggleSwitch = () => {
+    this.setState((previousState) => ({
+      isEnabled: !previousState.isEnabled,
+    }));
+  };
+
   learnMore = () => {
     this.props.navigation.push('Webview', {
       screen: 'SimpleWebview',
@@ -609,6 +660,7 @@ class ChoosePassword extends PureComponent {
       secureTextEntry,
       error,
       loading,
+      isEnabled,
     } = this.state;
     const passwordsMatch = password !== '' && password === confirmPassword;
     const canSubmit = passwordsMatch && isSelected;
@@ -647,7 +699,9 @@ class ChoosePassword extends PureComponent {
           </View>
         ) : (
           <View style={styles.wrapper} testID={'choose-password-screen'}>
-            <OnboardingProgress steps={CHOOSE_PASSWORD_STEPS} />
+            <View style={styles.wrapperStep}>
+              <OnboardingProgress steps={CHOOSE_PASSWORD_STEPS} />
+            </View>
             <KeyboardAwareScrollView
               style={styles.scrollableWrapper}
               contentContainerStyle={styles.keyboardScrollableWrapper}
@@ -665,30 +719,32 @@ class ChoosePassword extends PureComponent {
                   </View>
                 </View>
                 <View style={styles.field}>
-                  <Text style={styles.hintLabel}>
-                    {strings('choose_password.password')}
-                  </Text>
-                  <Text
-                    onPress={this.toggleShowHide}
-                    style={[styles.hintLabel, styles.showPassword]}
-                  >
-                    {strings(
-                      `choose_password.${secureTextEntry ? 'show' : 'hide'}`,
-                    )}
-                  </Text>
-                  <TextInput
-                    style={[styles.input, inputWidth]}
-                    value={password}
-                    onChangeText={this.onPasswordChange}
-                    secureTextEntry={secureTextEntry}
-                    placeholder=""
-                    placeholderTextColor={colors.text.muted}
-                    {...generateTestId(Platform, CREATE_PASSWORD_INPUT_BOX_ID)}
-                    onSubmitEditing={this.jumpToConfirmPassword}
-                    returnKeyType="next"
-                    autoCapitalize="none"
-                    keyboardAppearance={themeAppearance}
-                  />
+                  <View style={styles.passwordSection}>
+                    <Icon
+                      onPress={this.toggleShowHide}
+                      color={colors.icon.alternative}
+                      name={IconName.EyeShow}
+                      size={IconSize.Lg}
+                      style={styles.icon}
+                    />
+
+                    <TextInput
+                      style={[styles.input, inputWidth]}
+                      value={password}
+                      onChangeText={this.onPasswordChange}
+                      secureTextEntry={secureTextEntry}
+                      placeholder={strings('choose_password.password')}
+                      placeholderTextColor={colors['tvn.white']}
+                      {...generateTestId(
+                        Platform,
+                        CREATE_PASSWORD_INPUT_BOX_ID,
+                      )}
+                      onSubmitEditing={this.jumpToConfirmPassword}
+                      returnKeyType="next"
+                      autoCapitalize="none"
+                      keyboardAppearance={themeAppearance}
+                    />
+                  </View>
                   {(password !== '' && (
                     <Text style={styles.passwordStrengthLabel}>
                       {strings('choose_password.password_strength')}
@@ -702,25 +758,33 @@ class ChoosePassword extends PureComponent {
                   )) || <Text style={styles.passwordStrengthLabel} />}
                 </View>
                 <View style={styles.field}>
-                  <Text style={styles.hintLabel}>
-                    {strings('choose_password.confirm_password')}
-                  </Text>
-                  <TextInput
-                    ref={this.confirmPasswordInput}
-                    style={[styles.input, inputWidth]}
-                    value={confirmPassword}
-                    onChangeText={this.setConfirmPassword}
-                    secureTextEntry={secureTextEntry}
-                    placeholder={''}
-                    placeholderTextColor={colors.text.muted}
-                    testID={CONFIRM_PASSWORD_INPUT_BOX_ID}
-                    accessibilityLabel={CONFIRM_PASSWORD_INPUT_BOX_ID}
-                    onSubmitEditing={this.onPressCreate}
-                    returnKeyType={'done'}
-                    autoCapitalize="none"
-                    keyboardAppearance={themeAppearance}
-                  />
-                  <View style={styles.showMatchingPasswords}>
+                  <View style={styles.passwordSection}>
+                    <Icon
+                      onPress={this.toggleShowHide}
+                      name={IconName.EyeShow}
+                      size={IconSize.Lg}
+                      color={colors.icon.alternative}
+                      style={styles.icon}
+                    />
+
+                    <TextInput
+                      ref={this.confirmPasswordInput}
+                      style={[styles.input, inputWidth]}
+                      value={confirmPassword}
+                      onChangeText={this.setConfirmPassword}
+                      secureTextEntry={secureTextEntry}
+                      placeholder={strings('choose_password.confirm_password')}
+                      placeholderTextColor={colors['tvn.white']}
+                      testID={CONFIRM_PASSWORD_INPUT_BOX_ID}
+                      accessibilityLabel={CONFIRM_PASSWORD_INPUT_BOX_ID}
+                      onSubmitEditing={this.onPressCreate}
+                      returnKeyType={'done'}
+                      autoCapitalize="none"
+                      keyboardAppearance={themeAppearance}
+                    />
+                  </View>
+
+                  {/* <View style={styles.showMatchingPasswords}>
                     {passwordsMatch ? (
                       <Icon
                         name="check"
@@ -728,7 +792,7 @@ class ChoosePassword extends PureComponent {
                         color={colors.success.default}
                       />
                     ) : null}
-                  </View>
+                  </View> */}
                   <Text style={styles.passwordStrengthLabel}>
                     {strings('choose_password.must_be_at_least', {
                       number: MIN_PASSWORD_LENGTH,
@@ -736,14 +800,38 @@ class ChoosePassword extends PureComponent {
                   </Text>
                 </View>
                 <View>{this.renderSwitch()}</View>
+                <View style={styles.biometricsSection}>
+                  <View style={styles.biometricsItem}>
+                    <Icon
+                      name={IconName.Biometrics}
+                      size={IconSize.Lg}
+                      style={{ marginRight: 10 }}
+                    />
+                    <Text style={styles.label}>
+                      {strings('biometrics.enable_faceid')}
+                    </Text>
+                  </View>
+                  <Switch
+                    trackColor={{
+                      false: colors['tvn.white'],
+                      true: colors['tvn.primary.default'],
+                    }}
+                    thumbColor={colors['tvn.white']}
+                    ios_backgroundColor={colors['tvn.grayLight']}
+                    onValueChange={this.toggleSwitch}
+                    value={isEnabled}
+                    style={styles.switch}
+                  />
+                </View>
+
                 <View style={styles.checkboxContainer}>
                   <CheckBox
                     value={isSelected}
                     onValueChange={this.setSelection}
                     style={styles.checkbox}
                     tintColors={{
-                      true: colors.primary.default,
-                      false: colors.border.default,
+                      true: colors['tvn.primary.default'],
+                      false: colors['tvn.white'],
                     }}
                     boxType="square"
                     testID={IOS_I_UNDERSTAND_BUTTON_ID}

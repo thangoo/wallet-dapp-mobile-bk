@@ -39,7 +39,7 @@ import {
 const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors.background.default,
+      backgroundColor: colors['tvn.background.default'],
       flex: 1,
     },
     scrollviewWrapper: {
@@ -51,27 +51,31 @@ const createStyles = (colors) =>
       paddingTop: 0,
       paddingBottom: 0,
     },
+    wrapperStep: {
+      marginTop: 30,
+    },
     content: {
       alignItems: 'center',
       justifyContent: 'flex-start',
       flex: 1,
-      marginBottom: 10,
+      marginBottom: 32,
+      marginTop: 32,
     },
     title: {
       fontSize: 24,
-      marginBottom: 24,
-      color: colors.text.default,
+      marginBottom: 16,
+      color: colors['tvn.text.default'],
       textAlign: 'center',
       ...fontStyles.bold,
     },
     text: {
-      marginTop: 32,
+      marginBottom: 32,
       justifyContent: 'center',
     },
     label: {
       lineHeight: scaling.scale(20),
       fontSize: scaling.scale(14),
-      color: colors.text.default,
+      color: colors['tvn.text.default'],
       textAlign: 'center',
       ...fontStyles.normal,
     },
@@ -83,27 +87,20 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
     },
     blue: {
-      color: colors.primary.default,
+      color: colors['tvn.primary.default'],
     },
     remindLaterText: {
       textAlign: 'center',
       fontSize: 15,
       lineHeight: 20,
-      color: colors.primary.default,
+      color: colors['tvn.primary.default'],
       ...fontStyles.normal,
     },
     remindLaterSubText: {
       textAlign: 'center',
       fontSize: 11,
       lineHeight: 20,
-      color: colors.text.alternative,
-      ...fontStyles.normal,
-    },
-    startSubText: {
-      textAlign: 'center',
-      fontSize: 11,
-      marginTop: 12,
-      color: colors.text.alternative,
+      color: colors['tvn.text.default'],
       ...fontStyles.normal,
     },
     remindLaterContainer: {
@@ -134,9 +131,13 @@ const AccountBackupStep1 = (props) => {
   useEffect(() => {
     navigation.setOptions({
       ...getOnboardingNavbarOptions(
+        // route,
+        // // eslint-disable-next-line react/display-name
+        // { headerLeft: () => <View /> },
+        // colors,
+
         route,
-        // eslint-disable-next-line react/display-name
-        { headerLeft: () => <View /> },
+        {},
         colors,
       ),
       gesturesEnabled: false,
@@ -221,12 +222,13 @@ const AccountBackupStep1 = (props) => {
           style={styles.wrapper}
           {...generateTestId(Platform, PROTECT_YOUR_WALLET_CONTAINER_ID)}
         >
-          <OnboardingProgress steps={CHOOSE_PASSWORD_STEPS} currentStep={1} />
+          <View style={styles.wrapperStep}>
+            <OnboardingProgress steps={CHOOSE_PASSWORD_STEPS} currentStep={1} />
+          </View>
           <View style={styles.content}>
             <Text style={styles.title}>
               {strings('account_backup_step_1.title')}
             </Text>
-            <SeedPhraseVideo onClose={skip} />
             <View style={styles.text}>
               <Text style={styles.label}>
                 {strings('account_backup_step_1.info_text_1_1')}{' '}
@@ -239,8 +241,19 @@ const AccountBackupStep1 = (props) => {
                 </Text>
               </Text>
             </View>
+            <SeedPhraseVideo onClose={skip} />
           </View>
           <View style={styles.buttonWrapper}>
+            <View style={styles.ctaContainer}>
+              <StyledButton
+                containerStyle={styles.button}
+                type={'confirm'}
+                onPress={goNext}
+                testID={'submit-button'}
+              >
+                {strings('account_backup_step_1.cta_text')}
+              </StyledButton>
+            </View>
             {!hasFunds && (
               <View style={styles.remindLaterContainer}>
                 <TouchableOpacity
@@ -260,19 +273,6 @@ const AccountBackupStep1 = (props) => {
                 </Text>
               </View>
             )}
-            <View style={styles.ctaContainer}>
-              <StyledButton
-                containerStyle={styles.button}
-                type={'confirm'}
-                onPress={goNext}
-                testID={'submit-button'}
-              >
-                {strings('account_backup_step_1.cta_text')}
-              </StyledButton>
-              <Text style={styles.startSubText}>
-                {strings('account_backup_step_1.cta_subText')}
-              </Text>
-            </View>
           </View>
         </View>
       </ScrollView>

@@ -4,7 +4,7 @@ import { fontStyles } from '../../../styles/common';
 import StepIndicator from 'react-native-step-indicator';
 import { ThemeContext, mockTheme } from '../../../util/theme';
 
-const strokeWidth = 2;
+const strokeWidth = 1;
 
 export default class OnboardingProgress extends PureComponent {
   static defaultProps = {
@@ -26,30 +26,30 @@ export default class OnboardingProgress extends PureComponent {
     const { currentStep, steps } = this.props;
     const colors = this.context.colors || mockTheme.colors;
     const customStyles = {
-      stepIndicatorSize: 20,
-      currentStepIndicatorSize: 20,
+      stepIndicatorSize: 30,
+      currentStepIndicatorSize: 30,
       separatorStrokeWidth: strokeWidth,
-      separatorFinishedColor: colors.primary.default,
-      separatorUnFinishedColor: colors.text.muted,
+      separatorFinishedColor: colors['tvn.primary.default'],
+      separatorUnFinishedColor: colors['tvn.text.muted'],
       currentStepStrokeWidth: strokeWidth,
-      stepStrokeCurrentColor: colors.primary.default,
+      stepStrokeCurrentColor: colors['tvn.primary.default'],
       stepStrokeWidth: strokeWidth,
-      stepStrokeFinishedColor: colors.primary.default,
-      stepStrokeUnFinishedColor: colors.text.muted,
-      stepIndicatorFinishedColor: colors.primary.default,
-      stepIndicatorUnFinishedColor: colors.background.default,
-      stepIndicatorCurrentColor: colors.background.default,
-      stepIndicatorLabelFontSize: 9,
-      currentStepIndicatorLabelFontSize: 9,
-      stepIndicatorLabelCurrentColor: colors.text.default,
+      stepStrokeFinishedColor: colors['tvn.primary.default'],
+      stepStrokeUnFinishedColor: colors['tvn.text.muted'],
+      stepIndicatorFinishedColor: colors['tvn.background.default'],
+      stepIndicatorUnFinishedColor: colors['tvn.background.default'],
+      stepIndicatorCurrentColor: colors['tvn.primary.default'],
+      stepIndicatorLabelFontSize: 13,
+      currentStepIndicatorLabelFontSize: 13,
+      stepIndicatorLabelCurrentColor: colors['tvn.text.muted'],
       stepIndicatorLabelFinishedColor: colors.primary.inverse,
-      stepIndicatorLabelUnFinishedColor: colors.text.muted,
-      labelColor: colors.text.muted,
+      stepIndicatorLabelUnFinishedColor: colors['tvn.text.muted'],
+      labelColor: colors['tvn.text.muted'],
       stepIndicatorLabelFontFamily: fontStyles.normal.fontFamily,
       labelFontFamily: fontStyles.normal.fontFamily,
       labelSize: 10,
-      currentStepLabelColor: colors.primary.default,
-      finishedStepLabelColor: colors.primary.default,
+      currentStepLabelColor: colors['tvn.primary.default'],
+      finishedStepLabelColor: colors['tvn.primary.default'],
     };
 
     return (
