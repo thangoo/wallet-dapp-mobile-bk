@@ -31,7 +31,7 @@ const createStyles = (colors) =>
     },
     confirm: {
       backgroundColor: colors['tvn.blue'],
-      minHeight: 50,
+      minHeight: 32,
     },
     confirmText: {
       color: colors.primary.inverse,
