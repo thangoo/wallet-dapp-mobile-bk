@@ -65,7 +65,7 @@ const breakPoint = deviceHeight < 700;
 const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors['tvn.background.black'],
+      backgroundColor: colors['tvn.background.default'],
       flex: 1,
     },
     wrapper: {
