@@ -39,7 +39,7 @@ import {
 const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors.background.default,
+      backgroundColor: colors['tvn.background.default'],
       flex: 1,
     },
     scrollviewWrapper: {
@@ -64,7 +64,7 @@ const createStyles = (colors) =>
     title: {
       fontSize: 24,
       marginBottom: 16,
-      color: colors.text.default,
+      color: colors['tvn.text.default'],
       textAlign: 'center',
       ...fontStyles.bold,
     },
@@ -75,7 +75,7 @@ const createStyles = (colors) =>
     label: {
       lineHeight: scaling.scale(20),
       fontSize: scaling.scale(14),
-      color: colors.text.default,
+      color: colors['tvn.text.default'],
       textAlign: 'center',
       ...fontStyles.normal,
     },
@@ -87,27 +87,20 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
     },
     blue: {
-      color: colors.primary.default,
+      color: colors['tvn.primary.default'],
     },
     remindLaterText: {
       textAlign: 'center',
       fontSize: 15,
       lineHeight: 20,
-      color: colors['tvn.blue'],
+      color: colors['tvn.primary.default'],
       ...fontStyles.normal,
     },
     remindLaterSubText: {
       textAlign: 'center',
       fontSize: 11,
       lineHeight: 20,
-      color: colors['tvn.white'],
-      ...fontStyles.normal,
-    },
-    startSubText: {
-      textAlign: 'center',
-      fontSize: 11,
-      marginTop: 12,
-      color: colors.text.alternative,
+      color: colors['tvn.text.default'],
       ...fontStyles.normal,
     },
     remindLaterContainer: {

@@ -671,7 +671,7 @@ export function getOnboardingNavbarOptions(
     paymeName: {
       fontWeight: '400',
       fontSize: 18,
-      color: themeColors['tvn.white'],
+      color: themeColors['tvn.text.default'],
     },
   });
 
@@ -685,7 +685,7 @@ export function getOnboardingNavbarOptions(
     headerBackTitle: <View />,
     headerRight: () => <View />,
     headerLeft: headerLeftHide,
-    headerTintColor: themeColors['tvn.white'],
+    headerTintColor: themeColors['tvn.text.default'],
   };
 }
 
@@ -704,7 +704,7 @@ export function getTransparentOnboardingNavbarOptions(themeColors) {
     paymeName: {
       fontWeight: '400',
       fontSize: 18,
-      color: themeColors['tvn.white'],
+      color: themeColors['tvn.text.default'],
     },
   });
   return {
@@ -735,7 +735,7 @@ export function getTransparentBackOnboardingNavbarOptions(themeColors) {
     paymeName: {
       fontWeight: '400',
       fontSize: 18,
-      color: themeColors['tvn.white'],
+      color: themeColors['tvn.text.default'],
     },
   });
   return {
@@ -747,7 +747,7 @@ export function getTransparentBackOnboardingNavbarOptions(themeColors) {
     headerBackTitle: <View />,
     headerRight: () => <View />,
     headerStyle: innerStyles.headerStyle,
-    headerTintColor: themeColors['tvn.white'],
+    headerTintColor: themeColors['tvn.text.default'],
   };
 }
 
@@ -768,7 +768,7 @@ export function getOptinMetricsNavbarOptions(themeColors) {
     paymeName: {
       fontWeight: '400',
       fontSize: 18,
-      color: themeColors['tvn.white'],
+      color: themeColors['tvn.text.default'],
     },
   });
 

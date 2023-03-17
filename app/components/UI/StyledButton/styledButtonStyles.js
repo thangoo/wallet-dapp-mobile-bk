@@ -14,7 +14,7 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
     },
     blue: {
-      backgroundColor: colors['tvn.blue'],
+      backgroundColor: colors['tvn.primary.default'],
     },
     blueText: {
       color: colors.primary.inverse,
@@ -30,7 +30,7 @@ const createStyles = (colors) =>
       color: colors.primary.default,
     },
     confirm: {
-      backgroundColor: colors['tvn.blue'],
+      backgroundColor: colors['tvn.primary.default'],
       minHeight: 32,
     },
     confirmText: {

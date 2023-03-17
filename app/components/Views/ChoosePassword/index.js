@@ -80,7 +80,7 @@ import { scale } from 'react-native-size-matters';
 const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors['tvn.black'],
+      backgroundColor: colors['tvn.background.default'],
       flex: 1,
     },
     wrapper: {
@@ -158,7 +158,7 @@ const createStyles = (colors) =>
     label: {
       ...fontStyles.normal,
       fontSize: 14,
-      color: colors['tvn.white'],
+      color: colors['tvn.text.muted'],
       paddingHorizontal: 10,
       lineHeight: 18,
     },
@@ -178,7 +178,7 @@ const createStyles = (colors) =>
       fontSize: 14,
       height: 50,
       ...fontStyles.normal,
-      color: colors['tvn.white'],
+      color: colors['tvn.text.default'],
       position: 'relative',
 
       borderBottomWidth: 1,
@@ -224,7 +224,7 @@ const createStyles = (colors) =>
       right: 0,
     },
     hintLabel: {
-      color: 'white',
+      color: colors['tvn.text.default'],
       fontSize: 16,
       marginBottom: 12,
       ...fontStyles.normal,
@@ -233,7 +233,7 @@ const createStyles = (colors) =>
       height: 20,
       marginTop: 10,
       fontSize: scale(10),
-      color: 'white',
+      color: colors['tvn.text.default'],
       ...fontStyles.normal,
     },
     showPassword: {
@@ -814,11 +814,9 @@ class ChoosePassword extends PureComponent {
                   <Switch
                     trackColor={{
                       false: colors['tvn.white'],
-                      true: colors['tvn.blue'],
+                      true: colors['tvn.primary.default'],
                     }}
-                    thumbColor={
-                      isEnabled ? colors['tvn.white'] : colors['tvn.white']
-                    }
+                    thumbColor={colors['tvn.white']}
                     ios_backgroundColor={colors['tvn.grayLight']}
                     onValueChange={this.toggleSwitch}
                     value={isEnabled}
@@ -832,7 +830,7 @@ class ChoosePassword extends PureComponent {
                     onValueChange={this.setSelection}
                     style={styles.checkbox}
                     tintColors={{
-                      true: colors['tvn.blue'],
+                      true: colors['tvn.primary.default'],
                       false: colors['tvn.white'],
                     }}
                     boxType="square"
