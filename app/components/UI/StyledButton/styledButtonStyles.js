@@ -14,7 +14,7 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
     },
     blue: {
-      backgroundColor: colors.primary.default,
+      backgroundColor: colors['tvn.blue'],
     },
     blueText: {
       color: colors.primary.inverse,
