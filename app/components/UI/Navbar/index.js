@@ -664,7 +664,7 @@ export function getOnboardingNavbarOptions(
   const headerLeftHide = headerLeft || route.params?.headerLeft;
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors['tvn.black'],
+      backgroundColor: themeColors['tvn.innerBackground.default'],
       shadowColor: importedColors.transparent,
       elevation: 0,
     },
@@ -697,7 +697,7 @@ export function getOnboardingNavbarOptions(
 export function getTransparentOnboardingNavbarOptions(themeColors) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors['tvn.black'],
+      backgroundColor: themeColors['tvn.innerBackground.default'],
       shadowColor: importedColors.transparent,
       elevation: 0,
     },
@@ -727,7 +727,7 @@ export function getTransparentOnboardingNavbarOptions(themeColors) {
 export function getTransparentBackOnboardingNavbarOptions(themeColors) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors['tvn.black'],
+      backgroundColor: themeColors['tvn.innerBackground.default'],
       shadowColor: importedColors.transparent,
       elevation: 0,
     },
@@ -760,8 +760,7 @@ export function getTransparentBackOnboardingNavbarOptions(themeColors) {
 export function getOptinMetricsNavbarOptions(themeColors) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors['tvn.black'],
-
+      backgroundColor: themeColors['tvn.innerBackground.default'],
       shadowColor: importedColors.transparent,
       elevation: 0,
       height: 100,

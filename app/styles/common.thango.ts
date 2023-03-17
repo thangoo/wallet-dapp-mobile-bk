@@ -4,7 +4,8 @@ export const thangoLight = {
   ['tvn.white']: '#FFFFFF',
   ['tvn.grayLight']: '#999999',
   ['tvn.grayDark']: ' #333333',
-  ['tvn.background.black']: '#277EFF', // colors.background.default
+  ['tvn.background.default']: '#222222', // colors.background.default
+  ['tvn.innerBackground.default']: '#222222', // colors.innerBackground.default
 };
 export const thangoDark = {
   ['tvn.black']: '#222222',
@@ -12,5 +13,6 @@ export const thangoDark = {
   ['tvn.white']: '#FFFFFF',
   ['tvn.grayLight']: '#999999',
   ['tvn.grayDark']: ' #333333',
-  ['tvn.background.black']: '#277EFF', // colors.background.default
+  ['tvn.background.default']: '#222222', // colors.background.default
+  ['tvn.innerBackground.default']: '#222222', // colors.innerBackground.default
 };
