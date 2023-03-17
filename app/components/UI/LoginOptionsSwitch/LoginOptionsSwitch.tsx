@@ -8,6 +8,7 @@ import { LOGIN_WITH_BIOMETRICS_SWITCH } from '../../../constants/test-ids';
 import { LOGIN_WITH_REMEMBER_ME_SWITCH } from '../../../../wdio/screen-objects/testIDs/Screens/LoginScreen.testIds';
 import { useSelector } from 'react-redux';
 import generateTestId from '../../../../wdio/utils/generateTestId';
+import { BiometryButton } from '../BiometryButton';
 
 interface Props {
   shouldRenderBiometricOption: BIOMETRY_TYPE | null;
@@ -52,6 +53,11 @@ const LoginOptionsSwitch = ({
   if (shouldRenderBiometricOption !== null) {
     return (
       <View style={styles.container}>
+        <BiometryButton
+          sizeIcon={24}
+          disable
+          biometryType={shouldRenderBiometricOption}
+        />
         <Text style={styles.label}>
           {strings(
             `biometrics.enable_${shouldRenderBiometricOption.toLowerCase()}`,
@@ -62,10 +68,10 @@ const LoginOptionsSwitch = ({
           value={biometryChoiceState}
           style={styles.switch}
           trackColor={{
-            true: colors.primary.default,
+            //@ts-ignore
+            true: colors['tvn.blue'],
             false: colors.border.muted,
           }}
-          thumbColor={colors.white}
           ios_backgroundColor={colors.border.muted}
           testID={LOGIN_WITH_BIOMETRICS_SWITCH}
         />
@@ -82,10 +88,10 @@ const LoginOptionsSwitch = ({
           value={rememberMeEnabled}
           style={styles.switch}
           trackColor={{
-            true: colors.primary.default,
+            //@ts-ignore
+            true: colors['tvn.blue'],
             false: colors.border.muted,
           }}
-          thumbColor={colors.white}
           ios_backgroundColor={colors.border.muted}
           testID={LOGIN_WITH_REMEMBER_ME_SWITCH}
           {...generateTestId(Platform, LOGIN_WITH_REMEMBER_ME_SWITCH)}

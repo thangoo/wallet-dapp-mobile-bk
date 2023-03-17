@@ -11,6 +11,7 @@ import {
   InteractionManager,
   BackHandler,
   Platform,
+  TextInput,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -27,7 +28,6 @@ import {
   passcodeType,
   updateAuthTypeStorageFlags,
 } from '../../../util/authentication';
-import { OutlinedTextField } from 'react-native-material-textfield';
 import { BiometryButton } from '../../UI/BiometryButton';
 import Logger from '../../../util/Logger';
 import {
@@ -57,6 +57,7 @@ import {
   LOGIN_VIEW_TITLE_ID,
   LOGIN_VIEW_UNLOCK_BUTTON_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/LoginScreen.testIds';
+import { logo, vector } from '../../../images/index';
 
 const deviceHeight = Device.getDeviceHeight();
 const breakPoint = deviceHeight < 700;
@@ -64,38 +65,41 @@ const breakPoint = deviceHeight < 700;
 const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors.background.default,
+      backgroundColor: colors['tvn.background.black'],
       flex: 1,
     },
     wrapper: {
-      flex: 1,
+      flexGrow: 1,
       paddingHorizontal: 32,
     },
     foxWrapper: {
       justifyContent: 'center',
       alignSelf: 'center',
-      width: Device.isIos() ? 130 : 100,
-      height: Device.isIos() ? 130 : 100,
-      marginTop: 100,
+      width: 240,
+      height: 60,
+      marginTop: 150,
     },
     image: {
       alignSelf: 'center',
-      width: Device.isIos() ? 130 : 100,
-      height: Device.isIos() ? 130 : 100,
+      width: 240,
+      height: 60,
     },
     title: {
-      fontSize: Device.isAndroid() ? 30 : 35,
-      marginTop: 20,
-      marginBottom: 20,
+      fontSize: 32,
+      marginTop: 40,
+      marginBottom: 16,
+      fontWeight: '700',
       color: colors.text.default,
       justifyContent: 'center',
       textAlign: 'center',
       ...fontStyles.bold,
     },
     field: {
-      flex: 1,
-      marginBottom: Device.isAndroid() ? 0 : 10,
-      flexDirection: 'column',
+      flexDirection: 'row',
+      borderBottomWidth: 1,
+      borderBottomColor: colors['tvn.grayLight'],
+      alignItems: 'center',
+      paddingHorizontal: 15,
     },
     label: {
       color: colors.text.default,
@@ -104,17 +108,17 @@ const createStyles = (colors) =>
       ...fontStyles.normal,
     },
     ctaWrapper: {
-      marginTop: 20,
+      marginTop: 24,
     },
-    footer: {
-      marginVertical: 40,
-    },
+    footer: {},
     errorMsg: {
       color: colors.error.default,
       ...fontStyles.normal,
       lineHeight: 20,
+      marginTop: 4,
     },
     goBack: {
+      fontSize: 14,
       marginVertical: 14,
       color: colors.primary.default,
       ...fontStyles.normal,
@@ -136,9 +140,10 @@ const createStyles = (colors) =>
     },
     input: {
       ...fontStyles.normal,
-      fontSize: 16,
-      paddingTop: 2,
+      fontSize: 14,
+      paddingVertical: 15,
       color: colors.text.default,
+      flex: 1,
     },
     cant: {
       width: 280,
@@ -146,8 +151,7 @@ const createStyles = (colors) =>
       justifyContent: 'center',
       textAlign: 'center',
       ...fontStyles.normal,
-      fontSize: 16,
-      lineHeight: 24,
+      fontSize: 14,
       color: colors.text.default,
     },
     areYouSure: {
@@ -193,6 +197,12 @@ const createStyles = (colors) =>
       lineHeight: 20,
       marginTop: 10,
       color: colors.error.default,
+    },
+    subTitle: {
+      textAlign: 'center',
+      color: colors.text.default,
+      fontSize: 14,
+      marginBottom: 40,
     },
   });
 
@@ -446,21 +456,21 @@ class Login extends PureComponent {
     return (
       <ErrorBoundary view="Login">
         <SafeAreaView style={styles.mainWrapper}>
+          <View
+            style={{
+              position: 'absolute',
+              top: -100,
+            }}
+          >
+            <Image source={vector} style={StyleSheet.absoluteFillObject} />
+          </View>
           <KeyboardAwareScrollView
             style={styles.wrapper}
             resetScrollToCoords={{ x: 0, y: 0 }}
           >
             <View testID={'login'} {...generateTestId(Platform, 'login')}>
               <View style={styles.foxWrapper}>
-                {Device.isAndroid() ? (
-                  <Image
-                    source={require('../../../images/fox.png')}
-                    style={styles.image}
-                    resizeMethod={'auto'}
-                  />
-                ) : (
-                  <AnimatedFox bgColor={colors.background.default} />
-                )}
+                <Image source={logo} style={styles.image} />
               </View>
               <Text
                 style={styles.title}
@@ -468,9 +478,12 @@ class Login extends PureComponent {
               >
                 {strings('login.title')}
               </Text>
+              <Text style={styles.subTitle}>
+                {'Input your password below to login'}
+              </Text>
+
               <View style={styles.field}>
-                <Text style={styles.label}>{strings('login.password')}</Text>
-                <OutlinedTextField
+                <TextInput
                   style={styles.input}
                   placeholder={strings('login.password')}
                   placeholderTextColor={colors.text.muted}
@@ -482,21 +495,15 @@ class Login extends PureComponent {
                   ref={this.fieldRef}
                   onChangeText={this.setPassword}
                   value={this.state.password}
-                  baseColor={colors.border.default}
-                  tintColor={colors.primary.default}
                   onSubmitEditing={this.triggerLogIn}
-                  renderRightAccessory={() => (
-                    <BiometryButton
-                      onPress={this.tryBiometric}
-                      hidden={shouldHideBiometricAccessoryButton}
-                      biometryType={this.state.biometryType}
-                    />
-                  )}
                   keyboardAppearance={themeAppearance}
                 />
+                <BiometryButton
+                  onPress={this.tryBiometric}
+                  hidden={shouldHideBiometricAccessoryButton}
+                  biometryType={this.state.biometryType}
+                />
               </View>
-
-              {this.renderSwitch()}
 
               {!!this.state.error && (
                 <Text style={styles.errorMsg} testID={LOGIN_PASSWORD_ERROR}>
@@ -520,19 +527,21 @@ class Login extends PureComponent {
                 </StyledButton>
               </View>
 
-              <View style={styles.footer}>
-                <Text style={styles.cant}>{strings('login.go_back')}</Text>
-                <Button
-                  style={styles.goBack}
-                  onPress={this.toggleWarningModal}
-                  testID={RESET_WALLET_ID}
-                  {...generateTestId(Platform, RESET_WALLET_ID)}
-                >
-                  {strings('login.reset_wallet')}
-                </Button>
-              </View>
+              {this.renderSwitch()}
             </View>
           </KeyboardAwareScrollView>
+
+          <View style={styles.footer}>
+            <Text style={styles.cant}>{strings('login.go_back')}</Text>
+            <Button
+              style={styles.goBack}
+              onPress={this.toggleWarningModal}
+              testID={RESET_WALLET_ID}
+              {...generateTestId(Platform, RESET_WALLET_ID)}
+            >
+              {strings('login.reset_wallet')}
+            </Button>
+          </View>
           <FadeOutOverlay />
         </SafeAreaView>
       </ErrorBoundary>

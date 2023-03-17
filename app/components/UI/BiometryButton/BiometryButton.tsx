@@ -17,15 +17,19 @@ const androidIris = require('../../../images/android-iris.png');
 type BiometryType = BIOMETRY_TYPE | AUTHENTICATION_TYPE;
 
 interface BiometryButtonProps {
-  onPress: () => void;
-  hidden: boolean;
+  onPress?: () => void;
+  hidden?: boolean;
   biometryType: BiometryType;
+  disable?: boolean;
+  sizeIcon?: number;
 }
 
 const BiometryButton = ({
   onPress,
   hidden,
   biometryType,
+  disable,
+  sizeIcon = 28,
 }: BiometryButtonProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
@@ -36,7 +40,7 @@ const BiometryButton = ({
         return (
           <Ionicons
             color={colors.text.default}
-            size={28}
+            size={sizeIcon}
             style={styles.fixCenterIcon}
             name="ios-finger-print"
           />
@@ -45,7 +49,7 @@ const BiometryButton = ({
         return (
           <Ionicons
             color={colors.text.default}
-            size={28}
+            size={sizeIcon}
             style={styles.fixCenterIcon}
             name="ios-lock"
           />
@@ -60,7 +64,7 @@ const BiometryButton = ({
           <MaterialIcon
             color={colors.text.default}
             style={styles.fixCenterIcon}
-            size={28}
+            size={sizeIcon}
             name="fingerprint"
           />
         );
@@ -73,7 +77,7 @@ const BiometryButton = ({
           <MaterialIcon
             color={colors.text.default}
             style={styles.fixCenterIcon}
-            size={28}
+            size={sizeIcon}
             name="lock"
           />
         );
@@ -84,7 +88,7 @@ const BiometryButton = ({
       <Ionicons
         color={colors.text.default}
         style={styles.fixCenterIcon}
-        size={28}
+        size={sizeIcon}
         name="ios-finger-print"
       />
     );
@@ -93,7 +97,11 @@ const BiometryButton = ({
   if (hidden) return null;
 
   return (
-    <TouchableOpacity hitSlop={styles.hitSlop} onPress={onPress}>
+    <TouchableOpacity
+      disabled={disable}
+      hitSlop={styles.hitSlop}
+      onPress={onPress}
+    >
       {renderIcon(biometryType)}
     </TouchableOpacity>
   );

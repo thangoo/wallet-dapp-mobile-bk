@@ -5,7 +5,7 @@ const createStyles = (colors) =>
   StyleSheet.create({
     container: {
       padding: 15,
-      borderRadius: 100,
+      borderRadius: 12,
       justifyContent: 'center',
     },
     text: {
@@ -30,8 +30,8 @@ const createStyles = (colors) =>
       color: colors.primary.default,
     },
     confirm: {
-      backgroundColor: colors.primary.default,
-      minHeight: 50,
+      backgroundColor: colors['tvn.blue'],
+      minHeight: 32,
     },
     confirmText: {
       color: colors.primary.inverse,
