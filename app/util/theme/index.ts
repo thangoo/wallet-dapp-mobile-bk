@@ -72,12 +72,12 @@ const useColorSchemeCustom = (
   delay = Platform.select({ android: 0, ios: 350 }),
 ) => {
   // const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-  const [colorScheme, setColorScheme] = useState<ColorSchemeName>('dark');
+  const [colorScheme, setColorScheme] = useState<ColorSchemeName>('light');
   const onColorSchemeChange = useCallback(
     throttle(
       ({ colorScheme }) => {
         // setColorScheme(colorScheme);
-        setColorScheme('dark');
+        setColorScheme('light');
       },
       delay,
       {
