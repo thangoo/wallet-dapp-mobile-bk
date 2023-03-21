@@ -375,7 +375,8 @@
   "terms_and_conditions": {
     "title": "Nutzungsbedingungen zu",
     "description": "Wenn Sie fortfahren, stimmen Sie den",
-    "terms": "Nutzungsbedingungen zu"
+    "terms": "Nutzungsbedingungen zu",
+    "agree_term": "I've Read and accept the Terms of Service and Privacy Policy"
   },
   "privacy_policy": {
     "title": "Datenschutzerklärung",

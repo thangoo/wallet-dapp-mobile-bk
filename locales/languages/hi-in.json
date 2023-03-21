@@ -319,7 +319,8 @@
   "terms_and_conditions": {
     "title": "नियम और शर्तें",
     "description": "By proceeding, you agree to these ",
-    "terms": "नियम और शर्तें"
+    "terms": "नियम और शर्तें",
+    "agree_term": "I've Read and accept the Terms of Service and Privacy Policy"
   },
   "privacy_policy": {
     "title": "गोपनीयता नीति",

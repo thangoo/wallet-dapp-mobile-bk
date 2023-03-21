@@ -375,7 +375,8 @@
   "terms_and_conditions": {
     "title": "Conditions générales",
     "description": "En continuant, vous acceptez les présentes",
-    "terms": "Conditions générales"
+    "terms": "Conditions générales",
+    "agree_term": "I've Read and accept the Terms of Service and Privacy Policy"
   },
   "privacy_policy": {
     "title": "Politique de confidentialité",

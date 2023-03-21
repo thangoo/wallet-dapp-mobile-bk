@@ -375,7 +375,8 @@
   "terms_and_conditions": {
     "title": "Положения и условия",
     "description": "Продолжая, вы принимаете следующие документы:",
-    "terms": "Положения и условия"
+    "terms": "Положения и условия",
+    "agree_term": "I've Read and accept the Terms of Service and Privacy Policy"
   },
   "privacy_policy": {
     "title": "Политика конфиденциальности",
