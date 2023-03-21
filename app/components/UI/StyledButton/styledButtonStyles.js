@@ -17,7 +17,7 @@ const createStyles = (colors) =>
       backgroundColor: colors['tvn.primary.default'],
     },
     blueText: {
-      color: colors.primary.inverse,
+      color: colors['tvn.text.default'],
     },
     orange: {
       borderColor: colors.secondary.default,
@@ -51,7 +51,7 @@ const createStyles = (colors) =>
       borderColor: colors.primary.default,
     },
     normalText: {
-      color: colors.primary.default,
+      color: colors['tvn.primary.default'],
     },
     transparent: {
       backgroundColor: importedColors.transparent,
