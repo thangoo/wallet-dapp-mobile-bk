@@ -17,7 +17,7 @@ import { strings } from '../../../../locales/i18n';
 import FadeOutOverlay from '../../UI/FadeOutOverlay';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { getTransparentOnboardingNavbarOptions } from '../../UI/Navbar';
-import OnboardingScreenWithBg from '../../UI/OnboardingScreenWithBg';
+import { PREVIOUS_SCREEN, ONBOARDING } from '../../../constants/navigation';
 import Device from '../../../util/device';
 import { saveOnboardingEvent } from '../../../actions/onboarding';
 import { connect } from 'react-redux';
@@ -29,8 +29,11 @@ import {
   WELCOME_SCREEN_CAROUSEL_TITLE_ID,
   WELCOME_SCREEN_GET_STARTED_BUTTON_ID,
   WELCOME_SCREEN_CAROUSEL_CONTAINER_ID,
+  WALLET_SETUP_CREATE_NEW_WALLET_BUTTON_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/WelcomeScreen.testIds';
 import generateTestId from '../../../../wdio/utils/generateTestId';
+
+import { backgroundOnboarding, imgWalletOnboarding } from 'images/index';
 
 const IMAGE_3_RATIO = 215 / 315;
 const IMAGE_2_RATIO = 222 / 239;
@@ -45,23 +48,21 @@ const createStyles = (colors) =>
       flexGrow: 1,
     },
     wrapper: {
-      paddingVertical: 30,
       flex: 1,
+      position: 'relative',
     },
     title: {
-      fontSize: 24,
-      marginBottom: 12,
-      color: colors.text.default,
-      justifyContent: 'center',
+      fontSize: 28,
+      marginBottom: 16,
+      color: colors['tvn.gray.10'],
+      justifyContent: 'flex-end',
       textAlign: 'center',
       ...fontStyles.bold,
     },
     subtitle: {
-      fontSize: 14,
+      fontSize: 16,
       lineHeight: 19,
-      marginTop: 12,
-      marginBottom: 25,
-      color: colors.text.alternative,
+      color: colors['tvn.gray.10'],
       justifyContent: 'center',
       textAlign: 'center',
       ...fontStyles.normal,
@@ -69,17 +70,13 @@ const createStyles = (colors) =>
     ctas: {
       paddingHorizontal: 40,
       paddingBottom: Device.isIphoneX() ? 40 : 20,
-      flexDirection: 'column',
     },
-    ctaWrapper: {
-      justifyContent: 'flex-end',
-    },
-    carouselImage: {},
+    ctaWrapper: {},
+
     // eslint-disable-next-line react-native/no-unused-styles
-    carouselImage1: {
-      marginTop: 30,
-      width: DEVICE_WIDTH - IMG_PADDING,
-      height: (DEVICE_WIDTH - IMG_PADDING) * IMAGE_1_RATIO,
+    carouselImage: {
+      width: '97%',
+      height: '75%',
     },
     // eslint-disable-next-line react-native/no-unused-styles
     carouselImage2: {
@@ -92,40 +89,37 @@ const createStyles = (colors) =>
       height: (DEVICE_WIDTH - 60) * IMAGE_3_RATIO,
     },
     carouselImageWrapper: {
-      flex: 1,
-      flexDirection: 'row',
+      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
+      flex: 1,
     },
     circle: {
-      width: 8,
-      height: 8,
+      width: 6,
+      height: 6,
       borderRadius: 8 / 2,
-      backgroundColor: colors.icon.default,
-      opacity: 0.4,
-      marginHorizontal: 8,
+      backgroundColor: colors['tvn.gray.04'],
+      marginHorizontal: 4,
     },
     solidCircle: {
-      opacity: 1,
+      width: 24,
+      backgroundColor: colors['tvn.primary.blue'],
     },
     progessContainer: {
       flexDirection: 'row',
       alignSelf: 'center',
-      marginVertical: 36,
+      marginBottom: 30,
     },
     tab: {
-      marginHorizontal: 30,
+      marginHorizontal: 32,
     },
   });
 
-const onboarding_carousel_1 = require('../../../images/onboarding-carousel-1.png'); // eslint-disable-line
-const onboarding_carousel_2 = require('../../../images/onboarding-carousel-2.png'); // eslint-disable-line
-const onboarding_carousel_3 = require('../../../images/onboarding-carousel-3.png'); // eslint-disable-line
-
 const carousel_images = [
-  onboarding_carousel_1,
-  onboarding_carousel_2,
-  onboarding_carousel_3,
+  imgWalletOnboarding,
+  imgWalletOnboarding,
+  imgWalletOnboarding,
+  imgWalletOnboarding,
 ];
 
 /**
@@ -158,9 +152,22 @@ class OnboardingCarousel extends PureComponent {
     });
   };
 
-  onPressGetStarted = () => {
-    this.props.navigation.navigate('Onboarding');
-    this.trackEvent(MetaMetricsEvents.ONBOARDING_STARTED);
+  // onPressGetStarted = () => {
+  //   this.props.navigation.navigate('Onboarding');
+  //   this.trackEvent(MetaMetricsEvents.ONBOARDING_STARTED);
+  // };
+  handleExistingUser = (action) => {
+    if (this.state.existingUser) {
+      this.alertExistingUser(action);
+    } else {
+      action();
+    }
+  };
+
+  onPressCreate = () => {
+    this.props.navigation.navigate('Legal', {
+      [PREVIOUS_SCREEN]: ONBOARDING,
+    });
   };
 
   renderTabBar = () => <View />;
@@ -200,28 +207,38 @@ class OnboardingCarousel extends PureComponent {
         style={baseStyles.flexGrow}
         testID={'onboarding-carouselcarousel-screen--screen'}
       >
-        <OnboardingScreenWithBg screen={'carousel'}>
-          <ScrollView
-            style={baseStyles.flexGrow}
-            contentContainerStyle={styles.scroll}
+        <View
+          style={{
+            position: 'absolute',
+            top: -30,
+          }}
+        >
+          <Image
+            source={backgroundOnboarding}
+            style={StyleSheet.absoluteFillObject}
+          />
+        </View>
+        <ScrollView contentContainerStyle={styles.scroll}>
+          <View
+            style={styles.wrapper}
+            {...generateTestId(Platform, WELCOME_SCREEN_CAROUSEL_CONTAINER_ID)}
           >
-            <View
-              style={styles.wrapper}
-              {...generateTestId(
-                Platform,
-                WELCOME_SCREEN_CAROUSEL_CONTAINER_ID,
-              )}
+            <ScrollableTabView
+              style={styles.scrollTabs}
+              renderTabBar={this.renderTabBar}
+              onChangeTab={this.onChangeTab}
             >
-              <ScrollableTabView
-                style={styles.scrollTabs}
-                renderTabBar={this.renderTabBar}
-                onChangeTab={this.onChangeTab}
-              >
-                {['one', 'two', 'three'].map((value, index) => {
-                  const key = index + 1;
-                  const imgStyleKey = `carouselImage${key}`;
-                  return (
-                    <View key={key} style={baseStyles.flexGrow}>
+              {['one', 'two', 'three', 'four'].map((value, index) => {
+                const key = index + 1;
+                return (
+                  <View key={key} style={[baseStyles.flexGrow]}>
+                    <View style={styles.carouselImageWrapper}>
+                      <Image
+                        source={carousel_images[index]}
+                        style={styles.carouselImage}
+                        resizeMode={'contain'}
+                        testID={`carousel-${value}-image`}
+                      />
                       <View
                         style={styles.tab}
                         {...generateTestId(
@@ -236,44 +253,42 @@ class OnboardingCarousel extends PureComponent {
                           {strings(`onboarding_carousel.subtitle${key}`)}
                         </Text>
                       </View>
-                      <View style={styles.carouselImageWrapper}>
-                        <Image
-                          source={carousel_images[index]}
-                          style={[styles.carouselImage, styles[imgStyleKey]]}
-                          resizeMethod={'auto'}
-                          testID={`carousel-${value}-image`}
-                        />
-                      </View>
                     </View>
-                  );
-                })}
-              </ScrollableTabView>
-
-              <View style={styles.progessContainer}>
-                {[1, 2, 3].map((i) => (
-                  <View
-                    key={i}
-                    style={[
-                      styles.circle,
-                      currentTab === i ? styles.solidCircle : {},
-                    ]}
-                  />
-                ))}
-              </View>
-            </View>
-          </ScrollView>
-          <View style={styles.ctas}>
-            <View style={styles.ctaWrapper}>
-              <StyledButton
-                type={'normal'}
-                onPress={this.onPressGetStarted}
-                testID={WELCOME_SCREEN_GET_STARTED_BUTTON_ID}
-              >
-                {strings('onboarding_carousel.get_started')}
-              </StyledButton>
+                  </View>
+                );
+              })}
+            </ScrollableTabView>
+            <View style={styles.progessContainer}>
+              {[1, 2, 3, 4].map((i) => (
+                <View
+                  key={i}
+                  style={[
+                    styles.circle,
+                    currentTab === i ? styles.solidCircle : {},
+                  ]}
+                />
+              ))}
             </View>
           </View>
-        </OnboardingScreenWithBg>
+        </ScrollView>
+        <View style={styles.ctas}>
+          <View style={styles.ctaWrapper}>
+            <StyledButton
+              type={'blue'}
+              onPress={this.onPressCreate}
+              testID={WALLET_SETUP_CREATE_NEW_WALLET_BUTTON_ID}
+            >
+              {strings('onboarding.start_exploring_now')}
+            </StyledButton>
+            <StyledButton
+              type={'transparent-blue'}
+              onPress={this.onPressGetStarted}
+              testID={WELCOME_SCREEN_GET_STARTED_BUTTON_ID}
+            >
+              {strings('onboarding.already_have_wallet')}
+            </StyledButton>
+          </View>
+        </View>
         <FadeOutOverlay />
       </View>
     );
