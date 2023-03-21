@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { StyleSheet, ImageBackground, View } from 'react-native';
 import { useTheme } from '../../../util/theme';
 
+import { backgroundOnboarding } from 'images/index';
+
 const createStyles = (colors) =>
   StyleSheet.create({
     flex: {
@@ -19,14 +21,15 @@ const createStyles = (colors) =>
       flex: 1,
       width: null,
       height: null,
+      zIndex: 0,
     },
   });
 
 const images = {
-  a: require('../../../images/welcome-bg1.png'), // eslint-disable-line
-  b: require('../../../images/welcome-bg2.png'), // eslint-disable-line
-  c: require('../../../images/welcome-bg3.png'), // eslint-disable-line
-  d: require('../../../images/welcome-bg4.png'), // eslint-disable-line
+  a: backgroundOnboarding, // eslint-disable-line
+  b: backgroundOnboarding, // eslint-disable-line
+  c: backgroundOnboarding, // eslint-disable-line
+  d: backgroundOnboarding, // eslint-disable-line
   carousel: null,
 };
 
