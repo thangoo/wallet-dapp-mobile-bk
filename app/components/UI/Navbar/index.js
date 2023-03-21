@@ -664,14 +664,14 @@ export function getOnboardingNavbarOptions(
   const headerLeftHide = headerLeft || route.params?.headerLeft;
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors['tvn.innerBackground.default'],
+      backgroundColor: themeColors['tvn.background.default'],
       shadowColor: importedColors.transparent,
       elevation: 0,
     },
     paymeName: {
-      fontWeight: '400',
-      fontSize: 18,
-      color: themeColors['tvn.text.default'],
+      fontWeight: '600',
+      fontSize: 22,
+      color: themeColors['tvn.gray.10'],
     },
   });
 
@@ -679,13 +679,13 @@ export function getOnboardingNavbarOptions(
     headerStyle: innerStyles.headerStyle,
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Text style={innerStyles.paymeName}>PAYME</Text>
+        <Text style={innerStyles.paymeName}>Legal</Text>
       </View>
     ),
     headerBackTitle: <View />,
     headerRight: () => <View />,
     headerLeft: headerLeftHide,
-    headerTintColor: themeColors['tvn.text.default'],
+    headerTintColor: themeColors['tvn.gray.10'],
   };
 }
 
