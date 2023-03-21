@@ -4,7 +4,7 @@ export const thangoLight = {
   ['tvn.white']: '#FFFFFF',
   ['tvn.grayLight']: '#999999',
   ['tvn.grayDark']: ' #333333',
-  ['tvn.background.default']: '#222222', // colors.background.default
+  ['tvn.background.default']: '#FFFFFF', // colors.background.default
   ['tvn.primary.default']: '#277EFF',
   ['tvn.innerBackground.default']: '#222222', // colors.innerBackground.default
   ['tvn.text.muted']: '#FFFFFF',
@@ -20,6 +20,8 @@ export const thangoLight = {
   ['tvn.light_gray_blue']: '#F3F6FB',
   ['tvn.dark_gray_blue']: '#97A8C1',
   ['tvn.primary.blue']: '#277EFF',
+  ['tvn.background.linear1']: '#7EDDFE',
+  ['tvn.background.linear2']: '#92A0FE',
   ['tvn.status.orange']: '#FF8717',
   ['tvn.status.red']: '#FF2517',
 };
@@ -46,6 +48,8 @@ export const thangoDark = {
   ['tvn.light_gray_blue']: '#F3F6FB',
   ['tvn.dark_gray_blue']: '#97A8C1',
   ['tvn.primary.blue']: '#277EFF',
+  ['tvn.background.linear1.']: '#7EDDFE',
+  ['tvn.background.linear2.']: '#92A0FE',
   ['tvn.status.orange']: '#FF8717',
   ['tvn.status.red']: '#FF2517',
 };
