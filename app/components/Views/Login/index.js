@@ -58,7 +58,7 @@ import {
   LOGIN_VIEW_UNLOCK_BUTTON_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/LoginScreen.testIds';
 import { logo, vector } from '../../../images/index';
-import PassCode from './PassCode';
+import PassCode, { refPassCode } from './PassCode';
 
 const deviceHeight = Device.getDeviceHeight();
 const breakPoint = deviceHeight < 700;
@@ -96,7 +96,7 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
     },
     field: {
-      flexDirection: 'row',
+      // flexDirection: 'row',
       // borderBottomWidth: 1,
       // borderBottomColor: colors['tvn.grayLight'],
       // alignItems: 'center',
@@ -309,10 +309,10 @@ class Login extends PureComponent {
     return false;
   };
 
-  onLogin = async () => {
-    const { password } = this.state;
-    const { current: field } = this.fieldRef;
-    const locked = !passwordRequirementsMet(password);
+  onLogin = async (passcode) => {
+    // const { password } = this.state;
+    // const { current: field } = this.fieldRef;
+    const locked = !passwordRequirementsMet(passcode);
     if (locked) this.setState({ error: strings('login.invalid_password') });
     if (this.state.loading || locked) return;
 
@@ -324,7 +324,7 @@ class Login extends PureComponent {
 
     try {
       await Authentication.userEntryAuth(
-        password,
+        passcode,
         authType,
         this.props.selectedAddress,
       );
@@ -342,7 +342,8 @@ class Login extends PureComponent {
         password: '',
         hasBiometricCredentials: false,
       });
-      field.setValue('');
+      // field.setValue('');
+      refPassCode.current?.clearValue();
     } catch (e) {
       const error = e.toString();
       if (
@@ -395,7 +396,8 @@ class Login extends PureComponent {
         password: '',
         hasBiometricCredentials: false,
       });
-      field.setValue('');
+      // field.setValue('');
+      refPassCode.current?.clearValue();
     } catch (error) {
       this.setState({ hasBiometricCredentials: true });
       Logger.log(error);
@@ -403,8 +405,8 @@ class Login extends PureComponent {
     field?.blur();
   };
 
-  triggerLogIn = () => {
-    this.onLogin();
+  triggerLogIn = (passcode) => {
+    this.onLogin(passcode);
   };
 
   toggleWarningModal = () => {
@@ -491,7 +493,7 @@ class Login extends PureComponent {
                   onSubmitEditing={this.triggerLogIn}
                   keyboardAppearance={themeAppearance}
                 /> */}
-                <PassCode />
+                <PassCode onSubmitEditing={this.triggerLogIn} />
                 <BiometryButton
                   onPress={this.tryBiometric}
                   hidden={shouldHideBiometricAccessoryButton}
@@ -504,22 +506,24 @@ class Login extends PureComponent {
                   {this.state.error}
                 </Text>
               )}
-              <View
+              {/* <View
                 style={styles.ctaWrapper}
                 testID={'log-in-button'}
                 {...generateTestId(Platform, LOGIN_VIEW_UNLOCK_BUTTON_ID)}
               >
                 <StyledButton type={'confirm'} onPress={this.triggerLogIn}>
-                  {this.state.loading ? (
-                    <ActivityIndicator
-                      size="small"
-                      color={colors.primary.inverse}
-                    />
-                  ) : (
-                    strings('login.unlock_button')
-                  )}
                 </StyledButton>
-              </View>
+              </View> */}
+              {
+                this.state.loading ? (
+                  <ActivityIndicator
+                    size="small"
+                    color={colors['tvn.primary.blue']}
+                    style={{ marginTop: 16 }}
+                  />
+                ) : null
+                // <Text>{strings('login.unlock_button')}</Text>
+              }
 
               {this.renderSwitch()}
             </View>
