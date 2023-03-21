@@ -1444,9 +1444,10 @@
     "progressThree": "Confirm Secret Recovery Phrase"
   },
   "manual_backup_step_1": {
-    "action": "Write down your Secret Recovery Phrase",
-    "info": "This is your Secret Recovery Phrase. Write it down on a paper and keep it in a safe place. You'll be asked to re-enter this phrase (in order) on the next step.",
-    "continue": "Continue",
+    "action": "Write down your Secret Recovery Phrases",
+    "info": "Never share your secret phrase with anyone.",
+    "read_more": " Read more",
+    "continue": "CONTINUE",
     "reveal": "Tap to reveal your Secret Recovery Phrase",
     "watching": "Make sure no one is watching your screen.",
     "view": "View",

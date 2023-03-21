@@ -239,13 +239,14 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
         showCancelButton={false}
         confirmButtonMode={'confirm'}
       >
-        <View style={styles.wrapper} testID={'manual_backup_step_1-screen'}>
-          <Text style={styles.action}>
+        <View style={styles.wrapper} testID={'manual_backup_step_1f-screen'}>
+          {/* <Text style={styles.action}>
             {strings('manual_backup_step_1.action')}
-          </Text>
+          </Text> */}
           <View style={styles.infoWrapper}>
             <Text style={styles.info}>
               {strings('manual_backup_step_1.info')}
+              {strings('manual_backup_step_1.read_more')}
             </Text>
           </View>
           <View style={styles.seedPhraseWrapper}>
@@ -280,9 +281,9 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
 
   return ready ? (
     <SafeAreaView style={styles.mainWrapper}>
-      <View style={styles.onBoardingWrapper}>
+      {/* <View style={styles.onBoardingWrapper}>
         <OnboardingProgress currentStep={currentStep} steps={steps} />
-      </View>
+      </View> */}
       {view === SEED_PHRASE ? renderSeedphraseView() : renderConfirmPassword()}
     </SafeAreaView>
   ) : (
