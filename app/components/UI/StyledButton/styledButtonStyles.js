@@ -113,6 +113,11 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
       color: colors.overlay.inverse,
     },
+    gray10Text: {
+      ...fontStyles.bold,
+      fontSize: 16,
+      color: colors['tvn.gray.10'],
+    },
     onOverlayText: {
       fontSize: 18,
       ...fontStyles.bold,
@@ -186,6 +191,10 @@ function getStyles(type, colors) {
       break;
     case 'transparent-blue':
       fontStyle = styles.normalText;
+      containerStyle = styles.transparent;
+      break;
+    case 'transparent-gray-10':
+      fontStyle = styles.gray10Text;
       containerStyle = styles.transparent;
       break;
     case 'warning':
