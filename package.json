@@ -301,6 +301,7 @@
     "react-native-webrtc": "^106.0.0-beta.7",
     "react-native-webview": "11.13.0",
     "react-redux": "7.2.4",
+    "react-use": "^17.4.0",
     "readable-stream": "1.0.33",
     "redux": "4.1.1",
     "redux-flipper": "^2.0.2",
