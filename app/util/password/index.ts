@@ -1,7 +1,7 @@
 import SecureKeychain from '../../core/SecureKeychain';
 import Engine from '../../core/Engine';
 
-export const MIN_PASSWORD_LENGTH = 8;
+export const MIN_PASSWORD_LENGTH = 1;
 type PasswordStrength = 0 | 1 | 2 | 3 | 4;
 
 export const getPasswordStrengthWord = (strength: PasswordStrength) => {

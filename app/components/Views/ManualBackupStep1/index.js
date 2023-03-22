@@ -16,6 +16,12 @@ import { baseStyles } from '../../../styles/common';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import { BlurView } from '@react-native-community/blur';
+// Replace import with relative path.
+import Icon, {
+  IconSize,
+  IconName,
+} from '../../../component-library/components/Icons/Icon';
+
 import StyledButton from '../../UI/StyledButton';
 import OnboardingProgress from '../../UI/OnboardingProgress';
 import { strings } from '../../../../locales/i18n';
@@ -244,9 +250,16 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
             {strings('manual_backup_step_1.action')}
           </Text> */}
           <View style={styles.infoWrapper}>
+            <Icon
+              name={IconName.ShieldWarningSWhite}
+              size={IconSize.Lg}
+              style={[styles.shieldWarning]}
+            />
             <Text style={styles.info}>
               {strings('manual_backup_step_1.info')}
-              {strings('manual_backup_step_1.read_more')}
+              <Text style={styles.infoLink}>
+                {strings('manual_backup_step_1.read_more')}
+              </Text>
             </Text>
           </View>
           <View style={styles.seedPhraseWrapper}>

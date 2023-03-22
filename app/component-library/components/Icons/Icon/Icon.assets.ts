@@ -4,6 +4,7 @@
 // DO NOT EDIT - Use generate-assets.js
 ///////////////////////////////////////////////////////
 import { AssetByIconName, IconName } from './Icon.types';
+
 import AddSquare from './assets/add-square.svg';
 import Add from './assets/add.svg';
 import Arrow2Down from './assets/arrow-2-down.svg';
@@ -142,6 +143,9 @@ import WalletCard from './assets/wallet-card.svg';
 import WalletMoney from './assets/wallet-money.svg';
 import Wallet from './assets/wallet.svg';
 import Warning from './assets/warning.svg';
+
+// Thango icon
+import ShieldWarningSWhite from './assets/thango/shield_warning_small_white.svg';
 
 /**
  * Asset stored by icon name
@@ -285,4 +289,7 @@ export const assetByIconName: AssetByIconName = {
   [IconName.WalletMoney]: WalletMoney,
   [IconName.Wallet]: Wallet,
   [IconName.Warning]: Warning,
+
+  // Thango icon
+  [IconName.ShieldWarningSWhite]: ShieldWarningSWhite,
 };
