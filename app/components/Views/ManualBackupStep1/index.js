@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Text,
   View,
@@ -8,6 +8,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Appearance,
+  Image,
+  TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -34,6 +36,19 @@ import { trackEvent } from '../../../util/analyticsV2';
 import { createStyles } from './styles';
 import { CONFIRM_CHANGE_PASSWORD_INPUT_BOX_ID } from '../../../constants/test-ids';
 import { Authentication } from '../../../core';
+import {
+  arrow_right_icon,
+  copy_icon,
+  shield_warning_2_icon,
+  shield_warning_icon,
+} from '../../../images/index';
+import HStack from '../../../components/Base/HStack';
+import { ScrollView } from 'react-native-gesture-handler';
+import Share from 'react-native-share';
+import Logger from '../../../util/Logger';
+import { trackLegacyEvent } from '../../../util/analyticsV2';
+import { HeaderBackButton } from '@react-navigation/stack';
+import ReadMoreModal from './ReadMoreModal';
 
 /**
  * View that's shown during the second step of
@@ -51,12 +66,28 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
 
   const { colors, themeAppearance } = useTheme();
   const styles = createStyles(colors);
+  const refReadMore = useRef(null);
 
   const currentStep = 1;
   const steps = MANUAL_BACKUP_STEPS;
 
   const updateNavBar = useCallback(() => {
-    navigation.setOptions(getOnboardingNavbarOptions(route, {}, colors));
+    navigation.setOptions({
+      title: 'Secret Phrase',
+      headerLeft: (props) => (
+        <HeaderBackButton
+          {...props}
+          labelVisible={false}
+          style={{ marginLeft: 16 }}
+          backImage={() => (
+            <Image
+              source={arrow_right_icon}
+              style={{ width: 32, height: 32 }}
+            />
+          )}
+        />
+      ),
+    });
   }, [colors, navigation, route]);
 
   const tryExportSeedPhrase = async (password) => {
@@ -150,6 +181,24 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
     return blurType;
   };
 
+  /**
+   * Share seed phrase
+   */
+  const onShare = () => {
+    Share.open({
+      message: words.join(', '),
+    })
+      .then(() => {})
+      .catch((err) => {
+        Logger.log('Error while trying to copy ', err);
+      });
+    // InteractionManager.runAfterInteractions(() => {
+    //   trackLegacyEvent(MetaMetricsEvents.RECEIVE_OPTIONS_SHARE_ADDRESS);
+    // });
+  };
+
+  const onReadMore = () => refReadMore.current.toggle();
+
   const renderSeedPhraseConcealer = () => {
     const blurType = getBlurType();
 
@@ -231,58 +280,101 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
     const half = wordLength / 2 || 6;
 
     return (
-      <ActionView
-        confirmTestID={'manual-backup-step-1-continue-button'}
-        confirmText={strings('manual_backup_step_1.continue')}
-        onConfirmPress={goNext}
-        confirmDisabled={seedPhraseHidden}
-        showCancelButton={false}
-        confirmButtonMode={'confirm'}
-      >
-        <View style={styles.wrapper} testID={'manual_backup_step_1-screen'}>
-          <Text style={styles.action}>
-            {strings('manual_backup_step_1.action')}
-          </Text>
-          <View style={styles.infoWrapper}>
-            <Text style={styles.info}>
-              {strings('manual_backup_step_1.info')}
-            </Text>
-          </View>
+      <>
+        <ScrollView
+          style={{ marginHorizontal: 32 }}
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <TouchableOpacity onPress={onReadMore}>
+            <HStack style={styles.wrapWarning}>
+              <Image
+                source={shield_warning_icon}
+                style={{ width: 24, height: 24, marginRight: 16 }}
+                resizeMode="contain"
+              />
+              <HStack style={{ flex: 1 }}>
+                <Text style={styles.warningText}>
+                  {'Never share your secret phrase with anyone. '}
+                  <Text
+                    style={{
+                      textDecorationLine: 'underline',
+                      fontWeight: '500',
+                    }}
+                  >
+                    {'Read more'}
+                  </Text>
+                </Text>
+              </HStack>
+            </HStack>
+          </TouchableOpacity>
+
           <View style={styles.seedPhraseWrapper}>
-            {seedPhraseHidden ? (
-              renderSeedPhraseConcealer()
-            ) : (
-              <React.Fragment>
-                <View style={styles.wordColumn}>
-                  {words.slice(0, half).map((word, i) => (
-                    <View key={`word_${i}`} style={styles.wordWrapper}>
-                      <Text style={styles.word}>{`${i + 1}. ${word}`}</Text>
-                    </View>
-                  ))}
+            <View style={styles.wordColumn}>
+              {words.slice(0, half).map((word, i) => (
+                <View key={`word_${i}`} style={styles.wordWrapper}>
+                  <Text style={[styles.wordIndex]}>
+                    {`${i + 1}.   `}
+                    <Text style={styles.word}>{word}</Text>
+                  </Text>
                 </View>
-                <View style={styles.wordColumn}>
-                  {words.slice(-half).map((word, i) => (
-                    <View key={`word_${i}`} style={styles.wordWrapper}>
-                      <Text style={styles.word}>{`${
-                        i + (half + 1)
-                      }. ${word}`}</Text>
-                    </View>
-                  ))}
+              ))}
+            </View>
+            <View style={{ width: 16 }} />
+            <View style={styles.wordColumn}>
+              {words.slice(-half).map((word, i) => (
+                <View key={`word_${i}`} style={styles.wordWrapper}>
+                  <Text style={styles.wordIndex}>
+                    {`${i + (half + 1)}.   `}
+                    <Text style={styles.word}>{word}</Text>
+                  </Text>
                 </View>
-                <ScreenshotDeterrent enabled isSRP />
-              </React.Fragment>
-            )}
+              ))}
+            </View>
+            <ScreenshotDeterrent enabled isSRP />
           </View>
-        </View>
-      </ActionView>
+
+          <TouchableOpacity onPress={onShare}>
+            <HStack style={styles.wrapCopy}>
+              <Image
+                source={copy_icon}
+                style={{ width: 24, height: 24 }}
+                resizeMode="contain"
+              />
+              <Text style={styles.copyText}>
+                {strings('receive_request.copy')}
+              </Text>
+            </HStack>
+          </TouchableOpacity>
+
+          <View style={{ flex: 1 }} />
+
+          <HStack style={{ marginBottom: 24 }}>
+            <Image
+              source={shield_warning_2_icon}
+              style={{ width: 24, height: 24 }}
+              resizeMode="contain"
+            />
+            <Text style={styles.footerText}>
+              {'Never share your secret phrase with anyone, store it securely!'}
+            </Text>
+          </HStack>
+        </ScrollView>
+        <StyledButton
+          testID={'manual-backup-step-1-continue-button'}
+          type={'confirm'}
+          onPress={goNext}
+          containerStyle={{ marginHorizontal: 32 }}
+        >
+          {strings('manual_backup_step_1.continue')}
+        </StyledButton>
+      </>
     );
   };
 
   return ready ? (
     <SafeAreaView style={styles.mainWrapper}>
-      <View style={styles.onBoardingWrapper}>
-        <OnboardingProgress currentStep={currentStep} steps={steps} />
-      </View>
+      <ReadMoreModal ref={refReadMore} onNext={goNext} />
       {view === SEED_PHRASE ? renderSeedphraseView() : renderConfirmPassword()}
     </SafeAreaView>
   ) : (

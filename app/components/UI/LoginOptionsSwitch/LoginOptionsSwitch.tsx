@@ -71,25 +71,20 @@ const LoginOptionsSwitch = ({
             {
               borderWidth: 1,
               borderColor: biometryChoiceState
-                ? //@ts-ignore
-                  colors['tvn.primary.blue']
-                : //@ts-ignore
-                  colors['tvn.gray.04'],
+                ? colors['tvn.primary.blue']
+                : colors['tvn.gray.04'],
             },
           ]}
           trackColor={{
-            //@ts-ignore
-            true: colors['tvn.white'],
+            true: colors['tvn.blue'],
+            false: colors.border.muted,
           }}
-          //@ts-ignore
           ios_backgroundColor={colors['tvn.white']}
           testID={LOGIN_WITH_BIOMETRICS_SWITCH}
           thumbColor={
             biometryChoiceState
-              ? //@ts-ignore
-                colors['tvn.primary.blue']
-              : //@ts-ignore
-                colors['tvn.gray.06']
+              ? colors['tvn.primary.blue']
+              : colors['tvn.gray.06']
           }
         />
       </View>
@@ -105,7 +100,6 @@ const LoginOptionsSwitch = ({
           value={rememberMeEnabled}
           style={styles.switch}
           trackColor={{
-            //@ts-ignore
             true: colors['tvn.blue'],
             false: colors.border.muted,
           }}

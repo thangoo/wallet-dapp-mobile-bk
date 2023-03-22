@@ -183,18 +183,18 @@ class OnboardingCarousel extends PureComponent {
 
   updateNavBar = () => {
     const colors = this.context.colors || mockTheme.colors;
-    this.props.navigation.setOptions(
-      getTransparentOnboardingNavbarOptions(colors),
-    );
+    // this.props.navigation.setOptions(
+    //   getTransparentOnboardingNavbarOptions(colors),
+    // );
   };
 
   componentDidMount = () => {
-    this.updateNavBar();
+    // this.updateNavBar();
     this.trackEvent(MetaMetricsEvents.ONBOARDING_WELCOME_MESSAGE_VIEWED);
   };
 
   componentDidUpdate = () => {
-    this.updateNavBar();
+    // this.updateNavBar();
   };
 
   render() {
@@ -207,12 +207,7 @@ class OnboardingCarousel extends PureComponent {
         style={baseStyles.flexGrow}
         testID={'onboarding-carouselcarousel-screen--screen'}
       >
-        <View
-          style={{
-            position: 'absolute',
-            top: -30,
-          }}
-        >
+        <View>
           <Image
             source={backgroundOnboarding}
             style={StyleSheet.absoluteFillObject}
