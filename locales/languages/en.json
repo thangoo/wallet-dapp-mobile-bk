@@ -166,7 +166,7 @@
     "subtitle": "This password will unlock your MetaMask wallet only on this device.",
     "subtitle2": "Adds an extra layer of security when using the app",
     "password": "New Password",
-    "confirm_password": "Confirm Code",
+    "confirm_password": "Confirm Passcode",
     "create_button": "Create password",
     "import_with_seed_phrase": "Import with Secret Recovery Phrase",
     "password_length_error": "The password needs to be at least 8 characters long",
