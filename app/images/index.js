@@ -9,6 +9,8 @@ const vectorSplashScreen = require('./vectorSplash.png');
 const backgroundOnboarding = require('./background1-onboarding.png');
 const imgWalletOnboarding = require('./img-wallet-onboarding.png');
 
+const imgSecretPhrase = require('./img-secret-phrase-screen.png');
+
 export {
   arrow_right_icon,
   shield_warning_2_icon,
@@ -20,4 +22,5 @@ export {
   backgroundOnboarding,
   imgWalletOnboarding,
   logoSplashScreen,
+  imgSecretPhrase,
 };
