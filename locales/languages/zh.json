@@ -161,6 +161,7 @@
   "choose_password": {
     "title": "创建密码",
     "subtitle": "此密码将仅在此设备上解锁您的 MetaMask 钱包。",
+    "subtitle2": "Adds an extra layer of security when using the app.",
     "password": "新密码",
     "confirm_password": "确认密码",
     "create_button": "创建密码",

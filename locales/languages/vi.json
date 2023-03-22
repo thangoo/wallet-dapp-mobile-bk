@@ -161,6 +161,7 @@
   "choose_password": {
     "title": "Tạo mật khẩu",
     "subtitle": "Mật khẩu này sẽ chỉ mở khóa ví MetaMask của bạn trên thiết bị này.",
+    "subtitle2": "Adds an extra layer of security when using the app.",
     "password": "Mật khẩu mới",
     "confirm_password": "Xác nhận mật khẩu",
     "create_button": "Tạo mật khẩu",
