@@ -375,7 +375,8 @@
   "terms_and_conditions": {
     "title": "이용 약관",
     "description": "계속 진행할 경우 다음 사항에 동의하게 됩니다",
-    "terms": "이용 약관"
+    "terms": "이용 약관",
+    "agree_term": "I've Read and accept the Terms of Service and Privacy Policy"
   },
   "privacy_policy": {
     "title": "개인정보 보호 정책",

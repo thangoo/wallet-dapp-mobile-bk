@@ -319,7 +319,8 @@
   "terms_and_conditions": {
     "title": "Syarat dan Ketentuan",
     "description": "By proceeding, you agree to these ",
-    "terms": "Syarat dan Ketentuan"
+    "terms": "Syarat dan Ketentuan",
+    "agree_term": "I've Read and accept the Terms of Service and Privacy Policy"
   },
   "privacy_policy": {
     "title": "Kebijakan Privasi",

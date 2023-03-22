@@ -66,13 +66,26 @@ const LoginOptionsSwitch = ({
         <Switch
           onValueChange={onBiometryValueChanged}
           value={biometryChoiceState}
-          style={styles.switch}
+          style={[
+            styles.switch,
+            {
+              borderWidth: 1,
+              borderColor: biometryChoiceState
+                ? colors['tvn.primary.blue']
+                : colors['tvn.gray.04'],
+            },
+          ]}
           trackColor={{
             true: colors['tvn.blue'],
             false: colors.border.muted,
           }}
-          ios_backgroundColor={colors.border.muted}
+          ios_backgroundColor={colors['tvn.white']}
           testID={LOGIN_WITH_BIOMETRICS_SWITCH}
+          thumbColor={
+            biometryChoiceState
+              ? colors['tvn.primary.blue']
+              : colors['tvn.gray.06']
+          }
         />
       </View>
     );

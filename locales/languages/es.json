@@ -375,7 +375,8 @@
   "terms_and_conditions": {
     "title": "Términos y condiciones",
     "description": "Al proceder, usted acepta estos",
-    "terms": "Términos y condiciones"
+    "terms": "Términos y condiciones",
+    "agree_term": "I've Read and accept the Terms of Service and Privacy Policy"
   },
   "privacy_policy": {
     "title": "Política de privacidad",

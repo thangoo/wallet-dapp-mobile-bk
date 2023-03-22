@@ -374,8 +374,10 @@
   },
   "terms_and_conditions": {
     "title": "条款和条件",
+    "subtitle": "Please review the Payme Wallet Terms of Service and Privacy Policy.",
     "description": "继续即表示您同意这些",
-    "terms": "条款和条件"
+    "terms": "条款和条件",
+    "agree_term": "I've Read and accept the Terms of Service and Privacy Policy"
   },
   "privacy_policy": {
     "title": "隐私政策",

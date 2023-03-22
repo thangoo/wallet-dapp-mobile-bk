@@ -375,7 +375,8 @@
   "terms_and_conditions": {
     "title": "Όρους και Προϋποθέσεις",
     "description": "Συνεχίζοντας, συμφωνείτε στους παρακάτω",
-    "terms": "Όρους και Προϋποθέσεις"
+    "terms": "Όρους και Προϋποθέσεις",
+    "agree_term": "I've Read and accept the Terms of Service and Privacy Policy"
   },
   "privacy_policy": {
     "title": "Πολιτική Απορρήτου",

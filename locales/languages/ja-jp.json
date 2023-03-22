@@ -319,7 +319,8 @@
   "terms_and_conditions": {
     "title": "使用条件",
     "description": "By proceeding, you agree to these ",
-    "terms": "使用条件"
+    "terms": "使用条件",
+    "agree_term": "I've Read and accept the Terms of Service and Privacy Policy"
   },
   "privacy_policy": {
     "title": "プライバシー ポリシー",

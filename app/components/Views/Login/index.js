@@ -58,6 +58,7 @@ import {
   LOGIN_VIEW_UNLOCK_BUTTON_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/LoginScreen.testIds';
 import { logo, vector } from '../../../images/index';
+import PassCode, { refPassCode } from './PassCode';
 
 const deviceHeight = Device.getDeviceHeight();
 const breakPoint = deviceHeight < 700;
@@ -65,7 +66,7 @@ const breakPoint = deviceHeight < 700;
 const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors['tvn.background.default'],
+      backgroundColor: colors['tvn.gray.01'],
       flex: 1,
     },
     wrapper: {
@@ -86,7 +87,7 @@ const createStyles = (colors) =>
     },
     title: {
       fontSize: 32,
-      marginTop: 40,
+      marginTop: 36,
       marginBottom: 16,
       fontWeight: '700',
       color: colors.text.default,
@@ -95,11 +96,11 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
     },
     field: {
-      flexDirection: 'row',
-      borderBottomWidth: 1,
-      borderBottomColor: colors['tvn.grayLight'],
-      alignItems: 'center',
-      paddingHorizontal: 15,
+      // flexDirection: 'row',
+      // borderBottomWidth: 1,
+      // borderBottomColor: colors['tvn.grayLight'],
+      // alignItems: 'center',
+      // paddingHorizontal: 15,
     },
     label: {
       color: colors.text.default,
@@ -308,10 +309,10 @@ class Login extends PureComponent {
     return false;
   };
 
-  onLogin = async () => {
-    const { password } = this.state;
-    const { current: field } = this.fieldRef;
-    const locked = !passwordRequirementsMet(password);
+  onLogin = async (passcode) => {
+    // const { password } = this.state;
+    // const { current: field } = this.fieldRef;
+    const locked = !passwordRequirementsMet(passcode);
     if (locked) this.setState({ error: strings('login.invalid_password') });
     if (this.state.loading || locked) return;
 
@@ -323,7 +324,7 @@ class Login extends PureComponent {
 
     try {
       await Authentication.userEntryAuth(
-        password,
+        passcode,
         authType,
         this.props.selectedAddress,
       );
@@ -341,7 +342,8 @@ class Login extends PureComponent {
         password: '',
         hasBiometricCredentials: false,
       });
-      field.setValue('');
+      // field.setValue('');
+      refPassCode.current?.clearValue();
     } catch (e) {
       const error = e.toString();
       if (
@@ -394,7 +396,8 @@ class Login extends PureComponent {
         password: '',
         hasBiometricCredentials: false,
       });
-      field.setValue('');
+      // field.setValue('');
+      refPassCode.current?.clearValue();
     } catch (error) {
       this.setState({ hasBiometricCredentials: true });
       Logger.log(error);
@@ -402,8 +405,8 @@ class Login extends PureComponent {
     field?.blur();
   };
 
-  triggerLogIn = () => {
-    this.onLogin();
+  triggerLogIn = (passcode) => {
+    this.onLogin(passcode);
   };
 
   toggleWarningModal = () => {
@@ -456,14 +459,6 @@ class Login extends PureComponent {
     return (
       <ErrorBoundary view="Login">
         <SafeAreaView style={styles.mainWrapper}>
-          <View
-            style={{
-              position: 'absolute',
-              top: -100,
-            }}
-          >
-            <Image source={vector} style={StyleSheet.absoluteFillObject} />
-          </View>
           <KeyboardAwareScrollView
             style={styles.wrapper}
             resetScrollToCoords={{ x: 0, y: 0 }}
@@ -483,7 +478,7 @@ class Login extends PureComponent {
               </Text>
 
               <View style={styles.field}>
-                <TextInput
+                {/* <TextInput
                   style={styles.input}
                   placeholder={strings('login.password')}
                   placeholderTextColor={colors.text.muted}
@@ -497,7 +492,8 @@ class Login extends PureComponent {
                   value={this.state.password}
                   onSubmitEditing={this.triggerLogIn}
                   keyboardAppearance={themeAppearance}
-                />
+                /> */}
+                <PassCode onSubmitEditing={this.triggerLogIn} />
                 <BiometryButton
                   onPress={this.tryBiometric}
                   hidden={shouldHideBiometricAccessoryButton}
@@ -510,22 +506,24 @@ class Login extends PureComponent {
                   {this.state.error}
                 </Text>
               )}
-              <View
+              {/* <View
                 style={styles.ctaWrapper}
                 testID={'log-in-button'}
                 {...generateTestId(Platform, LOGIN_VIEW_UNLOCK_BUTTON_ID)}
               >
                 <StyledButton type={'confirm'} onPress={this.triggerLogIn}>
-                  {this.state.loading ? (
-                    <ActivityIndicator
-                      size="small"
-                      color={colors.primary.inverse}
-                    />
-                  ) : (
-                    strings('login.unlock_button')
-                  )}
                 </StyledButton>
-              </View>
+              </View> */}
+              {
+                this.state.loading ? (
+                  <ActivityIndicator
+                    size="small"
+                    color={colors['tvn.primary.blue']}
+                    style={{ marginTop: 16 }}
+                  />
+                ) : null
+                // <Text>{strings('login.unlock_button')}</Text>
+              }
 
               {this.renderSwitch()}
             </View>

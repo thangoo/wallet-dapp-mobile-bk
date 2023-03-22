@@ -375,7 +375,8 @@
   "terms_and_conditions": {
     "title": "Điều khoản và Điều kiện",
     "description": "Bằng cách tiếp tục, bạn đồng ý với ",
-    "terms": "Điều khoản và Điều kiện"
+    "terms": "Điều khoản và Điều kiện",
+    "agree_term": "I've Read and accept the Terms of Service and Privacy Policy"
   },
   "privacy_policy": {
     "title": "Chính sách Quyền riêng tư",

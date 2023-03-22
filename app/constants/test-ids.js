@@ -78,5 +78,6 @@ export const TURN_OFF_REMEMBER_ME_MODAL = 'TurnOffRememberMeConfirm';
 
 // ONBOARDING
 export const PROTECT_YOUR_ACCOUNT_SCREEN = 'protect-your-account-screen';
+export const LEGAL_SCREEN_CONTAINER = 'legal-screen';
 export const MANUAL_BACKUP_STEP_2_CONTINUE_BUTTON =
   'manual-backup-step-2-continue-button';

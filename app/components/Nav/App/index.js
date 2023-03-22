@@ -13,6 +13,7 @@ import Login from '../../Views/Login';
 import QRScanner from '../../Views/QRScanner';
 import Onboarding from '../../Views/Onboarding';
 import OnboardingCarousel from '../../Views/OnboardingCarousel';
+import Legal from '../../Views/Legal';
 import ChoosePassword from '../../Views/ChoosePassword';
 import ExtensionSync from '../../Views/ExtensionSync';
 import AccountBackupStep1 from '../../Views/AccountBackupStep1';
@@ -26,7 +27,7 @@ import DeleteWalletModal from '../../../components/UI/DeleteWalletModal';
 import WhatsNewModal from '../../UI/WhatsNewModal/WhatsNewModal';
 import Main from '../Main';
 import OptinMetrics from '../../UI/OptinMetrics';
-import MetaMaskAnimation from '../../UI/MetaMaskAnimation';
+import SplashScreen from '../../UI/MetaMaskAnimation';
 import SimpleWebview from '../../Views/SimpleWebview';
 import SharedDeeplinkManager from '../../../core/DeeplinkManager';
 import Engine from '../../../core/Engine';
@@ -102,7 +103,12 @@ const OnboardingNav = () => (
     <Stack.Screen
       name="OnboardingCarousel"
       component={OnboardingCarousel}
-      options={OnboardingCarousel.navigationOptions}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="Legal"
+      component={Legal}
+      options={Legal.navigationOptions}
     />
     <Stack.Screen
       name="ChoosePassword"
@@ -372,7 +378,7 @@ const App = ({ selectedAddress, userLoggedIn }) => {
       setTimeout(() => {
         setAnimationPlayed(true);
       }, 1500);
-      return <MetaMaskAnimation />;
+      return <SplashScreen />;
     }
     return null;
   };
