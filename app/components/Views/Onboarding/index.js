@@ -295,14 +295,14 @@ class Onboarding extends PureComponent {
     const action = async () => {
       const metricsOptIn = await DefaultPreference.get(METRICS_OPT_IN);
       if (metricsOptIn) {
-        this.props.navigation.navigate('ChoosePassword', {
+        this.props.navigation.navigate('Legal', {
           [PREVIOUS_SCREEN]: ONBOARDING,
         });
         this.track(MetaMetricsEvents.WALLET_SETUP_STARTED);
       } else {
         this.props.navigation.navigate('OptinMetrics', {
           onContinue: () => {
-            this.props.navigation.replace('ChoosePassword', {
+            this.props.navigation.replace('Legal', {
               [PREVIOUS_SCREEN]: ONBOARDING,
             });
             this.track(MetaMetricsEvents.WALLET_SETUP_STARTED);
@@ -496,13 +496,13 @@ class Onboarding extends PureComponent {
 
     return (
       <View style={baseStyles.flexGrow} testID={'onboarding-screen'}>
-        <OnboardingScreenWithBg screen={'c'}>
-          <ScrollView
-            style={baseStyles.flexGrow}
-            contentContainerStyle={styles.scroll}
-          >
-            <View style={styles.wrapper}>
-              {loading && (
+        {/* <OnboardingScreenWithBg screen={'c'}> */}
+        <ScrollView
+          style={baseStyles.flexGrow}
+          contentContainerStyle={styles.scroll}
+        >
+          <View style={styles.wrapper}>
+            {/* {loading && (
                 <View style={styles.foxWrapper}>
                   {Device.isAndroid() ? (
                     <Image
@@ -514,21 +514,21 @@ class Onboarding extends PureComponent {
                     <AnimatedFox bgColor={colors.background.default} />
                   )}
                 </View>
-              )}
-              {loading ? this.renderLoader() : this.renderContent()}
-            </View>
-            {existingUser && !loading && (
-              <View style={styles.footer}>
-                <Button style={styles.login} onPress={this.onLogin}>
-                  {strings('onboarding.unlock')}
-                </Button>
-              </View>
-            )}
-          </ScrollView>
-          <View style={styles.termsAndConditions}>
-            <TermsAndConditions navigation={this.props.navigation} />
+              )} */}
+            {loading ? this.renderLoader() : this.renderContent()}
           </View>
-        </OnboardingScreenWithBg>
+          {existingUser && !loading && (
+            <View style={styles.footer}>
+              <Button style={styles.login} onPress={this.onLogin}>
+                {strings('onboarding.unlock')}
+              </Button>
+            </View>
+          )}
+        </ScrollView>
+        <View style={styles.termsAndConditions}>
+          <TermsAndConditions navigation={this.props.navigation} />
+        </View>
+        {/* </OnboardingScreenWithBg> */}
         <FadeOutOverlay />
 
         <View>{this.handleSimpleNotification()}</View>
