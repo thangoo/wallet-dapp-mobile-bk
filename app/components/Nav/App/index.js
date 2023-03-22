@@ -15,6 +15,8 @@ import Onboarding from '../../Views/Onboarding';
 import OnboardingCarousel from '../../Views/OnboardingCarousel';
 import Legal from '../../Views/Legal';
 import ChoosePassword from '../../Views/ChoosePassword';
+import ConfirmPassword from '../../Views/ConfirmPassword';
+import SecretPhraseBackup from '../../Views/SecrectPhraseBackup';
 import ExtensionSync from '../../Views/ExtensionSync';
 import AccountBackupStep1 from '../../Views/AccountBackupStep1';
 import AccountBackupStep1B from '../../Views/AccountBackupStep1B';
@@ -117,6 +119,16 @@ const OnboardingNav = () => (
       name="ChoosePassword"
       component={ChoosePassword}
       options={ChoosePassword.navigationOptions}
+    />
+    <Stack.Screen
+      name="ConfirmPassword"
+      component={ConfirmPassword}
+      options={ConfirmPassword.navigationOptions}
+    />
+    <Stack.Screen
+      name="SecretPhraseBackup"
+      component={SecretPhraseBackup}
+      options={{ headerShown: false }}
     />
     <Stack.Screen name="ExtensionSync" component={ExtensionSync} />
     <Stack.Screen
