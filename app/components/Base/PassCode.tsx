@@ -9,7 +9,7 @@ import {
   useClearByFocusCell,
   isLastFilledCell,
 } from 'react-native-confirmation-code-field';
-import { useAppTheme } from '../../../../app/util/theme';
+import { useAppTheme } from '../../util/theme';
 
 export const refPassCode = React.createRef();
 const CELL_COUNT = 6;

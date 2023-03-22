@@ -76,7 +76,7 @@ const LoginOptionsSwitch = ({
             },
           ]}
           trackColor={{
-            true: colors['tvn.blue'],
+            true: colors['tvn.white'],
             false: colors.border.muted,
           }}
           ios_backgroundColor={colors['tvn.white']}
@@ -98,14 +98,27 @@ const LoginOptionsSwitch = ({
         <Switch
           onValueChange={onRememberMeValueChanged}
           value={rememberMeEnabled}
-          style={styles.switch}
+          style={[
+            styles.switch,
+            {
+              borderWidth: 1,
+              borderColor: rememberMeEnabled
+                ? colors['tvn.primary.blue']
+                : colors['tvn.gray.04'],
+            },
+          ]}
           trackColor={{
-            true: colors['tvn.blue'],
+            true: colors['tvn.white'],
             false: colors.border.muted,
           }}
-          ios_backgroundColor={colors.border.muted}
+          ios_backgroundColor={colors['tvn.white']}
           testID={LOGIN_WITH_REMEMBER_ME_SWITCH}
           {...generateTestId(Platform, LOGIN_WITH_REMEMBER_ME_SWITCH)}
+          thumbColor={
+            rememberMeEnabled
+              ? colors['tvn.primary.blue']
+              : colors['tvn.gray.06']
+          }
         />
       </View>
     );

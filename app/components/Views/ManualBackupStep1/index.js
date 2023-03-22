@@ -74,6 +74,7 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
   const updateNavBar = useCallback(() => {
     navigation.setOptions({
       title: 'Secret Phrase',
+      headerStyle: { backgroundColor: 'white', shadowOpacity: 0 },
       headerLeft: (props) => (
         <HeaderBackButton
           {...props}

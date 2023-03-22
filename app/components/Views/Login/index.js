@@ -58,7 +58,7 @@ import {
   LOGIN_VIEW_UNLOCK_BUTTON_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/LoginScreen.testIds';
 import { logo, vector } from '../../../images/index';
-import PassCode, { refPassCode } from './PassCode';
+import PassCode, { refPassCode } from '../../Base/PassCode';
 
 const deviceHeight = Device.getDeviceHeight();
 const breakPoint = deviceHeight < 700;

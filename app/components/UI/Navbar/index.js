@@ -697,7 +697,7 @@ export function getOnboardingNavbarOptions(
 export function getTransparentOnboardingNavbarOptions(themeColors) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors['tvn.innerBackground.default'],
+      backgroundColor: 'white',
       shadowColor: importedColors.transparent,
       elevation: 0,
     },
@@ -727,7 +727,7 @@ export function getTransparentOnboardingNavbarOptions(themeColors) {
 export function getTransparentBackOnboardingNavbarOptions(themeColors) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors['tvn.innerBackground.default'],
+      backgroundColor: 'white',
       shadowColor: importedColors.transparent,
       elevation: 0,
     },
