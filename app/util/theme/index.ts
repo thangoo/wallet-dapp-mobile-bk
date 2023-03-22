@@ -196,6 +196,6 @@ export const useAssetFromTheme = (light: any, dark: any) => {
   return asset;
 };
 
-interface CustomTheme extends Theme {
+export interface CustomTheme extends Theme {
   colors: Theme['colors'] & ThangoThemeColors;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Text,
   View,
@@ -48,6 +48,7 @@ import Share from 'react-native-share';
 import Logger from '../../../util/Logger';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
 import { HeaderBackButton } from '@react-navigation/stack';
+import ReadMoreModal from './ReadMoreModal';
 
 /**
  * View that's shown during the second step of
@@ -65,6 +66,7 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
 
   const { colors, themeAppearance } = useTheme();
   const styles = createStyles(colors);
+  const refReadMore = useRef(null);
 
   const currentStep = 1;
   const steps = MANUAL_BACKUP_STEPS;
@@ -195,6 +197,8 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
     // });
   };
 
+  const onReadMore = () => refReadMore.current.toggle();
+
   const renderSeedPhraseConcealer = () => {
     const blurType = getBlurType();
 
@@ -282,24 +286,28 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
         >
-          <HStack style={styles.wrapWarning}>
-            <Image
-              source={shield_warning_icon}
-              style={{ width: 24, height: 24, marginRight: 16 }}
-              resizeMode="contain"
-            />
-            <HStack style={{ flex: 1 }}>
-              <Text style={styles.warningText}>
-                {'Never share your secret phrase with anyone. '}
-                <Text
-                  onPress={() => {}}
-                  style={{ textDecorationLine: 'underline', fontWeight: '500' }}
-                >
-                  {'Read more'}
+          <TouchableOpacity onPress={onReadMore}>
+            <HStack style={styles.wrapWarning}>
+              <Image
+                source={shield_warning_icon}
+                style={{ width: 24, height: 24, marginRight: 16 }}
+                resizeMode="contain"
+              />
+              <HStack style={{ flex: 1 }}>
+                <Text style={styles.warningText}>
+                  {'Never share your secret phrase with anyone. '}
+                  <Text
+                    style={{
+                      textDecorationLine: 'underline',
+                      fontWeight: '500',
+                    }}
+                  >
+                    {'Read more'}
+                  </Text>
                 </Text>
-              </Text>
+              </HStack>
             </HStack>
-          </HStack>
+          </TouchableOpacity>
 
           <View style={styles.seedPhraseWrapper}>
             <View style={styles.wordColumn}>
@@ -366,6 +374,7 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
 
   return ready ? (
     <SafeAreaView style={styles.mainWrapper}>
+      <ReadMoreModal ref={refReadMore} onNext={goNext} />
       {view === SEED_PHRASE ? renderSeedphraseView() : renderConfirmPassword()}
     </SafeAreaView>
   ) : (
