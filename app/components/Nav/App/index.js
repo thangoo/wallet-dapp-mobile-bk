@@ -103,7 +103,10 @@ const OnboardingNav = () => (
     <Stack.Screen
       name="OnboardingCarousel"
       component={OnboardingCarousel}
-      options={{ headerShown: false }}
+      options={{
+        headerTransparent: true,
+        headerTitle: '',
+      }}
     />
     <Stack.Screen
       name="Legal"

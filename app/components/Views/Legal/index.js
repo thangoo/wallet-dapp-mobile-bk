@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 
@@ -28,6 +29,8 @@ import {
   IOS_I_UNDERSTAND_BUTTON_ID,
   ANDROID_I_UNDERSTAND_BUTTON_ID,
 } from '../../../constants/test-ids';
+import { HeaderBackButton } from '@react-navigation/stack';
+import { arrow_right_icon } from 'images/index';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -167,7 +170,23 @@ const Legal = ({ navigation, route }) => {
   const colors = useContext(ThemeContext).colors;
 
   useEffect(() => {
-    navigation.setOptions(getOnboardingNavbarOptions(route, {}, colors));
+    navigation.setOptions({
+      title: 'Legal',
+      headerStyle: { backgroundColor: 'white', shadowOpacity: 0 },
+      headerLeft: (props) => (
+        <HeaderBackButton
+          {...props}
+          labelVisible={false}
+          style={{ marginLeft: 16 }}
+          backImage={() => (
+            <Image
+              source={arrow_right_icon}
+              style={{ width: 32, height: 32 }}
+            />
+          )}
+        />
+      ),
+    });
   }, [navigation, route, colors]);
 
   const updateNavBar = () => {
