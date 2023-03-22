@@ -68,7 +68,6 @@ const LoginOptionsSwitch = ({
           value={biometryChoiceState}
           style={styles.switch}
           trackColor={{
-            //@ts-ignore
             true: colors['tvn.blue'],
             false: colors.border.muted,
           }}
@@ -88,7 +87,6 @@ const LoginOptionsSwitch = ({
           value={rememberMeEnabled}
           style={styles.switch}
           trackColor={{
-            //@ts-ignore
             true: colors['tvn.blue'],
             false: colors.border.muted,
           }}

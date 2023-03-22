@@ -1,4 +1,6 @@
-export const thangoLight = {
+import { ThangoThemeColors } from '../../app/types/common.thangoType';
+
+export const thangoLight: ThangoThemeColors = {
   ['tvn.black']: '#222222',
   ['tvn.blue']: '#277EFF', // colors.primary.default
   ['tvn.white']: '#FFFFFF',
@@ -23,7 +25,7 @@ export const thangoLight = {
   ['tvn.status.orange']: '#FF8717',
   ['tvn.status.red']: '#FF2517',
 };
-export const thangoDark = {
+export const thangoDark: ThangoThemeColors = {
   ['tvn.black']: '#222222',
   ['tvn.blue']: '#277EFF', // colors.primary.default
   ['tvn.white']: '#FFFFFF',
