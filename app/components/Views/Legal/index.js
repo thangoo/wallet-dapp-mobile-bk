@@ -10,6 +10,8 @@ import {
 import CheckBox from '@react-native-community/checkbox';
 
 import AppConstants from '../../../core/AppConstants';
+import { PREVIOUS_SCREEN, ONBOARDING } from '../../../constants/navigation';
+
 import StyledButton from '../../UI/StyledButton';
 import Device from '../../../util/device';
 import { fontStyles } from '../../../styles/common';
@@ -72,14 +74,14 @@ const createStyles = (colors) =>
     accordionItem1: {
       color: colors['tvn.gray.10'],
       paddingLeft: 24,
-      paddingVertical: 16,
+      paddingVertical: 6,
       borderBottomColor: colors['tvn.gray.04'],
       borderBottomWidth: 1,
     },
     accordionItem2: {
       color: colors['tvn.gray.10'],
       paddingLeft: 24,
-      paddingVertical: 16,
+      paddingVertical: 6,
     },
     clBody: {
       paddingVertical: 15,
@@ -165,7 +167,6 @@ const createStyles = (colors) =>
  */
 const Legal = ({ navigation, route }) => {
   const [isSelected, setSelected] = useState(false);
-  const [expanded, setExpanded] = useState(false);
   const [canSubmit, setCanSubmit] = useState(false);
   const colors = useContext(ThemeContext).colors;
 
@@ -218,7 +219,7 @@ const Legal = ({ navigation, route }) => {
   };
 
   const onPressContinue = () => {
-    // function logic here
+    navigation.navigate('ChoosePassword');
   };
 
   const styles = createStyles(colors);
@@ -233,32 +234,36 @@ const Legal = ({ navigation, route }) => {
         </View>
         <View style={styles.containerCollpase}>
           <View style={styles.accordionItem1}>
-            <View style={styles.wrapperAccordion}>
-              <Text style={styles.headerCollapse} onPress={onPrivacyPolicy}>
-                {strings('privacy_policy.title')}
-              </Text>
+            <StyledButton
+              type={'transparent-gray-10'}
+              onPress={onPrivacyPolicy}
+              testID={'continue-button'}
+            >
+              {strings('privacy_policy.title')}
               <Icon
                 onPress={onPrivacyPolicy}
-                name={expanded ? IconName.ArrowDown : IconName.ArrowRight}
+                name={IconName.ArrowRight}
                 size={IconSize.Md}
                 color={IconColor.Default}
                 style={{ marginRight: 10 }}
               />
-            </View>
+            </StyledButton>
           </View>
           <View style={styles.accordionItem2}>
-            <View style={styles.wrapperAccordion}>
-              <Text style={styles.headerCollapse} onPress={onTermConditions}>
-                {strings('terms_and_conditions.title')}
-              </Text>
+            <StyledButton
+              type={'transparent-gray-10'}
+              onPress={onTermConditions}
+              testID={'continue-button'}
+            >
+              {strings('terms_and_conditions.title')}
               <Icon
-                onPress={onTermConditions}
-                name={expanded ? IconName.ArrowDown : IconName.ArrowRight}
+                onPress={onPrivacyPolicy}
+                name={IconName.ArrowRight}
                 size={IconSize.Md}
                 color={IconColor.Default}
                 style={{ marginRight: 10 }}
               />
-            </View>
+            </StyledButton>
           </View>
         </View>
         <View style={styles.wrapperBottom}>
