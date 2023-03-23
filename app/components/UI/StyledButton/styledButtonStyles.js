@@ -18,6 +18,7 @@ const createStyles = (colors) =>
     },
     blueText: {
       color: colors['tvn.text.default'],
+      textTransform: 'uppercase',
     },
     orange: {
       borderColor: colors.secondary.default,
