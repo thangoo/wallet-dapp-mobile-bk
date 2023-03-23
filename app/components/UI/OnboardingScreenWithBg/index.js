@@ -26,10 +26,10 @@ const createStyles = (colors) =>
   });
 
 const images = {
-  a: backgroundOnboarding, // eslint-disable-line
-  b: backgroundOnboarding, // eslint-disable-line
-  c: backgroundOnboarding, // eslint-disable-line
-  d: backgroundOnboarding, // eslint-disable-line
+  a: require('../../../images/welcome-bg1.png'), // eslint-disable-line
+  b: require('../../../images/welcome-bg2.png'), // eslint-disable-line
+  c: require('../../../images/welcome-bg3.png'), // eslint-disable-line
+  d: require('../../../images/welcome-bg4.png'), // eslint-disable-line
   carousel: null,
 };
 
