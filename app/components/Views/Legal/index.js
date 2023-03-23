@@ -42,7 +42,7 @@ const createStyles = (colors) =>
     },
     wrapper: {
       ...StyleSheet.absoluteFillObject,
-      paddingHorizontal: 32,
+      paddingHorizontal: 28,
       justifyContent: 'space-between',
       alignItems: 'center',
     },
@@ -73,14 +73,14 @@ const createStyles = (colors) =>
     },
     accordionItem1: {
       color: colors['tvn.gray.10'],
-      paddingLeft: 24,
+      paddingLeft: 12,
       paddingVertical: 6,
       borderBottomColor: colors['tvn.gray.04'],
       borderBottomWidth: 1,
     },
     accordionItem2: {
       color: colors['tvn.gray.10'],
-      paddingLeft: 24,
+      paddingLeft: 12,
       paddingVertical: 6,
     },
     clBody: {
@@ -148,6 +148,7 @@ const createStyles = (colors) =>
       fontSize: 14,
       paddingHorizontal: 10,
       lineHeight: 18,
+      color: colors['tvn.gray.10'],
     },
 
     icon: {
@@ -296,6 +297,9 @@ const Legal = ({ navigation, route }) => {
               onPress={onPressContinue}
               testID={'continue-button'}
               disabled={!canSubmit}
+              disabledContainerStyle={{
+                backgroundColor: colors['tvn.dark_gray_blue'],
+              }}
             >
               {strings('manual_backup_step_1.continue')}
             </StyledButton>

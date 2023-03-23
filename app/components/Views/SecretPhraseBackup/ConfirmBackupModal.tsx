@@ -15,9 +15,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import _ from 'lodash';
 
 const NOTES = [
-  'If I lose my secret phrase, my funds will be lost forever.',
-  'If I expose or sahre my secret phrase to anybody, my fund can get stolen.',
-  'Payme Wallet support will NEVER reach out to ask for it.',
+  `${strings('secret_phrase.title1')}`,
+  `${strings('secret_phrase.title2')}`,
+  `${strings('secret_phrase.title3')}`,
 ];
 
 interface Props {
@@ -73,14 +73,8 @@ const ConfirmBackupModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
       <View style={styles.body}>
         <View style={styles.dragger} />
 
-        <Text style={styles.title}>
-          {'This secert phrase is the master key to your wallet'}
-        </Text>
-        <Text style={{}}>
-          {
-            'Tap on all checkboxes to confirm you understand the importance of your secret phrase'
-          }
-        </Text>
+        <Text style={styles.title}>{strings('secret_phrase.heading')}</Text>
+        <Text style={styles.title2}>{strings('secret_phrase.subheading')}</Text>
 
         <View
           style={{
@@ -94,10 +88,10 @@ const ConfirmBackupModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
             marginBottom: 64,
           }}
         >
-          {NOTES.map((t, index) => (
+          {[1, 2, 3].map((index) => (
             <CheckItem
               key={index}
-              content={t}
+              content={strings(`secret_phrase.title${index}`)}
               onPress={() => handleSelect(index + 1)}
               selected={Boolean(_.find(selections, (t) => t === index + 1))}
             />
@@ -179,6 +173,12 @@ const createStyles = (colors: CustomTheme['colors']) =>
       fontWeight: '600',
       textAlign: 'center',
       textTransform: 'capitalize',
+    },
+    title2: {
+      marginBottom: 16,
+      fontSize: 14,
+      fontWeight: '400',
+      textAlign: 'center',
     },
     dragger: {
       width: 36,
