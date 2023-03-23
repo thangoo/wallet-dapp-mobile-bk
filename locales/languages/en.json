@@ -1343,6 +1343,17 @@
     "cta_text": "Create Password",
     "creating_password": "Creating password..."
   },
+  "secret_phrase": {
+    "heading": "This secret phrase is the master key to your wallet",
+    "heading2": "Back up secret phrase",
+    "subheading": "Tap on all checkboxes to confirm you understand the importance of your secret phrase",
+    "subheading2": "Your secret phrase is the master key to your wallet, and anyone that has it can access your crypto. Never share it!",
+    "title1": "If I lose my secret phrase, my funds will be lost forever.",
+    "title2": "If I expose or sahre my secret phrase to anybody, my fund can get stolen.",
+    "title3": "Payme Wallet support will NEVER reach out to ask for it.",
+    "back_up_to_icloud": "Back up to icloud",
+    "back_up_manual": "Back up Manually"
+  },
   "account_backup_step_1": {
     "remind_me_later": "Remind me later",
     "remind_me_later_subtext": "(Not recommended)",

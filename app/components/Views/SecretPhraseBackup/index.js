@@ -193,11 +193,11 @@ const SecretPhrase = (props) => {
                 testID={`carousel-image`}
               />
               <View style={styles.tab}>
-                <Text style={styles.title}>{'Back up secret phrase'}</Text>
+                <Text style={styles.title}>
+                  {strings('secret_phrase.heading2')}
+                </Text>
                 <Text style={styles.subtitle}>
-                  {
-                    'Your secret phrase is the master key to your wallet, and anyone that has it can access your crypto. Never share it!'
-                  }
+                  {strings('secret_phrase.subheading2')}
                 </Text>
               </View>
             </View>
@@ -209,14 +209,14 @@ const SecretPhrase = (props) => {
           type={'blue'}
           testID={WALLET_SETUP_CREATE_NEW_WALLET_BUTTON_ID}
         >
-          {'Back up to icloud'}
+          {strings('secret_phrase.back_up_to_icloud')}
         </StyledButton>
         <StyledButton
           type={'transparent-blue'}
           onPress={onManually}
           testID={WELCOME_SCREEN_GET_STARTED_BUTTON_ID}
         >
-          {'Back up manually'}
+          {strings('secret_phrase.back_up_manual')}
         </StyledButton>
       </View>
       <FadeOutOverlay />
