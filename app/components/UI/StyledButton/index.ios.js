@@ -75,7 +75,8 @@ export default class StyledButton extends PureComponent {
       disabledContainerStyle,
     } = this.props;
     const colors = this.context.colors || mockTheme.colors;
-    const { fontStyle, containerStyle } = getStyles(type, colors);
+    const { fontStyle, containerStyle, disabledContainerStyleGlobal } =
+      getStyles(type, colors);
 
     return (
       <Button
@@ -83,7 +84,11 @@ export default class StyledButton extends PureComponent {
         accessibilityRole="button"
         disabled={disabled}
         styleDisabled={disabled ? styleDisabled : null}
-        disabledContainerStyle={disabled ? disabledContainerStyle : null}
+        disabledContainerStyle={
+          disabled
+            ? [disabledContainerStyleGlobal, disabledContainerStyle]
+            : null
+        }
         onPress={onPress}
         onPressOut={onPressOut}
         style={[...fontStyle, style]}

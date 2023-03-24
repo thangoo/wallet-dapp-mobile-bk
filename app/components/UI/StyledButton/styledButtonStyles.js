@@ -8,6 +8,9 @@ const createStyles = (colors) =>
       borderRadius: 12,
       justifyContent: 'center',
     },
+    disabledContainer: {
+      backgroundColor: colors['tvn.dark_gray_blue'],
+    },
     text: {
       fontSize: 14,
       textAlign: 'center',
@@ -233,6 +236,7 @@ function getStyles(type, colors) {
   return {
     fontStyle: [styles.text, fontStyle],
     containerStyle: [styles.container, containerStyle],
+    disabledContainerStyleGlobal: styles.disabledContainer,
   };
 }
 
