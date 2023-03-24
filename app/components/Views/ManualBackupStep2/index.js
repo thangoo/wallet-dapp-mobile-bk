@@ -165,27 +165,26 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
   const renderWordBox = (word, i) => {
     const styles = createStyles(colors);
 
-    // if (!word) return '';
-
     return (
-      <View key={`word_${i}`} style={styles.wordBoxWrapper}>
-        
-        <TouchableOpacity
-          // eslint-disable-next-line react/jsx-no-bind
-          onPress={() => {
-            clearConfirmedWordAt(i);
-          }}
-          style={[
-            styles.wordWrapper,
-            i === currentIndex && styles.currentWord,
-            confirmedWords[i].word && styles.confirmedWord,
-          ]}
-        >
-          <Text style={styles.word}>
-            {i + 1}. {word}
-          </Text>
-        </TouchableOpacity>
-      </View>
+      word !== undefined && (
+        <View key={`word_${i}`} style={styles.wordBoxWrapper}>
+          <TouchableOpacity
+            // eslint-disable-next-line react/jsx-no-bind
+            onPress={() => {
+              clearConfirmedWordAt(i);
+            }}
+            style={[
+              styles.wordWrapper,
+              i === currentIndex && styles.currentWord,
+              confirmedWords[i].word && styles.confirmedWord,
+            ]}
+          >
+            <Text style={styles.word}>
+              {i + 1}. {word}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )
     );
   };
 

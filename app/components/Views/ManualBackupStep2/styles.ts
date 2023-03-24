@@ -121,6 +121,7 @@ const createStyles = (colors: CustomTheme['colors']) =>
       flexWrap: 'wrap',
       justifyContent: 'center',
       marginTop: 20,
+      height: 300,
     },
     successRow: {
       flexDirection: 'row',
