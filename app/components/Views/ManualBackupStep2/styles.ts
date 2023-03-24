@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
+
 import { fontStyles } from '../../../styles/common';
 import Device from '../../../util/device';
+import { CustomTheme } from '../../../util/theme';
 
-const createStyles = (colors: any) =>
+const createStyles = (colors: CustomTheme['colors']) =>
   StyleSheet.create({
     mainWrapper: {
       backgroundColor: colors.background.default,
@@ -24,24 +26,24 @@ const createStyles = (colors: any) =>
       ...fontStyles.bold,
     },
     infoWrapper: {
-      marginBottom: 16,
+      marginTop: 30,
       justifyContent: 'center',
     },
     info: {
-      fontSize: 16,
-      color: colors.text.default,
+      fontSize: 14,
+      color: colors['tvn.gray.10'],
       textAlign: 'center',
       ...fontStyles.normal,
       paddingHorizontal: 6,
     },
     seedPhraseWrapper: {
-      backgroundColor: colors.background.default,
+      backgroundColor: colors['tvn.light_gray_blue'],
       borderRadius: 8,
       flexDirection: 'row',
       justifyContent: 'space-between',
-      borderColor: colors.border.default,
-      borderWidth: 1,
-      marginBottom: 24,
+      // borderColor: colors['tvn.grayLight'],
+      // borderWidth: 1,
+      marginTop: 24,
     },
     seedPhraseWrapperComplete: {
       borderColor: colors.success.default,
@@ -49,65 +51,77 @@ const createStyles = (colors: any) =>
     seedPhraseWrapperError: {
       borderColor: colors.error.default,
     },
-    colLeft: {
+    confirmPassPhraseWrapper: {
       paddingTop: 18,
-      paddingLeft: 27,
+      paddingLeft: 20,
+      paddingRight: 20,
       paddingBottom: 4,
-      alignItems: 'flex-start',
+
+      flexDirection: 'row',
+      justifyContent: 'center',
+      flexWrap: 'wrap',
+      height: 240,
     },
-    colRight: {
-      paddingTop: 18,
-      paddingRight: 27,
-      paddingBottom: 4,
-      alignItems: 'flex-end',
-    },
+
+    // colLeft: {
+    //   paddingTop: 18,
+    //   paddingLeft: 27,
+    //   paddingBottom: 4,
+    //   alignItems: 'flex-start',
+    // },
+    // colRight: {
+    //   paddingTop: 18,
+    //   paddingRight: 27,
+    //   paddingBottom: 4,
+    //   alignItems: 'flex-end',
+    // },
+
     wordBoxWrapper: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 14,
+      marginBottom: 5,
     },
     wordWrapper: {
+      // height: Device.isMediumDevice() ? 35 : 40,
       paddingHorizontal: 8,
       paddingVertical: 6,
-      width: Device.isMediumDevice() ? 75 : 95,
-      backgroundColor: colors.background.default,
-      borderColor: colors.border.default,
-      borderWidth: 1,
-      borderRadius: 34,
-      borderStyle: 'dashed',
-      marginLeft: 4,
+      marginLeft: 6,
+
+      backgroundColor: colors['tvn.primary.blue'],
+      borderRadius: 8,
+      alignItems: 'center',
     },
     word: {
-      fontSize: 14,
-      color: colors.text.default,
-      lineHeight: 14,
-      textAlign: 'center',
+      fontSize: 12,
+      fontWeight: '600',
+      lineHeight: 13,
+      color: colors['tvn.white'],
     },
     selectableWord: {
-      paddingHorizontal: 8,
+      paddingHorizontal: 12,
       paddingVertical: 6,
       color: colors.text.default,
-      width: 95,
       backgroundColor: colors.background.default,
-      borderColor: colors.primary.default,
+      borderColor: colors['tvn.gray.04'],
       borderWidth: 1,
-      marginBottom: 6,
-      borderRadius: 13,
-      textAlign: 'center',
+      borderRadius: 8,
+      marginBottom: 7,
+      marginLeft: 6,
     },
     selectableWordText: {
-      textAlign: 'center',
-      fontSize: 14,
+      fontSize: 12,
+      fontWeight: '400',
       lineHeight: 14,
-      color: colors.text.default,
+      color: colors['tvn.gray.10'],
     },
+    // Selectable list of PassPhrase
     words: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      justifyContent: Device.isMediumDevice()
-        ? 'space-around'
-        : 'space-between',
+      justifyContent: 'center',
+      marginTop: 20,
+      height: 300,
     },
     successRow: {
       flexDirection: 'row',
@@ -120,16 +134,16 @@ const createStyles = (colors: any) =>
       marginLeft: 4,
     },
     selectedWord: {
-      backgroundColor: colors.icon.muted,
-      borderWidth: 1,
-      borderColor: colors.icon.muted,
+      backgroundColor: colors['tvn.light_gray_blue'],
+      borderWidth: 0,
+      // borderColor: colors.icon.muted,
     },
     selectedWordText: {
-      color: colors.text.default,
+      color: colors['tvn.gray.05'],
     },
     currentWord: {
       borderWidth: 1,
-      borderColor: colors.primary.default,
+      borderColor: colors['tvn.gray.05'],
     },
     confirmedWord: {
       borderWidth: 1,

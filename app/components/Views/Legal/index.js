@@ -58,7 +58,6 @@ const createStyles = (colors) =>
       top: 90,
       width: '100%',
       position: 'absolute',
-      top: 90,
     },
     wrapperAccordion: {
       flexDirection: 'row',
