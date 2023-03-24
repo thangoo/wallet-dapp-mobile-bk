@@ -658,7 +658,7 @@ export function getModalNavbarOptions(title) {
  */
 export function getOnboardingNavbarOptions(
   route,
-  { headerLeft } = {},
+  { headerLeft, title } = { title: 'Legal' },
   themeColors,
 ) {
   const headerLeftHide = headerLeft || route.params?.headerLeft;
@@ -679,7 +679,7 @@ export function getOnboardingNavbarOptions(
     headerStyle: innerStyles.headerStyle,
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Text style={innerStyles.paymeName}>Legal</Text>
+        <Text style={innerStyles.paymeName}>{title}</Text>
       </View>
     ),
     headerBackTitle: <View />,

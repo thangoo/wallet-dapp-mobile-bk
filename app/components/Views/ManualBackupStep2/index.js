@@ -50,7 +50,13 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
   };
 
   const updateNavBar = useCallback(() => {
-    navigation.setOptions(getOnboardingNavbarOptions(route, {}, colors));
+    navigation.setOptions(
+      getOnboardingNavbarOptions(
+        route,
+        { title: 'Verify Secret Phrase' },
+        colors,
+      ),
+    );
   }, [colors, navigation, route]);
 
   useEffect(() => {
@@ -159,9 +165,11 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
   const renderWordBox = (word, i) => {
     const styles = createStyles(colors);
 
+    // if (!word) return '';
+
     return (
       <View key={`word_${i}`} style={styles.wordBoxWrapper}>
-        <Text style={styles.wordBoxIndex}>{i + 1}.</Text>
+        
         <TouchableOpacity
           // eslint-disable-next-line react/jsx-no-bind
           onPress={() => {
@@ -173,7 +181,9 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
             confirmedWords[i].word && styles.confirmedWord,
           ]}
         >
-          <Text style={styles.word}>{word}</Text>
+          <Text style={styles.word}>
+            {i + 1}. {word}
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -219,12 +229,12 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
 
   return (
     <SafeAreaView style={styles.mainWrapper}>
-      <View style={styles.onBoardingWrapper}>
+      {/* <View style={styles.onBoardingWrapper}>
         <OnboardingProgress
           currentStep={currentStep}
           steps={route.params?.steps}
         />
-      </View>
+      </View> */}
       <ActionView
         confirmTestID={MANUAL_BACKUP_STEP_2_CONTINUE_BUTTON}
         confirmText={strings('manual_backup_step_2.complete')}
@@ -234,9 +244,6 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
         confirmButtonMode={'confirm'}
       >
         <View style={styles.wrapper} testID={PROTECT_YOUR_ACCOUNT_SCREEN}>
-          <Text style={styles.action}>
-            {strings('manual_backup_step_2.action')}
-          </Text>
           <View style={styles.infoWrapper}>
             <Text style={styles.info}>
               {strings('manual_backup_step_2.info')}
@@ -249,17 +256,10 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
               validateWords() && styles.seedPhraseWrapperComplete,
             ]}
           >
-            <View style={styles.colLeft}>
+            <View style={styles.confirmPassPhraseWrapper}>
               {confirmedWords
-                .slice(0, confirmedWords.length / 2)
+                .slice(0, confirmedWords.length)
                 .map(({ word }, i) => renderWordBox(word, i))}
-            </View>
-            <View style={styles.colRight}>
-              {confirmedWords
-                .slice(-confirmedWords.length / 2)
-                .map(({ word }, i) =>
-                  renderWordBox(word, i + confirmedWords.length / 2),
-                )}
             </View>
           </View>
           {validateWords() ? renderSuccess() : renderWords()}
