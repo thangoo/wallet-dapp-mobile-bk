@@ -105,9 +105,6 @@ const ConfirmBackupModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
             onPress={handlePress}
             containerStyle={{ width: '100%' }}
             disabled={_.size(selections) < 3}
-            disabledContainerStyle={{
-              backgroundColor: colors['tvn.dark_gray_blue'],
-            }}
           >
             {strings('manual_backup_step_1.continue')}
           </StyledButton>
