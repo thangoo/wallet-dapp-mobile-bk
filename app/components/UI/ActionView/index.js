@@ -50,6 +50,8 @@ export default function ActionView({
   confirmDisabled,
   keyboardShouldPersistTaps = 'never',
   style = undefined,
+  containerStyle = undefined,
+  isFullScreen = false,
 }) {
   const { colors } = useTheme();
 
@@ -57,6 +59,10 @@ export default function ActionView({
     <View style={baseStyles.flexGrow}>
       <KeyboardAwareScrollView
         style={[baseStyles.flexGrow, style]}
+        contentContainerStyle={[
+          isFullScreen ? baseStyles.flexGrow : {},
+          containerStyle,
+        ]}
         resetScrollToCoords={{ x: 0, y: 0 }}
         keyboardShouldPersistTaps={keyboardShouldPersistTaps}
       >
@@ -182,4 +188,12 @@ ActionView.propTypes = {
    * Optional View styles. Applies to scroll view
    */
   style: PropTypes.object,
+  /**
+   * Optional View content container styles. Applies to scroll view
+   */
+  containerStyle: PropTypes.object,
+  /**
+   * Whether scroll view is show full screen
+   */
+  isFullScreen: PropTypes.bool,
 };

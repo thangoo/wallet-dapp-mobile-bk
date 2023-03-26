@@ -1476,7 +1476,7 @@
   },
   "manual_backup_step_2": {
     "action": "Confirm Secret Recovery Phrase",
-    "info": "Select each word in the order it was presented to you.",
+    "info": "Tap the words to put them next to each other in the correct order.",
     "complete": "Complete Backup",
     "success": "Success"
   },
