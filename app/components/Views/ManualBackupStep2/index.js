@@ -150,14 +150,14 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
 
     return (
       <View style={styles.successRow}>
-        <MaterialIcon
+        {/* <MaterialIcon
           name="check-circle"
           size={15}
           color={colors.success.default}
         />
         <Text style={styles.successText}>
           {strings('manual_backup_step_2.success')}
-        </Text>
+        </Text> */}
       </View>
     );
   };

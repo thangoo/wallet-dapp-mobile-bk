@@ -26,7 +26,7 @@ import AndroidBackHandler from '../AndroidBackHandler';
 import Device from '../../../util/device';
 import Confetti from '../../UI/Confetti';
 import HintModal from '../../UI/HintModal';
-import { getTransparentOnboardingNavbarOptions } from '../../UI/Navbar';
+import { getNoneHeaderNavbarOptions } from '../../UI/Navbar';
 import setOnboardingWizardStep from '../../../actions/wizard';
 import {
   ONBOARDING_WIZARD,
@@ -46,6 +46,7 @@ const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
       flex: 1,
+      marginTop: 60,
     },
     linearGradient: {
       ...StyleSheet.absoluteFillObject,
@@ -74,22 +75,6 @@ const createStyles = (colors) =>
       textAlign: 'center',
       ...fontStyles.bold,
     },
-    // baseText: {
-    //   fontSize: 16,
-    //   color: colors.text.default,
-    //   textAlign: 'center',
-    //   ...fontStyles.normal,
-    // },
-    // successText: {
-    //   marginBottom: 32,
-    // },
-    // hintText: {
-    //   marginBottom: 26,
-    //   color: colors.primary.default,
-    // },
-    // learnText: {
-    //   color: colors.primary.default,
-    // },
     recoverText: {
       fontSize: 16,
       color: colors['tvn.white'],
@@ -98,11 +83,6 @@ const createStyles = (colors) =>
       textAlign: 'center',
       ...fontStyles.normal,
     },
-    // emoji: {
-    //   textAlign: 'center',
-    //   fontSize: 65,
-    //   marginBottom: 16,
-    // },
     doneCircleWhite: {
       alignItems: 'center',
       marginBottom: 16,
@@ -158,8 +138,7 @@ class ManualBackupStep3 extends PureComponent {
 
   updateNavBar = () => {
     const { navigation } = this.props;
-    const colors = this.context.colors || mockTheme.colors;
-    navigation.setOptions(getTransparentOnboardingNavbarOptions(colors));
+    navigation.setOptions(getNoneHeaderNavbarOptions());
   };
 
   componentWillUnmount = () => {
