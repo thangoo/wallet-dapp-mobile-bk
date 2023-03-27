@@ -241,7 +241,7 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
         confirmDisabled={!seedPhraseReady || !validateWords()}
         showCancelButton={false}
         confirmButtonMode={'confirm'}
-        isFullScreen={true}
+        isFullScreen
       >
         <View style={styles.wrapper} testID={PROTECT_YOUR_ACCOUNT_SCREEN}>
           <View style={styles.infoWrapper}>

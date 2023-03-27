@@ -6,15 +6,18 @@ import {
   View,
   StyleSheet,
   Keyboard,
-  TouchableOpacity,
+  // TouchableOpacity,
   InteractionManager,
+  ImageBackground,
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+// import Emoji from 'react-native-emoji';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LinearGradient from 'react-native-linear-gradient';
+
 import { MetaMetricsEvents } from '../../../core/Analytics';
 import { fontStyles } from '../../../styles/common';
-import Emoji from 'react-native-emoji';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import OnboardingProgress from '../../UI/OnboardingProgress';
 import ActionView from '../../UI/ActionView';
 import { strings } from '../../../../locales/i18n';
@@ -31,13 +34,27 @@ import {
 } from '../../../constants/storage';
 import { trackEvent } from '../../../util/analyticsV2';
 import DefaultPreference from 'react-native-default-preference';
+import Icon, {
+  IconSize,
+  IconName,
+} from '../../../component-library/components/Icons/Icon';
+import { vectorSplashScreen } from 'images/index';
+
 import { ThemeContext, mockTheme } from '../../../util/theme';
 
 const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors.background.default,
       flex: 1,
+    },
+    linearGradient: {
+      ...StyleSheet.absoluteFillObject,
+      flex: 1,
+    },
+    backgroundSplash: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     actionView: {
       paddingTop: 40,
@@ -50,36 +67,58 @@ const createStyles = (colors) =>
       paddingHorizontal: 20,
     },
     congratulations: {
-      fontSize: Device.isMediumDevice() ? 28 : 32,
+      fontSize: Device.isMediumDevice() ? 24 : 28,
+      color: colors['tvn.white'],
       marginBottom: 12,
-      color: colors.text.default,
       justifyContent: 'center',
       textAlign: 'center',
       ...fontStyles.bold,
     },
-    baseText: {
+    // baseText: {
+    //   fontSize: 16,
+    //   color: colors.text.default,
+    //   textAlign: 'center',
+    //   ...fontStyles.normal,
+    // },
+    // successText: {
+    //   marginBottom: 32,
+    // },
+    // hintText: {
+    //   marginBottom: 26,
+    //   color: colors.primary.default,
+    // },
+    // learnText: {
+    //   color: colors.primary.default,
+    // },
+    recoverText: {
       fontSize: 16,
-      color: colors.text.default,
+      color: colors['tvn.white'],
+      marginBottom: 26,
+      justifyContent: 'center',
       textAlign: 'center',
       ...fontStyles.normal,
     },
-    successText: {
-      marginBottom: 32,
-    },
-    hintText: {
-      marginBottom: 26,
-      color: colors.primary.default,
-    },
-    learnText: {
-      color: colors.primary.default,
-    },
-    recoverText: {
-      marginBottom: 26,
-    },
-    emoji: {
-      textAlign: 'center',
-      fontSize: 65,
+    // emoji: {
+    //   textAlign: 'center',
+    //   fontSize: 65,
+    //   marginBottom: 16,
+    // },
+    doneCircleWhite: {
+      alignItems: 'center',
       marginBottom: 16,
+    },
+    shieldEffectWhite: {
+      alignItems: 'center',
+      marginBottom: 16,
+    },
+    // Skip button style
+    styleButton: {
+      color: colors['tvn.primary.default'],
+    },
+    containerStyleButton: {
+      flex: 1,
+      marginLeft: 8,
+      backgroundColor: colors['tvn.white'],
     },
   });
 
@@ -222,52 +261,70 @@ class ManualBackupStep3 extends PureComponent {
     const styles = createStyles(colors);
 
     return (
-      <View style={styles.mainWrapper}>
-        <Confetti />
-        {this.steps ? (
-          <View style={styles.onBoardingWrapper}>
-            <OnboardingProgress
-              currentStep={this.state.currentStep}
-              steps={this.steps}
-            />
-          </View>
-        ) : null}
-        <ActionView
-          confirmTestID={'manual-backup-step-3-done-button'}
-          confirmText={strings('manual_backup_step_3.done')}
-          onConfirmPress={this.done}
-          showCancelButton={false}
-          confirmButtonMode={'confirm'}
-          style={styles.actionView}
+      <LinearGradient
+        start={{ x: 0.5, y: 0.75 }}
+        end={{ x: 0, y: 0.25 }}
+        colors={[
+          // @ts-ignore
+          colors['tvn.background.linear1'],
+          // @ts-ignore
+          colors['tvn.background.linear2'],
+        ]}
+        style={styles.linearGradient}
+      >
+        <ImageBackground
+          source={vectorSplashScreen}
+          resizeMode="cover"
+          style={styles.backgroundSplash}
         >
-          <View style={styles.wrapper} testID={'import-congrats-screen'}>
-            <Emoji name="tada" style={styles.emoji} />
-            <Text style={styles.congratulations}>
-              {strings('manual_backup_step_3.congratulations')}
-            </Text>
-            <Text style={[styles.baseText, styles.successText]}>
-              {strings('manual_backup_step_3.success')}
-            </Text>
-            <TouchableOpacity onPress={this.toggleHint}>
-              <Text style={[styles.baseText, styles.hintText]}>
-                {strings('manual_backup_step_3.hint')}
-              </Text>
-            </TouchableOpacity>
-            <Text style={[styles.baseText, styles.recoverText]}>
-              {strings('manual_backup_step_3.recover')}
-            </Text>
-            <TouchableOpacity onPress={this.learnMore}>
-              <Text style={[styles.baseText, styles.learnText]}>
-                {strings('manual_backup_step_3.learn')}
-              </Text>
-            </TouchableOpacity>
+          <View style={styles.mainWrapper}>
+            {/* <Confetti /> */}
+            {this.steps ? (
+              <View style={styles.onBoardingWrapper}>
+                <OnboardingProgress
+                  currentStep={this.state.currentStep}
+                  steps={this.steps}
+                />
+              </View>
+            ) : null}
+
+            <ActionView
+              confirmTestID={'manual-backup-step-3-done-button'}
+              confirmText={strings('manual_backup_step_3.done')}
+              onConfirmPress={this.done}
+              showCancelButton={false}
+              confirmButtonMode={'confirm'}
+              style={styles.actionView}
+              styledButtonProps={{
+                containerStyle: styles.containerStyleButton,
+                style: styles.styleButton,
+              }}
+              isFullScreen
+            >
+              <View style={styles.wrapper} testID={'import-congrats-screen'}>
+                {/* <Emoji name="tada" style={styles.emoji} /> */}
+                <View style={styles.doneCircleWhite}>
+                  <Icon name={IconName.DoneCircleWhite} size={IconSize.Xxxl} />
+                </View>
+                <Text style={styles.congratulations}>
+                  {strings('manual_backup_step_3.congratulations')}
+                </Text>
+
+                <Text style={[styles.baseText, styles.recoverText]}>
+                  {strings('manual_backup_step_3.recover')}
+                </Text>
+                <View style={styles.shieldEffectWhite}>
+                  <Icon name={IconName.ShieldEffectWhite} size={'300'} />
+                </View>
+              </View>
+            </ActionView>
+            {Device.isAndroid() && (
+              <AndroidBackHandler customBackPress={this.props.navigation.pop} />
+            )}
+            {this.renderHint()}
           </View>
-        </ActionView>
-        {Device.isAndroid() && (
-          <AndroidBackHandler customBackPress={this.props.navigation.pop} />
-        )}
-        {this.renderHint()}
-      </View>
+        </ImageBackground>
+      </LinearGradient>
     );
   }
 }

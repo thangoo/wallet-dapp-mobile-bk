@@ -28,6 +28,8 @@ export enum IconSize {
   Md = '20',
   Lg = '24',
   Xl = '32',
+  Xxl = '48',
+  Xxxl = '64',
 }
 
 /**
@@ -203,4 +205,7 @@ export enum IconName {
   WalletMoney = 'WalletMoney',
   Wallet = 'Wallet',
   Warning = 'Warning',
+  // Thango icon
+  ShieldEffectWhite = 'ShieldEffectWhite',
+  DoneCircleWhite = 'DoneCircleWhite',
 }

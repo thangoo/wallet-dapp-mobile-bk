@@ -1481,12 +1481,12 @@
     "success": "Success"
   },
   "manual_backup_step_3": {
-    "congratulations": "Congratulations",
+    "congratulations": "Let’s Explore \n Your new wallet!",
     "success": "You’ve successfully protected your wallet. Remember to keep your Secret Recovery Phrase safe, it's your responsibility!",
     "hint": "Leave yourself a hint?",
-    "recover": "MetaMask cannot recover your wallet should you lose it. You can find your Secret Recovery Phrase in Settings > Security & Privacy.",
+    "recover": "No dirty old receipts & half filled coffee loyalty cards in here...",
     "learn": "Learn more",
-    "done": "Done",
+    "done": "skip",
     "recovery_hint": "Recovery hint",
     "leave_hint": "Leave yourself a hint. Write the location / where you saved it to remind yourself how you can access it. This information does not leave your device.",
     "no_seedphrase": "Do not use this to write your Secret Recovery Phrase.",

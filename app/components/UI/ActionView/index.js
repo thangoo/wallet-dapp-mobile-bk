@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
   confirm: {
     marginLeft: 8,
   },
+  containerFullScreen: {
+    ...baseStyles.flexGrow,
+    marginBottom: 30,
+  },
 });
 
 /**
@@ -51,6 +55,7 @@ export default function ActionView({
   keyboardShouldPersistTaps = 'never',
   style = undefined,
   containerStyle = undefined,
+  styledButtonProps = undefined,
   isFullScreen = false,
 }) {
   const { colors } = useTheme();
@@ -60,7 +65,7 @@ export default function ActionView({
       <KeyboardAwareScrollView
         style={[baseStyles.flexGrow, style]}
         contentContainerStyle={[
-          isFullScreen ? baseStyles.flexGrow : {},
+          isFullScreen ? styles.containerFullScreen : {},
           containerStyle,
         ]}
         resetScrollToCoords={{ x: 0, y: 0 }}
@@ -87,6 +92,7 @@ export default function ActionView({
               onPress={onCancelPress}
               containerStyle={[styles.button, styles.cancel]}
               disabled={confirmed}
+              {...styledButtonProps}
             >
               {cancelText}
             </StyledButton>
@@ -98,6 +104,7 @@ export default function ActionView({
               onPress={onConfirmPress}
               containerStyle={[styles.button, styles.confirm]}
               disabled={confirmed || confirmDisabled}
+              {...styledButtonProps}
             >
               {confirmed ? (
                 <ActivityIndicator
@@ -188,6 +195,10 @@ ActionView.propTypes = {
    * Optional View styles. Applies to scroll view
    */
   style: PropTypes.object,
+  /**
+   * Optional StyleButton props. Applies to StyleButton component
+   */
+  styledButtonProps: PropTypes.object,
   /**
    * Optional View content container styles. Applies to scroll view
    */
