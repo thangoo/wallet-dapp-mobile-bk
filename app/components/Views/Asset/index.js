@@ -4,6 +4,7 @@ import {
   InteractionManager,
   View,
   StyleSheet,
+  Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -17,7 +18,7 @@ import {
 } from '../../../constants/transaction';
 import AssetOverview from '../../UI/AssetOverview';
 import Transactions from '../../UI/Transactions';
-import { getNetworkNavbarOptions } from '../../UI/Navbar';
+import { getNavbarTransaction } from '../../UI/Navbar';
 import Engine from '../../../core/Engine';
 import { sortTransactions } from '../../../util/activity';
 import { safeToChecksumAddress } from '../../../util/address';
@@ -32,19 +33,31 @@ import {
   selectChainId,
   selectRpcTarget,
 } from '../../../selectors/networkController';
+import LinearGradient from 'react-native-linear-gradient';
 import Routes from '../../../constants/navigation/Routes';
 
 const createStyles = (colors) =>
   StyleSheet.create({
     wrapper: {
-      backgroundColor: colors.background.default,
       flex: 1,
+      position: 'relative',
     },
     assetOverviewWrapper: {
-      height: 280,
+      height: 447,
+    },
+    bgGradient: {
+      flex: 1,
+      borderBottomLeftRadius: 56,
+      borderBottomRightRadius: 56,
+    },
+    assetItem: {
+      position: 'absolute',
+      width: '100%',
+      top: 90,
     },
     loader: {
-      backgroundColor: colors.background.default,
+      // backgroundColor: colors.background.default,
+      backgroundColor: 'transparent',
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
@@ -131,10 +144,9 @@ class Asset extends PureComponent {
 
     const shouldShowMoreOptionsInNavBar =
       isMainnet || !isNativeToken || (isNativeToken && blockExplorer);
-
     navigation.setOptions(
-      getNetworkNavbarOptions(
-        route.params?.symbol ?? '',
+      getNavbarTransaction(
+        '',
         false,
         navigation,
         colors,
@@ -387,31 +399,48 @@ class Asset extends PureComponent {
 
     return (
       <View style={styles.wrapper}>
-        {loading ? (
-          this.renderLoader()
-        ) : (
-          <Transactions
-            header={
-              <View style={styles.assetOverviewWrapper}>
-                <AssetOverview
-                  navigation={navigation}
-                  asset={navigation && params}
-                />
-              </View>
-            }
-            assetSymbol={navigation && params.symbol}
-            navigation={navigation}
-            transactions={transactions}
-            submittedTransactions={submittedTxs}
-            confirmedTransactions={confirmedTxs}
-            selectedAddress={selectedAddress}
-            conversionRate={conversionRate}
-            currentCurrency={currentCurrency}
-            networkType={chainId}
-            loading={!transactionsUpdated}
-            headerHeight={280}
-          />
-        )}
+        <>
+          <View style={styles.assetOverviewWrapper}>
+            <LinearGradient
+              start={{ x: 0.75, y: 0.75 }}
+              end={{ x: 0.25, y: 0 }}
+              colors={[
+                // @ts-ignore
+                colors['tvn.orange.linear1'],
+                // @ts-ignore
+                colors['tvn.orange.linear2'],
+              ]}
+              style={styles.bgGradient}
+            />
+
+            <View style={styles.assetItem}>
+              <AssetOverview
+                navigation={navigation}
+                asset={navigation && params}
+              />
+            </View>
+          </View>
+          {loading ? (
+            this.renderLoader()
+          ) : (
+            <View style={{ flex: 1, marginTop: 20 }}>
+              <Transactions
+                header={null}
+                assetSymbol={navigation && params.symbol}
+                navigation={navigation}
+                transactions={transactions}
+                submittedTransactions={submittedTxs}
+                confirmedTransactions={confirmedTxs}
+                selectedAddress={selectedAddress}
+                conversionRate={conversionRate}
+                currentCurrency={currentCurrency}
+                networkType={chainId}
+                loading={!transactionsUpdated}
+                headerHeight={280}
+              />
+            </View>
+          )}
+        </>
       </View>
     );
   };
