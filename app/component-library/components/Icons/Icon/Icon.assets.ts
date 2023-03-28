@@ -41,6 +41,7 @@ import Connect from './assets/connect.svg';
 import CopySuccess from './assets/copy-success.svg';
 import Copy from './assets/copy.svg';
 import Customize from './assets/customize.svg';
+import CreditCard from './assets/credit-card.svg';
 import Danger from './assets/danger.svg';
 import Dark from './assets/dark.svg';
 import Data from './assets/data.svg';
@@ -96,6 +97,7 @@ import People from './assets/people.svg';
 import ProgrammingArrows from './assets/programming-arrows.svg';
 import Question from './assets/question.svg';
 import Received from './assets/received.svg';
+import ReceiveIcon from './assets/receive_icon.svg';
 import Refresh from './assets/refresh.svg';
 import Save from './assets/save.svg';
 import ScanBarcode from './assets/scan-barcode.svg';
@@ -114,6 +116,7 @@ import SecurityUser from './assets/security-user.svg';
 import Security from './assets/security.svg';
 import Send1 from './assets/send-1.svg';
 import Send2 from './assets/send-2.svg';
+import SendPlane from './assets/send-plane.svg';
 import Setting from './assets/setting.svg';
 import Slash from './assets/slash.svg';
 import SnapsMobile from './assets/snaps-mobile.svg';
@@ -122,6 +125,7 @@ import Snaps from './assets/snaps.svg';
 import Speedometer from './assets/speedometer.svg';
 import Star from './assets/star.svg';
 import Student from './assets/student.svg';
+import SwapIcon from './assets/swap_icon.svg';
 import SwapHorizontal from './assets/swap-horizontal.svg';
 import SwapVertival from './assets/swap-vertival.svg';
 import Tag from './assets/tag.svg';
@@ -184,6 +188,7 @@ export const assetByIconName: AssetByIconName = {
   [IconName.CopySuccess]: CopySuccess,
   [IconName.Copy]: Copy,
   [IconName.Customize]: Customize,
+  [IconName.CreditCard]: CreditCard,
   [IconName.Danger]: Danger,
   [IconName.Dark]: Dark,
   [IconName.Data]: Data,
@@ -239,6 +244,7 @@ export const assetByIconName: AssetByIconName = {
   [IconName.ProgrammingArrows]: ProgrammingArrows,
   [IconName.Question]: Question,
   [IconName.Received]: Received,
+  [IconName.ReceiveIcon]: ReceiveIcon,
   [IconName.Refresh]: Refresh,
   [IconName.Save]: Save,
   [IconName.ScanBarcode]: ScanBarcode,
@@ -257,6 +263,7 @@ export const assetByIconName: AssetByIconName = {
   [IconName.Security]: Security,
   [IconName.Send1]: Send1,
   [IconName.Send2]: Send2,
+  [IconName.SendPlane]: SendPlane,
   [IconName.Setting]: Setting,
   [IconName.Slash]: Slash,
   [IconName.SnapsMobile]: SnapsMobile,
@@ -265,6 +272,7 @@ export const assetByIconName: AssetByIconName = {
   [IconName.Speedometer]: Speedometer,
   [IconName.Star]: Star,
   [IconName.Student]: Student,
+  [IconName.SwapIcon]: SwapIcon,
   [IconName.SwapHorizontal]: SwapHorizontal,
   [IconName.SwapVertival]: SwapVertival,
   [IconName.Tag]: Tag,
