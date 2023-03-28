@@ -7,6 +7,11 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import Device from '../../../util/device';
 import Text from '../../Base/Text';
 import { useTheme } from '../../../util/theme';
+import Icon, {
+  IconName,
+  IconSize,
+} from '../../../component-library/components/Icons/Icon';
+import { fontStyles } from '../../../styles/common';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -21,14 +26,14 @@ const createStyles = (colors) =>
       opacity: 0.5,
     },
     buttonIconWrapper: {
-      width: 36,
-      height: 36,
-      borderRadius: 18,
-      paddingTop: Device.isAndroid() ? 2 : 4,
-      paddingLeft: 1,
+      // Design FIGMA
+      width: 48,
+      height: 48,
+      borderRadius: 12,
       justifyContent: 'center',
       alignContent: 'center',
-      backgroundColor: colors.primary.default,
+      alignItems: 'center',
+      backgroundColor: colors['tvn.background.asset.action.button'],
     },
     buttonIcon: {
       justifyContent: 'center',
@@ -39,8 +44,9 @@ const createStyles = (colors) =>
     buttonText: {
       marginTop: 8,
       marginHorizontal: 3,
-      color: colors.primary.default,
+      color: colors['tvn.text.default'],
       fontSize: 14,
+      ...fontStyles.normal,
     },
     receive: {
       right: Device.isIos() ? 1 : 0,
@@ -67,19 +73,18 @@ function AssetActionButton({ onPress, icon, label, disabled }) {
     switch (type) {
       case 'send': {
         return (
-          <MaterialCommunityIcon
-            name={'arrow-top-right'}
-            size={20}
-            style={styles.buttonIcon}
+          <Icon
+            name={IconName.SendPlane}
+            size={24}
+            style={[styles.buttonIcon, styles.sendIcon]}
           />
         );
       }
       case 'receive': {
         return (
-          <MaterialCommunityIcon
-            name={'keyboard-tab'}
-            size={20}
-            color={colors.primary.inverse}
+          <Icon
+            name={IconName.ReceiveIcon}
+            size={24}
             style={[styles.buttonIcon, styles.receive]}
           />
         );
@@ -94,18 +99,18 @@ function AssetActionButton({ onPress, icon, label, disabled }) {
       }
       case 'swap': {
         return (
-          <MaterialCommunityIcon
-            name="repeat"
-            size={22}
+          <Icon
+            name={IconName.SwapIcon}
+            size={24}
             style={[styles.buttonIcon, styles.swapsIcon]}
           />
         );
       }
       case 'buy': {
         return (
-          <FeatherIcon
-            name="credit-card"
-            size={20}
+          <Icon
+            name={IconName.CreditCard}
+            size={24}
             style={[styles.buttonIcon, styles.buyIcon]}
           />
         );
