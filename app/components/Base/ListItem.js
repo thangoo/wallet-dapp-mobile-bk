@@ -9,6 +9,10 @@ const createStyles = (colors) =>
   StyleSheet.create({
     wrapper: {
       padding: 15,
+      backgroundColor: colors['tvn.gray.02'],
+      borderRadius: 16,
+      alignItems: 'center',
+      justifyContent: 'center',
       // TODO(wachunei): check if this can be removed without breaking anything
       // minHeight: Device.isIos() ? 55 : 100
     },
@@ -37,15 +41,19 @@ const createStyles = (colors) =>
     },
     amounts: {
       flex: 0.6,
-      alignItems: 'flex-end',
+      alignItems: 'center',
+      paddingVertical: 7,
+      borderRadius: 8,
     },
     title: {
-      fontSize: 15,
-      color: colors.text.default,
+      fontSize: 16,
+      color: colors['tvn.gray.10'],
+      ...fontStyles.bold,
     },
     amount: {
       fontSize: 15,
-      color: colors.text.default,
+      color: colors['tvn.text.default'],
+      ...fontStyles.bold,
     },
     fiatAmount: {
       fontSize: 12,
