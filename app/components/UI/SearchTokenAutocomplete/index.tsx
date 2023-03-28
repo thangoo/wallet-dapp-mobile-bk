@@ -90,6 +90,7 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
     navigation.goBack();
   }, [navigation]);
 
+  // Handle UI and don't search anything
   const handleSearch = useCallback(
     (opts: any) => {
       setSearchResults(opts.results);

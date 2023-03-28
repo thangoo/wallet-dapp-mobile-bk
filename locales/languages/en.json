@@ -408,7 +408,7 @@
     "token_symbol": "Token Symbol",
     "token_address": "Token Address",
     "token_decimal": "Token Decimal",
-    "search_tokens_placeholder": "Search Tokens",
+    "search_tokens_placeholder": "Search",
     "address_cant_be_empty": "Token address can't be empty.",
     "address_must_be_valid": "Token address must be a valid address.",
     "symbol_cant_be_empty": "Token symbol can't be empty.",
