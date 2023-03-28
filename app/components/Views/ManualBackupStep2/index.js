@@ -150,14 +150,14 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
 
     return (
       <View style={styles.successRow}>
-        <MaterialIcon
+        {/* <MaterialIcon
           name="check-circle"
           size={15}
           color={colors.success.default}
         />
         <Text style={styles.successText}>
           {strings('manual_backup_step_2.success')}
-        </Text>
+        </Text> */}
       </View>
     );
   };
@@ -241,6 +241,7 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
         confirmDisabled={!seedPhraseReady || !validateWords()}
         showCancelButton={false}
         confirmButtonMode={'confirm'}
+        isFullScreen
       >
         <View style={styles.wrapper} testID={PROTECT_YOUR_ACCOUNT_SCREEN}>
           <View style={styles.infoWrapper}>

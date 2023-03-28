@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 import { fontStyles } from '../../../styles/common';
-import Device from '../../../util/device';
 import { CustomTheme } from '../../../util/theme';
 
 const createStyles = (colors: CustomTheme['colors']) =>
@@ -121,7 +120,7 @@ const createStyles = (colors: CustomTheme['colors']) =>
       flexWrap: 'wrap',
       justifyContent: 'center',
       marginTop: 20,
-      height: 300,
+      // height: 300,
     },
     successRow: {
       flexDirection: 'row',

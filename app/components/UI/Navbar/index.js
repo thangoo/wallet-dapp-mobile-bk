@@ -1507,3 +1507,12 @@ export function getFiatOnRampAggNavbar(
     headerTitleStyle: innerStyles.headerTitleStyle,
   };
 }
+
+/**
+ * Function that returns a navigation options without header
+ *
+ * @returns {Object} - Corresponding navbar options
+ */
+export function getNoneHeaderNavbarOptions() {
+  return { headerTransparent: true, headerShown: false };
+}

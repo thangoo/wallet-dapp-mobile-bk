@@ -142,6 +142,9 @@ import WalletCard from './assets/wallet-card.svg';
 import WalletMoney from './assets/wallet-money.svg';
 import Wallet from './assets/wallet.svg';
 import Warning from './assets/warning.svg';
+// Thango icon
+import ShieldEffectWhite from './assets/shield-effect-white.svg';
+import DoneCircleWhite from './assets/done-circle-white.svg';
 
 /**
  * Asset stored by icon name
@@ -285,4 +288,7 @@ export const assetByIconName: AssetByIconName = {
   [IconName.WalletMoney]: WalletMoney,
   [IconName.Wallet]: Wallet,
   [IconName.Warning]: Warning,
+  // Thango icon
+  [IconName.ShieldEffectWhite]: ShieldEffectWhite,
+  [IconName.DoneCircleWhite]: DoneCircleWhite,
 };
