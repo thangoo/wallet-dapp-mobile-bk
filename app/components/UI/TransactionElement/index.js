@@ -32,6 +32,7 @@ import {
   selectChainId,
   selectTicker,
 } from '../../../selectors/networkController';
+import _ from 'lodash';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -40,6 +41,7 @@ const createStyles = (colors) =>
       flex: 1,
       borderBottomWidth: StyleSheet.hairlineWidth,
       borderColor: colors.border.muted,
+      marginBottom: 8,
     },
     actionContainerStyle: {
       height: 25,
@@ -54,8 +56,8 @@ const createStyles = (colors) =>
       paddingHorizontal: 10,
     },
     icon: {
-      width: 28,
-      height: 28,
+      width: 20,
+      height: 20,
     },
     summaryWrapper: {
       padding: 15,
@@ -77,13 +79,19 @@ const createStyles = (colors) =>
       backgroundColor: colors.background.alternative,
       paddingTop: 10,
     },
+    address: {
+      fontSize: 12,
+      ...fontStyles.normal,
+      color: colors['tvn.address'],
+      width: '80%',
+    },
   });
 
 /* eslint-disable import/no-commonjs */
 const transactionIconApprove = require('../../../images/transaction-icons/approve.png');
 const transactionIconInteraction = require('../../../images/transaction-icons/interaction.png');
-const transactionIconSent = require('../../../images/transaction-icons/send.png');
-const transactionIconReceived = require('../../../images/transaction-icons/receive.png');
+const transactionIconSent = require('../../../images/transaction-icons/sent-icon-red.png');
+const transactionIconReceived = require('../../../images/transaction-icons/receive-icon-blue.png');
 
 const transactionIconApproveFailed = require('../../../images/transaction-icons/approve-failed.png');
 const transactionIconInteractionFailed = require('../../../images/transaction-icons/interaction-failed.png');
@@ -169,9 +177,13 @@ class TransactionElement extends PureComponent {
   }
 
   onPressItem = () => {
-    const { tx, i, onPressItem } = this.props;
-    onPressItem(tx.id, i);
-    this.setState({ detailsModalVisible: true });
+    const { tx, i, onPressItem, navigation, assetSymbol } = this.props;
+    const { transactionDetails } = this.state;
+    navigation.navigate('TransactionDetail', {
+      transactionDetails,
+      tx,
+      assetSymbol,
+    });
   };
 
   onPressImportWalletTip = () => {
@@ -270,6 +282,35 @@ class TransactionElement extends PureComponent {
     }
     return <Image source={icon} style={styles.icon} resizeMode="stretch" />;
   };
+  renderAddress = (transactionElement) => {
+    const { transactionType } = transactionElement;
+    const colors = this.context.colors || mockTheme.colors;
+    const styles = createStyles(colors);
+    let sub;
+    switch (transactionType) {
+      case TRANSACTION_TYPES.SENT_TOKEN:
+      case TRANSACTION_TYPES.SENT_COLLECTIBLE:
+      case TRANSACTION_TYPES.SENT:
+        sub = `To: ${transactionElement.renderTo}`;
+        break;
+      case TRANSACTION_TYPES.RECEIVED_TOKEN:
+      case TRANSACTION_TYPES.RECEIVED_COLLECTIBLE:
+      case TRANSACTION_TYPES.RECEIVED:
+        sub = `From: ${transactionElement.renderFrom}`;
+        break;
+      case TRANSACTION_TYPES.SITE_INTERACTION:
+        sub = 'To:';
+        break;
+      case TRANSACTION_TYPES.APPROVE:
+        sub = 'Approve:';
+        break;
+    }
+    return (
+      <Text numberOfLines={1} ellipsizeMode="middle" style={styles.address}>
+        {sub}
+      </Text>
+    );
+  };
 
   /**
    * Renders an horizontal bar with basic tx information
@@ -284,28 +325,39 @@ class TransactionElement extends PureComponent {
       isQRHardwareAccount,
       tx: { time, status },
     } = this.props;
+
     const { value, fiatValue = false, actionKey } = transactionElement;
     const renderNormalActions =
       status === 'submitted' || (status === 'approved' && !isQRHardwareAccount);
     const renderUnsignedQRActions =
       status === 'approved' && isQRHardwareAccount;
     const accountImportTime = identities[selectedAddress]?.importTime;
+    const colors = this.context.colors || mockTheme.colors;
+    const styles = createStyles(colors);
+
     return (
       <>
         {accountImportTime > time && this.renderImportTime()}
         <ListItem>
-          <ListItem.Date>{this.renderTxTime()}</ListItem.Date>
+          {/* <ListItem.Date>{this.renderTxTime()}</ListItem.Date> */}
           <ListItem.Content>
             <ListItem.Icon>
               {this.renderTxElementIcon(transactionElement, status)}
             </ListItem.Icon>
             <ListItem.Body>
-              <ListItem.Title numberOfLines={1}>{actionKey}</ListItem.Title>
-              <StatusText status={status} />
+              <ListItem.Title numberOfLines={1}>{'Transfer'}</ListItem.Title>
+              {this.renderAddress(transactionElement)}
             </ListItem.Body>
             {Boolean(value) && (
-              <ListItem.Amounts>
-                <ListItem.Amount>{value}</ListItem.Amount>
+              <ListItem.Amounts
+                style={{
+                  backgroundColor:
+                    transactionElement?.transactionType == 'transaction_sent'
+                      ? colors['tvn.status.red']
+                      : colors['tvn.primary.blue'],
+                }}
+              >
+                <ListItem.Amount>-{value}</ListItem.Amount>
                 {isMainNet(chainId) && (
                   <ListItem.FiatAmount>{fiatValue}</ListItem.FiatAmount>
                 )}
@@ -462,20 +514,24 @@ class TransactionElement extends PureComponent {
       transactionElement,
       transactionDetails,
     } = this.state;
+
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
 
     if (!transactionElement || !transactionDetails) return null;
     return (
       <>
-        <TouchableHighlight
-          style={styles.row}
-          onPress={this.onPressItem}
-          underlayColor={colors.background.alternative}
-          activeOpacity={1}
-        >
-          {this.renderTxElement(transactionElement)}
-        </TouchableHighlight>
+        <View>
+          <TouchableHighlight
+            style={styles.row}
+            onPress={this.onPressItem}
+            underlayColor={colors.background.alternative}
+            activeOpacity={1}
+          >
+            {this.renderTxElement(transactionElement)}
+          </TouchableHighlight>
+        </View>
+
         {detailsModalVisible && (
           <Modal
             isVisible={detailsModalVisible}
