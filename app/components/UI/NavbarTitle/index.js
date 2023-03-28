@@ -22,14 +22,13 @@ const createStyles = (colors) =>
   StyleSheet.create({
     wrapper: {
       alignItems: 'center',
-      flex: 1,
     },
     network: {
       flexDirection: 'row',
     },
     networkName: {
-      fontSize: 11,
-      color: colors.text.alternative,
+      fontSize: 20,
+      color: colors['tvn.gray.01'],
       ...fontStyles.normal,
     },
     networkIcon: {
@@ -131,12 +130,12 @@ class NavbarTitle extends PureComponent {
           </Text>
         ) : null}
         <View style={styles.network}>
-          <View
+          {/* <View
             style={[
               styles.networkIcon,
               color ? { backgroundColor: color } : styles.otherNetworkIcon,
             ]}
-          />
+          /> */}
           <Text
             numberOfLines={1}
             style={styles.networkName}
