@@ -1,6 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  ScrollView,
+  Image,
+} from 'react-native';
 import { query } from '@metamask/controller-utils';
 import { connect } from 'react-redux';
 import URL from 'url-parse';
@@ -18,6 +24,7 @@ import {
   getEtherscanTransactionUrl,
   getEtherscanBaseUrl,
 } from '../../../../util/etherscan';
+import { TRANSACTION_TYPES } from '../../../../util/transactions';
 import Logger from '../../../../util/Logger';
 import EthereumAddress from '../../EthereumAddress';
 import TransactionSummary from '../../../Views/TransactionSummary';
@@ -28,25 +35,31 @@ import Text from '../../../Base/Text';
 import DetailsModal from '../../../Base/DetailsModal';
 import { RPC, NO_RPC_BLOCK_EXPLORER } from '../../../../constants/network';
 import { withNavigation } from '@react-navigation/compat';
-import { ThemeContext, mockTheme } from '../../../../util/theme';
+import { ThemeContext, mockTheme, useTheme } from '../../../../util/theme';
 import Engine from '../../../../core/Engine';
 import decodeTransaction from '../../TransactionElement/utils';
 import {
   selectChainId,
   selectTicker,
 } from '../../../../selectors/networkController';
+import HStack from '../../../Base/HStack';
+import TokenIcon from '../../Swaps/components/TokenIcon';
+import { arrow_right_icon, external_icon, plus_icon } from 'images/index';
+import { HeaderBackButton } from '@react-navigation/stack';
+
+const infoIcon = require('../../../../images/transaction-icons/info.png');
 
 const createStyles = (colors) =>
   StyleSheet.create({
     viewOnEtherscan: {
-      fontSize: 16,
-      color: colors.primary.default,
-      ...fontStyles.normal,
+      fontSize: 14,
+      color: colors['tvn.primary.default'],
+      ...fontStyles.bold,
       textAlign: 'center',
     },
     touchableViewOnEtherscan: {
       marginBottom: 24,
-      marginTop: 12,
+      marginTop: 32,
     },
     summaryWrapper: {
       marginVertical: 8,
@@ -136,6 +149,82 @@ class TransactionDetails extends PureComponent {
     );
   };
 
+  viewOnEtherscan = () => {
+    const { tx } = this.props.route.params;
+
+    const {
+      navigation,
+      close,
+      network: {
+        providerConfig: { type },
+      },
+    } = this.props;
+    const { rpcBlockExplorer } = this.state;
+    try {
+      if (type === RPC) {
+        const url = `${rpcBlockExplorer}/tx/${tx?.transactionHash}`;
+        const title = new URL(rpcBlockExplorer).hostname;
+        navigation.push('Webview', {
+          screen: 'SimpleWebview',
+          params: { url, title },
+        });
+      } else {
+        const network = getNetworkTypeById(tx?.networkID);
+        const url = getEtherscanTransactionUrl(network, tx?.transactionHash);
+        const etherscan_url = getEtherscanBaseUrl(network).replace(
+          'https://',
+          '',
+        );
+        navigation.push('Webview', {
+          screen: 'SimpleWebview',
+          params: {
+            url,
+            title: etherscan_url,
+          },
+        });
+      }
+      close && close();
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      Logger.error(e, {
+        message: `can't get a block explorer link for network `,
+        networkID,
+      });
+    }
+  };
+
+  updateNavBar = () => {
+    const { navigation } = this.props;
+    navigation.setOptions({
+      title: 'Transfer',
+      headerStyle: { backgroundColor: 'white', shadowOpacity: 0 },
+      headerLeft: (props) => (
+        <HeaderBackButton
+          {...props}
+          labelVisible={false}
+          style={{ marginLeft: 16 }}
+          backImage={() => (
+            <Image
+              source={arrow_right_icon}
+              style={{ width: 32, height: 32 }}
+            />
+          )}
+        />
+      ),
+      headerRight: (props) => (
+        <HeaderBackButton
+          {...props}
+          labelVisible={false}
+          onPress={this.viewOnEtherscan}
+          style={{ marginRight: 16 }}
+          backImage={() => (
+            <Image source={external_icon} style={{ width: 32, height: 32 }} />
+          )}
+        />
+      ),
+    });
+  };
+
   /**
    * Updates transactionDetails for multilayer fee networks (e.g. for Optimism).
    */
@@ -154,7 +243,7 @@ class TransactionDetails extends PureComponent {
       swapsTransactions,
       swapsTokens,
       transactions,
-    } = this.props;
+    } = this.props.route.params;
     const multiLayerFeeNetwork = isMultiLayerFeeNetwork(chainId);
     const transactionHash = transactionDetails?.transactionHash;
     if (
@@ -195,6 +284,7 @@ class TransactionDetails extends PureComponent {
   };
 
   componentDidMount = () => {
+    this.updateNavBar();
     const {
       network: {
         providerConfig: { rpcTarget, type },
@@ -211,199 +301,133 @@ class TransactionDetails extends PureComponent {
     this.updateTransactionDetails();
   };
 
-  viewOnEtherscan = () => {
-    const {
-      navigation,
-      transactionObject: { networkID },
-      transactionDetails: { transactionHash },
-      network: {
-        providerConfig: { type },
-      },
-      close,
-    } = this.props;
-    const { rpcBlockExplorer } = this.state;
-    try {
-      if (type === RPC) {
-        const url = `${rpcBlockExplorer}/tx/${transactionHash}`;
-        const title = new URL(rpcBlockExplorer).hostname;
-        navigation.push('Webview', {
-          screen: 'SimpleWebview',
-          params: { url, title },
-        });
-      } else {
-        const network = getNetworkTypeById(networkID);
-        const url = getEtherscanTransactionUrl(network, transactionHash);
-        const etherscan_url = getEtherscanBaseUrl(network).replace(
-          'https://',
-          '',
-        );
-        navigation.push('Webview', {
-          screen: 'SimpleWebview',
-          params: {
-            url,
-            title: etherscan_url,
-          },
-        });
-      }
-      close && close();
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      Logger.error(e, {
-        message: `can't get a block explorer link for network `,
-        networkID,
-      });
-    }
-  };
-
   getStyles = () => {
     const colors = this.context.colors || mockTheme.colors;
     return createStyles(colors);
   };
 
-  showSpeedUpModal = () => {
-    const { showSpeedUpModal, close } = this.props;
-    if (close) {
-      close();
-      showSpeedUpModal();
-    }
-  };
-
-  showCancelModal = () => {
-    const { showCancelModal, close } = this.props;
-    if (close) {
-      close();
-      showCancelModal();
-    }
-  };
-
-  renderSpeedUpButton = () => {
-    const styles = this.getStyles();
-
-    return (
-      <StyledButton
-        type={'normal'}
-        containerStyle={[
-          styles.actionContainerStyle,
-          styles.speedupActionContainerStyle,
-        ]}
-        style={styles.actionStyle}
-        onPress={this.showSpeedUpModal}
-      >
-        {strings('transaction.speedup')}
-      </StyledButton>
-    );
-  };
-
-  renderCancelButton = () => {
-    const styles = this.getStyles();
-
-    return (
-      <StyledButton
-        type={'cancel'}
-        containerStyle={styles.actionContainerStyle}
-        style={styles.actionStyle}
-        onPress={this.showCancelModal}
-      >
-        {strings('transaction.cancel')}
-      </StyledButton>
-    );
-  };
-
   render = () => {
-    const {
-      chainId,
-      transactionObject: { status, time, transaction },
-    } = this.props;
+    const { tx, assetSymbol, transactionDetails } = this.props.route.params;
     const { updatedTransactionDetails } = this.state;
-    const styles = this.getStyles();
+    const colors = this.context.colors || mockTheme.colors;
+    const styles = createStyles(colors);
 
-    const renderTxActions = status === 'submitted' || status === 'approved';
+    const RenderTime = (timestamp) => {
+      const date = new Date(timestamp);
+      const month = strings(`date.months.${date.getMonth()}`);
+      const day = date.getDate();
+      const nowDate = new Date();
+      const nowMonth = strings(`date.months.${nowDate.getMonth()}`);
+      const nowDay = nowDate.getDate();
+
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      hours %= 24;
+      hours = hours || 24;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      return nowMonth + nowDay == month + day
+        ? `Today ${strings('date.connector')} ${hours}:${minutes} `
+        : `${month} ${day} ${strings('date.connector')} ${hours}:${minutes} `;
+    };
+    const RenderStatus = (status) => {
+      let statusText;
+      switch (status) {
+        case 'confirmed':
+          statusText = 'Completed';
+          break;
+        default:
+          statusText = 'Completed';
+      }
+      return statusText;
+    };
+
+    const RenderTypeTransaction = (typeTransaction, toOrFrom) => {
+      let type;
+      switch (typeTransaction) {
+        case TRANSACTION_TYPES.SENT_TOKEN:
+        case TRANSACTION_TYPES.SENT_COLLECTIBLE:
+        case TRANSACTION_TYPES.SENT:
+          type = toOrFrom.renderTo;
+          break;
+        case TRANSACTION_TYPES.RECEIVED_TOKEN:
+        case TRANSACTION_TYPES.RECEIVED_COLLECTIBLE:
+        case TRANSACTION_TYPES.RECEIVED:
+          type = toOrFrom.renderFrom;
+          break;
+        case TRANSACTION_TYPES.SITE_INTERACTION:
+          type = toOrFrom.renderFrom;
+          break;
+        case TRANSACTION_TYPES.APPROVE:
+          type = toOrFrom.renderFrom;
+          break;
+      }
+      return type;
+    };
+
     const { rpcBlockExplorer } = this.state;
 
     return updatedTransactionDetails ? (
-      <DetailsModal.Body>
-        <DetailsModal.Section borderBottom>
-          <DetailsModal.Column>
-            <DetailsModal.SectionTitle>
-              {strings('transactions.status')}
-            </DetailsModal.SectionTitle>
-            <StatusText status={status} />
-            {!!renderTxActions && (
-              <View style={styles.transactionActionsContainer}>
-                {this.renderSpeedUpButton()}
-                {this.renderCancelButton()}
-              </View>
-            )}
-          </DetailsModal.Column>
-          <DetailsModal.Column end>
-            <DetailsModal.SectionTitle>
-              {strings('transactions.date')}
-            </DetailsModal.SectionTitle>
-            <Text small primary>
-              {toDateFormat(time)}
-            </Text>
-          </DetailsModal.Column>
-        </DetailsModal.Section>
-        <DetailsModal.Section borderBottom={!!transaction?.nonce}>
-          <DetailsModal.Column>
-            <DetailsModal.SectionTitle>
-              {strings('transactions.from')}
-            </DetailsModal.SectionTitle>
-            <Text small primary>
-              <EthereumAddress
-                type="short"
-                address={updatedTransactionDetails.renderFrom}
-              />
-            </Text>
-          </DetailsModal.Column>
-          <DetailsModal.Column end>
-            <DetailsModal.SectionTitle>
-              {strings('transactions.to')}
-            </DetailsModal.SectionTitle>
-            <Text small primary>
-              <EthereumAddress
-                type="short"
-                address={updatedTransactionDetails.renderTo}
-              />
-            </Text>
-          </DetailsModal.Column>
-        </DetailsModal.Section>
-        <DetailsModal.Section>
-          <DetailsModal.Column>
-            <DetailsModal.SectionTitle upper>
-              {strings('transactions.nonce')}
-            </DetailsModal.SectionTitle>
-            {!!transaction?.nonce && (
-              <Text small primary>{`#${parseInt(
-                transaction.nonce.replace(/^#/, ''),
-                16,
-              )}`}</Text>
-            )}
-          </DetailsModal.Column>
-        </DetailsModal.Section>
-        <View
-          style={[
-            styles.summaryWrapper,
-            !transaction?.nonce && styles.touchableViewOnEtherscan,
-          ]}
+      <ScrollView>
+        <HStack
+          style={{
+            justifyContent: 'center',
+            marginTop: 22,
+            flexDirection: 'column',
+          }}
         >
-          <TransactionSummary
-            amount={updatedTransactionDetails.summaryAmount}
-            fee={updatedTransactionDetails.summaryFee}
-            totalAmount={updatedTransactionDetails.summaryTotalAmount}
-            secondaryTotalAmount={
-              isMainNet(chainId)
-                ? updatedTransactionDetails.summarySecondaryTotalAmount
-                : undefined
-            }
-            gasEstimationReady
-            transactionType={updatedTransactionDetails.transactionType}
-            chainId={chainId}
-          />
-        </View>
+          <TokenIcon symbol={assetSymbol} style={{ width: 56, height: 56 }} />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingVertical: 16,
+            }}
+          >
+            <Image
+              source={plus_icon}
+              style={{ width: 24, height: 24, marginRight: 12 }}
+            />
+            <Text
+              style={{
+                fontSize: 24,
+                color: colors['tvn.gray.10'],
+                ...fontStyles.bold,
+              }}
+            >
+              {transactionDetails.summaryAmount}
+            </Text>
+          </View>
+          <Text
+            style={{
+              fontSize: 14,
+              color: colors['tvn.gray.10'],
+              ...fontStyles.normal,
+            }}
+          >
+            = {transactionDetails.summarySecondaryTotalAmount}
+          </Text>
+        </HStack>
+        <Item title="Date" content={RenderTime(tx.time)} showIconInfo={false} />
+        <Item
+          title="Status"
+          content={RenderStatus(tx?.status)}
+          showIconInfo={true}
+        />
+        <Item
+          title="Sender"
+          content={RenderTypeTransaction(
+            transactionDetails.transactionType,
+            transactionDetails,
+          )}
+        />
+        <Item
+          title="Network"
+          content={`${transactionDetails.summaryFee} (${transactionDetails.summarySecondaryTotalAmount})`}
+          showIconInfo={true}
+        />
 
         {updatedTransactionDetails.transactionHash &&
-          status !== 'cancelled' &&
+          tx?.status !== 'cancelled' &&
           rpcBlockExplorer !== NO_RPC_BLOCK_EXPLORER && (
             <TouchableOpacity
               onPress={this.viewOnEtherscan}
@@ -418,10 +442,65 @@ class TransactionDetails extends PureComponent {
               </Text>
             </TouchableOpacity>
           )}
-      </DetailsModal.Body>
+      </ScrollView>
     ) : null;
   };
 }
+
+const Item = ({ title, content, showIconInfo }) => {
+  const { colors } = useTheme();
+
+  return (
+    <HStack
+      style={{
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        marginTop: 6,
+        flexDirection: 'column',
+        paddingHorizontal: 16,
+      }}
+    >
+      <Text
+        style={{
+          paddingHorizontal: 16,
+          paddingVertical: 8,
+          fontSize: 16,
+          color: colors['tvn.gray.10'],
+          ...fontStyles.normal,
+        }}
+      >
+        {title}
+      </Text>
+      <View
+        style={{
+          paddingVertical: 12,
+          paddingHorizontal: 16,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          backgroundColor: colors['tvn.gray.02'],
+          width: '100%',
+          borderRadius: 16,
+        }}
+      >
+        <Text
+          numberOfLines={1}
+          ellipsizeMode="middle"
+          style={{
+            paddingVertical: 8,
+            fontSize: 16,
+            color: colors['tvn.gray.10'],
+            ...fontStyles.normal,
+            width: '60%',
+          }}
+        >
+          {content}
+        </Text>
+        {showIconInfo && <Image source={infoIcon} />}
+      </View>
+    </HStack>
+  );
+};
 
 const mapStateToProps = (state) => ({
   network: state.engine.backgroundState.NetworkController,
