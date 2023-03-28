@@ -20,6 +20,7 @@ import Wallet from '../../Views/Wallet';
 import Asset from '../../Views/Asset';
 import AssetDetails from '../../Views/AssetDetails';
 import AddAsset from '../../Views/AddAsset';
+import TransactionDetail from '../../UI/TransactionElement/TransactionDetails';
 import Collectible from '../../Views/Collectible';
 import Send from '../../Views/Send';
 import SendTo from '../../Views/SendFlow/SendTo';
@@ -162,6 +163,11 @@ const WalletTabStackFlow = () => (
       name="RevealPrivateCredentialView"
       component={RevealPrivateCredential}
       options={RevealPrivateCredential.navigationOptions}
+    />
+    <Stack.Screen
+      name="TransactionDetail"
+      component={TransactionDetail}
+      options={TransactionDetail.navigationOptions}
     />
   </Stack.Navigator>
 );
