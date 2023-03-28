@@ -494,11 +494,13 @@ class Login extends PureComponent {
                   keyboardAppearance={themeAppearance}
                 /> */}
                 <PassCode onSubmitEditing={this.triggerLogIn} />
-                <BiometryButton
-                  onPress={this.tryBiometric}
-                  hidden={shouldHideBiometricAccessoryButton}
-                  biometryType={this.state.biometryType}
-                />
+                <View style={{ alignSelf: 'center', marginTop: 16 }}>
+                  <BiometryButton
+                    onPress={this.tryBiometric}
+                    hidden={shouldHideBiometricAccessoryButton}
+                    biometryType={this.state.biometryType}
+                  />
+                </View>
               </View>
 
               {!!this.state.error && (
@@ -514,6 +516,8 @@ class Login extends PureComponent {
                 <StyledButton type={'confirm'} onPress={this.triggerLogIn}>
                 </StyledButton>
               </View> */}
+
+              {this.renderSwitch()}
               {
                 this.state.loading ? (
                   <ActivityIndicator
@@ -524,8 +528,6 @@ class Login extends PureComponent {
                 ) : null
                 // <Text>{strings('login.unlock_button')}</Text>
               }
-
-              {this.renderSwitch()}
             </View>
           </KeyboardAwareScrollView>
 

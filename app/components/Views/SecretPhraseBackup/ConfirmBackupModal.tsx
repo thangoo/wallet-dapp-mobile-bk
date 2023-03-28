@@ -46,18 +46,17 @@ const ConfirmBackupModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
     }, 500);
   };
 
-  console.log(selections);
   const handleSelect = (index: number) => {
-    console.log(
-      _.find(selections, (t) => t === index),
-      'f',
-    );
-
     if (_.find(selections, (t) => t === index)) {
       setSelections(_.filter(selections, (t) => t !== index));
     } else {
       setSelections((prev) => [...prev, index]);
     }
+  };
+
+  const close = () => {
+    setToggle(false);
+    setSelections([]);
   };
   return (
     <ReactNativeModal
@@ -66,9 +65,9 @@ const ConfirmBackupModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
       style={styles.modal}
       backdropTransitionOutTiming={0}
       isVisible={toggle}
-      onBackdropPress={setToggle}
-      onBackButtonPress={setToggle}
-      onSwipeComplete={setToggle}
+      onBackdropPress={close}
+      onBackButtonPress={close}
+      onSwipeComplete={close}
     >
       <View style={styles.body}>
         <View style={styles.dragger} />
