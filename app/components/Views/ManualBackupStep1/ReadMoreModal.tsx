@@ -80,7 +80,7 @@ const ReadMoreModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
           testID={'manual-backup-step-1-continue-button'}
           type={'confirm'}
           onPress={handlePress}
-          containerStyle={{ width: '100%' }}
+          containerStyle={{ width: '100%', marginBottom: 16 }}
         >
           {strings('manual_backup_step_1.continue')}
         </StyledButton>
@@ -114,7 +114,6 @@ const NoteItem = ({ index, content }: { index: number; content: string }) => {
 const createStyles = (colors: CustomTheme['colors']) =>
   StyleSheet.create({
     body: {
-      flex: 0.85,
       backgroundColor: 'white',
       paddingHorizontal: 32,
       alignItems: 'center',

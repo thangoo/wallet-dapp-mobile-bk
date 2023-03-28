@@ -97,17 +97,15 @@ const ConfirmBackupModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
           ))}
         </View>
 
-        <SafeAreaView edges={['bottom']} style={{ width: '100%' }}>
-          <StyledButton
-            testID={'manual-backup-step-1-continue-button'}
-            type={'confirm'}
-            onPress={handlePress}
-            containerStyle={{ width: '100%' }}
-            disabled={_.size(selections) < 3}
-          >
-            {strings('manual_backup_step_1.continue')}
-          </StyledButton>
-        </SafeAreaView>
+        <StyledButton
+          testID={'manual-backup-step-1-continue-button'}
+          type={'confirm'}
+          onPress={handlePress}
+          containerStyle={{ width: '100%', marginBottom: 16 }}
+          disabled={_.size(selections) < 3}
+        >
+          {strings('manual_backup_step_1.continue')}
+        </StyledButton>
       </View>
     </ReactNativeModal>
   );
