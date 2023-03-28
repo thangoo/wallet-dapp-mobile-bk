@@ -33,6 +33,7 @@ import {
 } from '../../../constants/test-ids';
 import { HeaderBackButton } from '@react-navigation/stack';
 import { arrow_right_icon } from 'images/index';
+import HStack from '../../Base/HStack';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -41,23 +42,20 @@ const createStyles = (colors) =>
       flex: 1,
     },
     wrapper: {
-      ...StyleSheet.absoluteFillObject,
       paddingHorizontal: 28,
       justifyContent: 'space-between',
       alignItems: 'center',
+      flex: 1,
     },
     content: {
       textAlign: 'center',
       alignItems: 'center',
-      marginBottom: 20,
     },
 
     containerCollpase: {
       backgroundColor: colors['tvn.light_gray_blue'],
       borderRadius: 18,
-      top: 90,
       width: '100%',
-      position: 'absolute',
     },
     wrapperAccordion: {
       flexDirection: 'row',
@@ -137,10 +135,7 @@ const createStyles = (colors) =>
       margin: 10,
       marginTop: -5,
     },
-    wrapperBottom: {
-      position: 'absolute',
-      bottom: 45,
-    },
+    wrapperBottom: {},
 
     label: {
       ...fontStyles.normal,
@@ -227,45 +222,48 @@ const Legal = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.mainWrapper}>
       <View testID={'LEGAL_SCREEN_CONTAINER'} style={styles.wrapper}>
-        <View style={styles.content}>
-          <Text style={styles.title}>
-            {strings('terms_and_conditions.subtitle')}
-          </Text>
-        </View>
-        <View style={styles.containerCollpase}>
-          <View style={styles.accordionItem1}>
-            <StyledButton
-              type={'transparent-gray-10'}
-              onPress={onPrivacyPolicy}
-              testID={'continue-button'}
-            >
-              {strings('privacy_policy.title')}
-              <Icon
-                onPress={onPrivacyPolicy}
-                name={IconName.ArrowRight}
-                size={IconSize.Md}
-                color={IconColor.Default}
-                style={{ marginRight: 10 }}
-              />
-            </StyledButton>
+        <HStack style={{ flexDirection: 'column', width: '100%' }}>
+          <View style={styles.content}>
+            <Text style={styles.title}>
+              {strings('terms_and_conditions.subtitle')}
+            </Text>
           </View>
-          <View style={styles.accordionItem2}>
-            <StyledButton
-              type={'transparent-gray-10'}
-              onPress={onTermConditions}
-              testID={'continue-button'}
-            >
-              {strings('terms_and_conditions.title')}
-              <Icon
+          <View style={styles.containerCollpase}>
+            <View style={styles.accordionItem1}>
+              <StyledButton
+                type={'transparent-gray-10'}
                 onPress={onPrivacyPolicy}
-                name={IconName.ArrowRight}
-                size={IconSize.Md}
-                color={IconColor.Default}
-                style={{ marginRight: 10 }}
-              />
-            </StyledButton>
+                testID={'continue-button'}
+              >
+                {strings('privacy_policy.title')}
+                <Icon
+                  onPress={onPrivacyPolicy}
+                  name={IconName.ArrowRight}
+                  size={IconSize.Md}
+                  color={IconColor.Default}
+                  style={{ marginRight: 10 }}
+                />
+              </StyledButton>
+            </View>
+            <View style={styles.accordionItem2}>
+              <StyledButton
+                type={'transparent-gray-10'}
+                onPress={onTermConditions}
+                testID={'continue-button'}
+              >
+                {strings('terms_and_conditions.title')}
+                <Icon
+                  onPress={onPrivacyPolicy}
+                  name={IconName.ArrowRight}
+                  size={IconSize.Md}
+                  color={IconColor.Default}
+                  style={{ marginRight: 10 }}
+                />
+              </StyledButton>
+            </View>
           </View>
-        </View>
+        </HStack>
+
         <View style={styles.wrapperBottom}>
           <View style={styles.checkboxContainer}>
             <CheckBox
