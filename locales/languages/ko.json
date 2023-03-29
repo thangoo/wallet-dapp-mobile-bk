@@ -356,7 +356,8 @@
     "custom_token": "맞춤 토큰",
     "tokens": {
       "cancel_add_token": "취소",
-      "add_token": "불러오기"
+      "add_token": "불러오기",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "취소",

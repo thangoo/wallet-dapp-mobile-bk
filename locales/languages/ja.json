@@ -356,7 +356,8 @@
     "custom_token": "カスタムトークン",
     "tokens": {
       "cancel_add_token": "キャンセル",
-      "add_token": "インポート"
+      "add_token": "インポート",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "キャンセル",

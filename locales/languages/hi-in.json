@@ -309,7 +309,8 @@
     "custom_token": "कस्टम टोकन",
     "tokens": {
       "cancel_add_token": "रद्द करें",
-      "add_token": "टोकन जोड़ें"
+      "add_token": "टोकन जोड़ें",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "रद्द करें",

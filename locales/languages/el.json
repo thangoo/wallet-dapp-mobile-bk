@@ -356,7 +356,8 @@
     "custom_token": "ΠΡΟΣΑΡΜΟΣΜΕΝΟ TOKEN",
     "tokens": {
       "cancel_add_token": "ΆΚΥΡΟ",
-      "add_token": "ΕΙΣΑΓΩΓΉ"
+      "add_token": "ΕΙΣΑΓΩΓΉ",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "ΆΚΥΡΟ",

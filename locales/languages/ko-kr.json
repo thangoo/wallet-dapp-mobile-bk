@@ -309,7 +309,8 @@
     "custom_token": "맞춤형 토큰",
     "tokens": {
       "cancel_add_token": "취소",
-      "add_token": "토큰 추가"
+      "add_token": "토큰 추가",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "취소",

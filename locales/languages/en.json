@@ -360,7 +360,8 @@
     "custom_token": "CUSTOM TOKEN",
     "tokens": {
       "cancel_add_token": "CANCEL",
-      "add_token": "IMPORT"
+      "add_token": "IMPORT",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "CANCEL",

@@ -357,7 +357,8 @@
     "custom_token": "TOKEN TÙY CHỈNH",
     "tokens": {
       "cancel_add_token": "HỦY",
-      "add_token": "NHẬP"
+      "add_token": "NHẬP",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "HỦY",

@@ -357,7 +357,8 @@
     "custom_token": "自定义代币",
     "tokens": {
       "cancel_add_token": "取消",
-      "add_token": "添加代币"
+      "add_token": "添加代币",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "取消",

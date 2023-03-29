@@ -356,7 +356,8 @@
     "custom_token": "TOKEN KHUSUS",
     "tokens": {
       "cancel_add_token": "BATAL",
-      "add_token": "IMPOR"
+      "add_token": "IMPOR",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "BATAL",

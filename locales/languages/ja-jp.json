@@ -309,7 +309,8 @@
     "custom_token": "カスタム トークン",
     "tokens": {
       "cancel_add_token": "キャンセル",
-      "add_token": "トークンの追加"
+      "add_token": "トークンの追加",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "キャンセル",

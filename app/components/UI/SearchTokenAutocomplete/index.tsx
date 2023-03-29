@@ -196,7 +196,7 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
     <View style={styles.wrapper} testID={'search-token-screen'}>
       <ActionView
         cancelText={strings('add_asset.tokens.cancel_add_token')}
-        confirmText={strings('add_asset.tokens.add_token')}
+        confirmText={strings('add_asset.tokens.add_new_token')}
         onCancelPress={cancelAddToken}
         onConfirmPress={addToken}
         confirmDisabled={!(address && symbol && decimals)}
