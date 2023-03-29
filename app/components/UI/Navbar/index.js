@@ -50,8 +50,15 @@ import {
   IconName,
   IconSize,
 } from '../../../component-library/components/Icons/Icon';
+import {
+  arrow_right_icon,
+  arrow_right_icon_white,
+  chart_line_icon,
+} from 'images/index';
 import { MetaMetricsEvents } from '../../../core/Analytics';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
+import { HeaderBackButton } from '@react-navigation/stack';
+import LinearGradient from 'react-native-linear-gradient';
 
 const trackEvent = (event) => {
   InteractionManager.runAfterInteractions(() => {
@@ -92,7 +99,6 @@ const styles = StyleSheet.create({
   backButton: {
     paddingLeft: Device.isAndroid() ? 22 : 18,
     paddingRight: Device.isAndroid() ? 22 : 18,
-    marginTop: 5,
   },
   closeButton: {
     paddingHorizontal: Device.isAndroid() ? 22 : 18,
@@ -697,22 +703,18 @@ export function getOnboardingNavbarOptions(
 export function getTransparentOnboardingNavbarOptions(themeColors) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: 'white',
+      backgroundColor: themeColors.background.default,
       shadowColor: importedColors.transparent,
       elevation: 0,
     },
-    paymeName: {
-      fontWeight: '400',
-      fontSize: 18,
-      color: themeColors['tvn.text.default'],
+    metamaskName: {
+      width: 122,
+      height: 15,
+      tintColor: themeColors.text.default,
     },
   });
   return {
-    headerTitle: () => (
-      <View style={styles.metamaskNameTransparentWrapper}>
-        <Text style={innerStyles.paymeName}>PAYME</Text>
-      </View>
-    ),
+    headerTitle: () => <View />,
     headerLeft: () => <View />,
     headerRight: () => <View />,
     headerStyle: innerStyles.headerStyle,
@@ -727,27 +729,30 @@ export function getTransparentOnboardingNavbarOptions(themeColors) {
 export function getTransparentBackOnboardingNavbarOptions(themeColors) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: 'white',
+      backgroundColor: themeColors.background.default,
       shadowColor: importedColors.transparent,
       elevation: 0,
     },
-
-    paymeName: {
-      fontWeight: '400',
-      fontSize: 18,
-      color: themeColors['tvn.text.default'],
+    metamaskName: {
+      width: 122,
+      height: 15,
+      tintColor: themeColors.text.default,
     },
   });
   return {
     headerTitle: () => (
       <View style={styles.metamaskNameTransparentWrapper}>
-        <Text style={innerStyles.paymeName}>PAYME</Text>
+        <Image
+          source={metamask_name}
+          style={innerStyles.metamaskName}
+          resizeMethod={'auto'}
+        />
       </View>
     ),
-    headerBackTitle: <View />,
+    headerBackTitle: strings('navigation.back'),
     headerRight: () => <View />,
     headerStyle: innerStyles.headerStyle,
-    headerTintColor: themeColors['tvn.text.default'],
+    headerTintColor: themeColors.primary.default,
   };
 }
 
@@ -760,15 +765,15 @@ export function getTransparentBackOnboardingNavbarOptions(themeColors) {
 export function getOptinMetricsNavbarOptions(themeColors) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors['tvn.innerBackground.default'],
+      backgroundColor: themeColors.background.default,
       shadowColor: importedColors.transparent,
       elevation: 0,
       height: 100,
     },
-    paymeName: {
-      fontWeight: '400',
-      fontSize: 18,
-      color: themeColors['tvn.text.default'],
+    metamaskName: {
+      width: 122,
+      height: 15,
+      tintColor: themeColors.text.default,
     },
   });
 
@@ -778,15 +783,19 @@ export function getOptinMetricsNavbarOptions(themeColors) {
     headerLeft: () => (
       <View style={styles.optinHeaderLeft}>
         <View style={styles.metamaskNameWrapper}>
-          <Text style={innerStyles.paymeName}>PAYME</Text>
+          <Image
+            source={metamask_fox}
+            style={styles.metamaskFox}
+            resizeMethod={'auto'}
+          />
         </View>
-        {/* <View style={styles.metamaskNameWrapper}>
+        <View style={styles.metamaskNameWrapper}>
           <Image
             source={metamask_name}
             style={innerStyles.metamaskName}
             resizeMethod={'auto'}
           />
-        </View> */}
+        </View>
       </View>
     ),
     headerTintColor: themeColors.primary.default,
@@ -1054,6 +1063,78 @@ export function getNetworkNavbarOptions(
               size={28}
               style={innerStyles.headerIcon}
             />
+          </TouchableOpacity>
+          // eslint-disable-next-line no-mixed-spaces-and-tabs
+        )
+      : () => <View />,
+    headerStyle: innerStyles.headerStyle,
+  };
+}
+
+export function getNavbarTransaction(
+  title,
+  translate,
+  navigation,
+  themeColors,
+  onRightPress = undefined,
+  disableNetwork = false,
+) {
+  const innerStyles = StyleSheet.create({
+    headerStyle: {
+      backgroundColor: themeColors.background.default,
+      shadowColor: importedColors.transparent,
+      elevation: 0,
+    },
+    headerIcon: {
+      color: themeColors.primary.default,
+    },
+  });
+  return {
+    headerTitle: () => (
+      <NavbarTitle
+        disableNetwork={disableNetwork}
+        title={title}
+        translate={translate}
+      />
+    ),
+    // design UI FIGMA
+    headerTransparent: true,
+    // design UI FIGMA
+    headerLeft: () => (
+      // eslint-disable-next-line react/jsx-no-bind
+      // <TouchableOpacity
+      //   onPress={() => navigation.pop()}
+      //   style={styles.backButton}
+      //   {...generateTestId(Platform, ASSET_BACK_BUTTON)}
+      // >
+      //   <IonicIcon
+      //     name={Device.isAndroid() ? 'md-arrow-back' : 'ios-arrow-back'}
+      //     size={Device.isAndroid() ? 24 : 28}
+      //     style={innerStyles.headerIcon}
+      //   />
+      // </TouchableOpacity>
+      <HeaderBackButton
+        onPress={() => navigation.pop()}
+        labelVisible={false}
+        style={styles.backButton}
+        backImage={() => (
+          <Image
+            source={arrow_right_icon_white}
+            style={{ width: 32, height: 32 }}
+          />
+        )}
+      />
+    ),
+
+    headerRight: onRightPress
+      ? () => (
+          <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
+            {/* <MaterialCommunityIcon
+              name={'dots-horizontal'}
+              size={28}
+              style={innerStyles.headerIcon}
+            /> */}
+            <Image source={chart_line_icon} style={{ width: 27, height: 23 }} />
           </TouchableOpacity>
           // eslint-disable-next-line no-mixed-spaces-and-tabs
         )

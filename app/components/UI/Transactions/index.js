@@ -55,7 +55,9 @@ const createStyles = (colors) =>
     wrapper: {
       backgroundColor: colors.background.default,
       flex: 1,
+      paddingHorizontal: 6,
     },
+
     bottomModal: {
       justifyContent: 'flex-end',
       margin: 0,
@@ -63,7 +65,8 @@ const createStyles = (colors) =>
     emptyContainer: {
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.background.default,
+      // UI FIGMA
+      backgroundColor: 'transparent',
       minHeight: Dimensions.get('window').height / 2,
     },
     keyboardAwareWrapper: {
@@ -77,6 +80,13 @@ const createStyles = (colors) =>
       fontSize: 20,
       color: colors.text.muted,
       ...fontStyles.normal,
+    },
+    time: {
+      fontSize: 18,
+      color: colors['tvn.gray.10'],
+      ...fontStyles.bold,
+      paddingLeft: 8,
+      marginBottom: 16,
     },
     viewMoreBody: {
       marginBottom: 36,
@@ -101,6 +111,7 @@ class Transactions extends PureComponent {
     /**
      * Map of accounts to information objects including balances
      */
+
     accounts: PropTypes.object,
     /**
      * Callback to close the view
@@ -305,7 +316,6 @@ class Transactions extends PureComponent {
   renderLoader = () => {
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
-
     return (
       <View style={styles.emptyContainer}>
         <ActivityIndicator style={styles.loader} size="small" />
@@ -316,7 +326,6 @@ class Transactions extends PureComponent {
   renderEmpty = () => {
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
-
     return (
       <ScrollView
         contentContainerStyle={styles.emptyContainer}
@@ -530,29 +539,6 @@ class Transactions extends PureComponent {
     }
   };
 
-  renderItem = ({ item, index }) => (
-    <TransactionElement
-      tx={item}
-      i={index}
-      assetSymbol={this.props.assetSymbol}
-      onSpeedUpAction={this.onSpeedUpAction}
-      isQRHardwareAccount={this.state.isQRHardwareAccount}
-      signQRTransaction={this.signQRTransaction}
-      cancelUnsignedQRTransaction={this.cancelUnsignedQRTransaction}
-      onCancelAction={this.onCancelAction}
-      testID={'txn-item'}
-      onPressItem={this.toggleDetailsView}
-      selectedAddress={this.props.selectedAddress}
-      tokens={this.props.tokens}
-      collectibleContracts={this.props.collectibleContracts}
-      contractExchangeRates={this.props.contractExchangeRates}
-      exchangeRate={this.props.exchangeRate}
-      conversionRate={this.props.conversionRate}
-      currentCurrency={this.props.currentCurrency}
-      navigation={this.props.navigation}
-    />
-  );
-
   toggleRetry = (errorMsg) => {
     this.setState((state) => ({ retryIsOpen: !state.retryIsOpen, errorMsg }));
   };
@@ -575,6 +561,28 @@ class Transactions extends PureComponent {
       });
     }
   };
+  renderItem = ({ item, index }) => (
+    <TransactionElement
+      tx={item}
+      i={index}
+      assetSymbol={this.props.assetSymbol}
+      onSpeedUpAction={this.onSpeedUpAction}
+      isQRHardwareAccount={this.state.isQRHardwareAccount}
+      signQRTransaction={this.signQRTransaction}
+      cancelUnsignedQRTransaction={this.cancelUnsignedQRTransaction}
+      onCancelAction={this.onCancelAction}
+      testID={'txn-item'}
+      onPressItem={this.toggleDetailsView}
+      selectedAddress={this.props.selectedAddress}
+      tokens={this.props.tokens}
+      collectibleContracts={this.props.collectibleContracts}
+      contractExchangeRates={this.props.contractExchangeRates}
+      exchangeRate={this.props.exchangeRate}
+      conversionRate={this.props.conversionRate}
+      currentCurrency={this.props.currentCurrency}
+      navigation={this.props.navigation}
+    />
+  );
 
   renderUpdateTxEIP1559Gas = (isCancel) => {
     const { isSigningQRObject } = this.props;

@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Platform,
+  Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -49,28 +50,37 @@ import {
 import { createWebviewNavDetails } from '../../Views/SimpleWebview';
 import generateTestId from '../../../../wdio/utils/generateTestId';
 import { TOKEN_ASSET_OVERVIEW } from '../../../../wdio/screen-objects/testIDs/Screens/TokenOverviewScreen.testIds';
+import { send_plane } from 'images/index';
 
 const createStyles = (colors) =>
   StyleSheet.create({
     wrapper: {
       flex: 1,
       padding: 20,
-      borderBottomWidth: StyleSheet.hairlineWidth,
-      borderBottomColor: colors.border.muted,
+      // borderBottomWidth: StyleSheet.hairlineWidth,
+      // borderBottomColor: colors.border.muted,
       alignContent: 'center',
       alignItems: 'center',
-      paddingBottom: 30,
+      // paddingBottom: 30,
+      backgroundColor: 'transparent',
     },
     assetLogo: {
       marginTop: 15,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: 10,
+      borderRadius: 50,
       marginBottom: 10,
+      width: 48,
+      height: 48,
+      backgroundColor: colors['tvn.gray.01'],
     },
     ethLogo: {
       width: 70,
       height: 70,
+    },
+    imgAsset: {
+      width: 28,
+      height: 32,
     },
     balance: {
       alignItems: 'center',
@@ -78,27 +88,30 @@ const createStyles = (colors) =>
       marginBottom: 20,
     },
     amount: {
-      fontSize: 30,
-      color: colors.text.default,
-      ...fontStyles.normal,
+      fontSize: 32,
+      color: colors['tvn.text.default'],
+      ...fontStyles.bold,
       textTransform: 'uppercase',
     },
     testNetAmount: {
-      fontSize: 30,
-      color: colors.text.default,
-      ...fontStyles.normal,
+      fontSize: 32,
+      color: colors['tvn.text.default'],
+      ...fontStyles.bold,
     },
     amountFiat: {
-      fontSize: 18,
-      color: colors.text.alternative,
-      ...fontStyles.light,
+      fontSize: 14,
+      color: colors['tvn.text.default'],
+      ...fontStyles.normal,
       textTransform: 'uppercase',
     },
     actions: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       flexDirection: 'row',
+      width: '100%',
+      paddingHorizontal: 22,
+      marginTop: 31,
     },
     warning: {
       borderRadius: 8,
@@ -113,6 +126,19 @@ const createStyles = (colors) =>
     },
     warningLinks: {
       color: colors.primary.default,
+    },
+    secondaryBalanceStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+      width: '100%',
+      marginTop: 11,
+      paddingHorizontal: 62,
+    },
+    divider: {
+      width: 1,
+      height: 24,
+      backgroundColor: colors['tvn.text.default'],
     },
   });
 
@@ -241,7 +267,7 @@ class AssetOverview extends PureComponent {
     const styles = createStyles(colors);
 
     return asset.isETH ? (
-      <NetworkMainAssetLogo biggest style={styles.ethLogo} />
+      <NetworkMainAssetLogo biggest style={styles.imgAsset} />
     ) : (
       <TokenImage asset={asset} tokenList={tokenList} />
     );
@@ -308,6 +334,7 @@ class AssetOverview extends PureComponent {
     let mainBalance, secondaryBalance;
     const itemAddress = safeToChecksumAddress(address);
     let balance, balanceFiat;
+
     if (isETH) {
       balance = renderFromWei(
         accounts[selectedAddress] && accounts[selectedAddress].balance,
@@ -341,6 +368,7 @@ class AssetOverview extends PureComponent {
       mainBalance = !balanceFiat ? `${balance} ${symbol}` : balanceFiat;
       secondaryBalance = !balanceFiat ? balanceFiat : `${balance} ${symbol}`;
     }
+
     return (
       <View
         style={styles.wrapper}
@@ -361,7 +389,13 @@ class AssetOverview extends PureComponent {
                 {mainBalance}
               </Text>
               {secondaryBalance && (
-                <Text style={styles.amountFiat}>{secondaryBalance}</Text>
+                <View style={styles.secondaryBalanceStyle}>
+                  <Text style={styles.amountFiat}>{secondaryBalance}</Text>
+                  <View style={styles.divider} />
+                  <Text style={styles.amountFiat}>{secondaryBalance}</Text>
+                  <View style={styles.divider} />
+                  <Text style={styles.amountFiat}>{'COIN'}</Text>
+                </View>
               )}
             </>
           )}
@@ -370,9 +404,15 @@ class AssetOverview extends PureComponent {
         {!balanceError && (
           <View style={styles.actions}>
             <AssetActionButton
-              icon="receive"
+              icon={'receive'}
               onPress={this.onReceive}
               label={strings('asset_overview.receive_button')}
+            />
+            <AssetActionButton
+              testID={'token-send-button'}
+              icon="send"
+              onPress={this.onSend}
+              label={strings('asset_overview.send_button')}
             />
             {isETH && allowedToBuy(chainId) && (
               <AssetActionButton
@@ -381,12 +421,7 @@ class AssetOverview extends PureComponent {
                 label={strings('asset_overview.buy_button')}
               />
             )}
-            <AssetActionButton
-              testID={'token-send-button'}
-              icon="send"
-              onPress={this.onSend}
-              label={strings('asset_overview.send_button')}
-            />
+
             {AppConstants.SWAPS.ACTIVE && (
               <AssetSwapButton
                 isFeatureLive={swapsIsLive}
