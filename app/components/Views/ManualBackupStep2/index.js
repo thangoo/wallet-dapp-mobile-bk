@@ -16,7 +16,7 @@ import { strings } from '../../../../locales/i18n';
 import { connect } from 'react-redux';
 import { seedphraseBackedUp } from '../../../actions/user';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { getOnboardingNavbarOptions } from '../../UI/Navbar';
+import { getScreenNavbarOptions } from '../../UI/Navbar';
 import { trackEvent } from '../../../util/analyticsV2';
 import { shuffle, compareSRPs } from '../../../util/SRP';
 import { useTheme } from '../../../util/theme';
@@ -51,7 +51,7 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
 
   const updateNavBar = useCallback(() => {
     navigation.setOptions(
-      getOnboardingNavbarOptions(
+      getScreenNavbarOptions(
         route,
         { title: 'Verify Secret Phrase' },
         colors,

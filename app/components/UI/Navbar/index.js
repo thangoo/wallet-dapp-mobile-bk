@@ -695,6 +695,21 @@ export function getOnboardingNavbarOptions(
   };
 }
 
+export function getScreenNavbarOptions(
+  route,
+  { headerLeft, headerTitle, headerStyle, title },
+  themeColors,
+) {
+  return {
+    headerStyle: headerStyle || getHeaderStyleOption01(themeColors),
+    headerTitle: headerTitle || getHeaderTitleOption01({ title, themeColors }),
+    headerBackTitle: <View />,
+    headerRight: () => <View />,
+    headerLeft: headerLeft || route.params?.headerLeft || getHeaderLeftOption01,
+    headerTintColor: themeColors['tvn.gray.10'],
+
+  };
+}
 /**
  * Function that returns a transparent navigation options for our onboarding screens.
  *
@@ -1058,15 +1073,15 @@ export function getNetworkNavbarOptions(
     ),
     headerRight: onRightPress
       ? () => (
-          <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
-            <MaterialCommunityIcon
-              name={'dots-horizontal'}
-              size={28}
-              style={innerStyles.headerIcon}
-            />
-          </TouchableOpacity>
-          // eslint-disable-next-line no-mixed-spaces-and-tabs
-        )
+        <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
+          <MaterialCommunityIcon
+            name={'dots-horizontal'}
+            size={28}
+            style={innerStyles.headerIcon}
+          />
+        </TouchableOpacity>
+        // eslint-disable-next-line no-mixed-spaces-and-tabs
+      )
       : () => <View />,
     headerStyle: innerStyles.headerStyle,
   };
@@ -1129,16 +1144,16 @@ export function getNavbarTransaction(
 
     headerRight: onRightPress
       ? () => (
-          <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
-            {/* <MaterialCommunityIcon
+        <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
+          {/* <MaterialCommunityIcon
               name={'dots-horizontal'}
               size={28}
               style={innerStyles.headerIcon}
             /> */}
-            <Image source={chart_line_icon} style={{ width: 27, height: 23 }} />
-          </TouchableOpacity>
-          // eslint-disable-next-line no-mixed-spaces-and-tabs
-        )
+          <Image source={chart_line_icon} style={{ width: 27, height: 23 }} />
+        </TouchableOpacity>
+        // eslint-disable-next-line no-mixed-spaces-and-tabs
+      )
       : () => <View />,
     headerStyle: innerStyles.headerStyle,
   };
@@ -1597,4 +1612,62 @@ export function getFiatOnRampAggNavbar(
  */
 export function getNoneHeaderNavbarOptions() {
   return { headerTransparent: true, headerShown: false };
+}
+
+/**
+ * Function that returns a navigation options with HeaderLeft: black Arrow
+ *
+ * @returns {Object} - Corresponding navbar options
+ */
+export function getHeaderLeftOption01(props) {
+  return (
+    <HeaderBackButton
+      {...props}
+      labelVisible={false}
+      style={{ marginLeft: 16 }}
+      backImage={() => (
+        <Image
+          source={arrow_right_icon}
+          style={{ width: 32, height: 32 }}
+        />
+      )}
+    />
+  )
+}
+
+/**
+ * Function that returns a navigation options with header title color: gray
+ *
+ * @returns {Object} - Corresponding navbar options
+ */
+export function getHeaderTitleOption01({ title, themeColors }) {
+  const innerStyles = StyleSheet.create({
+    paymeName: {
+      fontWeight: '600',
+      fontSize: 22,
+      color: themeColors['tvn.gray.10'],
+    },
+  });
+
+  return (<View style={styles.metamaskNameTransparentWrapper}>
+    <Text style={innerStyles.paymeName}>{title}</Text>
+  </View>);
+}
+
+/**
+ * Function that returns a navigation options with background header color: white
+ *
+ * @returns {Object} - Corresponding navbar options
+ */
+export function getHeaderStyleOption01(themeColors) {
+
+  const innerStyles = StyleSheet.create({
+    headerStyle: {
+      backgroundColor: themeColors['tvn.background.default'],
+      shadowColor: importedColors.transparent,
+      elevation: 0,
+    },
+  });
+
+  return innerStyles.headerStyle;
 }

@@ -150,7 +150,7 @@ const TokenItem = ({ item, key, toggleToken, selectedAsset }) => {
   }
 
   return (
-    <View style={styles.assetListElement}>
+    <View key={key} style={styles.assetListElement}>
       <AssetIcon
         address={address}
         logo={iconUrl}
