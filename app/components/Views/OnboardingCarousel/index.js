@@ -32,7 +32,7 @@ import {
   WALLET_SETUP_CREATE_NEW_WALLET_BUTTON_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/WelcomeScreen.testIds';
 import generateTestId from '../../../../wdio/utils/generateTestId';
-
+import Routes from '../../../constants/navigation/Routes';
 import { backgroundOnboarding, imgWalletOnboarding } from 'images/index';
 
 const IMAGE_3_RATIO = 215 / 315;
@@ -152,10 +152,27 @@ class OnboardingCarousel extends PureComponent {
     });
   };
 
-  // onPressGetStarted = () => {
-  //   this.props.navigation.navigate('Onboarding');
-  //   this.trackEvent(MetaMetricsEvents.ONBOARDING_STARTED);
-  // };
+  onPressImport = () => {
+    const action = async () => {
+      const metricsOptIn = await DefaultPreference.get(METRICS_OPT_IN);
+      if (metricsOptIn) {
+        this.props.navigation.push(
+          Routes.ONBOARDING.IMPORT_FROM_SECRET_RECOVERY_PHRASE,
+        );
+        this.track(MetaMetricsEvents.WALLET_IMPORT_STARTED);
+      } else {
+        this.props.navigation.navigate('OptinMetrics', {
+          onContinue: () => {
+            this.props.navigation.replace(
+              Routes.ONBOARDING.IMPORT_FROM_SECRET_RECOVERY_PHRASE,
+            );
+            this.track(MetaMetricsEvents.WALLET_IMPORT_STARTED);
+          },
+        });
+      }
+    };
+    this.handleExistingUser(action);
+  };
   handleExistingUser = (action) => {
     if (this.state.existingUser) {
       this.alertExistingUser(action);
@@ -277,7 +294,7 @@ class OnboardingCarousel extends PureComponent {
             </StyledButton>
             <StyledButton
               type={'transparent-blue'}
-              onPress={this.onPressGetStarted}
+              onPress={this.onPressImport}
               testID={WELCOME_SCREEN_GET_STARTED_BUTTON_ID}
             >
               {strings('onboarding.already_have_wallet')}
