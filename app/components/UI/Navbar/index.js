@@ -1239,6 +1239,59 @@ export function getWebviewNavbar(navigation, route, themeColors) {
   };
 }
 
+export function getReceiveNavbar(navigation, title, themeColors) {
+  const innerStyles = StyleSheet.create({
+    headerTitleStyle: {
+      fontSize: 20,
+      color: themeColors.text.default,
+      textAlign: 'center',
+      ...fontStyles.normal,
+      alignItems: 'center',
+    },
+    headerStyle: {
+      backgroundColor: themeColors.background.default,
+      shadowColor: importedColors.transparent,
+      elevation: 0,
+    },
+    headerIcon: {
+      color: themeColors.primary.default,
+    },
+  });
+
+  return {
+    headerTitle: () => (
+      <Text style={innerStyles.headerTitleStyle}>{title}</Text>
+    ),
+    headerLeft: () =>
+      Device.isAndroid() ? (
+        // eslint-disable-next-line react/jsx-no-bind
+        <TouchableOpacity
+          onPress={() => navigation.pop()}
+          style={styles.backButton}
+        >
+          <IonicIcon
+            name={'md-arrow-back'}
+            size={24}
+            style={innerStyles.headerIcon}
+          />
+        </TouchableOpacity>
+      ) : (
+        // eslint-disable-next-line react/jsx-no-bind
+        <TouchableOpacity
+          onPress={() => navigation.pop()}
+          style={styles.backButton}
+        >
+          <IonicIcon
+            name="ios-close"
+            size={38}
+            style={[innerStyles.headerIcon, styles.backIconIOS]}
+          />
+        </TouchableOpacity>
+      ),
+    headerStyle: innerStyles.headerStyle,
+  };
+}
+
 export function getPaymentSelectorMethodNavbar(navigation, onPop, themeColors) {
   const innerStyles = StyleSheet.create({
     headerButtonText: {
