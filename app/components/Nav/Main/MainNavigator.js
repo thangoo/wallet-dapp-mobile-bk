@@ -72,6 +72,7 @@ import { isEqual } from 'lodash';
 import { selectProviderConfig } from '../../../selectors/networkController';
 import { strings } from '../../../../locales/i18n';
 import isUrl from 'is-url';
+import ReceiveScreen from '../../Views/ReceiveScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -651,6 +652,11 @@ const MainNavigator = () => (
       component={FiatOnRampAggregator}
     />
     <Stack.Screen name="Swaps" component={Swaps} />
+    <Stack.Screen
+      name="ReceiveScreen"
+      component={ReceiveScreen}
+      options={{ headerShown: true }}
+    />
     <Stack.Screen
       name="SetPasswordFlow"
       component={SetPasswordFlow}
