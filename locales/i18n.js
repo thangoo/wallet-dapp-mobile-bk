@@ -139,4 +139,7 @@ async function getUserPreferableLocale() {
   }
 }
 
+// set default language is en
+I18n.locale = 'en';
+
 export default I18n;
