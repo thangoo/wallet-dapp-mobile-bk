@@ -20,6 +20,7 @@ storiesOf('Components / UI / StyledButton', module)
             'rounded-normal': 'rounded-normal',
             cancel: 'cancel',
             signingCancel: 'signingCancel',
+            tokenList: 'tokenList',
             transparent: 'transparent',
             'transparent-blue': 'transparent-blue',
             warning: 'warning',

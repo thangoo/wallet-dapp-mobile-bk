@@ -356,7 +356,8 @@
     "custom_token": "CUSTOM NA TOKEN",
     "tokens": {
       "cancel_add_token": "KANSELAHIN",
-      "add_token": "MAGDAGDAG NG TOKEN"
+      "add_token": "MAGDAGDAG NG TOKEN",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "KANSELAHIN",

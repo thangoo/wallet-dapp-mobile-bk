@@ -22,8 +22,8 @@ const createStyles = (colors: any) =>
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 1,
-      borderRadius: 4,
-      borderColor: colors.border.default,
+      borderRadius: 12,
+      borderColor: colors['tvn.gray.04'],
       color: colors.text.default,
     },
     textInput: {
@@ -31,7 +31,7 @@ const createStyles = (colors: any) =>
       color: colors.text.default,
     } as StyleSheet.NamedStyles<any>,
     icon: {
-      padding: 16,
+      padding: 12,
       color: colors.icon.alternative,
     },
   });
@@ -84,24 +84,35 @@ const AssetSearch = memo(({ onSearch, onFocus, onBlur }: Props) => {
   // Update fuse list
   useEffect(() => {
     fuse.setCollection(tokenList);
+    // Show all result when opening Import Tokens
+    const results = [...tokenList];
+    onSearch({ searchQuery, results });
   }, [tokenList]);
 
+  // Search Token list
   const handleSearch = useCallback(
     (searchText: string) => {
       setSearchQuery(searchText);
-      const fuseSearchResult = fuse.search(searchText);
+      const fuseSearchResult = searchText ? fuse.search(searchText) : tokenList;
       const addressSearchResult = tokenList.filter((token) =>
         toLowerCaseEquals(token.address, searchText),
       );
       const results = [...addressSearchResult, ...fuseSearchResult];
+      // Return result search to SearchTokenAutocomplete
       onSearch({ searchQuery: searchText, results });
     },
     [setSearchQuery, onSearch, tokenList],
   );
 
+  // useEffect(() => {
+  //   console.log('### useEffect handleSearch ###: ', searchQuery);
+
+  //   handleSearch(searchQuery);
+  // }, [handleSearch]);
+
   return (
     <View style={styles.searchSection} testID={'add-searched-token-screen'}>
-      <Icon name="search" size={22} style={styles.icon} />
+      <Icon name="search" size={18} style={styles.icon} />
       <TextInput
         style={[
           styles.textInput,

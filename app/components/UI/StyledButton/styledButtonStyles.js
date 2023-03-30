@@ -57,6 +57,11 @@ const createStyles = (colors) =>
     normalText: {
       color: colors['tvn.primary.default'],
     },
+    tokenList: {
+      backgroundColor: colors['tvn.gray.02'],
+      borderWidth: 0,
+      // borderColor: importedColors.transparent,
+    },
     transparent: {
       backgroundColor: importedColors.transparent,
       borderWidth: 0,
@@ -188,6 +193,10 @@ function getStyles(type, colors) {
     case 'signingCancel':
       fontStyle = styles.signingCancelText;
       containerStyle = styles.signingCancel;
+      break;
+    case 'tokenList':
+      fontStyle = styles.whiteText;
+      containerStyle = styles.tokenList;
       break;
     case 'transparent':
       fontStyle = styles.whiteText;

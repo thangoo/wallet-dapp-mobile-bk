@@ -356,7 +356,8 @@
     "custom_token": "TOKEN PERSONALIZADO",
     "tokens": {
       "cancel_add_token": "CANCELAR",
-      "add_token": "AGREGAR TOKEN"
+      "add_token": "AGREGAR TOKEN",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "CANCELAR",

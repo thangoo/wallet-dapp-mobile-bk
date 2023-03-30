@@ -309,7 +309,8 @@
     "custom_token": "ЗАКАЗНОЙ ТОКЕН",
     "tokens": {
       "cancel_add_token": "ОТМЕНА",
-      "add_token": "ДОБАВИТЬ ТОКЕН"
+      "add_token": "ДОБАВИТЬ ТОКЕН",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "ОТМЕНА",

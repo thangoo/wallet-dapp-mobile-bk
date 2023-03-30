@@ -356,7 +356,8 @@
     "custom_token": "BENUTZERDEFINIERTES TOKEN",
     "tokens": {
       "cancel_add_token": "ABBRECHEN",
-      "add_token": "IMPORTIEREN"
+      "add_token": "IMPORTIEREN",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "ABBRECHEN",

@@ -23,7 +23,10 @@ import { MetaMetricsEvents } from '../../../core/Analytics';
 import { baseStyles } from '../../../styles/common';
 import AccountOverview from '../../UI/AccountOverview';
 import Tokens from '../../UI/Tokens';
-import { getWalletNavbarOptions } from '../../UI/Navbar';
+import {
+  getWalletNavbarOptions,
+  getNoneHeaderNavbarOptions,
+} from '../../UI/Navbar';
 import { strings } from '../../../../locales/i18n';
 import { renderFromWei, weiToFiat, hexToBN } from '../../../util/number';
 import Engine from '../../../core/Engine';
@@ -47,12 +50,27 @@ import {
   selectProviderConfig,
   selectTicker,
 } from '../../../selectors/networkController';
+import LinearGradient from 'react-native-linear-gradient';
+import { ThangoThemeColors } from 'app/types/common.thangoType';
 
 const createStyles = ({ colors, typography }: Theme) =>
   StyleSheet.create({
     wrapper: {
       flex: 1,
       backgroundColor: colors.background.default,
+    },
+    assetOverviewWrapper: {
+      height: 391,
+    },
+    bgGradient: {
+      flex: 1,
+      borderBottomLeftRadius: 56,
+      borderBottomRightRadius: 56,
+    },
+    assetItem: {
+      position: 'absolute',
+      width: '100%',
+      top: 90,
     },
     tabUnderlineStyle: {
       height: 2,
@@ -212,9 +230,12 @@ const Wallet = ({ navigation }: any) => {
         themeColors,
       ),
     );
+
+    // navigation.setOptions(getNoneHeaderNavbarOptions());
     /* eslint-disable-next-line */
   }, [navigation, themeColors, networkName, networkImageSource, onTitlePress]);
 
+  // Refesh: Token, Nft, Account Tracker, Currency Rate, Token Rates
   const onRefresh = useCallback(async () => {
     requestAnimationFrame(async () => {
       setRefreshing(true);
@@ -297,11 +318,27 @@ const Wallet = ({ navigation }: any) => {
 
     return (
       <View style={styles.wrapper}>
-        <AccountOverview
-          account={account}
-          navigation={navigation}
-          onRef={onRef}
-        />
+        <View style={styles.assetOverviewWrapper}>
+          <LinearGradient
+            start={{ x: 0.75, y: 0.75 }}
+            end={{ x: 0.25, y: 0 }}
+            colors={[
+              // @ts-ignore
+              colors['tvn.main.wallet.linear1'],
+              // @ts-ignore
+              colors['tvn.main.wallet.linear2'],
+            ]}
+            style={styles.bgGradient}
+          />
+          <View style={styles.assetItem}>
+            <AccountOverview
+              account={account}
+              navigation={navigation}
+              onRef={onRef}
+            />
+          </View>
+        </View>
+
         <ScrollableTabView
           renderTabBar={renderTabBar}
           // eslint-disable-next-line react/jsx-no-bind

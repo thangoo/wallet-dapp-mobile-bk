@@ -356,7 +356,8 @@
     "custom_token": "KİŞİSEL TOKEN",
     "tokens": {
       "cancel_add_token": "İPTAL",
-      "add_token": "İÇE AKTAR"
+      "add_token": "İÇE AKTAR",
+      "add_new_token": "ADD NEW TOKEN"
     },
     "collectibles": {
       "cancel_add_collectible": "İPTAL",

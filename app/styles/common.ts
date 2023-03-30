@@ -15,6 +15,8 @@ export const colors = {
   yellow: '#FFD33D',
   transparent: 'transparent',
   shadow: '#6a737d',
+  gray: '#333333',
+  lgray: '#AFAFAF',
 };
 
 /**
