@@ -52,7 +52,7 @@ const createStyles = (colors) =>
       alignItems: 'center',
     },
 
-    containerCollpase: {
+    container: {
       backgroundColor: colors['tvn.light_gray_blue'],
       borderRadius: 18,
       width: '100%',
@@ -228,7 +228,7 @@ const Legal = ({ navigation, route }) => {
               {strings('terms_and_conditions.subtitle')}
             </Text>
           </View>
-          <View style={styles.containerCollpase}>
+          <View style={styles.container}>
             <View style={styles.accordionItem1}>
               <StyledButton
                 type={'transparent-gray-10'}
@@ -237,7 +237,6 @@ const Legal = ({ navigation, route }) => {
               >
                 {strings('privacy_policy.title')}
                 <Icon
-                  onPress={onPrivacyPolicy}
                   name={IconName.ArrowRight}
                   size={IconSize.Md}
                   color={IconColor.Default}
@@ -253,7 +252,6 @@ const Legal = ({ navigation, route }) => {
               >
                 {strings('terms_and_conditions.title')}
                 <Icon
-                  onPress={onPrivacyPolicy}
                   name={IconName.ArrowRight}
                   size={IconSize.Md}
                   color={IconColor.Default}
