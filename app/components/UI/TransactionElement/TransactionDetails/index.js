@@ -343,25 +343,33 @@ class TransactionDetails extends PureComponent {
 
     const RenderTypeTransaction = (typeTransaction, toOrFrom) => {
       let type;
+      let label;
       switch (typeTransaction) {
         case TRANSACTION_TYPES.SENT_TOKEN:
         case TRANSACTION_TYPES.SENT_COLLECTIBLE:
         case TRANSACTION_TYPES.SENT:
           type = toOrFrom.renderTo;
+          label = 'Sender';
           break;
         case TRANSACTION_TYPES.RECEIVED_TOKEN:
         case TRANSACTION_TYPES.RECEIVED_COLLECTIBLE:
         case TRANSACTION_TYPES.RECEIVED:
           type = toOrFrom.renderFrom;
+          label = 'Sender';
           break;
+
+        // defined after
         case TRANSACTION_TYPES.SITE_INTERACTION:
           type = toOrFrom.renderFrom;
+          label = 'Sender';
           break;
         case TRANSACTION_TYPES.APPROVE:
           type = toOrFrom.renderFrom;
+          label = 'Sender';
           break;
       }
-      return type;
+      // return { type, label };
+      return <Item title={label} content={type} />;
     };
 
     const { rpcBlockExplorer } = this.state;
@@ -413,13 +421,10 @@ class TransactionDetails extends PureComponent {
           content={RenderStatus(tx?.status)}
           showIconInfo={true}
         />
-        <Item
-          title="Sender"
-          content={RenderTypeTransaction(
-            transactionDetails.transactionType,
-            transactionDetails,
-          )}
-        />
+        {RenderTypeTransaction(
+          transactionDetails.transactionType,
+          transactionDetails,
+        )}
         <Item
           title="Network"
           content={`${transactionDetails.summaryFee} (${transactionDetails.summarySecondaryTotalAmount})`}

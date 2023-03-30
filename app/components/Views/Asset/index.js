@@ -35,6 +35,7 @@ import {
 } from '../../../selectors/networkController';
 import LinearGradient from 'react-native-linear-gradient';
 import Routes from '../../../constants/navigation/Routes';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -399,48 +400,46 @@ class Asset extends PureComponent {
 
     return (
       <View style={styles.wrapper}>
-        <>
-          <View style={styles.assetOverviewWrapper}>
-            <LinearGradient
-              start={{ x: 0.75, y: 0.75 }}
-              end={{ x: 0.25, y: 0 }}
-              colors={[
-                // @ts-ignore
-                colors['tvn.orange.linear1'],
-                // @ts-ignore
-                colors['tvn.orange.linear2'],
-              ]}
-              style={styles.bgGradient}
-            />
+        <View style={styles.assetOverviewWrapper}>
+          <LinearGradient
+            start={{ x: 0.75, y: 0.75 }}
+            end={{ x: 0.25, y: 0 }}
+            colors={[
+              // @ts-ignore
+              colors['tvn.orange.linear1'],
+              // @ts-ignore
+              colors['tvn.orange.linear2'],
+            ]}
+            style={styles.bgGradient}
+          />
 
-            <View style={styles.assetItem}>
-              <AssetOverview
-                navigation={navigation}
-                asset={navigation && params}
-              />
-            </View>
+          <View style={styles.assetItem}>
+            <AssetOverview
+              navigation={navigation}
+              asset={navigation && params}
+            />
           </View>
-          {loading ? (
-            this.renderLoader()
-          ) : (
-            <View style={{ flex: 1, marginTop: 20 }}>
-              <Transactions
-                header={null}
-                assetSymbol={navigation && params.symbol}
-                navigation={navigation}
-                transactions={transactions}
-                submittedTransactions={submittedTxs}
-                confirmedTransactions={confirmedTxs}
-                selectedAddress={selectedAddress}
-                conversionRate={conversionRate}
-                currentCurrency={currentCurrency}
-                networkType={chainId}
-                loading={!transactionsUpdated}
-                headerHeight={280}
-              />
-            </View>
-          )}
-        </>
+        </View>
+        {loading ? (
+          this.renderLoader()
+        ) : (
+          <View style={{ flex: 1, paddingTop: 20 }}>
+            <Transactions
+              header={null}
+              assetSymbol={navigation && params.symbol}
+              navigation={navigation}
+              transactions={transactions}
+              submittedTransactions={submittedTxs}
+              confirmedTransactions={confirmedTxs}
+              selectedAddress={selectedAddress}
+              conversionRate={conversionRate}
+              currentCurrency={currentCurrency}
+              networkType={chainId}
+              loading={!transactionsUpdated}
+              headerHeight={280}
+            />
+          </View>
+        )}
       </View>
     );
   };

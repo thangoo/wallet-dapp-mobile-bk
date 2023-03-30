@@ -521,16 +521,14 @@ class TransactionElement extends PureComponent {
     if (!transactionElement || !transactionDetails) return null;
     return (
       <>
-        <View>
-          <TouchableHighlight
-            style={styles.row}
-            onPress={this.onPressItem}
-            underlayColor={colors.background.alternative}
-            activeOpacity={1}
-          >
-            {this.renderTxElement(transactionElement)}
-          </TouchableHighlight>
-        </View>
+        <TouchableHighlight
+          style={styles.row}
+          onPress={this.onPressItem}
+          underlayColor={colors.background.alternative}
+          activeOpacity={1}
+        >
+          {this.renderTxElement(transactionElement)}
+        </TouchableHighlight>
 
         {detailsModalVisible && (
           <Modal

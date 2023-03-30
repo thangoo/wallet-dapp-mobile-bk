@@ -12,6 +12,8 @@ import {
   Dimensions,
   InteractionManager,
   TouchableOpacity,
+  SectionList,
+  VirtualizedList,
 } from 'react-native';
 import {
   getNetworkTypeById,
@@ -49,6 +51,8 @@ import {
   selectChainId,
   selectProviderType,
 } from '../../../selectors/networkController';
+import _ from 'lodash';
+import { toLocaleDate } from '../../../util/date';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -67,7 +71,7 @@ const createStyles = (colors) =>
       alignItems: 'center',
       // UI FIGMA
       backgroundColor: 'transparent',
-      minHeight: Dimensions.get('window').height / 2,
+      minHeight: Dimensions.get('window').height / 3,
     },
     keyboardAwareWrapper: {
       flex: 1,
@@ -97,6 +101,15 @@ const createStyles = (colors) =>
       color: colors.primary.default,
       ...fontStyles.normal,
       textAlign: 'center',
+    },
+    headerSection: {
+      paddingLeft: 16,
+      paddingBottom: 12,
+    },
+    header: {
+      fontSize: 18,
+      ...fontStyles.bold,
+      color: colors['tvn.gray.10'],
     },
   });
 
@@ -643,10 +656,38 @@ class Transactions extends PureComponent {
     const { cancelConfirmDisabled, speedUpConfirmDisabled } = this.state;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
+
+    const renderTime = (value) => {
+      // date transaction
+      const date = new Date(value);
+      const month = strings(`date.months.${date.getMonth()}`);
+      const day = date.getDate();
+      const year = date.getFullYear();
+      const transactionTime = month + day + year;
+
+      // get now
+      const nowDate = new Date();
+      const yearNow = nowDate.getFullYear();
+      const dayNow = nowDate.getDate();
+      const monthNow = strings(`date.months.${nowDate.getMonth()}`);
+      const nowTime = monthNow + dayNow + yearNow;
+      return transactionTime == nowTime ? 'Today' : `${month} ${day} ${year}`;
+    };
+
     const transactions =
       submittedTransactions && submittedTransactions.length
         ? submittedTransactions.concat(confirmedTransactions)
         : this.props.transactions;
+
+    //Group transaction
+    const groupedTransaction = _.groupBy(transactions, (t) =>
+      toLocaleDate(Number(t.time)),
+    );
+
+    const data = _.map(groupedTransaction, (value, key) => ({
+      title: renderTime(key),
+      data: value,
+    }));
 
     const renderSpeedUpGas = () => {
       if (!this.existingGas) return null;
@@ -666,7 +707,7 @@ class Transactions extends PureComponent {
 
     return (
       <View style={styles.wrapper} testID={'transactions-screen'}>
-        <FlatList
+        {/* <FlatList
           ref={this.flatList}
           getItemLayout={this.getItemLayout}
           data={transactions}
@@ -688,6 +729,18 @@ class Transactions extends PureComponent {
           ListFooterComponent={this.renderViewMore}
           style={baseStyles.flexGrow}
           scrollIndicatorInsets={{ right: 1 }}
+        /> */}
+        <SectionList
+          sections={data}
+          keyExtractor={(item, index) => item + index}
+          renderItem={this.renderItem}
+          renderSectionHeader={({ section: { title } }) => (
+            <View style={styles.headerSection}>
+              <Text style={styles.header}>{title}</Text>
+            </View>
+          )}
+          extraData={this.state}
+          stickySectionHeadersEnabled={false}
         />
 
         {!isSigningQRObject && this.state.cancelIsOpen && (
