@@ -58,7 +58,8 @@ import { createAccountSelectorNavDetails } from '../../Views/AccountSelector';
 const createStyles = (colors) =>
   StyleSheet.create({
     scrollView: {
-      backgroundColor: colors.background.default,
+      // backgroundColor: colors.background.default,
+      backgroundColor: 'transparent',
     },
     wrapper: {
       paddingTop: 20,

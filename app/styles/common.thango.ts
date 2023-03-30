@@ -27,6 +27,8 @@ export const thangoLight: ThangoThemeColors = {
   ['tvn.background.linear2']: '#92A0FE',
   ['tvn.orange.linear1']: '#DF7B1F',
   ['tvn.orange.linear2']: '#F3BA2F',
+  ['tvn.main.wallet.linear1']: '#7EDDFE',
+  ['tvn.main.wallet.linear2']: '#92A0FE',
   ['tvn.status.orange']: '#FF8717',
   ['tvn.status.red']: '#FF2517',
   ['tvn.background.asset.action.button']: '#ffffff33',
@@ -60,6 +62,8 @@ export const thangoDark: ThangoThemeColors = {
   ['tvn.status.orange']: '#FF8717',
   ['tvn.orange.linear1']: '#DF7B1F',
   ['tvn.orange.linear2']: '#F3BA2F',
+  ['tvn.main.wallet.linear1']: '#7EDDFE',
+  ['tvn.main.wallet.linear2']: '#92A0FE',
   ['tvn.status.red']: '#FF2517',
   ['tvn.background.asset.action.button']: '#ffffff33',
 };

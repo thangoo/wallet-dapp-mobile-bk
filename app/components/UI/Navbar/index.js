@@ -975,6 +975,7 @@ export function getWalletNavbarOptions(
         />
       </View>
     ),
+    headerTransparent: true,
     headerLeft: () => (
       <TouchableOpacity
         onPress={openDrawer}
