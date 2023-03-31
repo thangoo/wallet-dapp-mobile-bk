@@ -14,11 +14,13 @@ import {
   StyleSheet,
   View,
   TextStyle,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
 import { Theme } from '@metamask/design-tokens';
 import { useDispatch, useSelector } from 'react-redux';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import DefaultTabBar from 'react-native-scrollable-tab-view/DefaultTabBar';
+import { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import { MetaMetricsEvents } from '../../../core/Analytics';
 import { baseStyles } from '../../../styles/common';
 import AccountOverview from '../../UI/AccountOverview';
@@ -62,7 +64,7 @@ const createStyles = ({ colors, typography }: Theme) =>
       backgroundColor: colors.background.default,
     },
     assetOverviewWrapper: {
-      height: 391,
+      height: 350,
     },
     bgGradient: {
       flex: 1,
@@ -74,25 +76,49 @@ const createStyles = ({ colors, typography }: Theme) =>
       width: '100%',
       top: 90,
     },
-    tabUnderlineStyle: {
-      height: 2,
-      backgroundColor: colors.primary.default,
-    },
-    tabStyle: {
-      paddingBottom: 0,
-    },
-    tabBar: {
-      borderColor: colors.border.muted,
-      marginTop: 16,
-    },
-    textStyle: {
-      ...(typography.HeadingSM as TextStyle),
-    },
+
     loader: {
       backgroundColor: colors.background.default,
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+
+    tabUnderlineStyle: {
+      height: 2,
+      backgroundColor: colors.primary.default,
+    },
+
+    tabBar: {
+      borderColor: colors.border.muted,
+      marginTop: 16,
+      justifyContent: 'flex-start',
+      marginLeft: 20,
+    },
+    textStyle: {
+      fontSize: 16,
+      ...(typography.HeadingSM as TextStyle),
+    },
+
+    tabWrapper: {
+      paddingLeft: 15,
+    },
+    tabStyle: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingBottom: 0,
+    },
+
+    tabs: {
+      height: 50,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      borderWidth: 1,
+      borderTopWidth: 0,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+      borderColor: '#ccc',
     },
   });
 
@@ -232,6 +258,7 @@ const Wallet = ({ navigation }: any) => {
         accountLabel,
         navigation,
         drawerRef,
+        onTitlePress,
         themeColors,
       ),
     );
@@ -263,16 +290,42 @@ const Wallet = ({ navigation }: any) => {
     });
   }, [setRefreshing]);
 
+  const renderTab = (name: any, page: any, isTabActive: any, onPressHandler: any) => {
+    // const { activeTextColor, inactiveTextColor, textStyle, } = this.props;
+    const textColor = isTabActive ? colors['tvn.gray.10'] : colors['tvn.gray.05'];
+    const fontWeight = isTabActive ? 'bold' : 'normal';
+
+   
+    return (
+      <TouchableOpacity
+        style={styles.tabWrapper}
+        key={name}
+        accessible={true}
+        accessibilityLabel={name}
+        // accessibilityTraits='button'
+        onPress={() => onPressHandler(page)}
+      >
+        <View style={styles.tabStyle}>
+          <Text style={[{ color: textColor, fontWeight, }, styles.textStyle,]}>
+            {name}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    )
+
+  }
+
   const renderTabBar = useCallback(
     () => (
       <DefaultTabBar
         underlineStyle={styles.tabUnderlineStyle}
-        activeTextColor={colors.text.default}
-        inactiveTextColor={colors.text.muted}
-        backgroundColor={colors.background.default}
-        tabStyle={styles.tabStyle}
-        textStyle={styles.textStyle}
+        // activeTextColor={colors['tvn.gray.10']}
+        // inactiveTextColor={colors['tvn.gray.05']}
+        // backgroundColor={colors.background.default}
+        // tabStyle={styles.tabStyle}
+        // textStyle={styles.textStyle}
         style={styles.tabBar}
+        renderTab={renderTab}
       />
     ),
     [styles, colors],

@@ -74,7 +74,6 @@ const createStyles = (colors) =>
     },
     data: {
       textAlign: 'center',
-      paddingTop: 7,
     },
     label: {
       fontSize: 24,
@@ -121,10 +120,10 @@ const createStyles = (colors) =>
       letterSpacing: 0.8,
     },
     amountFiat: {
-      fontSize: 12,
+      fontSize: 40,
       paddingTop: 5,
-      color: colors.text.alternative,
-      ...fontStyles.normal,
+      color: colors['tvn.white'],
+      ...fontStyles.bold,
     },
     identiconBorder: {
       borderRadius: 80,
@@ -138,13 +137,20 @@ const createStyles = (colors) =>
       paddingVertical: Device.isIos() ? 2 : -4,
       paddingHorizontal: Device.isIos() ? 5 : 5,
       top: Device.isIos() ? 0 : -2,
+      fontSize: 14,
+      color: colors['tvn.white'],
+      ...fontStyles.normal,
     },
     actions: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      // alignItems: 'flex-start',
       flexDirection: 'row',
+      marginTop: 40,
     },
+    actionIcon: {
+      marginLeft: 15,
+    }
   });
 
 /**
@@ -348,7 +354,7 @@ class AccountOverview extends PureComponent {
       const ens = await doENSReverseLookup(account.address, network);
       this.setState({ ens });
       // eslint-disable-next-line no-empty
-    } catch {}
+    } catch { }
   };
 
   render() {
@@ -399,6 +405,7 @@ class AccountOverview extends PureComponent {
                 noFadeIn={onboardingWizard}
               />
             </TouchableOpacity> */}
+            <Text style={styles.amountFiat}>{fiatBalance}</Text>
             <View
               ref={this.editableLabelRef}
               style={styles.data}
@@ -436,11 +443,12 @@ class AccountOverview extends PureComponent {
                       style={[
                         styles.label,
                         styles.onboardingWizardLabel,
-                        {
-                          borderColor: onboardingWizard
-                            ? colors.primary.default
-                            : colors.background.default,
-                        },
+                        { borderWidth: 0 }
+                        // {
+                        //   borderColor: onboardingWizard
+                        //     ? colors.primary.default
+                        //     : colors.background.default,
+                        // },
                       ]}
                       numberOfLines={1}
                       {...generateTestId(
@@ -461,8 +469,8 @@ class AccountOverview extends PureComponent {
                 </View>
               )}
             </View>
-            <Text style={styles.amountFiat}>{fiatBalance}</Text>
-            <TouchableOpacity
+
+            {/* <TouchableOpacity
               style={styles.addressWrapper}
               onPress={this.copyAccountToClipboard}
             >
@@ -471,34 +479,42 @@ class AccountOverview extends PureComponent {
                 style={styles.address}
                 type={'short'}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <View style={styles.actions}>
-              <AssetActionButton
-                icon="receive"
-                onPress={this.onReceive}
-                label={strings('asset_overview.receive_button')}
-              />
-              <AssetActionButton
-                testID={'token-send-button'}
-                icon="send"
-                onPress={this.onSend}
-                label={strings('asset_overview.send_button')}
-              />
-              {allowedToBuy(chainId) && (
+              <View>
                 <AssetActionButton
-                  icon="buy"
-                  onPress={this.onBuy}
-                  label={strings('asset_overview.buy_button')}
+                  icon="receive"
+                  onPress={this.onReceive}
+                  label={strings('asset_overview.receive_button')}
                 />
+              </View>
+              <View style={styles.actionIcon}>
+                <AssetActionButton
+                  testID={'token-send-button'}
+                  icon="send"
+                  onPress={this.onSend}
+                  label={strings('asset_overview.send_button')}
+                />
+              </View>
+              {allowedToBuy(chainId) && (
+                <View style={styles.actionIcon}>
+                  <AssetActionButton
+                    icon="buy"
+                    onPress={this.onBuy}
+                    label={strings('asset_overview.buy_button')}
+                  />
+                </View>
               )}
               {AppConstants.SWAPS.ACTIVE && (
-                <AssetSwapButton
-                  isFeatureLive={swapsIsLive}
-                  isNetworkAllowed={isSwapsAllowed(chainId)}
-                  onPress={this.goToSwaps}
-                  isAssetAllowed
-                />
+                <View style={styles.actionIcon}>
+                  <AssetSwapButton
+                    isFeatureLive={swapsIsLive}
+                    isNetworkAllowed={isSwapsAllowed(chainId)}
+                    onPress={this.goToSwaps}
+                    isAssetAllowed
+                  />
+                </View>
               )}
             </View>
           </View>

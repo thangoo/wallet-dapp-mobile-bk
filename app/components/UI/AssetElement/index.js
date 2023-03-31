@@ -68,14 +68,14 @@ export default class AssetElement extends PureComponent {
         style={styles.itemWrapper}
       >
         {children}
-        <View styles={styles.arrow}>
+        {/* <View styles={styles.arrow}>
           <Icon
             name="ios-arrow-forward"
             size={24}
             color={colors.icon.alternative}
             style={styles.arrowIcon}
           />
-        </View>
+        </View> */}
       </TouchableOpacity>
     );
   };

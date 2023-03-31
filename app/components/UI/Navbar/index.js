@@ -894,6 +894,7 @@ export function getWalletNavbarOptions(
   title,
   navigation,
   drawerRef,
+  onPressTitle,
   themeColors,
 ) {
   const innerStyles = StyleSheet.create({
@@ -975,15 +976,18 @@ export function getWalletNavbarOptions(
 
   return {
     headerTitle: () => (
-      <View style={innerStyles.headerTitle}>
-        <Text style={innerStyles.title}>Hello, {title}</Text>
-        {/* <PickerNetwork
-          label={networkName}
-          imageSource={networkImageSource}
-          onPress={onPressTitle}
-          {...generateTestId(Platform, NAVBAR_NETWORK_BUTTON)}
-        /> */}
-      </View>
+      // <TouchableOpacity onPress={onPressTitle} >
+        <View style={innerStyles.headerTitle}>
+          <Text style={innerStyles.title}>Hello, {title}</Text>
+        </View>
+      // </TouchableOpacity>
+
+      // <PickerNetwork
+      //   label={networkName}
+      //   imageSource={networkImageSource}
+      //   onPress={onPressTitle}
+      //   {...generateTestId(Platform, NAVBAR_NETWORK_BUTTON)}
+      // />
     ),
     headerTransparent: true,
     headerLeft: () => (
@@ -992,13 +996,13 @@ export function getWalletNavbarOptions(
       //   style={styles.backButton}
       //   {...generateTestId(Platform, HAMBURGER_MENU_BUTTON)}
       // >
-        <ButtonIcon
-          variant={ButtonIconVariants.Primary}
-          onPress={openDrawer}
-          iconName={IconName.MenuItem01White}
-          style={styles.infoLeftButton}
-          size={IconSize.Xl}
-        />
+      <ButtonIcon
+        variant={ButtonIconVariants.Primary}
+        onPress={openDrawer}
+        iconName={IconName.MenuItem01White}
+        style={styles.infoLeftButton}
+        size={IconSize.Xl}
+      />
       // </TouchableOpacity>
     ),
     headerRight: () => (

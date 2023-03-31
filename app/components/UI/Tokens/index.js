@@ -82,24 +82,48 @@ const createStyles = (colors) =>
       alignItems: 'center',
       marginTop: 24,
     },
+    tokenWrapper: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors['tvn.gray.02'],
+      borderRadius: 16,
+      height: 70, 
+      padding: 10,
+    },
     balances: {
       flex: 1,
       justifyContent: 'center',
+      alignSelf: 'flex-end',
+    },
+    nametWrapper: {
+      flex: 1,
+      flexDirection: 'column',
+      marginLeft: 12,
+    },
+    name: {
+      fontSize: 16,
+      color: colors['tvn.gray.10'],
+      ...fontStyles.bold,
     },
     balance: {
-      fontSize: 16,
-      color: colors.text.default,
+      flex: 1,
+      fontSize: 14,
+      color: colors['tvn.gray.10'],
       ...fontStyles.normal,
       textTransform: 'uppercase',
+      alignSelf: 'flex-end',
+      marginRight: 15,
     },
     testNetBalance: {
-      fontSize: 16,
-      color: colors.text.default,
+      fontSize: 14,
+      color: colors['tvn.gray.10'],
       ...fontStyles.normal,
+      alignSelf: 'flex-end',
     },
     balanceFiat: {
-      fontSize: 12,
-      color: colors.text.alternative,
+      fontSize: 14,
+      color: colors['tvn.address'],
       ...fontStyles.normal,
       textTransform: 'uppercase',
     },
@@ -283,32 +307,38 @@ class Tokens extends PureComponent {
         onLongPress={asset.isETH ? null : this.showRemoveMenu}
         asset={asset}
       >
-        {asset.isETH ? (
-          <NetworkMainAssetLogo
-            big
-            style={styles.ethLogo}
-            testID={'eth-logo'}
-          />
-        ) : (
-          <TokenImage asset={asset} containerStyle={styles.ethLogo} />
-        )}
+        <View style={styles.tokenWrapper}>
+          {asset.isETH ? (
+            <NetworkMainAssetLogo
+              big
+              style={styles.ethLogo}
+              testID={'eth-logo'}
+            />
+          ) : (
+            <TokenImage asset={asset} containerStyle={styles.ethLogo} />
+          )}
 
-        <View style={styles.balances} testID={'balance'}>
-          <Text
-            style={isTestNet(chainId) ? styles.testNetBalance : styles.balance}
-          >
-            {mainBalance}
-          </Text>
-          {secondaryBalance ? (
+          <View style={styles.nameWrapper}>
+            <Text style={styles.name}>{asset.name}</Text>
+            {secondaryBalance ? (
+              <Text
+                style={[
+                  styles.balanceFiat,
+                  asset?.balanceError && styles.balanceFiatTokenError,
+                ]}
+              >
+                {secondaryBalance}
+              </Text>
+            ) : null}
+          </View>
+
+          <View style={styles.balances} testID={'balance'}>
             <Text
-              style={[
-                styles.balanceFiat,
-                asset?.balanceError && styles.balanceFiatTokenError,
-              ]}
+              style={isTestNet(chainId) ? styles.testNetBalance : styles.balance}
             >
-              {secondaryBalance}
+              {mainBalance}
             </Text>
-          ) : null}
+          </View>
         </View>
       </AssetElement>
     );
@@ -370,11 +400,14 @@ class Tokens extends PureComponent {
     const { tokens, hideZeroBalanceTokens, tokenBalances } = this.props;
     const tokensToDisplay = hideZeroBalanceTokens
       ? tokens.filter((token) => {
-          const { address, isETH } = token;
-          return !isZero(tokenBalances[address]) || isETH;
-          // eslint-disable-next-line no-mixed-spaces-and-tabs
-        })
+        const { address, isETH } = token;
+        return !isZero(tokenBalances[address]) || isETH;
+        // eslint-disable-next-line no-mixed-spaces-and-tabs
+      })
       : tokens;
+
+    console.log('#### tokensToDisplay: ', tokensToDisplay);
+
 
     return (
       <View>
