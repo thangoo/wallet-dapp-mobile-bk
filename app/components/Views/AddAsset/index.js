@@ -85,8 +85,7 @@ class AddAsset extends PureComponent {
     const colors = this.context.colors || mockTheme.colors;
     navigation.setOptions(
       getNetworkNavbarOptions(
-        `add_asset.${
-          route.params.assetType === 'token' ? 'title' : 'title_nft'
+        `add_asset.${route.params.assetType === 'token' ? 'title' : 'title_nft'
         }`,
         true,
         navigation,

@@ -387,7 +387,7 @@ class AccountOverview extends PureComponent {
           testID={'account-overview'}
         >
           <View style={styles.info} ref={this.mainView}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.identiconBorder}
               disabled={onboardingWizard}
               onPress={this.openAccountSelector}
@@ -398,7 +398,7 @@ class AccountOverview extends PureComponent {
                 diameter={38}
                 noFadeIn={onboardingWizard}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View
               ref={this.editableLabelRef}
               style={styles.data}
@@ -479,6 +479,12 @@ class AccountOverview extends PureComponent {
                 onPress={this.onReceive}
                 label={strings('asset_overview.receive_button')}
               />
+              <AssetActionButton
+                testID={'token-send-button'}
+                icon="send"
+                onPress={this.onSend}
+                label={strings('asset_overview.send_button')}
+              />
               {allowedToBuy(chainId) && (
                 <AssetActionButton
                   icon="buy"
@@ -486,12 +492,6 @@ class AccountOverview extends PureComponent {
                   label={strings('asset_overview.buy_button')}
                 />
               )}
-              <AssetActionButton
-                testID={'token-send-button'}
-                icon="send"
-                onPress={this.onSend}
-                label={strings('asset_overview.send_button')}
-              />
               {AppConstants.SWAPS.ACTIVE && (
                 <AssetSwapButton
                   isFeatureLive={swapsIsLive}

@@ -104,7 +104,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: Device.isAndroid() ? 22 : 18,
     paddingVertical: Device.isAndroid() ? 14 : 8,
   },
-  infoButton: {
+  infoLeftButton: {
+    paddingLeft: Device.isAndroid() ? 22 : 18,
+    marginTop: 5,
+  },
+  infoRightButton: {
     paddingRight: Device.isAndroid() ? 22 : 18,
     marginTop: 5,
   },
@@ -695,21 +699,6 @@ export function getOnboardingNavbarOptions(
   };
 }
 
-export function getScreenNavbarOptions(
-  route,
-  { headerLeft, headerTitle, headerStyle, title },
-  themeColors,
-) {
-  return {
-    headerStyle: headerStyle || getHeaderStyleOption01(themeColors),
-    headerTitle: headerTitle || getHeaderTitleOption01({ title, themeColors }),
-    headerBackTitle: <View />,
-    headerRight: () => <View />,
-    headerLeft: headerLeft || route.params?.headerLeft || getHeaderLeftOption01,
-    headerTintColor: themeColors['tvn.gray.10'],
-
-  };
-}
 /**
  * Function that returns a transparent navigation options for our onboarding screens.
  *
@@ -902,7 +891,7 @@ export function getOfflineModalNavbar() {
 export function getWalletNavbarOptions(
   networkName,
   networkImageSource,
-  onPressTitle,
+  title,
   navigation,
   drawerRef,
   themeColors,
@@ -921,6 +910,11 @@ export function getWalletNavbarOptions(
       marginTop: 5,
       flex: 1,
     },
+    title: {
+      fontSize: 16,
+      fontWeight: '600',
+      color: themeColors['tvn.white'],
+    }
   });
 
   const onScanSuccess = (data, content) => {
@@ -982,37 +976,39 @@ export function getWalletNavbarOptions(
   return {
     headerTitle: () => (
       <View style={innerStyles.headerTitle}>
-        <PickerNetwork
+        <Text style={innerStyles.title}>Hello, {title}</Text>
+        {/* <PickerNetwork
           label={networkName}
           imageSource={networkImageSource}
           onPress={onPressTitle}
           {...generateTestId(Platform, NAVBAR_NETWORK_BUTTON)}
-        />
+        /> */}
       </View>
     ),
     headerTransparent: true,
     headerLeft: () => (
-      <TouchableOpacity
-        onPress={openDrawer}
-        style={styles.backButton}
-        {...generateTestId(Platform, HAMBURGER_MENU_BUTTON)}
-      >
-        <IonicIcon
-          {...generateTestId(Platform, WALLET_VIEW_BURGER_ICON_ID)}
-          name={Device.isAndroid() ? 'md-menu' : 'ios-menu'}
-          size={Device.isAndroid() ? 24 : 28}
-          style={innerStyles.headerIcon}
+      // <TouchableOpacity
+      //   onPress={openDrawer}
+      //   style={styles.backButton}
+      //   {...generateTestId(Platform, HAMBURGER_MENU_BUTTON)}
+      // >
+        <ButtonIcon
+          variant={ButtonIconVariants.Primary}
+          onPress={openDrawer}
+          iconName={IconName.MenuItem01White}
+          style={styles.infoLeftButton}
+          size={IconSize.Xl}
         />
-      </TouchableOpacity>
+      // </TouchableOpacity>
     ),
     headerRight: () => (
       <ButtonIcon
         variant={ButtonIconVariants.Primary}
-        onPress={openQRScanner}
-        iconName={IconName.Scan}
-        style={styles.infoButton}
+        // onPress={openQRScanner}
+        iconName={IconName.BellNotificationWhite}
+        style={styles.infoRightButton}
         size={IconSize.Xl}
-        testID="scan-header-icon"
+      // testID="scan-header-icon"
       />
     ),
     headerStyle: innerStyles.headerStyle,
@@ -1612,6 +1608,22 @@ export function getFiatOnRampAggNavbar(
  */
 export function getNoneHeaderNavbarOptions() {
   return { headerTransparent: true, headerShown: false };
+}
+
+export function getScreenNavbarOptions(
+  route,
+  { headerLeft, headerTitle, headerStyle, title },
+  themeColors,
+) {
+  return {
+    headerStyle: headerStyle || getHeaderStyleOption01(themeColors),
+    headerTitle: headerTitle || getHeaderTitleOption01({ title, themeColors }),
+    headerBackTitle: <View />,
+    headerRight: () => <View />,
+    headerLeft: headerLeft || route.params?.headerLeft || getHeaderLeftOption01,
+    headerTintColor: themeColors['tvn.gray.10'],
+
+  };
 }
 
 /**

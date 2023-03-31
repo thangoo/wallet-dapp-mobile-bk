@@ -149,7 +149,9 @@ import Warning from './assets/warning.svg';
 // Thango icon
 import ShieldEffectWhite from './assets/shield-effect-white.svg';
 import DoneCircleWhite from './assets/done-circle-white.svg';
-
+import BellNotificationWhite from './assets/bell-notification-white.svg';
+import AddPlusCircleAddBlack from './assets/add-plus-circle-add-black.svg';
+import MenuItem01White from './assets/menu-item01-white.svg';
 /**
  * Asset stored by icon name
  */
@@ -299,4 +301,7 @@ export const assetByIconName: AssetByIconName = {
   // Thango icon
   [IconName.ShieldEffectWhite]: ShieldEffectWhite,
   [IconName.DoneCircleWhite]: DoneCircleWhite,
+  [IconName.BellNotificationWhite]: BellNotificationWhite,
+  [IconName.AddPlusCircleAddBlack]: AddPlusCircleAddBlack,
+  [IconName.MenuItem01White]: MenuItem01White,
 };

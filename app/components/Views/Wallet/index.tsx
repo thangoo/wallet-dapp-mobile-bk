@@ -39,6 +39,8 @@ import { useTheme } from '../../../util/theme';
 import { shouldShowWhatsNewModal } from '../../../util/onboarding';
 import Logger from '../../../util/Logger';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
+import { renderAccountName } from '../../../util/address';
+
 import Routes from '../../../constants/navigation/Routes';
 import {
   getNetworkImageSource,
@@ -220,11 +222,14 @@ const Wallet = ({ navigation }: any) => {
   );
 
   useEffect(() => {
+    // const ens = await doENSReverseLookup(account.address, network);
+    // const title = isDefaultAccountName(name) && ens ? ens : name;
+    const accountLabel = renderAccountName(selectedAddress, identities);
     navigation.setOptions(
       getWalletNavbarOptions(
         networkName,
         networkImageSource,
-        onTitlePress,
+        accountLabel,
         navigation,
         drawerRef,
         themeColors,
@@ -233,7 +238,7 @@ const Wallet = ({ navigation }: any) => {
 
     // navigation.setOptions(getNoneHeaderNavbarOptions());
     /* eslint-disable-next-line */
-  }, [navigation, themeColors, networkName, networkImageSource, onTitlePress]);
+  }, [navigation, themeColors, networkName, networkImageSource, onTitlePress, selectedAddress, identities]);
 
   // Refesh: Token, Nft, Account Tracker, Currency Rate, Token Rates
   const onRefresh = useCallback(async () => {
