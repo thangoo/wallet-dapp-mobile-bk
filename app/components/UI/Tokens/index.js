@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   TouchableOpacity,
@@ -88,7 +88,7 @@ const createStyles = (colors) =>
       alignItems: 'center',
       backgroundColor: colors['tvn.gray.02'],
       borderRadius: 16,
-      height: 70, 
+      height: 70,
       padding: 10,
     },
     balances: {
@@ -202,6 +202,10 @@ class Tokens extends PureComponent {
      * Boolean that indicates if token detection is enabled
      */
     isTokenDetectionEnabled: PropTypes.bool,
+    /**
+     * Used to get child ref
+     */
+    onRef: PropTypes.func,
   };
 
   actionSheet = null;
@@ -212,11 +216,18 @@ class Tokens extends PureComponent {
     isAddTokenEnabled: true,
   };
 
+  componentDidMount = () => {
+    const { onRef } = this.props;
+    onRef && onRef(this);
+  };
+
   getStyles = () => {
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
     return styles;
   };
+
+
 
   renderEmpty = () => {
     const styles = this.getStyles();
@@ -413,7 +424,7 @@ class Tokens extends PureComponent {
       <View>
         {tokensToDisplay.map((item) => this.renderItem(item))}
         {this.renderTokensDetectedSection()}
-        {this.renderFooter()}
+        {/* {this.renderFooter()} */}
       </View>
     );
   }

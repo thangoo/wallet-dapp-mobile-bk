@@ -129,7 +129,7 @@ export default class AssetList extends PureComponent {
               key={i}
               {...generateTestId(Platform, TOKEN_RESULTS_LIST_ID)}
             >
-              <TokenItem item={searchResults[i]} key={i} toggleToken={toggleToken} selectedAsset={selectedAsset} />
+              <TokenItem item={searchResults[i]} id={i} toggleToken={toggleToken} selectedAsset={selectedAsset} />
             </StyledButton>
           );
         })}
@@ -138,7 +138,7 @@ export default class AssetList extends PureComponent {
   };
 }
 
-const TokenItem = ({ item, key, toggleToken, selectedAsset }) => {
+const TokenItem = ({ item, id, toggleToken, selectedAsset }) => {
   const { colors } = useTheme();
   const [isSelected, setIsSelected] = useState(selectedAsset && selectedAsset.address === address);
   const { symbol, name, address, iconUrl } = item || {};
@@ -150,7 +150,7 @@ const TokenItem = ({ item, key, toggleToken, selectedAsset }) => {
   }
 
   return (
-    <View key={key} style={styles.assetListElement}>
+    <View key={id} style={styles.assetListElement}>
       <AssetIcon
         address={address}
         logo={iconUrl}
@@ -162,7 +162,7 @@ const TokenItem = ({ item, key, toggleToken, selectedAsset }) => {
       </View>
       <SwitchToggle
         switchOn={isSelected}
-        onPress={() => toggleSwitch(key)}
+        onPress={() => toggleSwitch(id)}
         circleColorOff={colors['tvn.gray.06']}
         circleColorOn={colors['tvn.primary.blue']}
         backgroundColorOn={colors['tvn.white']}
