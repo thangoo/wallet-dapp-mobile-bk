@@ -9,7 +9,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import PropTypes from 'prop-types';
 import { strings } from '../../../../locales/i18n';
 import AddCustomCollectible from '../../UI/AddCustomCollectible';
-import { getNetworkNavbarOptions } from '../../UI/Navbar';
+import { getScreenNavbarOptions } from '../../UI/Navbar';
 import CollectibleDetectionModal from '../../UI/CollectibleDetectionModal';
 import { isTokenDetectionSupportedForNetwork } from '@metamask/assets-controllers/dist/assetsUtil';
 import { ThemeContext, mockTheme } from '../../../util/theme';
@@ -83,14 +83,13 @@ class AddAsset extends PureComponent {
   updateNavBar = () => {
     const { navigation, route } = this.props;
     const colors = this.context.colors || mockTheme.colors;
+    const title = strings(route.params.assetType === 'token' ? 'add_asset.title' : 'add_asset.title_nft');
     navigation.setOptions(
-      getNetworkNavbarOptions(
-        `add_asset.${route.params.assetType === 'token' ? 'title' : 'title_nft'
-        }`,
-        true,
-        navigation,
+      getScreenNavbarOptions(
+        route,
+        { title },
         colors,
-      ),
+      )
     );
   };
 
@@ -102,22 +101,22 @@ class AddAsset extends PureComponent {
     this.updateNavBar();
   };
 
-  renderTabBar() {
-    const colors = this.context.colors || mockTheme.colors;
-    const styles = createStyles(colors);
+  // renderTabBar() {
+  //   const colors = this.context.colors || mockTheme.colors;
+  //   const styles = createStyles(colors);
 
-    return (
-      <DefaultTabBar
-        underlineStyle={styles.tabUnderlineStyle}
-        activeTextColor={colors.primary.default}
-        inactiveTextColor={colors.text.alternative}
-        backgroundColor={colors.background.default}
-        tabStyle={styles.tabStyle}
-        textStyle={styles.textStyle}
-        style={styles.tabBar}
-      />
-    );
-  }
+  //   return (
+  //     <DefaultTabBar
+  //       underlineStyle={styles.tabUnderlineStyle}
+  //       activeTextColor={colors.primary.default}
+  //       inactiveTextColor={colors.text.alternative}
+  //       backgroundColor={colors.background.default}
+  //       tabStyle={styles.tabStyle}
+  //       textStyle={styles.textStyle}
+  //       style={styles.tabBar}
+  //     />
+  //   );
+  // }
 
   dismissNftInfo = async () => {
     this.setState({ dismissNftInfo: true });
@@ -152,32 +151,34 @@ class AddAsset extends PureComponent {
               />
             </View>
           )}
-        {assetType === 'token' ? (
+        {/* {assetType === 'token' ? (
           <ScrollableTabView
             key={chainId}
             renderTabBar={() => this.renderTabBar()}
-          >
-            {isTokenDetectionSupported && (
-              <SearchTokenAutocomplete
-                navigation={navigation}
-                tabLabel={strings('add_asset.search_token')}
-                testID={'tab-search-token'}
-              />
-            )}
-            <AddCustomToken
-              navigation={navigation}
-              tabLabel={strings('add_asset.custom_token')}
-              testID={'tab-add-custom-token'}
-              isTokenDetectionSupported={isTokenDetectionSupported}
-            />
-          </ScrollableTabView>
+          > */}
+        {isTokenDetectionSupported ? (
+          <SearchTokenAutocomplete
+            navigation={navigation}
+            tabLabel={strings('add_asset.search_token')}
+            testID={'tab-search-token'}
+          />
+        ) :
+          (<AddCustomToken
+            navigation={navigation}
+            tabLabel={strings('add_asset.custom_token')}
+            testID={'tab-add-custom-token'}
+            isTokenDetectionSupported={isTokenDetectionSupported}
+          />)
+        }
+
+        {/*  </ScrollableTabView>
         ) : (
           <AddCustomCollectible
             navigation={navigation}
             collectibleContract={collectibleContract}
             testID={'add-custom-collectible'}
           />
-        )}
+        )} */}
       </SafeAreaView>
     );
   };

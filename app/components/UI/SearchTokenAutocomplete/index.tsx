@@ -99,13 +99,6 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
     [setSearchResults, setSearchQuery],
   );
 
-  const handleSelectAsset = useCallback(
-    (asset) => {
-      setSelectedAsset(asset);
-    },
-    [setSelectedAsset],
-  );
-
   const addToken = useCallback(async () => {
     const { TokensController } = Engine.context as any;
     await TokensController.addToken(address, symbol, decimals, image);
@@ -140,6 +133,14 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
     getAnalyticsParams,
   ]);
 
+  const handleSelectAsset = useCallback(
+    (asset) => {
+      setSelectedAsset(asset);
+      addToken();
+    },
+    [setSelectedAsset, addToken],
+  );
+  
   const renderTokenDetectionBanner = useCallback(() => {
     if (isTokenDetectionEnabled || isSearchFocused) {
       return null;
@@ -195,11 +196,13 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
   return (
     <View style={styles.wrapper} testID={'search-token-screen'}>
       <ActionView
-        cancelText={strings('add_asset.tokens.cancel_add_token')}
+        // cancelText={strings('add_asset.tokens.cancel_add_token')}
+        // onCancelPress={cancelAddToken}
+        showCancelButton={false}
         confirmText={strings('add_asset.tokens.add_new_token')}
-        onCancelPress={cancelAddToken}
+        confirmButtonMode={'confirm'}
         onConfirmPress={addToken}
-        confirmDisabled={!(address && symbol && decimals)}
+        // confirmDisabled={!(address && symbol && decimals)}
       >
         <View>
           {renderTokenDetectionBanner()}

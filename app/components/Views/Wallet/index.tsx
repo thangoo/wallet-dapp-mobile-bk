@@ -354,6 +354,7 @@ const Wallet = ({ navigation }: any) => {
             iconName={IconName.AddPlusCircleAddBlack}
             style={styles.infoRightButton}
             size={IconSize.Xl}
+            // disabled={!tokensRef.current?.state.isAddTokenEnabled}
           />
         </View>
       </View>
@@ -379,11 +380,6 @@ const Wallet = ({ navigation }: any) => {
     () => (
       <DefaultTabBar
         underlineStyle={styles.tabUnderlineStyle}
-        // activeTextColor={colors['tvn.gray.10']}
-        // inactiveTextColor={colors['tvn.gray.05']}
-        // backgroundColor={colors.background.default}
-        // tabStyle={styles.tabStyle}
-        // textStyle={styles.textStyle}
         style={styles.tabBar}
         renderTab={renderTab}
       />
