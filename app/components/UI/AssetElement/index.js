@@ -9,9 +9,9 @@ const createStyles = (colors) =>
     itemWrapper: {
       flex: 1,
       flexDirection: 'row',
-      paddingHorizontal: 15,
-      paddingVertical: 10,
-      borderBottomWidth: StyleSheet.hairlineWidth,
+      // paddingHorizontal: 15,
+      paddingVertical: 5,
+      borderBottomWidth: 0,
       borderBottomColor: colors.border.muted,
     },
     arrow: {

@@ -103,6 +103,7 @@ const createStyles = ({ colors, typography }: Theme) =>
       marginTop: 16,
       justifyContent: 'flex-start',
       marginLeft: 20,
+      borderBottomWidth: 0,
     },
     splitTab: {
       fontSize: 18,
@@ -113,7 +114,6 @@ const createStyles = ({ colors, typography }: Theme) =>
       fontSize: 16,
       ...(typography.HeadingSM as TextStyle),
     },
-
     tabWrapper: {
       paddingLeft: 15,
     },
@@ -137,7 +137,7 @@ const createStyles = ({ colors, typography }: Theme) =>
       height: 50,
       flexDirection: 'row',
       justifyContent: 'space-around',
-      borderWidth: 1,
+      
       borderTopWidth: 0,
       borderLeftWidth: 0,
       borderRightWidth: 0,
