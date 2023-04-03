@@ -81,16 +81,16 @@ function Notification({
   ]);
 
   if (!currentNotification?.type) return null;
-  // if (currentNotification.type === TRANSACTION)
-  //   return (
-  //     <TransactionNotification
-  //       onClose={hideCurrentNotification}
-  //       isInBrowserView={isInBrowserView}
-  //       notificationAnimated={notificationAnimated}
-  //       animatedTimingStart={animatedTimingStart}
-  //       currentNotification={currentNotification}
-  //     />
-  //   );
+  if (currentNotification.type === TRANSACTION)
+    return (
+      <TransactionNotification
+        onClose={hideCurrentNotification}
+        isInBrowserView={isInBrowserView}
+        notificationAnimated={notificationAnimated}
+        animatedTimingStart={animatedTimingStart}
+        currentNotification={currentNotification}
+      />
+    );
   if (currentNotification.type === SIMPLE)
     return (
       <SimpleNotification
