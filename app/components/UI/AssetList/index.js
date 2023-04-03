@@ -1,4 +1,5 @@
 import React, { PureComponent, useState } from 'react';
+import { connect, useSelector } from 'react-redux';
 import { View, StyleSheet, Platform, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import SwitchToggle from "react-native-switch-toggle";
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
 /**
  * PureComponent that provides ability to search assets.
  */
-export default class AssetList extends PureComponent {
+class AssetList extends PureComponent {
   static propTypes = {
     /**
      * Array of assets objects returned from the search
@@ -82,7 +83,7 @@ export default class AssetList extends PureComponent {
     /**
      * Callback triggered when a token is selected
      */
-    handleSelectAsset: PropTypes.func,
+    handleToggleAsset: PropTypes.func,
     /**
      * Object of the currently-selected token
      */
@@ -91,22 +92,30 @@ export default class AssetList extends PureComponent {
      * Search query that generated "searchResults"
      */
     searchQuery: PropTypes.string,
+    /**
+     * An array that represents the user tokens
+     */
+    tokens: PropTypes.array,
   };
 
-
-
-  onToggleAsset = (key) => {
+  toggleToken = (key) => {
     const { searchResults, handleSelectAsset } = this.props;
-    handleSelectAsset(searchResults[key]);
-  };
-
+    onToggleAsset(searchResults[key]);
+  }
+  
   render = () => {
     const { searchResults = [], handleSelectAsset, selectedAsset } = this.props;
 
-    toggleToken = (key) => {
-      // console.log('### searchResults[key]: ', searchResults[key]);
-      handleSelectAsset(searchResults[key]);
+    
+
+    checkExist = (item) => {
+      const { tokens } = this.props;
+      return tokens.some(element =>
+        element.address.toUpperCase() == item.address.toUpperCase()
+      );
     }
+
+    const {searchQuery, handleToggleAsset} = this.props;
 
     return (
       <ScrollView style={styles.rowWrapper} testID={'add-searched-token-screen'}>
@@ -115,12 +124,13 @@ export default class AssetList extends PureComponent {
             {strings('token.select_token')}
           </Text>
         ) : null} */}
-        {searchResults.length === 0 && this.props.searchQuery.length ? (
+        {searchResults.length === 0 && searchQuery.length ? (
           <Text style={styles.normalText}>
             {strings('token.no_tokens_found')}
           </Text>
         ) : null}
-        {searchResults.slice(0, 6).map((_, i) => {
+        {searchResults.slice(0, 6).map((item, i) => {
+          const isExist = checkExist(item);
           return (
             <StyledButton
               type={'tokenList'}
@@ -129,7 +139,7 @@ export default class AssetList extends PureComponent {
               key={i}
               {...generateTestId(Platform, TOKEN_RESULTS_LIST_ID)}
             >
-              <TokenItem item={searchResults[i]} id={i} toggleToken={toggleToken} selectedAsset={selectedAsset} />
+              <TokenItem item={item} id={i} onToggleAsset={handleToggleAsset} selectedAsset={isExist} />
             </StyledButton>
           );
         })}
@@ -139,15 +149,14 @@ export default class AssetList extends PureComponent {
   };
 }
 
-const TokenItem = ({ item, id, toggleToken, selectedAsset }) => {
+const TokenItem = ({ item, id, onToggleAsset, selectedAsset }) => {
   const { colors } = useTheme();
-  const [isSelected, setIsSelected] = useState(selectedAsset && selectedAsset.address === address);
+  const [isSelected, setIsSelected] = useState(selectedAsset);
   const { symbol, name, address, iconUrl } = item || {};
 
-  const toggleSwitch = (key) => {
-    // isSelected = !isSelected;
+  const toggleSwitch = (item) => {
     setIsSelected(!isSelected);
-    toggleToken(key);
+    onToggleAsset(item, isSelected);
   }
 
   return (
@@ -163,7 +172,7 @@ const TokenItem = ({ item, id, toggleToken, selectedAsset }) => {
       </View>
       <SwitchToggle
         switchOn={isSelected}
-        onPress={() => toggleSwitch(id)}
+        onPress={() => toggleSwitch(item)}
         circleColorOff={colors['tvn.gray.06']}
         circleColorOn={colors['tvn.primary.blue']}
         backgroundColorOn={colors['tvn.white']}
@@ -173,3 +182,9 @@ const TokenItem = ({ item, id, toggleToken, selectedAsset }) => {
       />
     </View>)
 }
+
+const mapStateToProps = (state) => ({
+  tokens: state.engine.backgroundState.TokensController.tokens,
+});
+
+export default connect(mapStateToProps)(AssetList);

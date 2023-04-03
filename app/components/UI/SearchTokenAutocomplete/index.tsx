@@ -60,6 +60,8 @@ const SearchTokenAutocomplete = ({ navigation, onChangeCustomToken }: Props) => 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAsset, setSelectedAsset] = useState({});
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  
+
   const { address, symbol, decimals, image } = selectedAsset as any;
   const { colors } = useTheme();
   const styles = createStyles(colors);
@@ -115,17 +117,26 @@ const SearchTokenAutocomplete = ({ navigation, onChangeCustomToken }: Props) => 
     setSearchQuery('');
     setSelectedAsset({});
 
-    InteractionManager.runAfterInteractions(() => {
-      navigation.goBack();
-      NotificationManager.showSimpleNotification({
-        status: `simple_notification`,
-        duration: 5000,
-        title: strings('wallet.token_toast.token_imported_title'),
-        description: strings('wallet.token_toast.token_imported_desc', {
-          tokenSymbol: symbol,
-        }),
-      });
+    NotificationManager.showSimpleNotification({
+      status: `simple_notification`,
+      duration: 5000,
+      title: strings('wallet.token_toast.token_imported_title'),
+      description: strings('wallet.token_toast.token_imported_desc', {
+        tokenSymbol: symbol,
+      }),
     });
+
+    // InteractionManager.runAfterInteractions(() => {
+    //   navigation.goBack();
+    //   NotificationManager.showSimpleNotification({
+    //     status: `simple_notification`,
+    //     duration: 5000,
+    //     title: strings('wallet.token_toast.token_imported_title'),
+    //     description: strings('wallet.token_toast.token_imported_desc', {
+    //       tokenSymbol: symbol,
+    //     }),
+    //   });
+    // });
   }, [
     address,
     symbol,
@@ -138,8 +149,8 @@ const SearchTokenAutocomplete = ({ navigation, onChangeCustomToken }: Props) => 
     getAnalyticsParams,
   ]);
 
-  const handleSelectAsset = useCallback(
-    (asset) => {
+  const handleToggleAsset = useCallback(
+    (asset, isSelected) => {
       setSelectedAsset(asset);
       addToken();
     },
@@ -221,9 +232,10 @@ const SearchTokenAutocomplete = ({ navigation, onChangeCustomToken }: Props) => 
           />
           <AssetList
             searchResults={searchResults}
-            handleSelectAsset={handleSelectAsset}
+            handleToggleAsset={handleToggleAsset}
             selectedAsset={selectedAsset}
             searchQuery={searchQuery}
+            // selectedTokens={selectedTokens}
           />
           {/* <StyledButton
               type={'blue'}
