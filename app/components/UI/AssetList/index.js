@@ -1,5 +1,5 @@
 import React, { PureComponent, useState } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import SwitchToggle from "react-native-switch-toggle";
 import { strings } from '../../../../locales/i18n';
@@ -17,16 +17,19 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 20,
+    flex: 1,
   },
   item: {
     marginBottom: 5,
     padding: 8,
     borderRadius: 16,
+    height: 50,
   },
   assetListElement: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    height: 40,
   },
   tokenIcon: {
     width: 32,
@@ -97,9 +100,6 @@ export default class AssetList extends PureComponent {
     handleSelectAsset(searchResults[key]);
   };
 
-
-
-
   render = () => {
     const { searchResults = [], handleSelectAsset, selectedAsset } = this.props;
 
@@ -109,7 +109,7 @@ export default class AssetList extends PureComponent {
     }
 
     return (
-      <View style={styles.rowWrapper} testID={'add-searched-token-screen'}>
+      <ScrollView style={styles.rowWrapper} testID={'add-searched-token-screen'}>
         {/* {searchResults.length > 0 ? (
           <Text style={styles.normalText} testID={'select-token-title'}>
             {strings('token.select_token')}
@@ -129,16 +129,17 @@ export default class AssetList extends PureComponent {
               key={i}
               {...generateTestId(Platform, TOKEN_RESULTS_LIST_ID)}
             >
-              <TokenItem item={searchResults[i]} key={i} toggleToken={toggleToken} selectedAsset={selectedAsset} />
+              <TokenItem item={searchResults[i]} id={i} toggleToken={toggleToken} selectedAsset={selectedAsset} />
             </StyledButton>
           );
         })}
-      </View>
+
+      </ScrollView>
     );
   };
 }
 
-const TokenItem = ({ item, key, toggleToken, selectedAsset }) => {
+const TokenItem = ({ item, id, toggleToken, selectedAsset }) => {
   const { colors } = useTheme();
   const [isSelected, setIsSelected] = useState(selectedAsset && selectedAsset.address === address);
   const { symbol, name, address, iconUrl } = item || {};
@@ -150,7 +151,7 @@ const TokenItem = ({ item, key, toggleToken, selectedAsset }) => {
   }
 
   return (
-    <View style={styles.assetListElement}>
+    <View key={id} style={styles.assetListElement}>
       <AssetIcon
         address={address}
         logo={iconUrl}
@@ -162,7 +163,7 @@ const TokenItem = ({ item, key, toggleToken, selectedAsset }) => {
       </View>
       <SwitchToggle
         switchOn={isSelected}
-        onPress={() => toggleSwitch(key)}
+        onPress={() => toggleSwitch(id)}
         circleColorOff={colors['tvn.gray.06']}
         circleColorOn={colors['tvn.primary.blue']}
         backgroundColorOn={colors['tvn.white']}

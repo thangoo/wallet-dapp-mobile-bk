@@ -212,4 +212,7 @@ export enum IconName {
   // Thango icon
   ShieldEffectWhite = 'ShieldEffectWhite',
   DoneCircleWhite = 'DoneCircleWhite',
+  BellNotificationWhite = 'BellNotificationWhite',
+  AddPlusCircleAddBlack = 'AddPlusCircleAddBlack',
+  MenuItem01White = 'MenuItem01White',
 }

@@ -23,7 +23,6 @@ import { fontStyles, colors as importedColors } from '../../../styles/common';
 import { strings } from '../../../../locales/i18n';
 import { importAccountFromPrivateKey } from '../../../util/address';
 import Device from '../../../util/device';
-import PickerNetwork from '../../../component-library/components/Pickers/PickerNetwork';
 import BrowserUrlBar from '../BrowserUrlBar';
 import generateTestId from '../../../../wdio/utils/generateTestId';
 import {
@@ -59,6 +58,7 @@ import { MetaMetricsEvents } from '../../../core/Analytics';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
 import { HeaderBackButton } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
+
 
 const trackEvent = (event) => {
   InteractionManager.runAfterInteractions(() => {
@@ -104,7 +104,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: Device.isAndroid() ? 22 : 18,
     paddingVertical: Device.isAndroid() ? 14 : 8,
   },
-  infoButton: {
+  infoLeftButton: {
+    paddingLeft: Device.isAndroid() ? 22 : 18,
+    marginTop: 5,
+  },
+  infoRightButton: {
     paddingRight: Device.isAndroid() ? 22 : 18,
     marginTop: 5,
   },
@@ -887,9 +891,10 @@ export function getOfflineModalNavbar() {
 export function getWalletNavbarOptions(
   networkName,
   networkImageSource,
-  onPressTitle,
+  title,
   navigation,
   drawerRef,
+  onPressTitle,
   themeColors,
 ) {
   const innerStyles = StyleSheet.create({
@@ -906,51 +911,59 @@ export function getWalletNavbarOptions(
       marginTop: 5,
       flex: 1,
     },
+    title: {
+      fontSize: 16,
+      fontWeight: '600',
+      color: themeColors['tvn.white'],
+    },
+    headerTitleWrapper: {
+      flex: 1,
+    },
   });
 
-  const onScanSuccess = (data, content) => {
-    if (data.private_key) {
-      Alert.alert(
-        strings('wallet.private_key_detected'),
-        strings('wallet.do_you_want_to_import_this_account'),
-        [
-          {
-            text: strings('wallet.cancel'),
-            onPress: () => false,
-            style: 'cancel',
-          },
-          {
-            text: strings('wallet.yes'),
-            onPress: async () => {
-              try {
-                await importAccountFromPrivateKey(data.private_key);
-                navigation.navigate('ImportPrivateKeyView', {
-                  screen: 'ImportPrivateKeySuccess',
-                });
-              } catch (e) {
-                Alert.alert(
-                  strings('import_private_key.error_title'),
-                  strings('import_private_key.error_message'),
-                );
-              }
-            },
-          },
-        ],
-        { cancelable: false },
-      );
-    } else if (data.seed) {
-      Alert.alert(
-        strings('wallet.error'),
-        strings('wallet.logout_to_import_seed'),
-      );
-    } else {
-      setTimeout(() => {
-        DeeplinkManager.parse(content, {
-          origin: AppConstants.DEEPLINKS.ORIGIN_QR_CODE,
-        });
-      }, 500);
-    }
-  };
+  // const onScanSuccess = (data, content) => {
+  //   if (data.private_key) {
+  //     Alert.alert(
+  //       strings('wallet.private_key_detected'),
+  //       strings('wallet.do_you_want_to_import_this_account'),
+  //       [
+  //         {
+  //           text: strings('wallet.cancel'),
+  //           onPress: () => false,
+  //           style: 'cancel',
+  //         },
+  //         {
+  //           text: strings('wallet.yes'),
+  //           onPress: async () => {
+  //             try {
+  //               await importAccountFromPrivateKey(data.private_key);
+  //               navigation.navigate('ImportPrivateKeyView', {
+  //                 screen: 'ImportPrivateKeySuccess',
+  //               });
+  //             } catch (e) {
+  //               Alert.alert(
+  //                 strings('import_private_key.error_title'),
+  //                 strings('import_private_key.error_message'),
+  //               );
+  //             }
+  //           },
+  //         },
+  //       ],
+  //       { cancelable: false },
+  //     );
+  //   } else if (data.seed) {
+  //     Alert.alert(
+  //       strings('wallet.error'),
+  //       strings('wallet.logout_to_import_seed'),
+  //     );
+  //   } else {
+  //     setTimeout(() => {
+  //       DeeplinkManager.parse(content, {
+  //         origin: AppConstants.DEEPLINKS.ORIGIN_QR_CODE,
+  //       });
+  //     }, 500);
+  //   }
+  // };
 
   function openDrawer() {
     drawerRef.current?.showDrawer?.();
@@ -966,38 +979,42 @@ export function getWalletNavbarOptions(
 
   return {
     headerTitle: () => (
-      <View style={innerStyles.headerTitle}>
-        <PickerNetwork
-          label={networkName}
-          imageSource={networkImageSource}
-          onPress={onPressTitle}
-          {...generateTestId(Platform, NAVBAR_NETWORK_BUTTON)}
-        />
-      </View>
+      <TouchableOpacity style={innerStyles.headerTitleWrapper} onPress={onPressTitle} >
+        <View style={innerStyles.headerTitle}>
+          <Text style={innerStyles.title}>Hello, {title}</Text>
+        </View>
+      </TouchableOpacity>
+      // <PickerNetwork
+      //   label={networkName}
+      //   imageSource={networkImageSource}
+      //   onPress={onPressTitle}
+      //   {...generateTestId(Platform, NAVBAR_NETWORK_BUTTON)}
+      // />
     ),
     headerTransparent: true,
     headerLeft: () => (
-      <TouchableOpacity
+      // <TouchableOpacity
+      //   onPress={openDrawer}
+      //   style={styles.backButton}
+      //   {...generateTestId(Platform, HAMBURGER_MENU_BUTTON)}
+      // >
+      <ButtonIcon
+        variant={ButtonIconVariants.Primary}
         onPress={openDrawer}
-        style={styles.backButton}
-        {...generateTestId(Platform, HAMBURGER_MENU_BUTTON)}
-      >
-        <IonicIcon
-          {...generateTestId(Platform, WALLET_VIEW_BURGER_ICON_ID)}
-          name={Device.isAndroid() ? 'md-menu' : 'ios-menu'}
-          size={Device.isAndroid() ? 24 : 28}
-          style={innerStyles.headerIcon}
-        />
-      </TouchableOpacity>
+        iconName={IconName.MenuItem01White}
+        style={styles.infoLeftButton}
+        size={IconSize.Xl}
+      />
+      // </TouchableOpacity>
     ),
     headerRight: () => (
       <ButtonIcon
         variant={ButtonIconVariants.Primary}
-        onPress={openQRScanner}
-        iconName={IconName.Scan}
-        style={styles.infoButton}
+        // onPress={openQRScanner}
+        iconName={IconName.BellNotificationWhite}
+        style={styles.infoRightButton}
         size={IconSize.Xl}
-        testID="scan-header-icon"
+      // testID="scan-header-icon"
       />
     ),
     headerStyle: innerStyles.headerStyle,
@@ -1058,15 +1075,15 @@ export function getNetworkNavbarOptions(
     ),
     headerRight: onRightPress
       ? () => (
-          <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
-            <MaterialCommunityIcon
-              name={'dots-horizontal'}
-              size={28}
-              style={innerStyles.headerIcon}
-            />
-          </TouchableOpacity>
-          // eslint-disable-next-line no-mixed-spaces-and-tabs
-        )
+        <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
+          <MaterialCommunityIcon
+            name={'dots-horizontal'}
+            size={28}
+            style={innerStyles.headerIcon}
+          />
+        </TouchableOpacity>
+        // eslint-disable-next-line no-mixed-spaces-and-tabs
+      )
       : () => <View />,
     headerStyle: innerStyles.headerStyle,
   };
@@ -1129,16 +1146,16 @@ export function getNavbarTransaction(
 
     headerRight: onRightPress
       ? () => (
-          <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
-            {/* <MaterialCommunityIcon
+        <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
+          {/* <MaterialCommunityIcon
               name={'dots-horizontal'}
               size={28}
               style={innerStyles.headerIcon}
             /> */}
-            <Image source={chart_line_icon} style={{ width: 27, height: 23 }} />
-          </TouchableOpacity>
-          // eslint-disable-next-line no-mixed-spaces-and-tabs
-        )
+          <Image source={chart_line_icon} style={{ width: 27, height: 23 }} />
+        </TouchableOpacity>
+        // eslint-disable-next-line no-mixed-spaces-and-tabs
+      )
       : () => <View />,
     headerStyle: innerStyles.headerStyle,
   };
@@ -1597,4 +1614,78 @@ export function getFiatOnRampAggNavbar(
  */
 export function getNoneHeaderNavbarOptions() {
   return { headerTransparent: true, headerShown: false };
+}
+
+export function getScreenNavbarOptions(
+  route,
+  { headerLeft, headerTitle, headerStyle, title },
+  themeColors,
+) {
+  return {
+    headerStyle: headerStyle || getHeaderStyleOption01(themeColors),
+    headerTitle: headerTitle || getHeaderTitleOption01({ title, themeColors }),
+    headerBackTitle: <View />,
+    headerRight: () => <View />,
+    headerLeft: headerLeft || route.params?.headerLeft || getHeaderLeftOption01,
+    headerTintColor: themeColors['tvn.gray.10'],
+
+  };
+}
+
+/**
+ * Function that returns a navigation options with HeaderLeft: black Arrow
+ *
+ * @returns {Object} - Corresponding navbar options
+ */
+export function getHeaderLeftOption01(props) {
+  return (
+    <HeaderBackButton
+      {...props}
+      labelVisible={false}
+      style={{ marginLeft: 16 }}
+      backImage={() => (
+        <Image
+          source={arrow_right_icon}
+          style={{ width: 32, height: 32 }}
+        />
+      )}
+    />
+  )
+}
+
+/**
+ * Function that returns a navigation options with header title color: gray
+ *
+ * @returns {Object} - Corresponding navbar options
+ */
+export function getHeaderTitleOption01({ title, themeColors }) {
+  const innerStyles = StyleSheet.create({
+    paymeName: {
+      fontWeight: '600',
+      fontSize: 22,
+      color: themeColors['tvn.gray.10'],
+    },
+  });
+
+  return (<View style={styles.metamaskNameTransparentWrapper}>
+    <Text style={innerStyles.paymeName}>{title}</Text>
+  </View>);
+}
+
+/**
+ * Function that returns a navigation options with background header color: white
+ *
+ * @returns {Object} - Corresponding navbar options
+ */
+export function getHeaderStyleOption01(themeColors) {
+
+  const innerStyles = StyleSheet.create({
+    headerStyle: {
+      backgroundColor: themeColors['tvn.background.default'],
+      shadowColor: importedColors.transparent,
+      elevation: 0,
+    },
+  });
+
+  return innerStyles.headerStyle;
 }

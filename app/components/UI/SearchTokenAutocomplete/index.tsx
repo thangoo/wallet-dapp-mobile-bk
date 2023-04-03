@@ -20,11 +20,15 @@ import { FORMATTED_NETWORK_NAMES } from '../../../constants/on-ramp';
 import NotificationManager from '../../../core/NotificationManager';
 import { useTheme } from '../../../util/theme';
 import { selectChainId } from '../../../selectors/networkController';
+import StyledButton from '../StyledButton';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
     wrapper: {
       backgroundColor: colors.background.default,
+      flex: 1,
+    },
+    listTokenWrapper: {
       flex: 1,
     },
     tokenDetectionBanner: {
@@ -42,15 +46,16 @@ const createStyles = (colors: any) =>
 
 interface Props {
   /**
-	/* navigation object required to push new views
-	*/
+  /* navigation object required to push new views
+  */
   navigation: any;
+  onChangeCustomToken: any;
 }
 
 /**
  * Component that provides ability to add searched assets with metadata.
  */
-const SearchTokenAutocomplete = ({ navigation }: Props) => {
+const SearchTokenAutocomplete = ({ navigation, onChangeCustomToken }: Props) => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAsset, setSelectedAsset] = useState({});
@@ -99,13 +104,6 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
     [setSearchResults, setSearchQuery],
   );
 
-  const handleSelectAsset = useCallback(
-    (asset) => {
-      setSelectedAsset(asset);
-    },
-    [setSelectedAsset],
-  );
-
   const addToken = useCallback(async () => {
     const { TokensController } = Engine.context as any;
     await TokensController.addToken(address, symbol, decimals, image);
@@ -139,6 +137,14 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
     navigation,
     getAnalyticsParams,
   ]);
+
+  const handleSelectAsset = useCallback(
+    (asset) => {
+      setSelectedAsset(asset);
+      addToken();
+    },
+    [setSelectedAsset, addToken],
+  );
 
   const renderTokenDetectionBanner = useCallback(() => {
     if (isTokenDetectionEnabled || isSearchFocused) {
@@ -195,13 +201,16 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
   return (
     <View style={styles.wrapper} testID={'search-token-screen'}>
       <ActionView
-        cancelText={strings('add_asset.tokens.cancel_add_token')}
+        // cancelText={strings('add_asset.tokens.cancel_add_token')}
+        // onCancelPress={cancelAddToken}
+        showCancelButton={false}
         confirmText={strings('add_asset.tokens.add_new_token')}
-        onCancelPress={cancelAddToken}
-        onConfirmPress={addToken}
-        confirmDisabled={!(address && symbol && decimals)}
+        confirmButtonMode={'confirm'}
+        onConfirmPress={onChangeCustomToken}
+        isFullScreen
+        // confirmDisabled={!(address && symbol && decimals)}
       >
-        <View>
+        <View style={styles.listTokenWrapper}>
           {renderTokenDetectionBanner()}
           <AssetSearch
             onSearch={handleSearch}
@@ -216,6 +225,18 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
             selectedAsset={selectedAsset}
             searchQuery={searchQuery}
           />
+          {/* <StyledButton
+              type={'blue'}
+              onPress={addToken}
+              testID={'continue-button'}
+              // disabled={!canSubmit}
+              disabledContainerStyle={{
+                backgroundColor: colors['tvn.dark_gray_blue'],
+              }}
+              containerStyle={{marginHorizontal:16, marginBottom:16}}
+            > 
+              {strings('manual_backup_step_1.continue')}
+            </StyledButton>*/}
         </View>
       </ActionView>
     </View>

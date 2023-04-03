@@ -9,9 +9,9 @@ const createStyles = (colors) =>
     itemWrapper: {
       flex: 1,
       flexDirection: 'row',
-      paddingHorizontal: 15,
-      paddingVertical: 10,
-      borderBottomWidth: StyleSheet.hairlineWidth,
+      // paddingHorizontal: 15,
+      paddingVertical: 5,
+      borderBottomWidth: 0,
       borderBottomColor: colors.border.muted,
     },
     arrow: {
@@ -68,14 +68,14 @@ export default class AssetElement extends PureComponent {
         style={styles.itemWrapper}
       >
         {children}
-        <View styles={styles.arrow}>
+        {/* <View styles={styles.arrow}>
           <Icon
             name="ios-arrow-forward"
             size={24}
             color={colors.icon.alternative}
             style={styles.arrowIcon}
           />
-        </View>
+        </View> */}
       </TouchableOpacity>
     );
   };

@@ -14,11 +14,13 @@ import {
   StyleSheet,
   View,
   TextStyle,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
 import { Theme } from '@metamask/design-tokens';
 import { useDispatch, useSelector } from 'react-redux';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import DefaultTabBar from 'react-native-scrollable-tab-view/DefaultTabBar';
+import { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import { MetaMetricsEvents } from '../../../core/Analytics';
 import { baseStyles } from '../../../styles/common';
 import AccountOverview from '../../UI/AccountOverview';
@@ -39,6 +41,17 @@ import { useTheme } from '../../../util/theme';
 import { shouldShowWhatsNewModal } from '../../../util/onboarding';
 import Logger from '../../../util/Logger';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
+import { renderAccountName } from '../../../util/address';
+
+import ButtonIcon, {
+  ButtonIconVariants,
+} from '../../../component-library/components/Buttons/ButtonIcon';
+import {
+  IconName,
+  IconSize,
+} from '../../../component-library/components/Icons/Icon';
+import Device from '../../../util/device';
+
 import Routes from '../../../constants/navigation/Routes';
 import {
   getNetworkImageSource,
@@ -60,7 +73,7 @@ const createStyles = ({ colors, typography }: Theme) =>
       backgroundColor: colors.background.default,
     },
     assetOverviewWrapper: {
-      height: 391,
+      height: 350,
     },
     bgGradient: {
       flex: 1,
@@ -72,25 +85,72 @@ const createStyles = ({ colors, typography }: Theme) =>
       width: '100%',
       top: 90,
     },
-    tabUnderlineStyle: {
-      height: 2,
-      backgroundColor: colors.primary.default,
-    },
-    tabStyle: {
-      paddingBottom: 0,
-    },
-    tabBar: {
-      borderColor: colors.border.muted,
-      marginTop: 16,
-    },
-    textStyle: {
-      ...(typography.HeadingSM as TextStyle),
-    },
+
     loader: {
       backgroundColor: colors.background.default,
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+
+    tabUnderlineStyle: {
+      height: 0,
+      backgroundColor: colors.primary.default,
+    },
+
+    tabBar: {
+      borderColor: colors.border.muted,
+      marginTop: 16,
+      justifyContent: 'flex-start',
+      marginLeft: 20,
+      borderBottomWidth: 0,
+    },
+    splitTab: {
+      fontSize: 18,
+      color: colors['tvn.gray.05'],
+      marginRight: 15,
+    },
+    textStyle: {
+      fontSize: 16,
+      ...(typography.HeadingSM as TextStyle),
+    },
+    tabWrapper: {
+      paddingLeft: 15,
+    },
+    tabWrapperFinal: {
+      flex: 1,
+      paddingLeft: 15,
+    },
+    tabStyleFirst: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingBottom: 0,
+    },
+    tabStyleSecond: {
+      flex: 1,
+      alignItems: 'center',
+      paddingBottom: 0,
+      flexDirection: 'row',
+    },
+    tabs: {
+      height: 50,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      
+      borderTopWidth: 0,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+      borderColor: '#ccc',
+    },
+    addIconWrapper: {
+      flex: 1,
+      flexDirection: 'row-reverse',
+      alignItems: 'center',
+    },
+    infoRightButton: {
+      paddingRight: Device.isAndroid() ? 22 : 18,
+      marginTop: 5,
     },
   });
 
@@ -101,6 +161,7 @@ const Wallet = ({ navigation }: any) => {
   const { drawerRef } = useContext(DrawerContext);
   const [refreshing, setRefreshing] = useState(false);
   const accountOverviewRef = useRef(null);
+  const tokensRef = useRef(null);
   const theme = useTheme();
   const styles = createStyles(theme);
   const { colors } = theme;
@@ -220,20 +281,24 @@ const Wallet = ({ navigation }: any) => {
   );
 
   useEffect(() => {
+    // const ens = await doENSReverseLookup(account.address, network);
+    // const title = isDefaultAccountName(name) && ens ? ens : name;
+    const accountLabel = renderAccountName(selectedAddress, identities);
     navigation.setOptions(
       getWalletNavbarOptions(
         networkName,
         networkImageSource,
-        onTitlePress,
+        accountLabel,
         navigation,
         drawerRef,
+        onTitlePress,
         themeColors,
       ),
     );
 
     // navigation.setOptions(getNoneHeaderNavbarOptions());
     /* eslint-disable-next-line */
-  }, [navigation, themeColors, networkName, networkImageSource, onTitlePress]);
+  }, [navigation, themeColors, networkName, networkImageSource, onTitlePress, selectedAddress, identities]);
 
   // Refesh: Token, Nft, Account Tracker, Currency Rate, Token Rates
   const onRefresh = useCallback(async () => {
@@ -258,19 +323,68 @@ const Wallet = ({ navigation }: any) => {
     });
   }, [setRefreshing]);
 
+
+  const renderTab = (name: any, page: any, isTabActive: any, onPressHandler: any) => {
+    // const { activeTextColor, inactiveTextColor, textStyle, } = this.props;
+    const textColor = isTabActive ? colors['tvn.gray.10'] : colors['tvn.gray.05'];
+    const fontWeight = isTabActive ? 'bold' : 'normal';
+
+    // console.log('#### name: ', name);
+
+    // Frist Tab
+    const RenderTokens = () => (
+      <View style={styles.tabStyleFirst}>
+        <Text style={[{ color: textColor, fontWeight, }, styles.textStyle,]}>
+          {name}
+        </Text>
+      </View>
+    );
+
+    // From Sencond Tab
+    const RenderNFTs = () => (
+      <View style={styles.tabStyleSecond}>
+        <Text style={styles.splitTab}>\</Text>
+        <Text style={[{ color: textColor, fontWeight, }, styles.textStyle,]}>
+          {name}
+        </Text>
+        <View style={styles.addIconWrapper}>
+          <ButtonIcon
+            variant={ButtonIconVariants.Primary}
+            onPress={tokensRef.current?.goToAddToken}
+            iconName={IconName.AddPlusCircleAddBlack}
+            style={styles.infoRightButton}
+            size={IconSize.Xl}
+            // disabled={!tokensRef.current?.state.isAddTokenEnabled}
+          />
+        </View>
+      </View>
+    );
+
+    const isTokens = name === 'Tokens';
+
+    return (<TouchableOpacity
+      style={isTokens ? styles.tabWrapper : styles.tabWrapperFinal}
+      key={name}
+      accessible={true}
+      accessibilityLabel={name}
+      accessibilityTraits='button'
+      onPress={() => onPressHandler(page)}
+    >
+      {isTokens ? <RenderTokens /> : <RenderNFTs />}
+    </TouchableOpacity>)
+
+
+  }
+
   const renderTabBar = useCallback(
     () => (
       <DefaultTabBar
         underlineStyle={styles.tabUnderlineStyle}
-        activeTextColor={colors.text.default}
-        inactiveTextColor={colors.text.muted}
-        backgroundColor={colors.background.default}
-        tabStyle={styles.tabStyle}
-        textStyle={styles.textStyle}
         style={styles.tabBar}
+        renderTab={renderTab}
       />
     ),
-    [styles, colors],
+    [styles, colors, tokensRef],
   );
 
   const onChangeTab = useCallback((obj) => {
@@ -285,6 +399,10 @@ const Wallet = ({ navigation }: any) => {
 
   const onRef = useCallback((ref) => {
     accountOverviewRef.current = ref;
+  }, []);
+
+  const onTokensRef = useCallback((ref) => {
+    tokensRef.current = ref;
   }, []);
 
   const renderContent = useCallback(() => {
@@ -349,6 +467,7 @@ const Wallet = ({ navigation }: any) => {
             key={'tokens-tab'}
             navigation={navigation}
             tokens={assets}
+            onRef={onTokensRef}
           />
           <CollectibleContracts
             tabLabel={strings('wallet.collectibles')}
