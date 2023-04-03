@@ -23,7 +23,6 @@ import { fontStyles, colors as importedColors } from '../../../styles/common';
 import { strings } from '../../../../locales/i18n';
 import { importAccountFromPrivateKey } from '../../../util/address';
 import Device from '../../../util/device';
-import PickerNetwork from '../../../component-library/components/Pickers/PickerNetwork';
 import BrowserUrlBar from '../BrowserUrlBar';
 import generateTestId from '../../../../wdio/utils/generateTestId';
 import {
@@ -59,6 +58,7 @@ import { MetaMetricsEvents } from '../../../core/Analytics';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
 import { HeaderBackButton } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
+
 
 const trackEvent = (event) => {
   InteractionManager.runAfterInteractions(() => {
@@ -915,52 +915,55 @@ export function getWalletNavbarOptions(
       fontSize: 16,
       fontWeight: '600',
       color: themeColors['tvn.white'],
-    }
+    },
+    headerTitleWrapper: {
+      flex: 1,
+    },
   });
 
-  const onScanSuccess = (data, content) => {
-    if (data.private_key) {
-      Alert.alert(
-        strings('wallet.private_key_detected'),
-        strings('wallet.do_you_want_to_import_this_account'),
-        [
-          {
-            text: strings('wallet.cancel'),
-            onPress: () => false,
-            style: 'cancel',
-          },
-          {
-            text: strings('wallet.yes'),
-            onPress: async () => {
-              try {
-                await importAccountFromPrivateKey(data.private_key);
-                navigation.navigate('ImportPrivateKeyView', {
-                  screen: 'ImportPrivateKeySuccess',
-                });
-              } catch (e) {
-                Alert.alert(
-                  strings('import_private_key.error_title'),
-                  strings('import_private_key.error_message'),
-                );
-              }
-            },
-          },
-        ],
-        { cancelable: false },
-      );
-    } else if (data.seed) {
-      Alert.alert(
-        strings('wallet.error'),
-        strings('wallet.logout_to_import_seed'),
-      );
-    } else {
-      setTimeout(() => {
-        DeeplinkManager.parse(content, {
-          origin: AppConstants.DEEPLINKS.ORIGIN_QR_CODE,
-        });
-      }, 500);
-    }
-  };
+  // const onScanSuccess = (data, content) => {
+  //   if (data.private_key) {
+  //     Alert.alert(
+  //       strings('wallet.private_key_detected'),
+  //       strings('wallet.do_you_want_to_import_this_account'),
+  //       [
+  //         {
+  //           text: strings('wallet.cancel'),
+  //           onPress: () => false,
+  //           style: 'cancel',
+  //         },
+  //         {
+  //           text: strings('wallet.yes'),
+  //           onPress: async () => {
+  //             try {
+  //               await importAccountFromPrivateKey(data.private_key);
+  //               navigation.navigate('ImportPrivateKeyView', {
+  //                 screen: 'ImportPrivateKeySuccess',
+  //               });
+  //             } catch (e) {
+  //               Alert.alert(
+  //                 strings('import_private_key.error_title'),
+  //                 strings('import_private_key.error_message'),
+  //               );
+  //             }
+  //           },
+  //         },
+  //       ],
+  //       { cancelable: false },
+  //     );
+  //   } else if (data.seed) {
+  //     Alert.alert(
+  //       strings('wallet.error'),
+  //       strings('wallet.logout_to_import_seed'),
+  //     );
+  //   } else {
+  //     setTimeout(() => {
+  //       DeeplinkManager.parse(content, {
+  //         origin: AppConstants.DEEPLINKS.ORIGIN_QR_CODE,
+  //       });
+  //     }, 500);
+  //   }
+  // };
 
   function openDrawer() {
     drawerRef.current?.showDrawer?.();
@@ -976,12 +979,11 @@ export function getWalletNavbarOptions(
 
   return {
     headerTitle: () => (
-      // <TouchableOpacity onPress={onPressTitle} >
+      <TouchableOpacity style={innerStyles.headerTitleWrapper} onPress={onPressTitle} >
         <View style={innerStyles.headerTitle}>
           <Text style={innerStyles.title}>Hello, {title}</Text>
         </View>
-      // </TouchableOpacity>
-
+      </TouchableOpacity>
       // <PickerNetwork
       //   label={networkName}
       //   imageSource={networkImageSource}

@@ -17,7 +17,7 @@ const createStyles = (colors: any) =>
     searchSection: {
       margin: 20,
       marginBottom: 0,
-      flex: 1,
+      // flex: 1,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',

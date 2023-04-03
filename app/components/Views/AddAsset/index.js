@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useState } from 'react';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 import { fontStyles } from '../../../styles/common';
 import { connect } from 'react-redux';
@@ -55,6 +55,7 @@ class AddAsset extends PureComponent {
     symbol: '',
     decimals: '',
     dismissNftInfo: false,
+    isSearchToken: true,
   };
 
   static propTypes = {
@@ -122,7 +123,12 @@ class AddAsset extends PureComponent {
     this.setState({ dismissNftInfo: true });
   };
 
+  
+
   render = () => {
+    changeToCustomToken = async () => {
+      this.setState({ isSearchToken: false });
+    };
     const {
       route: {
         params: { assetType, collectibleContract },
@@ -132,7 +138,7 @@ class AddAsset extends PureComponent {
       useNftDetection,
       networkType,
     } = this.props;
-    const { dismissNftInfo } = this.state;
+    const { dismissNftInfo, isSearchToken } = this.state;
     const isTokenDetectionSupported =
       isTokenDetectionSupportedForNetwork(chainId);
     const colors = this.context.colors || mockTheme.colors;
@@ -156,19 +162,19 @@ class AddAsset extends PureComponent {
             key={chainId}
             renderTabBar={() => this.renderTabBar()}
           > */}
-        {isTokenDetectionSupported ? (
+        {isTokenDetectionSupported && isSearchToken ? (
           <SearchTokenAutocomplete
             navigation={navigation}
+            onChangeCustomToken={changeToCustomToken}
             tabLabel={strings('add_asset.search_token')}
             testID={'tab-search-token'}
           />
-        ) :
-          (<AddCustomToken
-            navigation={navigation}
-            tabLabel={strings('add_asset.custom_token')}
-            testID={'tab-add-custom-token'}
-            isTokenDetectionSupported={isTokenDetectionSupported}
-          />)
+        ) : (<AddCustomToken
+          navigation={navigation}
+          tabLabel={strings('add_asset.custom_token')}
+          testID={'tab-add-custom-token'}
+          isTokenDetectionSupported={isTokenDetectionSupported}
+        />)
         }
 
         {/*  </ScrollableTabView>
