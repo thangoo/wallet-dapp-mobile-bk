@@ -321,7 +321,8 @@ class AccountOverview extends PureComponent {
     });
   };
 
-  onReceive = () => this.props.toggleReceiveModal();
+  // onReceive = () => this.props.toggleReceiveModal();
+  onReceive = () => this.props.navigation.navigate('ReceiveScreen');
 
   onSend = () => {
     const { newAssetTransaction, navigation, ticker } = this.props;

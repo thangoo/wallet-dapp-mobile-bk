@@ -72,6 +72,7 @@ import { isEqual } from 'lodash';
 import { selectProviderConfig } from '../../../selectors/networkController';
 import { strings } from '../../../../locales/i18n';
 import isUrl from 'is-url';
+import ReceiveScreen from '../../Views/ReceiveScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -181,6 +182,15 @@ const WalletTabModalFlow = () => (
   </Stack.Navigator>
 );
 
+const SettingsTabModalFlow = () => (
+  <Stack.Navigator mode={'modal'}>
+    <Stack.Screen
+      name={Routes.SETTINGS_TAB.TAB_STACK_FLOW}
+      component={Settings}
+    />
+  </Stack.Navigator>
+);
+
 const TransactionsHome = () => (
   <Stack.Navigator>
     <Stack.Screen name={Routes.TRANSACTIONS_VIEW} component={ActivityView} />
@@ -260,7 +270,7 @@ const HomeTabs = () => {
     },
     browser: {
       tabBarIconKey: TabBarIconKey.Browser,
-      tabBarLabel: strings('drawer.browser'),
+      tabBarLabel: 'Market',
       callback: () => {
         trackEvent(MetaMetricsEvents.BROWSER_OPENED, {
           number_of_accounts: accountsLength,
@@ -271,6 +281,16 @@ const HomeTabs = () => {
         });
       },
       rootScreenName: Routes.BROWSER_VIEW,
+    },
+    market: {
+      tabBarIconKey: TabBarIconKey.Market,
+      tabBarLabel: 'Scan',
+      rootScreenName: Routes.MARKET_VIEW,
+    },
+    setting: {
+      tabBarIconKey: TabBarIconKey.Settings,
+      tabBarLabel: 'Settings',
+      rootScreenName: Routes.SETTINGS_VIEW,
     },
   };
 
@@ -317,6 +337,16 @@ const HomeTabs = () => {
             options={options.browser}
             component={BrowserFlow}
           />
+          <Tab.Screen
+            name={Routes.MARKET.HOME}
+            options={options.market}
+            component={BrowserFlow}
+          />
+          <Tab.Screen
+            name={Routes.SETTINGS_TAB.HOME}
+            options={options.setting}
+            component={SettingsTabModalFlow}
+          />
         </Tab.Navigator>
       </Drawer>
     </DrawerContext.Provider>
@@ -336,11 +366,9 @@ const Webview = () => (
 
 const SettingsFlow = () => (
   <Stack.Navigator initialRouteName={'Settings'}>
-    <Stack.Screen
-      name="Settings"
-      component={Settings}
-      options={Settings.navigationOptions}
-    />
+    <Stack.Screen name="Settings" options={Settings.navigationOptions}>
+      {(p) => <Settings {...p} showClose />}
+    </Stack.Screen>
     <Stack.Screen
       name="GeneralSettings"
       component={GeneralSettings}
@@ -651,6 +679,11 @@ const MainNavigator = () => (
       component={FiatOnRampAggregator}
     />
     <Stack.Screen name="Swaps" component={Swaps} />
+    <Stack.Screen
+      name="ReceiveScreen"
+      component={ReceiveScreen}
+      options={{ headerShown: true }}
+    />
     <Stack.Screen
       name="SetPasswordFlow"
       component={SetPasswordFlow}

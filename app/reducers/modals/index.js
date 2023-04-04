@@ -23,6 +23,12 @@ const modalsReducer = (state = initialState, action) => {
         receiveAsset: action.asset,
       };
     }
+    case 'SET_RECEIVE_ASSET': {
+      return {
+        ...state,
+        receiveAsset: action.asset,
+      };
+    }
     case 'TOGGLE_COLLECTIBLE_CONTRACT_MODAL':
       return {
         ...state,

@@ -46,18 +46,17 @@ const ConfirmBackupModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
     }, 500);
   };
 
-  console.log(selections);
   const handleSelect = (index: number) => {
-    console.log(
-      _.find(selections, (t) => t === index),
-      'f',
-    );
-
     if (_.find(selections, (t) => t === index)) {
       setSelections(_.filter(selections, (t) => t !== index));
     } else {
       setSelections((prev) => [...prev, index]);
     }
+  };
+
+  const close = () => {
+    setToggle(false);
+    setSelections([]);
   };
   return (
     <ReactNativeModal
@@ -66,9 +65,9 @@ const ConfirmBackupModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
       style={styles.modal}
       backdropTransitionOutTiming={0}
       isVisible={toggle}
-      onBackdropPress={setToggle}
-      onBackButtonPress={setToggle}
-      onSwipeComplete={setToggle}
+      onBackdropPress={close}
+      onBackButtonPress={close}
+      onSwipeComplete={close}
     >
       <View style={styles.body}>
         <View style={styles.dragger} />
@@ -98,17 +97,15 @@ const ConfirmBackupModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
           ))}
         </View>
 
-        <SafeAreaView edges={['bottom']} style={{ width: '100%' }}>
-          <StyledButton
-            testID={'manual-backup-step-1-continue-button'}
-            type={'confirm'}
-            onPress={handlePress}
-            containerStyle={{ width: '100%' }}
-            disabled={_.size(selections) < 3}
-          >
-            {strings('manual_backup_step_1.continue')}
-          </StyledButton>
-        </SafeAreaView>
+        <StyledButton
+          testID={'manual-backup-step-1-continue-button'}
+          type={'confirm'}
+          onPress={handlePress}
+          containerStyle={{ width: '100%', marginBottom: 16 }}
+          disabled={_.size(selections) < 3}
+        >
+          {strings('manual_backup_step_1.continue')}
+        </StyledButton>
       </View>
     </ReactNativeModal>
   );

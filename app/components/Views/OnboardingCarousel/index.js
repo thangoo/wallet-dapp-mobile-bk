@@ -33,6 +33,8 @@ import {
 } from '../../../../wdio/screen-objects/testIDs/Screens/WelcomeScreen.testIds';
 import generateTestId from '../../../../wdio/utils/generateTestId';
 import Routes from '../../../constants/navigation/Routes';
+import WarningExistingUserModal from '../../UI/WarningExistingUserModal';
+
 import { backgroundOnboarding, imgWalletOnboarding } from 'images/index';
 
 const IMAGE_3_RATIO = 215 / 315;
@@ -139,6 +141,7 @@ class OnboardingCarousel extends PureComponent {
 
   state = {
     currentTab: 1,
+    warningModalVisible: false,
   };
 
   trackEvent = (eventArgs) => {
@@ -152,27 +155,19 @@ class OnboardingCarousel extends PureComponent {
     });
   };
 
-  onPressImport = () => {
-    const action = async () => {
-      const metricsOptIn = await DefaultPreference.get(METRICS_OPT_IN);
-      if (metricsOptIn) {
-        this.props.navigation.push(
-          Routes.ONBOARDING.IMPORT_FROM_SECRET_RECOVERY_PHRASE,
-        );
-        this.track(MetaMetricsEvents.WALLET_IMPORT_STARTED);
-      } else {
-        this.props.navigation.navigate('OptinMetrics', {
-          onContinue: () => {
-            this.props.navigation.replace(
-              Routes.ONBOARDING.IMPORT_FROM_SECRET_RECOVERY_PHRASE,
-            );
-            this.track(MetaMetricsEvents.WALLET_IMPORT_STARTED);
-          },
-        });
-      }
+  alertExistingUser = (callback) => {
+    this.warningCallback = () => {
+      callback();
+      this.toggleWarningModal();
     };
-    this.handleExistingUser(action);
+    this.toggleWarningModal();
   };
+
+  toggleWarningModal = () => {
+    const warningModalVisible = this.state.warningModalVisible;
+    this.setState({ warningModalVisible: !warningModalVisible });
+  };
+
   handleExistingUser = (action) => {
     if (this.state.existingUser) {
       this.alertExistingUser(action);
@@ -212,6 +207,41 @@ class OnboardingCarousel extends PureComponent {
 
   componentDidUpdate = () => {
     // this.updateNavBar();
+  };
+
+  onPressImport = () => {
+    const action = async () => {
+      const metricsOptIn = await DefaultPreference.get(METRICS_OPT_IN);
+      if (metricsOptIn) {
+        this.props.navigation.push(
+          Routes.ONBOARDING.IMPORT_FROM_SECRET_RECOVERY_PHRASE,
+        );
+        this.track(MetaMetricsEvents.WALLET_IMPORT_STARTED);
+      } else {
+        this.props.navigation.navigate('OptinMetrics', {
+          onContinue: () => {
+            this.props.navigation.replace(
+              Routes.ONBOARDING.IMPORT_FROM_SECRET_RECOVERY_PHRASE,
+            );
+            this.track(MetaMetricsEvents.WALLET_IMPORT_STARTED);
+          },
+        });
+      }
+    };
+    this.handleExistingUser(action);
+  };
+
+  track = (...eventArgs) => {
+    InteractionManager.runAfterInteractions(async () => {
+      if (MetaMetrics.checkEnabled()) {
+        trackEvent(...eventArgs);
+        return;
+      }
+      const metricsOptIn = await DefaultPreference.get(METRICS_OPT_IN);
+      if (!metricsOptIn) {
+        this.props.saveOnboardingEvent(eventArgs);
+      }
+    });
   };
 
   render() {
@@ -302,6 +332,12 @@ class OnboardingCarousel extends PureComponent {
           </View>
         </View>
         <FadeOutOverlay />
+        <WarningExistingUserModal
+          warningModalVisible={this.state.warningModalVisible}
+          onCancelPress={this.warningCallback}
+          onRequestClose={this.toggleWarningModal}
+          onConfirmPress={this.toggleWarningModal}
+        />
       </View>
     );
   }

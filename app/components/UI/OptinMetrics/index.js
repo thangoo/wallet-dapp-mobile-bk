@@ -9,6 +9,7 @@ import {
   Alert,
   InteractionManager,
   Platform,
+  Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { MetaMetrics, MetaMetricsEvents } from '../../../core/Analytics';
@@ -42,6 +43,8 @@ import Button, {
   ButtonSize,
 } from '../../../component-library/components/Buttons/Button';
 import { MAINNET } from '../../../constants/network';
+import { HeaderBackButton } from '@react-navigation/stack';
+import { arrow_right_icon } from '../../../images/index';
 
 const createStyles = ({ colors }) =>
   StyleSheet.create({
@@ -180,7 +183,24 @@ class OptinMetrics extends PureComponent {
   updateNavBar = () => {
     const { navigation } = this.props;
     const colors = this.context.colors;
-    navigation.setOptions(getOptinMetricsNavbarOptions(colors));
+    // navigation.setOptions(getOptinMetricsNavbarOptions(colors));
+    navigation.setOptions({
+      title: 'Legal',
+      headerStyle: { backgroundColor: 'white', shadowOpacity: 0 },
+      headerLeft: (props) => (
+        <HeaderBackButton
+          {...props}
+          labelVisible={false}
+          style={{ marginLeft: 16 }}
+          backImage={() => (
+            <Image
+              source={arrow_right_icon}
+              style={{ width: 32, height: 32 }}
+            />
+          )}
+        />
+      ),
+    });
   };
 
   componentDidMount() {

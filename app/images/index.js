@@ -15,8 +15,22 @@ const check_box_blue = require('./check_box_blue.png');
 const chart_line_icon = require('./icon-right-nav-transaction.png');
 const external_icon = require('./external_link.png');
 const plus_icon = require('./plus_icon.png');
+const credit_card_icon = require('./credit_card_icon.png');
+const copy_icon_02 = require('./copy_icon_02.png');
+const share_icon = require('./share_icon.png');
+const icon_tab_01 = require('./icon_tab_01.png');
+const icon_tab_02 = require('./icon_tab_02.png');
+const icon_tab_03 = require('./icon_tab_03.png');
+const icon_tab_04 = require('./icon_tab_04.png');
 
 export {
+  icon_tab_01,
+  icon_tab_02,
+  icon_tab_03,
+  icon_tab_04,
+  share_icon,
+  copy_icon_02,
+  credit_card_icon,
   check_box_blue,
   check_box_empty,
   arrow_right_icon,

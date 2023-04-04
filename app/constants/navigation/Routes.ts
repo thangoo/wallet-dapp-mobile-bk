@@ -1,5 +1,7 @@
 const Routes = {
   WALLET_VIEW: 'WalletView',
+  SETTINGS_VIEW: 'SettingsView',
+  MARKET_VIEW: 'MarketView',
   BROWSER_TAB_HOME: 'BrowserTabHome',
   BROWSER_URL_MODAL: 'BrowserUrlModal',
   BROWSER_VIEW: 'BrowserView',
@@ -68,6 +70,13 @@ const Routes = {
   WALLET: {
     HOME: 'WalletTabHome',
     TAB_STACK_FLOW: 'WalletTabStackFlow',
+  },
+  SETTINGS_TAB: {
+    HOME: 'SettingsTabHome',
+    TAB_STACK_FLOW: 'SettingsTabStackFlow',
+  },
+  MARKET: {
+    HOME: 'MarketTabHome',
   },
 };
 

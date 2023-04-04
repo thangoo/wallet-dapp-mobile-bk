@@ -59,7 +59,6 @@ import { trackLegacyEvent } from '../../../util/analyticsV2';
 import { HeaderBackButton } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 
-
 const trackEvent = (event) => {
   InteractionManager.runAfterInteractions(() => {
     trackLegacyEvent(event);
@@ -816,6 +815,7 @@ export function getClosableNavigationOptions(
   backButtonText,
   navigation,
   themeColors,
+  showLeft,
 ) {
   const innerStyles = StyleSheet.create({
     headerButtonText: {
@@ -843,28 +843,30 @@ export function getClosableNavigationOptions(
   return {
     title,
     headerTitleStyle: innerStyles.headerTitleStyle,
-    headerLeft: () =>
-      Device.isIos() ? (
-        <TouchableOpacity
-          onPress={navigationPop}
-          style={styles.closeButton}
-          testID={'nav-ios-back'}
-        >
-          <Text style={innerStyles.headerButtonText}>{backButtonText}</Text>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity
-          onPress={navigationPop}
-          style={styles.backButton}
-          {...generateTestId(Platform, NAV_ANDROID_BACK_BUTTON)}
-        >
-          <IonicIcon
-            name={'md-arrow-back'}
-            size={24}
-            style={innerStyles.headerIcon}
-          />
-        </TouchableOpacity>
-      ),
+    headerLeft: showLeft
+      ? () =>
+          Device.isIos() ? (
+            <TouchableOpacity
+              onPress={navigationPop}
+              style={styles.closeButton}
+              testID={'nav-ios-back'}
+            >
+              <Text style={innerStyles.headerButtonText}>{backButtonText}</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={navigationPop}
+              style={styles.backButton}
+              {...generateTestId(Platform, NAV_ANDROID_BACK_BUTTON)}
+            >
+              <IonicIcon
+                name={'md-arrow-back'}
+                size={24}
+                style={innerStyles.headerIcon}
+              />
+            </TouchableOpacity>
+          )
+      : null,
     headerStyle: innerStyles.headerStyle,
     headerTintColor: themeColors.primary.default,
   };
@@ -979,7 +981,10 @@ export function getWalletNavbarOptions(
 
   return {
     headerTitle: () => (
-      <TouchableOpacity style={innerStyles.headerTitleWrapper} onPress={onPressTitle} >
+      <TouchableOpacity
+        style={innerStyles.headerTitleWrapper}
+        onPress={onPressTitle}
+      >
         <View style={innerStyles.headerTitle}>
           <Text style={innerStyles.title}>Hello, {title}</Text>
         </View>
@@ -1014,7 +1019,7 @@ export function getWalletNavbarOptions(
         iconName={IconName.BellNotificationWhite}
         style={styles.infoRightButton}
         size={IconSize.Xl}
-      // testID="scan-header-icon"
+        // testID="scan-header-icon"
       />
     ),
     headerStyle: innerStyles.headerStyle,
@@ -1075,15 +1080,15 @@ export function getNetworkNavbarOptions(
     ),
     headerRight: onRightPress
       ? () => (
-        <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
-          <MaterialCommunityIcon
-            name={'dots-horizontal'}
-            size={28}
-            style={innerStyles.headerIcon}
-          />
-        </TouchableOpacity>
-        // eslint-disable-next-line no-mixed-spaces-and-tabs
-      )
+          <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
+            <MaterialCommunityIcon
+              name={'dots-horizontal'}
+              size={28}
+              style={innerStyles.headerIcon}
+            />
+          </TouchableOpacity>
+          // eslint-disable-next-line no-mixed-spaces-and-tabs
+        )
       : () => <View />,
     headerStyle: innerStyles.headerStyle,
   };
@@ -1146,16 +1151,16 @@ export function getNavbarTransaction(
 
     headerRight: onRightPress
       ? () => (
-        <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
-          {/* <MaterialCommunityIcon
+          <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
+            {/* <MaterialCommunityIcon
               name={'dots-horizontal'}
               size={28}
               style={innerStyles.headerIcon}
             /> */}
-          <Image source={chart_line_icon} style={{ width: 27, height: 23 }} />
-        </TouchableOpacity>
-        // eslint-disable-next-line no-mixed-spaces-and-tabs
-      )
+            <Image source={chart_line_icon} style={{ width: 27, height: 23 }} />
+          </TouchableOpacity>
+          // eslint-disable-next-line no-mixed-spaces-and-tabs
+        )
       : () => <View />,
     headerStyle: innerStyles.headerStyle,
   };
@@ -1232,6 +1237,59 @@ export function getWebviewNavbar(navigation, route, themeColors) {
             name="share-apple"
             size={32}
             style={[innerStyles.headerIcon, styles.shareIconIOS]}
+          />
+        </TouchableOpacity>
+      ),
+    headerStyle: innerStyles.headerStyle,
+  };
+}
+
+export function getReceiveNavbar(navigation, title, themeColors) {
+  const innerStyles = StyleSheet.create({
+    headerTitleStyle: {
+      fontSize: 20,
+      color: themeColors.text.default,
+      textAlign: 'center',
+      ...fontStyles.normal,
+      alignItems: 'center',
+    },
+    headerStyle: {
+      backgroundColor: themeColors.background.default,
+      shadowColor: importedColors.transparent,
+      elevation: 0,
+    },
+    headerIcon: {
+      color: themeColors.primary.default,
+    },
+  });
+
+  return {
+    headerTitle: () => (
+      <Text style={innerStyles.headerTitleStyle}>{title}</Text>
+    ),
+    headerLeft: () =>
+      Device.isAndroid() ? (
+        // eslint-disable-next-line react/jsx-no-bind
+        <TouchableOpacity
+          onPress={() => navigation.pop()}
+          style={styles.backButton}
+        >
+          <IonicIcon
+            name={'md-arrow-back'}
+            size={24}
+            style={innerStyles.headerIcon}
+          />
+        </TouchableOpacity>
+      ) : (
+        // eslint-disable-next-line react/jsx-no-bind
+        <TouchableOpacity
+          onPress={() => navigation.pop()}
+          style={styles.backButton}
+        >
+          <IonicIcon
+            name="ios-close"
+            size={38}
+            style={[innerStyles.headerIcon, styles.backIconIOS]}
           />
         </TouchableOpacity>
       ),
@@ -1628,7 +1686,6 @@ export function getScreenNavbarOptions(
     headerRight: () => <View />,
     headerLeft: headerLeft || route.params?.headerLeft || getHeaderLeftOption01,
     headerTintColor: themeColors['tvn.gray.10'],
-
   };
 }
 
@@ -1644,13 +1701,10 @@ export function getHeaderLeftOption01(props) {
       labelVisible={false}
       style={{ marginLeft: 16 }}
       backImage={() => (
-        <Image
-          source={arrow_right_icon}
-          style={{ width: 32, height: 32 }}
-        />
+        <Image source={arrow_right_icon} style={{ width: 32, height: 32 }} />
       )}
     />
-  )
+  );
 }
 
 /**
@@ -1667,9 +1721,11 @@ export function getHeaderTitleOption01({ title, themeColors }) {
     },
   });
 
-  return (<View style={styles.metamaskNameTransparentWrapper}>
-    <Text style={innerStyles.paymeName}>{title}</Text>
-  </View>);
+  return (
+    <View style={styles.metamaskNameTransparentWrapper}>
+      <Text style={innerStyles.paymeName}>{title}</Text>
+    </View>
+  );
 }
 
 /**
@@ -1678,7 +1734,6 @@ export function getHeaderTitleOption01({ title, themeColors }) {
  * @returns {Object} - Corresponding navbar options
  */
 export function getHeaderStyleOption01(themeColors) {
-
   const innerStyles = StyleSheet.create({
     headerStyle: {
       backgroundColor: themeColors['tvn.background.default'],

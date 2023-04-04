@@ -348,7 +348,7 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
             </HStack>
           </TouchableOpacity>
 
-          <View style={{ flex: 1 }} />
+          <View style={{ flex: 1, marginBottom: 16 }} />
 
           <HStack style={{ marginBottom: 24 }}>
             <Image
@@ -365,7 +365,7 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
           testID={'manual-backup-step-1-continue-button'}
           type={'confirm'}
           onPress={goNext}
-          containerStyle={{ marginHorizontal: 32 }}
+          containerStyle={{ marginHorizontal: 32, marginBottom: 16 }}
         >
           {strings('manual_backup_step_1.continue')}
         </StyledButton>
@@ -374,10 +374,10 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
   };
 
   return ready ? (
-    <SafeAreaView style={styles.mainWrapper}>
+    <View style={styles.mainWrapper}>
       <ReadMoreModal ref={refReadMore} onNext={goNext} />
       {view === SEED_PHRASE ? renderSeedphraseView() : renderConfirmPassword()}
-    </SafeAreaView>
+    </View>
   ) : (
     <View style={styles.loader}>
       <ActivityIndicator size="small" />

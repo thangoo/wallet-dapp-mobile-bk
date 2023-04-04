@@ -17,6 +17,8 @@ import { IconName } from '../../Icons/Icon';
 export enum TabBarIconKey {
   Wallet = 'Wallet',
   Browser = 'Browser',
+  Market = 'Market',
+  Settings = 'Settings',
 }
 
 /**
