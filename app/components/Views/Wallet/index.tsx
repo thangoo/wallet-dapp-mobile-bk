@@ -137,7 +137,7 @@ const createStyles = ({ colors, typography }: Theme) =>
       height: 50,
       flexDirection: 'row',
       justifyContent: 'space-around',
-      
+
       borderTopWidth: 0,
       borderLeftWidth: 0,
       borderRightWidth: 0,
@@ -298,7 +298,15 @@ const Wallet = ({ navigation }: any) => {
 
     // navigation.setOptions(getNoneHeaderNavbarOptions());
     /* eslint-disable-next-line */
-  }, [navigation, themeColors, networkName, networkImageSource, onTitlePress, selectedAddress, identities]);
+  }, [
+    navigation,
+    themeColors,
+    networkName,
+    networkImageSource,
+    onTitlePress,
+    selectedAddress,
+    identities,
+  ]);
 
   // Refesh: Token, Nft, Account Tracker, Currency Rate, Token Rates
   const onRefresh = useCallback(async () => {
@@ -323,10 +331,16 @@ const Wallet = ({ navigation }: any) => {
     });
   }, [setRefreshing]);
 
-
-  const renderTab = (name: any, page: any, isTabActive: any, onPressHandler: any) => {
+  const renderTab = (
+    name: any,
+    page: any,
+    isTabActive: any,
+    onPressHandler: any,
+  ) => {
     // const { activeTextColor, inactiveTextColor, textStyle, } = this.props;
-    const textColor = isTabActive ? colors['tvn.gray.10'] : colors['tvn.gray.05'];
+    const textColor = isTabActive
+      ? colors['tvn.gray.10']
+      : colors['tvn.gray.05'];
     const fontWeight = isTabActive ? 'bold' : 'normal';
 
     // console.log('#### name: ', name);
@@ -334,7 +348,7 @@ const Wallet = ({ navigation }: any) => {
     // Frist Tab
     const RenderTokens = () => (
       <View style={styles.tabStyleFirst}>
-        <Text style={[{ color: textColor, fontWeight, }, styles.textStyle,]}>
+        <Text style={[{ color: textColor, fontWeight }, styles.textStyle]}>
           {name}
         </Text>
       </View>
@@ -344,7 +358,7 @@ const Wallet = ({ navigation }: any) => {
     const RenderNFTs = () => (
       <View style={styles.tabStyleSecond}>
         <Text style={styles.splitTab}>\</Text>
-        <Text style={[{ color: textColor, fontWeight, }, styles.textStyle,]}>
+        <Text style={[{ color: textColor, fontWeight }, styles.textStyle]}>
           {name}
         </Text>
         <View style={styles.addIconWrapper}>
@@ -362,19 +376,18 @@ const Wallet = ({ navigation }: any) => {
 
     const isTokens = name === 'Tokens';
 
-    return (<TouchableOpacity
-      style={isTokens ? styles.tabWrapper : styles.tabWrapperFinal}
-      key={name}
-      accessible={true}
-      accessibilityLabel={name}
-      accessibilityTraits='button'
-      onPress={() => onPressHandler(page)}
-    >
-      {isTokens ? <RenderTokens /> : <RenderNFTs />}
-    </TouchableOpacity>)
-
-
-  }
+    return (
+      <TouchableOpacity
+        style={isTokens ? styles.tabWrapper : styles.tabWrapperFinal}
+        key={name}
+        accessible={true}
+        accessibilityLabel={name}
+        onPress={() => onPressHandler(page)}
+      >
+        {isTokens ? <RenderTokens /> : <RenderNFTs />}
+      </TouchableOpacity>
+    );
+  };
 
   const renderTabBar = useCallback(
     () => (
