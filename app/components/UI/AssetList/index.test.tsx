@@ -8,7 +8,7 @@ describe('AssetList', () => {
       <AssetList
         searchQuery={''}
         searchResults={[]}
-        handleSelectAsset={null}
+        handleToggleAsset={null}
         selectedAsset={{ address: '0xABC', symbol: 'ABC', decimals: 0 }}
       />,
     );

@@ -90,6 +90,8 @@ const createStyles = (colors) =>
       borderRadius: 16,
       height: 70,
       padding: 10,
+      marginLeft: 15,
+      marginRight: 15,
     },
     balances: {
       flex: 1,
@@ -330,7 +332,7 @@ class Tokens extends PureComponent {
           )}
 
           <View style={styles.nameWrapper}>
-            <Text style={styles.name}>{asset.name}</Text>
+            <Text style={styles.name}>{asset.symbol}</Text>
             {secondaryBalance ? (
               <Text
                 style={[
@@ -417,7 +419,7 @@ class Tokens extends PureComponent {
       })
       : tokens;
 
-    console.log('#### tokensToDisplay: ', tokensToDisplay);
+    // console.log('#### tokensToDisplay: ', tokensToDisplay);
 
 
     return (
