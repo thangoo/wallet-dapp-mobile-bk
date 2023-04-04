@@ -15,7 +15,7 @@ export interface TabBarItemProps extends TouchableOpacityProps {
   /**
    * Icon of the tab item.
    */
-  icon: IconProps['name'];
+  icon: any;
   /**
    * Boolean that states if the item is selected.
    */

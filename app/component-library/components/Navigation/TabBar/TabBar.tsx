@@ -46,6 +46,12 @@ const TabBar = ({ state, descriptors, navigation }: TabBarProps) => {
             navigation.navigate(Routes.BROWSER.HOME, {
               screen: Routes.BROWSER_VIEW,
             });
+            break;
+          case Routes.SETTINGS_VIEW:
+            navigation.navigate(Routes.SETTINGS_TAB.HOME, {
+              screen: Routes.SETTINGS_TAB.TAB_STACK_FLOW,
+            });
+            break;
         }
       };
 

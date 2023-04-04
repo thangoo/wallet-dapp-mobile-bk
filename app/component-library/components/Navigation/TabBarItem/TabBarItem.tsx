@@ -2,16 +2,16 @@
 
 // Third party dependencies.
 import React, { useMemo } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, Text } from 'react-native';
 
 // External dependencies.
-import Text, { TextVariant } from '../../Texts/Text';
 import Icon, { IconSize } from '../../Icons/Icon';
 import { useStyles } from '../../../hooks';
 
 // Internal dependencies
 import styleSheet from './TabBarItem.styles';
 import { TabBarItemProps } from './TabBarItem.types';
+import { useTheme } from '../../../../../app/util/theme';
 
 const TabBarItem = ({
   style,
@@ -20,17 +20,17 @@ const TabBarItem = ({
   isSelected,
   ...props
 }: TabBarItemProps) => {
-  const { styles, theme } = useStyles(styleSheet, { style, isSelected });
-  const tabColor = useMemo(
-    () =>
-      isSelected ? theme.colors.primary.default : theme.colors.icon.alternative,
-    [isSelected, theme],
-  );
+  const { styles } = useStyles(styleSheet, { style, isSelected });
+  const { colors } = useTheme();
+  const colorSelect = isSelected
+    ? colors.primary.default
+    : colors['tvn.gray.10'];
+  const tabColor = useMemo(() => colorSelect, [isSelected, colors]);
 
   return (
     <TouchableOpacity {...props} style={styles.base}>
-      <Icon size={IconSize.Lg} name={icon} color={tabColor} />
-      <Text variant={TextVariant.BodySM} style={styles.label}>
+      <Image source={icon} style={{ tintColor: tabColor }} />
+      <Text style={{ color: colorSelect, fontSize: 12, marginTop: 6 }}>
         {label}
       </Text>
     </TouchableOpacity>
