@@ -19,6 +19,13 @@ export function toggleReceiveModal(asset) {
   };
 }
 
+export function setReceiveAsset(asset) {
+  return {
+    type: 'SET_RECEIVE_ASSET',
+    asset,
+  };
+}
+
 export function toggleDappTransactionModal(show) {
   return {
     type: 'TOGGLE_DAPP_TRANSACTION_MODAL',

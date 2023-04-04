@@ -17,7 +17,7 @@ import AssetActionButton from '../AssetActionButton';
 import TokenImage from '../../UI/TokenImage';
 import { fontStyles } from '../../../styles/common';
 import { strings } from '../../../../locales/i18n';
-import { toggleReceiveModal } from '../../../actions/modals';
+import { setReceiveAsset, toggleReceiveModal } from '../../../actions/modals';
 import {
   renderFromTokenMinimalUnit,
   balanceToFiat,
@@ -192,6 +192,10 @@ class AssetOverview extends PureComponent {
     /**
      * Primary currency, either ETH or Fiat
      */
+    setReceiveAsset: PropTypes.func,
+    /**
+     * Primary currency, either ETH or Fiat
+     */
     primaryCurrency: PropTypes.string,
     /**
      * Chain id
@@ -217,7 +221,11 @@ class AssetOverview extends PureComponent {
 
   onReceive = () => {
     const { asset } = this.props;
-    this.props.toggleReceiveModal(asset);
+    // this.props.toggleReceiveModal(asset);
+
+    // SET ASSET TO REDUX
+    this.props.setReceiveAsset(asset);
+    this.props.navigation.navigate('ReceiveScreen');
   };
 
   onBuy = () => {
@@ -461,6 +469,7 @@ const mapDispatchToProps = (dispatch) => ({
   toggleReceiveModal: (asset) => dispatch(toggleReceiveModal(asset)),
   newAssetTransaction: (selectedAsset) =>
     dispatch(newAssetTransaction(selectedAsset)),
+  setReceiveAsset: (asset) => dispatch(setReceiveAsset(asset)),
 });
 
 AssetOverview.contextType = ThemeContext;

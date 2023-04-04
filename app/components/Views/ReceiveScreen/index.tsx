@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import _ from 'lodash';
 import React, { FC, useEffect } from 'react';
 import {
@@ -78,9 +78,13 @@ interface Props {
   showAlert: ({ isVisible, autodismiss, content, data }: Config) => void;
 }
 
+type ParamList = {
+  Detail: {};
+};
+
 const ReceiveScreen: FC<Props> = (props) => {
   const navigation = useNavigation();
-  const route = useRoute();
+  const route = useRoute<RouteProp<ParamList, 'Detail'>>();
   const { colors } = useTheme();
   const tColors = colors || mockTheme.colors;
   const styles = createStyles(colors);
