@@ -113,8 +113,8 @@ const SearchTokenAutocomplete = ({ navigation, onChangeCustomToken }: Props) => 
     trackEvent(MetaMetricsEvents.TOKEN_ADDED, getAnalyticsParams());
 
     // Clear state before closing
-    setSearchResults([]);
-    setSearchQuery('');
+    // setSearchResults([]);
+    // setSearchQuery('');
     setSelectedAsset({});
 
     NotificationManager.showSimpleNotification({
@@ -219,7 +219,7 @@ const SearchTokenAutocomplete = ({ navigation, onChangeCustomToken }: Props) => 
         confirmButtonMode={'confirm'}
         onConfirmPress={onChangeCustomToken}
         isFullScreen
-        // confirmDisabled={!(address && symbol && decimals)}
+      // confirmDisabled={!(address && symbol && decimals)}
       >
         <View style={styles.listTokenWrapper}>
           {renderTokenDetectionBanner()}
