@@ -254,6 +254,7 @@ class TransactionElement extends PureComponent {
 
     const isFailedTransaction = status === 'cancelled' || status === 'failed';
     let icon;
+    // Sent, Received, Interaction, Approve
     switch (transactionType) {
       case TRANSACTION_TYPES.SENT_TOKEN:
       case TRANSACTION_TYPES.SENT_COLLECTIBLE:
@@ -282,6 +283,7 @@ class TransactionElement extends PureComponent {
     }
     return <Image source={icon} style={styles.icon} resizeMode="stretch" />;
   };
+  
   renderAddress = (transactionElement) => {
     const { transactionType } = transactionElement;
     const colors = this.context.colors || mockTheme.colors;
