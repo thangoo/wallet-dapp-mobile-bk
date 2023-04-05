@@ -815,7 +815,7 @@ export function getClosableNavigationOptions(
   backButtonText,
   navigation,
   themeColors,
-  showLeft,
+  hideLeft,
 ) {
   const innerStyles = StyleSheet.create({
     headerButtonText: {
@@ -843,8 +843,9 @@ export function getClosableNavigationOptions(
   return {
     title,
     headerTitleStyle: innerStyles.headerTitleStyle,
-    headerLeft: showLeft
-      ? () =>
+    headerLeft: Boolean(hideLeft)
+      ? null
+      : () =>
           Device.isIos() ? (
             <TouchableOpacity
               onPress={navigationPop}
@@ -865,8 +866,7 @@ export function getClosableNavigationOptions(
                 style={innerStyles.headerIcon}
               />
             </TouchableOpacity>
-          )
-      : null,
+          ),
     headerStyle: innerStyles.headerStyle,
     headerTintColor: themeColors.primary.default,
   };

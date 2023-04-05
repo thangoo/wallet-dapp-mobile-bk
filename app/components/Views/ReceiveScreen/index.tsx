@@ -6,6 +6,7 @@ import {
   Image,
   ImageSourcePropType,
   InteractionManager,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -172,7 +173,10 @@ const ReceiveScreen: FC<Props> = (props) => {
   };
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: 32 }}>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      style={{ flex: 1, paddingHorizontal: 32 }}
+    >
       <View style={{ alignSelf: 'center', marginTop: 32 }}>
         <QRCode
           value={`ethereum:${props.selectedAddress}@${props.chainId}`}
@@ -220,7 +224,7 @@ const ReceiveScreen: FC<Props> = (props) => {
       )}
 
       <GlobalAlert />
-    </View>
+    </ScrollView>
   );
 };
 
