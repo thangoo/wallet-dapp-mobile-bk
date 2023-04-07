@@ -1,15 +1,14 @@
-import { StyleSheet, Text, View, Image, SafeAreaView } from 'react-native';
 import React, { FC, useEffect } from 'react';
-import { HeaderBackButton } from '@react-navigation/stack';
-import { arrow_right_icon } from 'images/index';
-import { CustomTheme, useTheme } from '../../../../app/util/theme';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { CREATE_PASSWORD_CONTAINER_ID } from '../../../constants/test-ids';
-import { strings } from '../../../../locales/i18n';
 import PassCode from '../../../../app/components/Base/PassCode';
-import Device from '../../../util/device';
+import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
+import { CustomTheme, useTheme } from '../../../../app/util/theme';
+import { strings } from '../../../../locales/i18n';
+import { ONBOARDING, PREVIOUS_SCREEN } from '../../../constants/navigation';
+import { CREATE_PASSWORD_CONTAINER_ID } from '../../../constants/test-ids';
 import { fontStyles } from '../../../styles/common';
-import { PREVIOUS_SCREEN, ONBOARDING } from '../../../constants/navigation';
+import Device from '../../../util/device';
 
 const createStyles = (colors: CustomTheme['colors']) =>
   StyleSheet.create({
@@ -71,23 +70,9 @@ const ChoosePassword: FC<{ navigation: any; route: any }> = ({
   const styles = createStyles(colors);
 
   useEffect(() => {
-    navigation.setOptions({
-      title: 'Set Password',
-      headerStyle: { backgroundColor: 'white', shadowOpacity: 0 },
-      headerLeft: (props: any) => (
-        <HeaderBackButton
-          {...props}
-          labelVisible={false}
-          style={{ marginLeft: 16 }}
-          backImage={() => (
-            <Image
-              source={arrow_right_icon}
-              style={{ width: 32, height: 32 }}
-            />
-          )}
-        />
-      ),
-    });
+    navigation.setOptions(
+      tHeaderOptions(navigation, colors, { title: 'Set Password' }),
+    );
   }, [navigation, route, colors]);
 
   const onSubmitEditing = (passcode: string) => {

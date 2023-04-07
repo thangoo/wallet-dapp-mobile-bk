@@ -182,15 +182,6 @@ const WalletTabModalFlow = () => (
   </Stack.Navigator>
 );
 
-const SettingsTabModalFlow = () => (
-  <Stack.Navigator mode={'modal'}>
-    <Stack.Screen
-      name={Routes.SETTINGS_TAB.TAB_STACK_FLOW}
-      component={Settings}
-    />
-  </Stack.Navigator>
-);
-
 const TransactionsHome = () => (
   <Stack.Navigator>
     <Stack.Screen name={Routes.TRANSACTIONS_VIEW} component={ActivityView} />
@@ -345,7 +336,7 @@ const HomeTabs = () => {
           <Tab.Screen
             name={Routes.SETTINGS_TAB.HOME}
             options={options.setting}
-            component={SettingsTabModalFlow}
+            component={SettingsModalStack}
           />
         </Tab.Navigator>
       </Drawer>
@@ -366,9 +357,11 @@ const Webview = () => (
 
 const SettingsFlow = () => (
   <Stack.Navigator initialRouteName={'Settings'}>
-    <Stack.Screen name="Settings" options={Settings.navigationOptions}>
-      {(p) => <Settings {...p} showClose />}
-    </Stack.Screen>
+    <Stack.Screen
+      name="Settings"
+      component={Settings}
+      options={Settings.navigationOptions}
+    />
     <Stack.Screen
       name="GeneralSettings"
       component={GeneralSettings}
@@ -464,13 +457,107 @@ const SettingsFlow = () => (
 const SettingsModalStack = () => (
   <Stack.Navigator
     initialRouteName={'SettingsFlow'}
-    mode={'modal'}
+    // mode={'modal'}
     screenOptions={{
-      headerShown: false,
+      // headerShown: false,
       cardStyle: { backgroundColor: importedColors.transparent },
     }}
   >
-    <Stack.Screen name={'SettingsFlow'} component={SettingsFlow} />
+    {/* <Stack.Screen name={'SettingsFlow'} component={SettingsFlow} /> */}
+    <Stack.Screen
+      name="Settings"
+      component={Settings}
+      options={Settings.navigationOptions}
+    />
+    <Stack.Screen
+      name="GeneralSettings"
+      component={GeneralSettings}
+      options={GeneralSettings.navigationOptions}
+    />
+    <Stack.Screen
+      name="AdvancedSettings"
+      component={AdvancedSettings}
+      options={AdvancedSettings.navigationOptions}
+    />
+    <Stack.Screen
+      name="SecuritySettings"
+      component={SecuritySettings}
+      options={SecuritySettings.navigationOptions}
+    />
+    <Stack.Screen
+      name={Routes.FIAT_ON_RAMP_AGGREGATOR.SETTINGS}
+      component={OnRampSettings}
+    />
+    <Stack.Screen
+      name={Routes.FIAT_ON_RAMP_AGGREGATOR.ADD_ACTIVATION_KEY}
+      component={OnrampAddActivationKey}
+    />
+    <Stack.Screen
+      name="ExperimentalSettings"
+      component={ExperimentalSettings}
+      options={ExperimentalSettings.navigationOptions}
+    />
+    <Stack.Screen
+      name="NetworksSettings"
+      component={NetworksSettings}
+      options={NetworksSettings.navigationOptions}
+    />
+    <Stack.Screen name="NetworkSettings" component={NetworkSettings} />
+    <Stack.Screen
+      name="CompanySettings"
+      component={AppInformation}
+      options={AppInformation.navigationOptions}
+    />
+    <Stack.Screen
+      name="ContactsSettings"
+      component={Contacts}
+      options={Contacts.navigationOptions}
+    />
+    <Stack.Screen
+      name="ContactForm"
+      component={ContactForm}
+      options={ContactForm.navigationOptions}
+    />
+    <Stack.Screen
+      name="RevealPrivateCredentialView"
+      component={RevealPrivateCredential}
+      options={RevealPrivateCredential.navigationOptions}
+    />
+    <Stack.Screen
+      name="WalletConnectSessionsView"
+      component={WalletConnectSessions}
+      options={WalletConnectSessions.navigationOptions}
+    />
+    <Stack.Screen
+      name="ResetPassword"
+      component={ResetPassword}
+      options={ResetPassword.navigationOptions}
+    />
+    <Stack.Screen
+      name="AccountBackupStep1B"
+      component={AccountBackupStep1B}
+      options={AccountBackupStep1B.navigationOptions}
+    />
+    <Stack.Screen
+      name="ManualBackupStep1"
+      component={ManualBackupStep1}
+      options={ManualBackupStep1.navigationOptions}
+    />
+    <Stack.Screen
+      name="ManualBackupStep2"
+      component={ManualBackupStep2}
+      options={ManualBackupStep2.navigationOptions}
+    />
+    <Stack.Screen
+      name="ManualBackupStep3"
+      component={ManualBackupStep3}
+      options={ManualBackupStep3.navigationOptions}
+    />
+    <Stack.Screen
+      name="EnterPasswordSimple"
+      component={EnterPasswordSimple}
+      options={EnterPasswordSimple.navigationOptions}
+    />
     <Stack.Screen
       name={'ThemeSettings'}
       component={ThemeSettings}

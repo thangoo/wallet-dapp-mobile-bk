@@ -18,6 +18,7 @@ import {
   selectChainId,
   selectProviderType,
 } from '../../../selectors/networkController';
+import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -84,14 +85,12 @@ class AddAsset extends PureComponent {
   updateNavBar = () => {
     const { navigation, route } = this.props;
     const colors = this.context.colors || mockTheme.colors;
-    const title = strings(route.params.assetType === 'token' ? 'add_asset.title' : 'add_asset.title_nft');
-    navigation.setOptions(
-      getScreenNavbarOptions(
-        route,
-        { title },
-        colors,
-      )
+    const title = strings(
+      route.params.assetType === 'token'
+        ? 'add_asset.title'
+        : 'add_asset.title_nft',
     );
+    navigation.setOptions(tHeaderOptions(route, colors, { title }));
   };
 
   componentDidMount = () => {
@@ -123,12 +122,10 @@ class AddAsset extends PureComponent {
     this.setState({ dismissNftInfo: true });
   };
 
-  
-
+  changeToCustomToken = async () => {
+    this.setState({ isSearchToken: false });
+  };
   render = () => {
-    changeToCustomToken = async () => {
-      this.setState({ isSearchToken: false });
-    };
     const {
       route: {
         params: { assetType, collectibleContract },
@@ -165,17 +162,18 @@ class AddAsset extends PureComponent {
         {isTokenDetectionSupported && isSearchToken ? (
           <SearchTokenAutocomplete
             navigation={navigation}
-            onChangeCustomToken={changeToCustomToken}
+            onChangeCustomToken={this.changeToCustomToken}
             tabLabel={strings('add_asset.search_token')}
             testID={'tab-search-token'}
           />
-        ) : (<AddCustomToken
-          navigation={navigation}
-          tabLabel={strings('add_asset.custom_token')}
-          testID={'tab-add-custom-token'}
-          isTokenDetectionSupported={isTokenDetectionSupported}
-        />)
-        }
+        ) : (
+          <AddCustomToken
+            navigation={navigation}
+            tabLabel={strings('add_asset.custom_token')}
+            testID={'tab-add-custom-token'}
+            isTokenDetectionSupported={isTokenDetectionSupported}
+          />
+        )}
 
         {/*  </ScrollableTabView>
         ) : (

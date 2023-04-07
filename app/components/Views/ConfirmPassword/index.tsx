@@ -1,18 +1,13 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { HeaderBackButton } from '@react-navigation/stack';
-import { arrow_right_icon } from 'images/index';
 import React, { FC, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Text,
-  View,
-  TextInput,
+  InteractionManager,
   SafeAreaView,
   StyleSheet,
-  Image,
-  InteractionManager,
-  Platform,
+  Text,
+  View,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
@@ -27,30 +22,31 @@ import {
 } from '../../../actions/user';
 import { CREATE_PASSWORD_CONTAINER_ID } from '../../../constants/test-ids';
 import { fontStyles } from '../../../styles/common';
-import Device from '../../../util/device';
 import Logger from '../../../util/Logger';
+import Device from '../../../util/device';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ONBOARDING, PREVIOUS_SCREEN } from '../../../constants/navigation';
 import {
-  EXISTING_USER,
-  TRUE,
-  SEED_PHRASE_HINTS,
   BIOMETRY_CHOICE_DISABLED,
+  EXISTING_USER,
   PASSCODE_DISABLED,
+  SEED_PHRASE_HINTS,
+  TRUE,
 } from '../../../constants/storage';
 import AppConstants from '../../../core/AppConstants';
 import { passwordRequirementsMet } from '../../../util/password';
 
+import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
+import AUTHENTICATION_TYPE from '../../../constants/userProperties';
 import { Authentication } from '../../../core';
 import { MetaMetricsEvents } from '../../../core/Analytics';
+import Engine from '../../../core/Engine';
 import { trackEvent } from '../../../util/analyticsV2';
-import AUTHENTICATION_TYPE from '../../../constants/userProperties';
 import {
   passcodeType,
   updateAuthTypeStorageFlags,
 } from '../../../util/authentication';
-import Engine from '../../../core/Engine';
 import { LoginOptionsSwitch } from '../../UI/LoginOptionsSwitch';
 
 const PASSCODE_NOT_SET_ERROR = 'Error: Passcode not set.';
@@ -151,23 +147,9 @@ const ConfirmPassword: FC<Props> = (props) => {
     useState(false);
 
   useEffect(() => {
-    props.navigation.setOptions({
-      title: 'Set Password',
-      headerStyle: { backgroundColor: 'white', shadowOpacity: 0 },
-      headerLeft: (props: any) => (
-        <HeaderBackButton
-          {...props}
-          labelVisible={false}
-          style={{ marginLeft: 16 }}
-          backImage={() => (
-            <Image
-              source={arrow_right_icon}
-              style={{ width: 32, height: 32 }}
-            />
-          )}
-        />
-      ),
-    });
+    props.navigation.setOptions(
+      tHeaderOptions(props.navigation, colors, { title: 'Set Password' }),
+    );
   }, [props.navigation, route, colors]);
 
   const componentDidMount = async () => {

@@ -45,7 +45,7 @@ class Settings extends PureComponent {
         strings('navigation.close'),
         navigation,
         colors,
-        this.props.showClose,
+        this.props.route.params?.hideLeft ?? true,
       ),
     );
   };

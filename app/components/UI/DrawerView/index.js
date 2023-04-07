@@ -729,7 +729,13 @@ class DrawerView extends PureComponent {
   };
 
   showSettings = async () => {
-    this.props.navigation.navigate('SettingsView');
+    // show left button setting view
+    this.props.navigation.navigate('SettingsView', {
+      screen: 'Settings',
+      params: {
+        hideLeft: false,
+      },
+    });
     this.hideDrawer();
     this.trackEvent(MetaMetricsEvents.NAVIGATION_TAPS_SETTINGS);
   };

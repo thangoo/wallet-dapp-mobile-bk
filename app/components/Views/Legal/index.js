@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {
-  Text,
-  View,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 
 import AppConstants from '../../../core/AppConstants';
@@ -16,7 +9,6 @@ import StyledButton from '../../UI/StyledButton';
 import Device from '../../../util/device';
 import { fontStyles } from '../../../styles/common';
 import { strings } from '../../../../locales/i18n';
-import { getOnboardingNavbarOptions } from '../../UI/Navbar';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Icon, {
@@ -31,25 +23,23 @@ import {
   IOS_I_UNDERSTAND_BUTTON_ID,
   ANDROID_I_UNDERSTAND_BUTTON_ID,
 } from '../../../constants/test-ids';
-import { HeaderBackButton } from '@react-navigation/stack';
-import { arrow_right_icon } from 'images/index';
 import HStack from '../../Base/HStack';
+import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
 
 const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors['tvn.gray.01'],
+      backgroundColor: colors.background.default,
       flex: 1,
+      marginHorizontal: 32,
     },
     wrapper: {
-      paddingHorizontal: 28,
       justifyContent: 'space-between',
-      alignItems: 'center',
       flex: 1,
     },
     content: {
-      textAlign: 'center',
       alignItems: 'center',
+      marginTop: 20,
     },
 
     container: {
@@ -62,55 +52,17 @@ const createStyles = (colors) =>
       alignItems: 'center',
       justifyContent: 'space-between',
     },
-
-    headerCollapse: {
-      ...fontStyles.bold,
-      fontSize: 16,
-      color: colors['tvn.gray.10'],
-    },
-    accordionItem1: {
-      color: colors['tvn.gray.10'],
-      paddingLeft: 12,
-      paddingVertical: 6,
-      borderBottomColor: colors['tvn.gray.04'],
-      borderBottomWidth: 1,
-    },
-    accordionItem2: {
-      color: colors['tvn.gray.10'],
-      paddingLeft: 12,
-      paddingVertical: 6,
-    },
-    clBody: {
-      paddingVertical: 15,
-    },
-
-    scrollableWrapper: {
-      flex: 1,
-      paddingHorizontal: 32,
-    },
-    keyboardScrollableWrapper: {
-      flexGrow: 1,
-    },
-    loadingWrapper: {
-      paddingHorizontal: 40,
-      paddingBottom: 30,
-      alignItems: 'center',
-      flex: 1,
-    },
     image: {
       alignSelf: 'center',
       width: 80,
       height: 80,
     },
-
     title: {
-      fontSize: Device.isAndroid() ? 16 : 14,
-      marginTop: 20,
-      marginBottom: 20,
-      justifyContent: 'center',
+      fontSize: 14,
+      marginVertical: 20,
       textAlign: 'center',
       ...fontStyles.normal,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
     },
     subtitle: {
       fontSize: 16,
@@ -140,11 +92,10 @@ const createStyles = (colors) =>
     label: {
       ...fontStyles.normal,
       fontSize: 14,
-      paddingHorizontal: 10,
       lineHeight: 18,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
+      marginHorizontal: Device.isAndroid() ? 16 : 8,
     },
-
     icon: {
       padding: 16,
       color: colors.icon.alternative,
@@ -152,8 +103,20 @@ const createStyles = (colors) =>
       zIndex: 2,
     },
     ctaWrapper: {
-      marginTop: 20,
-      paddingHorizontal: 10,
+      marginVertical: 20,
+    },
+    text: {
+      flex: 1,
+      fontWeight: '600',
+      fontSize: 16,
+      color: colors.tText.default,
+    },
+    btn: {
+      height: 64,
+      backgroundColor: colors.tBackground.alternative,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 16,
     },
   });
 
@@ -166,28 +129,10 @@ const Legal = ({ navigation, route }) => {
   const colors = useContext(ThemeContext).colors;
 
   useEffect(() => {
-    navigation.setOptions({
-      title: 'Legal',
-      headerStyle: { backgroundColor: 'white', shadowOpacity: 0 },
-      headerLeft: (props) => (
-        <HeaderBackButton
-          {...props}
-          labelVisible={false}
-          style={{ marginLeft: 16 }}
-          backImage={() => (
-            <Image
-              source={arrow_right_icon}
-              style={{ width: 32, height: 32 }}
-            />
-          )}
-        />
-      ),
-    });
+    navigation.setOptions(
+      tHeaderOptions(navigation, colors, { title: 'Legal' }),
+    );
   }, [navigation, route, colors]);
-
-  const updateNavBar = () => {
-    navigation.setOptions(getOnboardingNavbarOptions(navigation, {}, colors));
-  };
 
   const setSelection = () => {
     setSelected(!isSelected);
@@ -220,47 +165,52 @@ const Legal = ({ navigation, route }) => {
   const styles = createStyles(colors);
 
   return (
-    <SafeAreaView style={styles.mainWrapper}>
-      <View testID={'LEGAL_SCREEN_CONTAINER'} style={styles.wrapper}>
-        <HStack style={{ flexDirection: 'column', width: '100%' }}>
-          <View style={styles.content}>
-            <Text style={styles.title}>
-              {strings('terms_and_conditions.subtitle')}
-            </Text>
-          </View>
-          <View style={styles.container}>
-            <View style={styles.accordionItem1}>
-              <StyledButton
-                type={'transparent-gray-10'}
-                onPress={onPrivacyPolicy}
-                testID={'continue-button'}
-              >
-                {strings('privacy_policy.title')}
-                <Icon
-                  name={IconName.ArrowRight}
-                  size={IconSize.Md}
-                  color={IconColor.Default}
-                  style={{ marginRight: 10 }}
-                />
-              </StyledButton>
-            </View>
-            <View style={styles.accordionItem2}>
-              <StyledButton
-                type={'transparent-gray-10'}
-                onPress={onTermConditions}
-                testID={'continue-button'}
-              >
+    <View style={styles.mainWrapper}>
+      <View style={styles.wrapper}>
+        <View>
+          <Text style={styles.title}>
+            {strings('terms_and_conditions.subtitle')}
+          </Text>
+          <TouchableOpacity
+            style={[
+              styles.btn,
+              { borderTopLeftRadius: 18, borderTopRightRadius: 18 },
+            ]}
+            onPress={onPrivacyPolicy}
+          >
+            <HStack>
+              <Text style={styles.text}>{strings('privacy_policy.title')}</Text>
+              <Icon
+                name={IconName.ArrowRight}
+                size={IconSize.Md}
+                color={IconColor.Default}
+                style={{ marginRight: 10 }}
+              />
+            </HStack>
+          </TouchableOpacity>
+          <View
+            style={{ borderWidth: 0.5, borderColor: colors.tBorder.default }}
+          />
+          <TouchableOpacity
+            style={[
+              styles.btn,
+              { borderBottomLeftRadius: 18, borderBottomRightRadius: 18 },
+            ]}
+            onPress={onTermConditions}
+          >
+            <HStack>
+              <Text style={styles.text}>
                 {strings('terms_and_conditions.title')}
-                <Icon
-                  name={IconName.ArrowRight}
-                  size={IconSize.Md}
-                  color={IconColor.Default}
-                  style={{ marginRight: 10 }}
-                />
-              </StyledButton>
-            </View>
-          </View>
-        </HStack>
+              </Text>
+              <Icon
+                name={IconName.ArrowRight}
+                size={IconSize.Md}
+                color={IconColor.Default}
+                style={{ marginRight: 10 }}
+              />
+            </HStack>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.wrapperBottom}>
           <View style={styles.checkboxContainer}>
@@ -269,8 +219,8 @@ const Legal = ({ navigation, route }) => {
               onValueChange={setSelection}
               style={styles.checkbox}
               tintColors={{
-                true: colors['tvn.primary.blue'],
-                false: colors['tvn.gray.01'],
+                true: colors.tPrimary.default,
+                false: colors.tPrimary.default,
               }}
               boxType="square"
               testID={IOS_I_UNDERSTAND_BUTTON_ID}
@@ -292,16 +242,13 @@ const Legal = ({ navigation, route }) => {
               onPress={onPressContinue}
               testID={'continue-button'}
               disabled={!canSubmit}
-              disabledContainerStyle={{
-                backgroundColor: colors['tvn.dark_gray_blue'],
-              }}
             >
               {strings('manual_backup_step_1.continue')}
             </StyledButton>
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

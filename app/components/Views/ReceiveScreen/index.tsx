@@ -6,6 +6,7 @@ import {
   Image,
   ImageSourcePropType,
   InteractionManager,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -41,6 +42,7 @@ import {
 import { trackLegacyEvent } from '../../../util/analyticsV2';
 import Logger from '../../../util/Logger';
 import { generateUniversalLinkAddress } from '../../../util/payment-link-generator';
+import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
 
 const D: {
   icon: ImageSourcePropType;
@@ -90,7 +92,9 @@ const ReceiveScreen: FC<Props> = (props) => {
   const styles = createStyles(colors);
 
   useEffect(() => {
-    navigation.setOptions(getReceiveNavbar(navigation, 'Receive', tColors));
+    navigation.setOptions(
+      tHeaderOptions(navigation, tColors, { title: 'Receive' }),
+    );
   }, [navigation, route]);
 
   /**
@@ -172,14 +176,17 @@ const ReceiveScreen: FC<Props> = (props) => {
   };
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: 32 }}>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      style={{ flex: 1, paddingHorizontal: 32 }}
+    >
       <View style={{ alignSelf: 'center', marginTop: 32 }}>
         <QRCode
           value={`ethereum:${props.selectedAddress}@${props.chainId}`}
           size={240}
         />
         <View style={styles.wrapQRText}>
-          <Text>
+          <Text style={{ color: colors.tText.default }}>
             <EthereumAddress address={props.selectedAddress} type={'short'} />
           </Text>
         </View>
@@ -220,7 +227,7 @@ const ReceiveScreen: FC<Props> = (props) => {
       )}
 
       <GlobalAlert />
-    </View>
+    </ScrollView>
   );
 };
 
@@ -245,7 +252,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ReceiveScreen);
 const createStyles = (colors: CustomTheme['colors']) =>
   StyleSheet.create({
     wrapIcon: {
-      backgroundColor: colors['tvn.primary.blue'],
+      backgroundColor: colors.tPrimary.default,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 12,
@@ -256,17 +263,17 @@ const createStyles = (colors: CustomTheme['colors']) =>
     howText: {
       fontSize: 14,
       fontWeight: '600',
-      color: colors['tvn.primary.blue'],
+      color: colors.tPrimary.default,
       textAlign: 'center',
       marginBottom: 24,
     },
     nameText: {
       fontSize: 14,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       fontWeight: '400',
     },
     wrapQRText: {
-      backgroundColor: colors['tvn.light_gray_blue'],
+      backgroundColor: colors.tBackground.alternative,
       paddingVertical: 16,
       alignItems: 'center',
       marginVertical: 32,

@@ -25,6 +25,7 @@ import {
   MANUAL_BACKUP_STEP_2_CONTINUE_BUTTON,
   PROTECT_YOUR_ACCOUNT_SCREEN,
 } from './../../../constants/test-ids';
+import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
 
 const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
   const { colors } = useTheme();
@@ -51,11 +52,7 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
 
   const updateNavBar = useCallback(() => {
     navigation.setOptions(
-      getScreenNavbarOptions(
-        route,
-        { title: 'Verify Secret Phrase' },
-        colors,
-      ),
+      tHeaderOptions(navigation, colors, { title: 'Verify Secret Phrase' }),
     );
   }, [colors, navigation, route]);
 

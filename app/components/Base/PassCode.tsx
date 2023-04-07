@@ -9,7 +9,8 @@ import {
   useClearByFocusCell,
   isLastFilledCell,
 } from 'react-native-confirmation-code-field';
-import { useAppTheme } from '../../util/theme';
+import { useTheme } from '../../util/theme';
+import { ThangoThemeColors } from '../../../app/types/common.thangoType';
 
 export const refPassCode = React.createRef();
 const CELL_COUNT = 6;
@@ -24,7 +25,7 @@ const PassCode = ({
     value,
     setValue,
   });
-  const { colors } = useAppTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
 
   useImperativeHandle(refPassCode, () => ({
@@ -92,19 +93,20 @@ const PassCode = ({
 
 export default PassCode;
 
-const createStyles = (colors: any) =>
+const createStyles = (colors: ThangoThemeColors) =>
   StyleSheet.create({
     cell: {
       fontSize: 24,
       textAlign: 'center',
       lineHeight: 64,
       height: 64,
+      color: colors.tText.default,
     },
     focusCell: {},
     wrapText: {
       borderWidth: 1,
       borderStyle: 'dashed',
-      borderColor: colors['tvn.gray.06'],
+      borderColor: colors.tBorder.default,
       borderRadius: 8,
       height: 64,
       flex: 1,
