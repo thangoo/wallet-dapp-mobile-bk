@@ -21,8 +21,8 @@ const createStyles = (colors) =>
       justifyContent: 'center',
       alignItems: 'center',
       minWidth: 60,
-      marginLeft: 10,
-      marginRight: 10,
+      marginLeft: 5,
+      marginRight: 5,
     },
     disabledButton: {
       opacity: 0.5,
