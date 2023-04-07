@@ -33,12 +33,14 @@ export const thangoLight: ThangoThemeColors = {
   ['tvn.status.red']: '#FF2517',
   ['tvn.background.asset.action.button']: '#ffffff33',
 
+  gray01: colorThango.gray01,
   // DEFINE CONSTANT
   tBackground: {
     default: colorThango.light,
+    secondary: colorThango.light,
     defaultHover: '#FAFBFC',
     defaultPressed: '#FAFBFC',
-    alternative: '#F2F4F6',
+    alternative: colorThango.lightGrayBlue,
     alternativeHover: '#D6D9DC',
     alternativePressed: '#D6D9DC',
   },
@@ -88,7 +90,7 @@ export const thangoLight: ThangoThemeColors = {
     shadow: '#D7384766',
   },
   tWarning: {
-    default: '#F66A0A',
+    default: colorThango.orange,
     alternative: '#FFC70A',
     muted: '#FFD33D19',
     inverse: '#FCFCFC',

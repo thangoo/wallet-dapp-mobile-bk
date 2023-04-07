@@ -10,9 +10,10 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
   // OVERRIDE
   tBackground: {
     default: colorThango.dark,
+    secondary: colorThango.dark02,
     defaultHover: '#FAFBFC',
     defaultPressed: '#FAFBFC',
-    alternative: '#F2F4F6',
+    alternative: colorThango.darkGrayBlue,
     alternativeHover: '#D6D9DC',
     alternativePressed: '#D6D9DC',
   },

@@ -23,12 +23,17 @@ export interface ThangoThemeColors {
   ['tvn.status.orange']?: string;
   ['tvn.status.red']?: string;
 
+  gray01: string;
   // DEFINE CONSTANT
   tBackground: {
     /**
      * {string} background.default - For default neutral backgrounds
      */
     default: string;
+    /**
+     * {string} background.secondary - For default secondary backgrounds
+     */
+    secondary: string;
     /**
      * {string} background.defaultHover - For component hover states that use background/default
      */
