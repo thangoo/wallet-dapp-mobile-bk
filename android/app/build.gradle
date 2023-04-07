@@ -156,7 +156,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
 	defaultConfig {
-		applicationId "io.metamask"
+		applicationId "com.thango.paymewallet"
 		minSdkVersion rootProject.ext.minSdkVersion
 		targetSdkVersion rootProject.ext.targetSdkVersion
 		versionCode 1079
@@ -237,12 +237,12 @@ android {
         qa {
           dimension "version"
           applicationIdSuffix ".qa"
-          applicationId "io.metamask"
+          applicationId "com.thango.paymewallet"
           signingConfig signingConfigs.qa
         }
         prod {
           dimension "version"
-          applicationId "io.metamask"
+          applicationId "com.thango.paymewallet"
           signingConfig signingConfigs.release
         }
     	}
