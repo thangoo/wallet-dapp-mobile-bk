@@ -100,6 +100,7 @@ const createStyles = (colors: ThangoThemeColors) =>
       textAlign: 'center',
       lineHeight: 64,
       height: 64,
+      color: colors.tText.default,
     },
     focusCell: {},
     wrapText: {

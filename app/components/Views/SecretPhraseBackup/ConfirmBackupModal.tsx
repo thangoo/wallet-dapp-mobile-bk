@@ -1,18 +1,13 @@
-import HStack from '../../../../app/components/Base/HStack';
-import {
-  check_box_blue,
-  check_box_empty,
-  shield_warning_2_icon,
-} from 'images/index';
+import { check_box_blue, check_box_empty } from 'images/index';
+import _ from 'lodash';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ReactNativeModal from 'react-native-modal';
 import { useToggle } from 'react-use';
+import HStack from '../../../../app/components/Base/HStack';
+import { strings } from '../../../../locales/i18n';
 import { CustomTheme, useTheme } from '../../../util/theme';
 import StyledButton from '../../UI/StyledButton';
-import { strings } from '../../../../locales/i18n';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import _ from 'lodash';
 
 const NOTES = [
   `${strings('secret_phrase.title1')}`,
@@ -135,9 +130,7 @@ const CheckItem = ({
           style={{ width: 24, height: 24 }}
         />
         <View style={{ flex: 1, marginLeft: 16 }}>
-          <Text style={[styles.text, { color: colors['tvn.gray.10'] }]}>
-            {content}
-          </Text>
+          <Text style={styles.text}>{content}</Text>
         </View>
       </HStack>
     </TouchableOpacity>
@@ -159,7 +152,7 @@ const createStyles = (colors: CustomTheme['colors']) =>
     text: {
       fontSize: 14,
       fontWeight: '400',
-      color: colors['tvn.white'],
+      color: colors.tText.default,
     },
     title: {
       marginBottom: 16,
@@ -167,12 +160,14 @@ const createStyles = (colors: CustomTheme['colors']) =>
       fontWeight: '600',
       textAlign: 'center',
       textTransform: 'capitalize',
+      color: colors.tText.default,
     },
     title2: {
       marginBottom: 16,
       fontSize: 14,
       fontWeight: '400',
       textAlign: 'center',
+      color: colors.tText.default,
     },
     dragger: {
       width: 36,

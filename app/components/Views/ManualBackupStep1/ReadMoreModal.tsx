@@ -69,7 +69,7 @@ const ReadMoreModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
             source={shield_warning_2_icon}
             style={{ width: 24, height: 24, marginRight: 16 }}
           />
-          <Text style={[styles.text, { color: colors['tvn.status.orange'] }]}>
+          <Text style={[styles.text, { color: colors.tWarning.default }]}>
             {
               'Your 12-word secret phrase is only way to recover your wallet. Please store it securely!'
             }
@@ -100,12 +100,10 @@ const NoteItem = ({ index, content }: { index: number; content: string }) => {
   return (
     <HStack style={styles.noteWrap}>
       <View style={styles.indexText}>
-        <Text style={styles.text}>{index}</Text>
+        <Text style={[styles.text, { color: colors.gray01 }]}>{index}</Text>
       </View>
       <View style={{ flex: 1, marginLeft: 16 }}>
-        <Text style={[styles.text, { color: colors['tvn.gray.10'] }]}>
-          {content}
-        </Text>
+        <Text style={styles.text}>{content}</Text>
       </View>
     </HStack>
   );
@@ -114,7 +112,7 @@ const NoteItem = ({ index, content }: { index: number; content: string }) => {
 const createStyles = (colors: CustomTheme['colors']) =>
   StyleSheet.create({
     body: {
-      backgroundColor: 'white',
+      backgroundColor: colors.tBackground.secondary,
       paddingHorizontal: 32,
       alignItems: 'center',
       justifyContent: 'flex-start',
@@ -126,7 +124,7 @@ const createStyles = (colors: CustomTheme['colors']) =>
     text: {
       fontSize: 14,
       fontWeight: '400',
-      color: colors['tvn.white'],
+      color: colors.tText.default,
     },
     title: {
       marginBottom: 16,
@@ -138,7 +136,7 @@ const createStyles = (colors: CustomTheme['colors']) =>
       width: 36,
       height: 5,
       borderRadius: 2.5,
-      backgroundColor: colors['tvn.gray.04'],
+      backgroundColor: colors.tBorder.default,
       marginTop: 6,
       marginBottom: 32,
     },
@@ -146,13 +144,13 @@ const createStyles = (colors: CustomTheme['colors']) =>
       borderBottomWidth: 1,
       marginTop: 16,
       paddingBottom: 16,
-      borderBottomColor: colors['tvn.gray.05'],
+      borderBottomColor: colors.tBorder.default,
       alignItems: 'flex-start',
     },
     indexText: {
       width: 32,
       height: 32,
-      backgroundColor: colors['tvn.status.orange'],
+      backgroundColor: colors.tWarning.default,
       borderRadius: 8,
       justifyContent: 'center',
       alignItems: 'center',
