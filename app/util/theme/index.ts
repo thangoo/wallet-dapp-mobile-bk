@@ -11,8 +11,9 @@ import { AppThemeKey, Theme } from './models';
 import { useSelector } from 'react-redux';
 import { lightTheme, darkTheme } from '@metamask/design-tokens';
 import Device from '../device';
-import { thangoDark, thangoLight } from '../../styles/common.thango';
 import { ThangoThemeColors } from '../../../app/types/common.thangoType';
+import { thangoLight } from '../../../app/styles/light.thango';
+import { thangoDark } from '../../../app/styles/dark.thango';
 
 /**
  * This is needed to make our unit tests pass since Enzyme doesn't support contextType
@@ -172,7 +173,7 @@ export const useAppTheme = (): Theme => {
 };
 
 export const useAppThemeFromContext = (): CustomTheme => {
-  const theme = useContext<Theme>(ThemeContext);
+  const theme = useContext<CustomTheme>(ThemeContext);
   return theme;
 };
 

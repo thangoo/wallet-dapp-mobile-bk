@@ -66,7 +66,7 @@ const breakPoint = deviceHeight < 700;
 const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors['tvn.gray.01'],
+      backgroundColor: colors.background.default,
       flex: 1,
     },
     wrapper: {
@@ -90,7 +90,7 @@ const createStyles = (colors) =>
       marginTop: 36,
       marginBottom: 16,
       fontWeight: '700',
-      color: colors.text.default,
+      color: colors.tText.default,
       justifyContent: 'center',
       textAlign: 'center',
       ...fontStyles.bold,
@@ -522,7 +522,7 @@ class Login extends PureComponent {
                 this.state.loading ? (
                   <ActivityIndicator
                     size="small"
-                    color={colors['tvn.primary.blue']}
+                    color={colors.tPrimary.default}
                     style={{ marginTop: 16 }}
                   />
                 ) : null

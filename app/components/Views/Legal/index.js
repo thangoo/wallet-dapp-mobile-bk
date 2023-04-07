@@ -38,7 +38,7 @@ import HStack from '../../Base/HStack';
 const createStyles = (colors) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors['tvn.gray.01'],
+      backgroundColor: colors.background.default,
       flex: 1,
     },
     wrapper: {
@@ -110,7 +110,7 @@ const createStyles = (colors) =>
       justifyContent: 'center',
       textAlign: 'center',
       ...fontStyles.normal,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
     },
     subtitle: {
       fontSize: 16,
@@ -168,7 +168,10 @@ const Legal = ({ navigation, route }) => {
   useEffect(() => {
     navigation.setOptions({
       title: 'Legal',
-      headerStyle: { backgroundColor: 'white', shadowOpacity: 0 },
+      headerStyle: {
+        backgroundColor: colors.background.default,
+        shadowOpacity: 0,
+      },
       headerLeft: (props) => (
         <HeaderBackButton
           {...props}
@@ -177,11 +180,16 @@ const Legal = ({ navigation, route }) => {
           backImage={() => (
             <Image
               source={arrow_right_icon}
-              style={{ width: 32, height: 32 }}
+              style={{ width: 32, height: 32, tintColor: colors.tIcon.default }}
             />
           )}
         />
       ),
+      headerTitleStyle: {
+        fontSize: 20,
+        color: colors.tText.default,
+        ...fontStyles.normal,
+      },
     });
   }, [navigation, route, colors]);
 

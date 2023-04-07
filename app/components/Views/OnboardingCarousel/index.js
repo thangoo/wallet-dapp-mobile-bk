@@ -56,7 +56,7 @@ const createStyles = (colors) =>
     title: {
       fontSize: 28,
       marginBottom: 16,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       justifyContent: 'flex-end',
       textAlign: 'center',
       ...fontStyles.bold,
@@ -64,7 +64,7 @@ const createStyles = (colors) =>
     subtitle: {
       fontSize: 16,
       lineHeight: 19,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       justifyContent: 'center',
       textAlign: 'center',
       ...fontStyles.normal,
