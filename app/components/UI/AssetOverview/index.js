@@ -402,6 +402,7 @@ class AssetOverview extends PureComponent {
                   <Text style={styles.amountFiat}>{renderFiat(conversionRate, currentCurrency, 2)}</Text>
                   <View style={styles.divider} />
                   <Text style={styles.amountFiat}>{secondaryBalance}</Text>
+                  <Text style={styles.amountFiat}>0%</Text>
                   <View style={styles.divider} />
                   <Text style={styles.amountFiat}>{'COIN'}</Text>
                 </View>

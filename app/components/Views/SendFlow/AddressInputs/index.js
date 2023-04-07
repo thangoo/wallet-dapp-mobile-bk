@@ -236,6 +236,8 @@ export const AddressTo = (props) => {
 
   const isInputFilled = toSelectedAddress?.length;
 
+  // Adress or name ENS, .bnb, .eth, .crypto..
+
   if (isConfirmScreen) {
     return (
       <View style={styles.wrapper}>
@@ -301,9 +303,9 @@ export const AddressTo = (props) => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.label}>
+      {/* <View style={styles.label}>
         <Text style={styles.labelText}>To:</Text>
-      </View>
+      </View> */}
       {!addressToReady ? (
         <View
           style={[
