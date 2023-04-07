@@ -1,41 +1,37 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
-  Text,
-  View,
+  Dimensions,
+  Image,
+  Platform,
   ScrollView,
   StyleSheet,
-  Image,
-  Dimensions,
-  Platform,
+  Text,
+  View,
 } from 'react-native';
-import { MetaMetricsEvents } from '../../../core/Analytics';
-import StyledButton from '../../UI/StyledButton';
-import { fontStyles, baseStyles } from '../../../styles/common';
-import { strings } from '../../../../locales/i18n';
-import FadeOutOverlay from '../../UI/FadeOutOverlay';
-import { getTransparentOnboardingNavbarOptions } from '../../UI/Navbar';
-import { PREVIOUS_SCREEN, ONBOARDING } from '../../../constants/navigation';
-import Device from '../../../util/device';
-import { saveOnboardingEvent } from '../../../actions/onboarding';
 import { connect } from 'react-redux';
-import { trackEvent } from '../../../util/analyticsV2';
-import { ThemeContext, mockTheme } from '../../../util/theme';
+import { strings } from '../../../../locales/i18n';
 import {
-  WELCOME_SCREEN_CAROUSEL_TITLE_ID,
-  WELCOME_SCREEN_GET_STARTED_BUTTON_ID,
-  WELCOME_SCREEN_CAROUSEL_CONTAINER_ID,
   WALLET_SETUP_CREATE_NEW_WALLET_BUTTON_ID,
+  WELCOME_SCREEN_CAROUSEL_CONTAINER_ID,
+  WELCOME_SCREEN_GET_STARTED_BUTTON_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/WelcomeScreen.testIds';
 import generateTestId from '../../../../wdio/utils/generateTestId';
+import { saveOnboardingEvent } from '../../../actions/onboarding';
+import { ONBOARDING, PREVIOUS_SCREEN } from '../../../constants/navigation';
+import { baseStyles, fontStyles } from '../../../styles/common';
+import Device from '../../../util/device';
+import { ThemeContext, mockTheme } from '../../../util/theme';
+import FadeOutOverlay from '../../UI/FadeOutOverlay';
+import { getTransparentOnboardingNavbarOptions } from '../../UI/Navbar';
+import StyledButton from '../../UI/StyledButton';
 
 import {
-  arrow_right_icon,
   backgroundOnboarding,
   imgSecretPhrase,
   imgWalletOnboarding,
 } from 'images/index';
+import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
 import ConfirmBackupModal from './ConfirmBackupModal';
-import { HeaderBackButton } from '@react-navigation/stack';
 
 const IMAGE_3_RATIO = 215 / 315;
 const IMAGE_2_RATIO = 222 / 239;
@@ -146,23 +142,14 @@ const SecretPhrase = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setOptions({
-      headerTransparent: true,
-      title: 'Secret Phrase Backup',
-      headerLeft: (props) => (
-        <HeaderBackButton
-          {...props}
-          labelVisible={false}
-          style={{ marginLeft: 16 }}
-          backImage={() => (
-            <Image
-              source={arrow_right_icon}
-              style={{ width: 32, height: 32 }}
-            />
-          )}
-        />
+    props.navigation.setOptions(
+      tHeaderOptions(
+        props.navigation,
+        colors,
+        { title: 'Secret Phrase Backup' },
+        { headerTransparent: true },
       ),
-    });
+    );
   }, [props.navigation, props.route, colors]);
 
   const styles = createStyles(colors);

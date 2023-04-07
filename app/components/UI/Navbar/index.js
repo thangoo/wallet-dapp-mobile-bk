@@ -835,6 +835,7 @@ export function getClosableNavigationOptions(
       fontSize: 20,
       ...fontStyles.normal,
       color: themeColors.text.default,
+      textAlign: 'center',
     },
   });
   function navigationPop() {
@@ -867,6 +868,7 @@ export function getClosableNavigationOptions(
               />
             </TouchableOpacity>
           ),
+    headerRight: () => <View />,
     headerStyle: innerStyles.headerStyle,
     headerTintColor: themeColors.primary.default,
   };
@@ -916,7 +918,8 @@ export function getWalletNavbarOptions(
     title: {
       fontSize: 16,
       fontWeight: '600',
-      color: themeColors['tvn.white'],
+      color: themeColors.gray01,
+      textAlign: 'center',
     },
     headerTitleWrapper: {
       flex: 1,
@@ -1124,22 +1127,10 @@ export function getNavbarTransaction(
     headerTransparent: true,
     // design UI FIGMA
     headerLeft: () => (
-      // eslint-disable-next-line react/jsx-no-bind
-      // <TouchableOpacity
-      //   onPress={() => navigation.pop()}
-      //   style={styles.backButton}
-      //   {...generateTestId(Platform, ASSET_BACK_BUTTON)}
-      // >
-      //   <IonicIcon
-      //     name={Device.isAndroid() ? 'md-arrow-back' : 'ios-arrow-back'}
-      //     size={Device.isAndroid() ? 24 : 28}
-      //     style={innerStyles.headerIcon}
-      //   />
-      // </TouchableOpacity>
       <HeaderBackButton
         onPress={() => navigation.pop()}
         labelVisible={false}
-        style={styles.backButton}
+        style={{ marginLeft: 16 }}
         backImage={() => (
           <Image
             source={arrow_right_icon_white}
@@ -1152,11 +1143,6 @@ export function getNavbarTransaction(
     headerRight: onRightPress
       ? () => (
           <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
-            {/* <MaterialCommunityIcon
-              name={'dots-horizontal'}
-              size={28}
-              style={innerStyles.headerIcon}
-            /> */}
             <Image source={chart_line_icon} style={{ width: 27, height: 23 }} />
           </TouchableOpacity>
           // eslint-disable-next-line no-mixed-spaces-and-tabs

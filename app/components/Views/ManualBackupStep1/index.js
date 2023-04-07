@@ -49,6 +49,7 @@ import Logger from '../../../util/Logger';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
 import { HeaderBackButton } from '@react-navigation/stack';
 import ReadMoreModal from './ReadMoreModal';
+import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
 
 /**
  * View that's shown during the second step of
@@ -72,23 +73,9 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
   const steps = MANUAL_BACKUP_STEPS;
 
   const updateNavBar = useCallback(() => {
-    navigation.setOptions({
-      title: 'Secret Phrase',
-      headerStyle: { backgroundColor: 'white', shadowOpacity: 0 },
-      headerLeft: (props) => (
-        <HeaderBackButton
-          {...props}
-          labelVisible={false}
-          style={{ marginLeft: 16 }}
-          backImage={() => (
-            <Image
-              source={arrow_right_icon}
-              style={{ width: 32, height: 32 }}
-            />
-          )}
-        />
-      ),
-    });
+    navigation.setOptions(
+      tHeaderOptions(navigation, colors, { title: 'Secret Phrase' }),
+    );
   }, [colors, navigation, route]);
 
   const tryExportSeedPhrase = async (password) => {
