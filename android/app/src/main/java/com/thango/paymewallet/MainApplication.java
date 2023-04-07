@@ -1,4 +1,4 @@
-package io.metamask;
+package com.thango.paymewallet;
 
 import com.facebook.react.ReactApplication;
 import com.cmcewen.blurview.BlurViewPackage;
@@ -15,7 +15,7 @@ import com.facebook.soloader.SoLoader;
 import cl.json.ShareApplication;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import io.metamask.nativeModules.PreventScreenshotPackage;
+import com.thango.paymewallet.nativeModules.PreventScreenshotPackage;
 import android.webkit.WebView;
 
 import androidx.multidex.MultiDexApplication;

@@ -1,4 +1,4 @@
-package io.metamask;
+package com.thango.paymewallet;
 
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactActivity;
@@ -25,7 +25,7 @@ public class MainActivity extends ReactActivity {
 	*/
 	@Override
 	protected String getMainComponentName() {
-		return "MetaMask";
+		return "StandaloneWallet";
 	}
 
 	// Override onStart, onNewIntent:

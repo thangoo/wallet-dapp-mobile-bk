@@ -1,4 +1,4 @@
-package io.metamask.nativeModules;
+package com.thango.paymewallet.nativeModules;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
