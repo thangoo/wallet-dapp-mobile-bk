@@ -165,6 +165,9 @@ const Wallet = ({ navigation }: any) => {
   const theme = useTheme();
   const styles = createStyles(theme);
   const { colors } = theme;
+  const { themeAppearance } = useTheme();
+  
+
   /**
    * Map of accounts to information objects including balances
    */
@@ -339,9 +342,9 @@ const Wallet = ({ navigation }: any) => {
   ) => {
     // const { activeTextColor, inactiveTextColor, textStyle, } = this.props;
     const textColor = isTabActive
-      ? colors['tvn.gray.10']
-      : colors['tvn.gray.05'];
-    const fontWeight = isTabActive ? 'bold' : 'normal';
+      ? colors.tText.default
+      : colors.tText.third
+    const fontWeight =  'bold'
 
     // console.log('#### name: ', name);
 
@@ -365,7 +368,7 @@ const Wallet = ({ navigation }: any) => {
           <ButtonIcon
             variant={ButtonIconVariants.Primary}
             onPress={tokensRef.current?.goToAddToken}
-            iconName={IconName.AddPlusCircleAddBlack}
+            iconName={themeAppearance === 'light' ? IconName.AddPlusCircleAddBlack : IconName.AddPlusCircleAddWhite}
             style={styles.infoRightButton}
             size={IconSize.Xl}
             // disabled={!tokensRef.current?.state.isAddTokenEnabled}

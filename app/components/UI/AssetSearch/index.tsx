@@ -25,6 +25,7 @@ const createStyles = (colors: any) =>
       borderRadius: 12,
       borderColor: colors['tvn.gray.04'],
       color: colors.text.default,
+      backgroundColor:colors.tBackground.tokenCard
     },
     textInput: {
       ...fontStyles.normal,
@@ -32,7 +33,7 @@ const createStyles = (colors: any) =>
     } as StyleSheet.NamedStyles<any>,
     icon: {
       padding: 12,
-      color: colors.icon.alternative,
+      color: colors.tIcon.default,
     },
   });
 
@@ -122,7 +123,7 @@ const AssetSearch = memo(({ onSearch, onFocus, onBlur }: Props) => {
         onFocus={onFocus}
         onBlur={onBlur}
         placeholder={strings('token.search_tokens_placeholder')}
-        placeholderTextColor={colors.text.muted}
+        placeholderTextColor={colors.tText.placeHolder}
         onChangeText={handleSearch}
         {...generateTestId(Platform, TOKEN_INPUT_BOX_ID)}
         keyboardAppearance={themeAppearance}

@@ -43,11 +43,16 @@ export const thangoLight: ThangoThemeColors = {
     alternative: colorThango.lightGrayBlue,
     alternativeHover: '#D6D9DC',
     alternativePressed: '#D6D9DC',
+    tokenCard : colorThango.gray02
   },
   tText: {
     default: colorThango.gray10,
     alternative: '#535A61',
     muted: '#BBC0C5',
+    secondary: colorThango.lightGray,
+    third:colorThango.gray05,
+    placeHolder :colorThango.gray06,
+    
   },
   tIcon: {
     default: colorThango.gray10,

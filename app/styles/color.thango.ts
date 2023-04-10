@@ -5,6 +5,7 @@ export default {
   dark05: '#555555',
   dark02: '#222222',
 
+
   // gray
   gray01: '#FFFFFF',
   gray02: '#F8F8F8',
@@ -20,6 +21,7 @@ export default {
 
   primary: '#277EFF',
 
+  lightGray:"#AFAFAF",
   darkGrayBlue: '#97A8C1',
   lightGrayBlue: '#F3F6FB',
   red: '#FF2517',

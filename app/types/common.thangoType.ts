@@ -54,6 +54,10 @@ export interface ThangoThemeColors {
      * {string} background.alternativePressed - For component pressed states that use background/alternative
      */
     alternativePressed: string;
+    /**
+     * {string} background.tokenCard - For component pressed states that use background/tokenCard
+     */
+    tokenCard :string
   };
   tText: {
     /**
@@ -68,6 +72,18 @@ export interface ThangoThemeColors {
      * {string} text.muted - For inactive or lowest priority text. (Example: placeholder)
      */
     muted: string;
+    secondary : string
+     /**
+     * {string} text.secondary - For secondary balance 
+     */
+     third : string
+     /**
+     * {string} text.third - For tab name deactivate
+     */
+     placeHolder : string
+     /**
+     * {string} text.placeHolder - For placeHolder input
+     */
   };
   tIcon: {
     /**

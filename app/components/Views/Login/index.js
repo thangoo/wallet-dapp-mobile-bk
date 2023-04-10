@@ -57,7 +57,7 @@ import {
   LOGIN_VIEW_TITLE_ID,
   LOGIN_VIEW_UNLOCK_BUTTON_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/LoginScreen.testIds';
-import { logo, vector } from '../../../images/index';
+import { logo, logo_dark } from '../../../images/index';
 import PassCode, { refPassCode } from '../../Base/PassCode';
 
 const deviceHeight = Device.getDeviceHeight();
@@ -465,7 +465,7 @@ class Login extends PureComponent {
           >
             <View testID={'login'} {...generateTestId(Platform, 'login')}>
               <View style={styles.foxWrapper}>
-                <Image source={logo} style={styles.image} />
+                <Image source={themeAppearance === 'light'  ? logo : logo_dark} style={styles.image} />
               </View>
               <Text
                 style={styles.title}

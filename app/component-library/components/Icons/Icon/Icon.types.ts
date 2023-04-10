@@ -214,5 +214,6 @@ export enum IconName {
   DoneCircleWhite = 'DoneCircleWhite',
   BellNotificationWhite = 'BellNotificationWhite',
   AddPlusCircleAddBlack = 'AddPlusCircleAddBlack',
+  AddPlusCircleAddWhite = 'AddPlusCircleAddWhite',
   MenuItem01White = 'MenuItem01White',
 }

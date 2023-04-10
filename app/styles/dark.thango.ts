@@ -16,11 +16,15 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     alternative: colorThango.darkGrayBlue,
     alternativeHover: '#D6D9DC',
     alternativePressed: '#D6D9DC',
+    tokenCard : colorThango.gray10
   },
   tText: {
     default: colorThango.light,
     alternative: '#535A61',
     muted: '#BBC0C5',
+    secondary: colorThango.gray09,
+    third : colorThango.dark05,
+    placeHolder :  colorThango.gray09,
   },
   tBorder: {
     default: colorThango.dark05,

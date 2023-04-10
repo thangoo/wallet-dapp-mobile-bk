@@ -1,4 +1,5 @@
 const logo = require('./logo.png');
+const logo_dark = require('./logo-dark.png');
 const vector = require('./vector.png');
 const shield_warning_icon = require('./shield_warning_icon.png');
 const copy_icon = require('./copy_icon.png');
@@ -37,6 +38,7 @@ export {
   arrow_right_icon_white,
   shield_warning_2_icon,
   logo,
+  logo_dark,
   vector,
   shield_warning_icon,
   copy_icon,

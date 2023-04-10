@@ -86,7 +86,7 @@ const createStyles = (colors) =>
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors['tvn.gray.02'],
+      backgroundColor: colors.tBackground.tokenCard,
       borderRadius: 16,
       height: 70,
       padding: 10,
@@ -105,13 +105,13 @@ const createStyles = (colors) =>
     },
     name: {
       fontSize: 16,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       ...fontStyles.bold,
     },
     balance: {
       flex: 1,
       fontSize: 14,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       ...fontStyles.normal,
       textTransform: 'uppercase',
       alignSelf: 'flex-end',
@@ -119,7 +119,7 @@ const createStyles = (colors) =>
     },
     testNetBalance: {
       fontSize: 14,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       ...fontStyles.normal,
       alignSelf: 'flex-end',
     },

@@ -151,6 +151,7 @@ import ShieldEffectWhite from './assets/shield-effect-white.svg';
 import DoneCircleWhite from './assets/done-circle-white.svg';
 import BellNotificationWhite from './assets/bell-notification-white.svg';
 import AddPlusCircleAddBlack from './assets/add-plus-circle-add-black.svg';
+import AddPlusCircleAddWhite from './assets/add-plus-circle-white.svg';
 import MenuItem01White from './assets/menu-item01-white.svg';
 /**
  * Asset stored by icon name
@@ -303,5 +304,6 @@ export const assetByIconName: AssetByIconName = {
   [IconName.DoneCircleWhite]: DoneCircleWhite,
   [IconName.BellNotificationWhite]: BellNotificationWhite,
   [IconName.AddPlusCircleAddBlack]: AddPlusCircleAddBlack,
+  [IconName.AddPlusCircleAddWhite]: AddPlusCircleAddWhite,
   [IconName.MenuItem01White]: MenuItem01White,
 };
