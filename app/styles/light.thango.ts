@@ -25,6 +25,8 @@ export const thangoLight: ThangoThemeColors = {
   ['tvn.primary.blue']: '#277EFF',
   ['tvn.background.linear1']: '#7EDDFE',
   ['tvn.background.linear2']: '#92A0FE',
+  ['tvn.green.linear1']: '#159B9B',
+  ['tvn.green.linear2']: '#37BFBF',
   ['tvn.orange.linear1']: '#DF7B1F',
   ['tvn.orange.linear2']: '#F3BA2F',
   ['tvn.main.wallet.linear1']: '#7EDDFE',
@@ -38,6 +40,7 @@ export const thangoLight: ThangoThemeColors = {
   tBackground: {
     default: colorThango.light,
     secondary: colorThango.light,
+    third :colorThango.gray02,
     defaultHover: '#FAFBFC',
     defaultPressed: '#FAFBFC',
     alternative: colorThango.lightGrayBlue,
@@ -48,6 +51,7 @@ export const thangoLight: ThangoThemeColors = {
     default: colorThango.gray10,
     alternative: '#535A61',
     muted: '#BBC0C5',
+    address:colorThango.gray12,
   },
   tIcon: {
     default: colorThango.gray10,
