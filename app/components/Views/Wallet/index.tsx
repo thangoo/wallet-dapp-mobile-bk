@@ -466,6 +466,8 @@ const Wallet = ({ navigation }: any) => {
               account={account}
               navigation={navigation}
               onRef={onRef}
+            // props token for received crypto
+              token={assets}
             />
           </View>
         </View>

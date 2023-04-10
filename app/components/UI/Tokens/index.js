@@ -388,6 +388,7 @@ class Tokens extends PureComponent {
 
   renderTokensDetectedSection = () => {
     const { isTokenDetectionEnabled, detectedTokens } = this.props;
+
     const styles = this.getStyles();
 
     if (!isTokenDetectionEnabled || !detectedTokens?.length) {

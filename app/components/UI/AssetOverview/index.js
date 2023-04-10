@@ -339,6 +339,7 @@ class AssetOverview extends PureComponent {
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
 
+
     let mainBalance, secondaryBalance;
     const itemAddress = safeToChecksumAddress(address);
     let balance, balanceFiat;

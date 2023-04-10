@@ -20,6 +20,7 @@ import Wallet from '../../Views/Wallet';
 import Asset from '../../Views/Asset';
 import AssetDetails from '../../Views/AssetDetails';
 import AddAsset from '../../Views/AddAsset';
+import ReceivedCrypto from '../../Views/ReceivedCrypto';
 import TransactionDetail from '../../UI/TransactionElement/TransactionDetails';
 import Collectible from '../../Views/Collectible';
 import Send from '../../Views/Send';
@@ -136,6 +137,7 @@ const AssetModalFlow = (props) => (
     />
   </Stack.Navigator>
 );
+
 /* eslint-enable react/prop-types */
 
 const WalletTabStackFlow = () => (
@@ -769,6 +771,11 @@ const MainNavigator = () => (
     <Stack.Screen
       name="ReceiveScreen"
       component={ReceiveScreen}
+      options={{ headerShown: true }}
+    />
+    <Stack.Screen
+      name="ReceivedCryptoScreen"
+      component={ReceivedCrypto}
       options={{ headerShown: true }}
     />
     <Stack.Screen

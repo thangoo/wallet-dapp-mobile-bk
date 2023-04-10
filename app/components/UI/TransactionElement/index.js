@@ -82,7 +82,7 @@ const createStyles = (colors) =>
     address: {
       fontSize: 12,
       ...fontStyles.normal,
-      color: colors['tvn.address'],
+      color: colors.tText.address,
       width: '80%',
     },
   });
@@ -337,7 +337,7 @@ class TransactionElement extends PureComponent {
 
     return (
       <>
-        {accountImportTime > time && this.renderImportTime()}
+        {/* {accountImportTime > time && this.renderImportTime()} */}
         <ListItem>
           {/* <ListItem.Date>{this.renderTxTime()}</ListItem.Date> */}
           <ListItem.Content>
@@ -377,7 +377,7 @@ class TransactionElement extends PureComponent {
             </ListItem.Actions>
           )}
         </ListItem>
-        {accountImportTime <= time && this.renderImportTime()}
+        {/* {accountImportTime <= time && this.renderImportTime()} */}
       </>
     );
   };

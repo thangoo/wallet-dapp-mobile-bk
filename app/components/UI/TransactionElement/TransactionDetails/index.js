@@ -376,11 +376,11 @@ class TransactionDetails extends PureComponent {
 
     return updatedTransactionDetails ? (
       <ScrollView>
-        <HStack
+        <View
           style={{
             justifyContent: 'center',
             marginTop: 22,
-            flexDirection: 'column',
+            alignItems:'center'
           }}
         >
           <TokenIcon symbol={assetSymbol} style={{ width: 56, height: 56 }} />
@@ -414,7 +414,7 @@ class TransactionDetails extends PureComponent {
           >
             = {transactionDetails.summarySecondaryTotalAmount}
           </Text>
-        </HStack>
+        </View>
         <Item title="Date" content={RenderTime(tx.time)} showIconInfo={false} />
         <Item
           title="Status"
@@ -456,7 +456,7 @@ const Item = ({ title, content, showIconInfo }) => {
   const { colors } = useTheme();
 
   return (
-    <HStack
+    <View
       style={{
         justifyContent: 'center',
         alignItems: 'flex-start',
@@ -503,7 +503,7 @@ const Item = ({ title, content, showIconInfo }) => {
         </Text>
         {showIconInfo && <Image source={infoIcon} />}
       </View>
-    </HStack>
+    </View>
   );
 };
 

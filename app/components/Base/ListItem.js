@@ -9,7 +9,7 @@ const createStyles = (colors) =>
   StyleSheet.create({
     wrapper: {
       padding: 15,
-      backgroundColor: colors['tvn.gray.02'],
+      backgroundColor: colors.tBackground.third,
       borderRadius: 16,
       alignItems: 'center',
       justifyContent: 'center',
@@ -47,7 +47,7 @@ const createStyles = (colors) =>
     },
     title: {
       fontSize: 16,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       ...fontStyles.bold,
     },
     amount: {

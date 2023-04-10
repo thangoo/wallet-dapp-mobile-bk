@@ -109,7 +109,7 @@ const createStyles = (colors) =>
     header: {
       fontSize: 18,
       ...fontStyles.bold,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default
     },
   });
 
