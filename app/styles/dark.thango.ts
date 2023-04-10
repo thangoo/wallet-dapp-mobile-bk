@@ -36,6 +36,11 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     alternative: '#6A737D',
     muted: '#BBC0C5',
   },
+  tInput: {
+    backgroundColor: {
+      default: colorThango.gray02,
+    }
+  },
   background: {
     ...darkTheme.colors['background'],
     default: colorThango.dark,

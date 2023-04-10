@@ -215,4 +215,5 @@ export enum IconName {
   BellNotificationWhite = 'BellNotificationWhite',
   AddPlusCircleAddBlack = 'AddPlusCircleAddBlack',
   MenuItem01White = 'MenuItem01White',
+  ScanQRCode = 'ScanQRCode,'
 }

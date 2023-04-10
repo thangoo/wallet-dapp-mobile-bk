@@ -1125,7 +1125,7 @@
     "hash_copied_to_clipboard": "Transaction hash copied to clipboard",
     "address_copied_to_clipboard": "Address copied to clipboard",
     "transaction_error": "Transaction error",
-    "address_to_placeholder": "Search, public address (0x), or ENS",
+    "address_to_placeholder": "Public address (0x), or ENS",
     "address_from_balance": "Balance:",
     "status": "Status",
     "date": "Date",
