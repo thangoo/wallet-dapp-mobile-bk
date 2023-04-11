@@ -51,7 +51,7 @@ const createStyles = (colors: any) =>
   });
 
 const SplashScreen = (): JSX.Element => {
-  const { colors } = useAppTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
   const appVersion = getVersion();
 
@@ -59,12 +59,7 @@ const SplashScreen = (): JSX.Element => {
     <LinearGradient
       start={{ x: 0.5, y: 0.75 }}
       end={{ x: 0, y: 0.25 }}
-      colors={[
-        // @ts-ignore
-        colors['tvn.background.linear1'],
-        // @ts-ignore
-        colors['tvn.background.linear2'],
-      ]}
+      colors={colors.tGradient.onBoarding}
       style={styles.main}
     >
       <ImageBackground

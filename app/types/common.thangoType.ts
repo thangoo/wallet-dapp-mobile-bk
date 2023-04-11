@@ -56,6 +56,11 @@ export interface ThangoThemeColors {
     alternativePressed: string;
 
     third: string;
+
+    /**
+     * {string} background.fourth - for background circle 
+     */
+    fourth: string
   };
   tText: {
     /**
@@ -73,7 +78,7 @@ export interface ThangoThemeColors {
     /**
      * {string} text.address - For address
      */
-    address:string 
+    address: string 
   };
   tIcon: {
     /**
@@ -301,4 +306,13 @@ export interface ThangoThemeColors {
      */
     inverse: string;
   };
+  tGradient :{
+     /**
+     * {string[]}  For background gradient
+     */
+    onBoarding : string[],
+    transaction : string[],
+    receive : string[],
+    wallet: string[],
+  }
 }

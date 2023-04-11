@@ -404,12 +404,7 @@ class Asset extends PureComponent {
           <LinearGradient
             start={{ x: 0.75, y: 0.75 }}
             end={{ x: 0.25, y: 0 }}
-            colors={[
-              // @ts-ignore
-              colors['tvn.orange.linear1'],
-              // @ts-ignore
-              colors['tvn.orange.linear2'],
-            ]}
+            colors={colors.tGradient.transaction}
             style={styles.bgGradient}
           />
 

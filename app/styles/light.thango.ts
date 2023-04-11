@@ -1,4 +1,5 @@
 import { ThangoThemeColors } from '../../app/types/common.thangoType';
+
 import colorThango from './color.thango';
 
 export const thangoLight: ThangoThemeColors = {
@@ -36,11 +37,13 @@ export const thangoLight: ThangoThemeColors = {
   ['tvn.background.asset.action.button']: '#ffffff33',
 
   gray01: colorThango.gray01,
+  
   // DEFINE CONSTANT
   tBackground: {
     default: colorThango.light,
     secondary: colorThango.light,
     third :colorThango.gray02,
+    fourth:colorThango.gray04,
     defaultHover: '#FAFBFC',
     defaultPressed: '#FAFBFC',
     alternative: colorThango.lightGrayBlue,
@@ -132,4 +135,10 @@ export const thangoLight: ThangoThemeColors = {
     default: '#8B45B6',
     inverse: '#FCFCFC',
   },
+  tGradient : {
+    onBoarding : colorThango.backgroundOnboarding,
+    transaction : colorThango.orangeLinear,
+    receive : colorThango.receiveLinearBackground,
+    wallet: colorThango.maiWalletLinear,
+  }
 };

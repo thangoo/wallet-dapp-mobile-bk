@@ -44,10 +44,12 @@ import {
 } from '../../../../selectors/networkController';
 import HStack from '../../../Base/HStack';
 import TokenIcon from '../../Swaps/components/TokenIcon';
-import { arrow_right_icon, external_icon, plus_icon } from 'images/index';
+import { arrow_right_icon, external_icon, plus_icon,arrow_right_icon_white,external_icon_white } from 'images/index';
 import { HeaderBackButton } from '@react-navigation/stack';
 
 const infoIcon = require('../../../../images/transaction-icons/info.png');
+const infoIconWhite = require('../../../../images/transaction-icons/info-white.png');
+
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -195,9 +197,15 @@ class TransactionDetails extends PureComponent {
 
   updateNavBar = () => {
     const { navigation } = this.props;
+    const themeAppearance = this.context.themeAppearance 
+    const colors = this.context.colors || mockTheme.colors;
+
     navigation.setOptions({
       title: 'Transfer',
-      headerStyle: { backgroundColor: 'white', shadowOpacity: 0 },
+      headerTitleStyle: {
+        color: colors.tText.default
+      },
+      headerStyle: { backgroundColor: colors.tBackground.default, shadowOpacity: 0 },
       headerLeft: (props) => (
         <HeaderBackButton
           {...props}
@@ -205,7 +213,7 @@ class TransactionDetails extends PureComponent {
           style={{ marginLeft: 16 }}
           backImage={() => (
             <Image
-              source={arrow_right_icon}
+              source={themeAppearance === 'light' ? arrow_right_icon : arrow_right_icon_white }
               style={{ width: 32, height: 32 }}
             />
           )}
@@ -218,7 +226,7 @@ class TransactionDetails extends PureComponent {
           onPress={this.viewOnEtherscan}
           style={{ marginRight: 16 }}
           backImage={() => (
-            <Image source={external_icon} style={{ width: 32, height: 32 }} />
+            <Image source={themeAppearance === 'light' ? external_icon : external_icon_white} style={{ width: 32, height: 32 }} />
           )}
         />
       ),
@@ -299,6 +307,9 @@ class TransactionDetails extends PureComponent {
     }
     this.setState({ rpcBlockExplorer: blockExplorer });
     this.updateTransactionDetails();
+  };
+  componentDidUpdate = () => {
+    this.updateNavBar();
   };
 
   getStyles = () => {
@@ -398,7 +409,7 @@ class TransactionDetails extends PureComponent {
             <Text
               style={{
                 fontSize: 24,
-                color: colors['tvn.gray.10'],
+                color: colors.tText.default,
                 ...fontStyles.bold,
               }}
             >
@@ -408,7 +419,7 @@ class TransactionDetails extends PureComponent {
           <Text
             style={{
               fontSize: 14,
-              color: colors['tvn.gray.10'],
+              color: colors.tText.default,
               ...fontStyles.normal,
             }}
           >
@@ -454,6 +465,8 @@ class TransactionDetails extends PureComponent {
 
 const Item = ({ title, content, showIconInfo }) => {
   const { colors } = useTheme();
+  const themeAppearance = useTheme();
+
 
   return (
     <View
@@ -470,7 +483,7 @@ const Item = ({ title, content, showIconInfo }) => {
           paddingHorizontal: 16,
           paddingVertical: 8,
           fontSize: 16,
-          color: colors['tvn.gray.10'],
+          color: colors.tText.default,
           ...fontStyles.normal,
         }}
       >
@@ -483,7 +496,7 @@ const Item = ({ title, content, showIconInfo }) => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
-          backgroundColor: colors['tvn.gray.02'],
+          backgroundColor: colors.tBackground.third,
           width: '100%',
           borderRadius: 16,
         }}
@@ -494,14 +507,14 @@ const Item = ({ title, content, showIconInfo }) => {
           style={{
             paddingVertical: 8,
             fontSize: 16,
-            color: colors['tvn.gray.10'],
+            color: colors.tText.default,
             ...fontStyles.normal,
             width: '60%',
           }}
         >
           {content}
         </Text>
-        {showIconInfo && <Image source={infoIcon} />}
+        {showIconInfo && <Image source={themeAppearance === 'light' ? infoIcon : infoIconWhite} />}
       </View>
     </View>
   );
