@@ -135,7 +135,7 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
       paddingLeft: 0,
       paddingRight: 6,
-      color: colors.tText.color.gray02,
+      color: colors.tText.color.default,
       flex: 1,
       fontSize: 14,
 
