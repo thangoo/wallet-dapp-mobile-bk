@@ -43,8 +43,7 @@ import Button, {
   ButtonSize,
 } from '../../../component-library/components/Buttons/Button';
 import { MAINNET } from '../../../constants/network';
-import { HeaderBackButton } from '@react-navigation/stack';
-import { arrow_right_icon } from '../../../images/index';
+import { tHeaderOptions } from '../Navbar/index.thango';
 
 const createStyles = ({ colors }) =>
   StyleSheet.create({
@@ -184,23 +183,7 @@ class OptinMetrics extends PureComponent {
     const { navigation } = this.props;
     const colors = this.context.colors;
     // navigation.setOptions(getOptinMetricsNavbarOptions(colors));
-    navigation.setOptions({
-      title: 'Legal',
-      headerStyle: { backgroundColor: 'white', shadowOpacity: 0 },
-      headerLeft: (props) => (
-        <HeaderBackButton
-          {...props}
-          labelVisible={false}
-          style={{ marginLeft: 16 }}
-          backImage={() => (
-            <Image
-              source={arrow_right_icon}
-              style={{ width: 32, height: 32 }}
-            />
-          )}
-        />
-      ),
-    });
+    navigation.setOptions(tHeaderOptions(navigation, colors, { title: '' }));
   };
 
   componentDidMount() {
