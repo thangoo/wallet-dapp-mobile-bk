@@ -104,7 +104,9 @@ const transactionIconReceivedFailed = require('../../../images/transaction-icons
  */
 class TransactionElement extends PureComponent {
   static propTypes = {
-    assetSymbol: PropTypes.string,
+    // assetSymbol: PropTypes.string,
+
+    assetSymbol: PropTypes.any,
     /**
      * Asset object (in this case ERC721 token)
      */
