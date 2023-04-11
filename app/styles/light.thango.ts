@@ -54,7 +54,7 @@ export const thangoLight: ThangoThemeColors = {
   tText: {
     color: {
       default: colorThango.gray10,
-      gray02: colorThango.gray02
+      gray02: colorThango.gray02,
     },
     default: colorThango.gray10,
     secondary: colorThango.gray06,

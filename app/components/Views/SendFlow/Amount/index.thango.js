@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import {
   StyleSheet,
-  Text as ReactText,
+  Text,
   View,
   TouchableOpacity,
   TextInput,
@@ -20,6 +20,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Modal from 'react-native-modal';
 import { GAS_ESTIMATE_TYPES } from '@metamask/gas-fee-controller';
 import { fontStyles } from '../../../../styles/common';
+import ButtonIcon from '../../../../component-library/components/Buttons/ButtonIcon';
+import {
+  IconName,
+  IconSize,
+} from '../../../../component-library/components/Icons/Icon';
 import { MetaMetricsEvents } from '../../../../core/Analytics';
 import {
   setSelectedAsset,
@@ -113,19 +118,21 @@ const createStyles = (colors) =>
       marginHorizontal: 24,
     },
     inputWrapper: {
-      flex: 1,
-      marginTop: 30,
-      marginHorizontal: 24,
+      // flex: 1,
+      marginTop: 10,
+      marginHorizontal: 10,
+      height: 200,
     },
     actionsWrapper: {
       flexDirection: 'row',
     },
     action: {
       flex: 1,
-      alignItems: 'center',
+      alignItems: 'flex-start',
+      marginLeft: 20,
     },
     actionBorder: {
-      flex: 0.8,
+      // flex: 0.8,
     },
     actionDropdown: {
       ...fontStyles.normal,
@@ -146,24 +153,50 @@ const createStyles = (colors) =>
       paddingLeft: 10,
     },
     maxText: {
-      ...fontStyles.normal,
-      fontSize: 12,
+      ...fontStyles.bold,
+      fontSize: 14,
       color: colors.primary.default,
       alignSelf: 'flex-end',
-      textTransform: 'uppercase',
+      // textTransform: 'uppercase',
     },
     actionMax: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-end',
     },
-    actionMaxTouchable: {},
     inputContainerWrapper: {
-      marginVertical: 16,
+      // marginVertical: 16,
       alignItems: 'center',
+      minHeight: 66,
+      
+    },
+    selectWrapper: {
+      flex: 1,
+      marginLeft: 8,
+      // paddingHorizontal: 10,
+      // borderWidth: 1,
+
+      alignItems: 'center',
+      justifyContent: 'center',
+     
+      flexDirection: 'row',
+      borderRadius: 16,
+      marginVertical: 8,
+      padding: 6,
+      backgroundColor: colors.tInput.backgroundColor.default,
+    },
+    borderOpaque: {
+      // borderWidth: 1,
+      // borderColor: colors.border.default,
+    },
+    borderHighlighted: {
+      // borderWidth: 1,
+      // borderColor: colors.border.default,
     },
     inputContainer: {
+      flex: 1,
       flexDirection: 'row',
+      alignItems: 'center',
     },
     inputCurrencyText: {
       ...fontStyles.light,
@@ -176,29 +209,32 @@ const createStyles = (colors) =>
       textTransform: 'uppercase',
     },
     textInput: {
-      ...fontStyles.light,
-      fontSize: 44,
-      textAlign: 'center',
-      color: colors.text.default,
+      ...fontStyles.bold,
+      paddingLeft: 0,
+      paddingRight: 6,
+      color: colors.tText.color.default,
+      flex: 1,
+      fontSize: 16,
+      
     },
     switch: {
       flex: 1,
-      marginTop: Device.isIos() ? 0 : 2,
+      // marginTop: Device.isIos() ? 0 : 2,
     },
     actionSwitch: {
       paddingHorizontal: 8,
       paddingVertical: 2,
       borderRadius: 8,
       flexDirection: 'row',
-      borderColor: colors.text.alternative,
-      borderWidth: 1,
-      right: -2,
+      // borderColor: colors.text.alternative,
+      // borderWidth: 1,
+      // right: -2,
     },
     textSwitch: {
       ...fontStyles.normal,
       fontSize: 14,
       color: colors.text.alternative,
-      textTransform: 'uppercase',
+      // textTransform: 'uppercase',
     },
     switchWrapper: {
       flexDirection: 'row',
@@ -421,6 +457,15 @@ class Amount extends PureComponent {
      * Indicates whether the current transaction is a deep link transaction
      */
     isPaymentRequest: PropTypes.bool,
+    /**
+     * Callback called when input onBlur
+     */
+    onInputBlur: PropTypes.func,
+    /**
+     * Input width to solve android paste bug
+     * https://github.com/facebook/react-native/issues/9958
+     */
+    inputWidth: PropTypes.object,
   };
 
   state = {
@@ -438,14 +483,6 @@ class Amount extends PureComponent {
   tokens = [];
   collectibles = [];
 
-  updateNavBar = () => {
-    const { navigation, route } = this.props;
-    const colors = this.context.colors || mockTheme.colors;
-    navigation.setOptions(
-      getSendFlowTitle('send.amount', navigation, route, colors),
-    );
-  };
-
   componentDidMount = async () => {
     const {
       tokens,
@@ -455,10 +492,11 @@ class Amount extends PureComponent {
       providerType,
       selectedAsset,
       isPaymentRequest,
+      onInputBlur,
     } = this.props;
     // For analytics
-    this.updateNavBar();
-    navigation.setParams({ providerType, isPaymentRequest });
+    // this.updateNavBar();
+    // navigation.setParams({ providerType, isPaymentRequest });
 
     this.tokens = [getEther(ticker), ...tokens];
     this.collectibles = this.processCollectibles();
@@ -528,7 +566,7 @@ class Amount extends PureComponent {
   };
 
   componentDidUpdate = () => {
-    this.updateNavBar();
+    // this.updateNavBar();
   };
 
   hasExchangeRate = () => {
@@ -1018,11 +1056,11 @@ class Amount extends PureComponent {
             />
           )}
           <View style={styles.assetInformationWrapper}>
-            <ReactText style={styles.textAssetTitle}>{symbol}</ReactText>
+            <Text style={styles.textAssetTitle}>{symbol}</Text>
             <View style={styles.assetBalanceWrapper}>
-              <ReactText style={styles.textAssetBalance}>{balance}</ReactText>
+              <Text style={styles.textAssetBalance}>{balance}</Text>
               {!!balanceFiat && (
-                <ReactText style={styles.textAssetFiat}>{balanceFiat}</ReactText>
+                <Text style={styles.textAssetFiat}>{balanceFiat}</Text>
               )}
             </View>
           </View>
@@ -1051,7 +1089,7 @@ class Amount extends PureComponent {
             containerStyle={styles.tokenImage}
           />
           <View style={styles.assetInformationWrapper}>
-            <ReactText style={styles.textAssetTitle}>{name}</ReactText>
+            <Text style={styles.textAssetTitle}>{name}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -1139,7 +1177,9 @@ class Amount extends PureComponent {
       internalPrimaryCurrencyIsCrypto,
       currentBalance,
     } = this.state;
-    const { currentCurrency } = this.props;
+
+
+    const { currentCurrency, onInputBlur, inputWidth, highlighted } = this.props;
     const colors = this.context.colors || mockTheme.colors;
     const themeAppearance = this.context.themeAppearance || 'light';
     const styles = createStyles(colors);
@@ -1147,22 +1187,36 @@ class Amount extends PureComponent {
     return (
       <View>
         <View style={styles.inputContainerWrapper}>
-          <View style={styles.inputContainer}>
-            {!internalPrimaryCurrencyIsCrypto && !!inputValue && (
-              <ReactText style={styles.inputCurrencyText}>{`${getCurrencySymbol(
+          <View
+            style={[
+              styles.selectWrapper,
+              highlighted ? styles.borderHighlighted : styles.borderOpaque,
+            ]}
+          >
+            <View style={styles.inputContainer}>
+              {/* {!internalPrimaryCurrencyIsCrypto && !!inputValue && (
+              <Text style={styles.inputCurrencyText}>{`${getCurrencySymbol(
                 currentCurrency,
-              )} `}</ReactText>
-            )}
-            <TextInput
-              ref={this.amountInput}
-              style={styles.textInput}
-              value={inputValue}
-              onChangeText={this.onInputChange}
-              keyboardType={'numeric'}
-              placeholder={'0'}
-              placeholderTextColor={colors.text.muted}
-              keyboardAppearance={themeAppearance}
-              {...generateTestId(Platform, TRANSACTION_AMOUNT_INPUT)}
+              )} `}</Text>
+            )} */}
+              <TextInput
+                ref={this.amountInput}
+                style={[styles.textInput, inputWidth]}
+                value={inputValue}
+                onChangeText={this.onInputChange}
+                keyboardType={'numeric'}
+                placeholder={'0'}
+                placeholderTextColor={colors.text.muted}
+                keyboardAppearance={themeAppearance}
+                {...generateTestId(Platform, TRANSACTION_AMOUNT_INPUT)}
+                numberOfLines={1}
+                onBlur={onInputBlur}
+              // onSubmitEditing={onSubmit}
+              />
+            </View>
+            <ButtonIcon
+              iconName={IconName.ScanQRCode}
+              size={IconSize.Xl}
             />
           </View>
         </View>
@@ -1173,7 +1227,7 @@ class Amount extends PureComponent {
                 style={styles.actionSwitch}
                 onPress={this.switchCurrency}
               >
-                <ReactText
+                <Text
                   style={styles.textSwitch}
                   numberOfLines={1}
                   {...generateTestId(
@@ -1181,25 +1235,25 @@ class Amount extends PureComponent {
                     TRANSACTION_AMOUNT_CONVERSION_VALUE,
                   )}
                 >
-                  {renderableInputValueConversion}
-                </ReactText>
-                <View styles={styles.switchWrapper}>
+                  = {renderableInputValueConversion}
+                </Text>
+                {/* <View styles={styles.switchWrapper}>
                   <MaterialCommunityIcons
                     name="swap-vertical"
                     size={16}
                     color={colors.primary.default}
                     style={styles.switch}
                   />
-                </View>
+                </View> */}
               </TouchableOpacity>
             </View>
           </View>
         )}
-        <View style={styles.balanceWrapper}>
-          <ReactText style={styles.balanceText}>{`${strings(
+        {/* <View style={styles.balanceWrapper}>
+          <Text style={styles.balanceText}>{`${strings(
             'transaction.balance',
-          )}: ${currentBalance}`}</ReactText>
-        </View>
+          )}: ${currentBalance}`}</Text>
+        </View> */}
         {amountError && (
           <View
             style={styles.errorMessageWrapper}
@@ -1229,11 +1283,11 @@ class Amount extends PureComponent {
           />
         </View>
         <View style={styles.collectibleInputInformationWrapper}>
-          <ReactText style={styles.collectibleName}>{selectedAsset.name}</ReactText>
-          <ReactText style={styles.collectibleId}>{`#${renderShortText(
+          <Text style={styles.collectibleName}>{selectedAsset.name}</Text>
+          <Text style={styles.collectibleId}>{`#${renderShortText(
             selectedAsset.tokenId,
             10,
-          )}`}</ReactText>
+          )}`}</Text>
         </View>
         {amountError && (
           <View
@@ -1257,104 +1311,24 @@ class Amount extends PureComponent {
     const styles = createStyles(colors);
 
     return (
-      <SafeAreaView
-        edges={['bottom']}
-        style={styles.wrapper}
-        {...generateTestId(Platform, AMOUNT_SCREEN)}
-      >
-        <ScrollView style={styles.scrollWrapper}>
-          {!hasExchangeRate && !selectedAsset.tokenId ? (
-            <Alert
-              small
-              type={AlertType.Warning}
-              renderIcon={() => (
-                <MaterialCommunityIcons
-                  name="information"
-                  size={20}
-                  color={colors.warning.default}
-                />
-              )}
-              style={styles.warningContainer}
-            >
-              {() => (
-                <View style={styles.warningTextContainer}>
-                  <ReactText
-                    red
-                    style={styles.warningText}
-                    {...generateTestId(Platform, FIAT_CONVERSION_WARNING_TEXT)}
-                  >
-                    {strings('transaction.fiat_conversion_not_available')}
-                  </ReactText>
-                </View>
-              )}
-            </Alert>
-          ) : null}
-          <View style={styles.inputWrapper}>
-            <View style={styles.actionsWrapper}>
-              <View style={styles.actionBorder} />
-              <View style={styles.action}>
-                <TouchableOpacity
-                  style={styles.actionDropdown}
-                  disabled={isPaymentRequest}
-                  onPress={this.toggleAssetsModal}
-                >
-                  <ReactText style={styles.textDropdown}>
-                    {selectedAsset.symbol || strings('wallet.collectible')}
-                  </ReactText>
-                  <View styles={styles.arrow}>
-                    <Ionicons
-                      name="ios-arrow-down"
-                      size={16}
-                      color={colors.primary.inverse}
-                      style={styles.iconDropdown}
-                      {...generateTestId(
-                        Platform,
-                        AMOUNT_SCREEN_CARET_DROP_DOWN,
-                      )}
-                    />
-                  </View>
-                </TouchableOpacity>
-              </View>
-              <View style={[styles.actionBorder, styles.actionMax]}>
-                {!selectedAsset.tokenId && (
-                  <TouchableOpacity
-                    style={styles.actionMaxTouchable}
-                    disabled={!estimatedTotalGas}
-                    onPress={this.useMax}
-                  >
-                    <ReactText style={styles.maxText}>
-                      {strings('transaction.use_max')}
-                    </ReactText>
-                  </TouchableOpacity>
-                )}
-              </View>
-            </View>
-            {selectedAsset.tokenId
-              ? this.renderCollectibleInput()
-              : this.renderTokenInput()}
-          </View>
-        </ScrollView>
-
-        <KeyboardAvoidingView
-          style={styles.nextActionWrapper}
-          behavior={'padding'}
-          keyboardVerticalOffset={KEYBOARD_OFFSET}
-          enabled={Device.isIos()}
-        >
-          <View style={styles.buttonNextWrapper}>
-            <StyledButton
-              type={'confirm'}
-              containerStyle={styles.buttonNext}
+      <View style={styles.inputWrapper}>
+        <View style={[styles.actionBorder, styles.actionMax]}>
+          {!selectedAsset.tokenId && (
+            <TouchableOpacity
+              style={styles.actionMaxTouchable}
               disabled={!estimatedTotalGas}
-              onPress={this.onNext}
-              testID={NEXT_BUTTON}
+              onPress={this.useMax}
             >
-              {strings('transaction.next')}
-            </StyledButton>
-          </View>
-        </KeyboardAvoidingView>
-        {this.renderAssetsModal()}
-      </SafeAreaView>
+              <Text style={styles.maxText}>
+                {strings('transaction.use_max')}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+        {selectedAsset.tokenId
+          ? this.renderCollectibleInput()
+          : this.renderTokenInput()}
+      </View>
     );
   };
 }
