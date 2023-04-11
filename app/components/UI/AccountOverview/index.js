@@ -223,7 +223,7 @@ class AccountOverview extends PureComponent {
      /**
      * Current token
      */
-    token: PropTypes.object,
+    token: PropTypes.array,
   };
   state = {
     accountLabelEditable: false,
@@ -338,7 +338,6 @@ class AccountOverview extends PureComponent {
 
   onSend = () => {
     const { newAssetTransaction, navigation, ticker } = this.props;
-    console.log("this.props;",this.props);
     newAssetTransaction(getEther(ticker));
     navigation.navigate('SendFlowView');
   };
