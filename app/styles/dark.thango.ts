@@ -23,7 +23,7 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     default: colorThango.light,
     alternative: '#535A61',
     muted: '#BBC0C5',
-    address:colorThango.gray09,
+    address: colorThango.gray09,
   },
   tBorder: {
     default: colorThango.dark05,
@@ -38,10 +38,13 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     ...darkTheme.colors['background'],
     default: colorThango.dark,
   },
-  tGradient : {
-    onBoarding : colorThango.backgroundOnboarding,
-    transaction : colorThango.orangeLinear,
-    receive : colorThango.receiveLinearBackground,
+  tGradient: {
+    onBoarding: colorThango.backgroundOnboarding,
+    transaction: colorThango.orangeLinear,
+    receive: colorThango.receiveLinearBackground,
     wallet: colorThango.maiWalletLinear,
-  }
+  },
+  tSwitch: {
+    default: colorThango.dark07,
+  },
 };

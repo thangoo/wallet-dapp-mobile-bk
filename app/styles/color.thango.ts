@@ -4,6 +4,7 @@ export default {
   dark: '#111111',
   dark05: '#555555',
   dark02: '#222222',
+  dark07: '#777777',
 
 
   // gray
