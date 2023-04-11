@@ -121,7 +121,10 @@ const createStyles = (colors) =>
       // flex: 1,
       marginTop: 10,
       marginHorizontal: 10,
-      height: 200,
+      marginBottom: 20,
+      // height: 200,
+      // flexDirection: 'row'
+      
     },
     actionsWrapper: {
       flexDirection: 'row',
@@ -152,6 +155,24 @@ const createStyles = (colors) =>
     iconDropdown: {
       paddingLeft: 10,
     },
+    wrapAmountLabel: {
+      flexDirection: 'row',
+      marginLeft: 20,
+      marginRight: 15,
+      justifyContent: 'space-between',
+    },
+    amoundLabel: {
+      ...fontStyles.bold,
+      fontSize: 14,
+      color: colors.primary.default,
+      // textTransform: 'uppercase',
+    },
+    actionMax: {
+      // flexDirection: 'row',
+      // alignItems: 'center',
+      // justifyContent: 'flex-end',
+      // alignSelf: 'flex-end',
+    },
     maxText: {
       ...fontStyles.bold,
       fontSize: 14,
@@ -159,16 +180,11 @@ const createStyles = (colors) =>
       alignSelf: 'flex-end',
       // textTransform: 'uppercase',
     },
-    actionMax: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-    },
     inputContainerWrapper: {
       // marginVertical: 16,
       alignItems: 'center',
       minHeight: 66,
-      
+
     },
     selectWrapper: {
       flex: 1,
@@ -178,7 +194,7 @@ const createStyles = (colors) =>
 
       alignItems: 'center',
       justifyContent: 'center',
-     
+
       flexDirection: 'row',
       borderRadius: 16,
       marginVertical: 8,
@@ -215,7 +231,7 @@ const createStyles = (colors) =>
       color: colors.tText.color.default,
       flex: 1,
       fontSize: 16,
-      
+
     },
     switch: {
       flex: 1,
@@ -482,6 +498,9 @@ class Amount extends PureComponent {
   amountInput = React.createRef();
   tokens = [];
   collectibles = [];
+
+  colors = this.context.colors || mockTheme.colors;
+  styles = createStyles(this.colors);
 
   componentDidMount = async () => {
     const {
@@ -1006,6 +1025,18 @@ class Amount extends PureComponent {
     return asset.address;
   };
 
+  renderTokenImg = (token) => (
+    token.isETH ? (
+      <NetworkMainAssetLogo big />
+    ) : (
+      <TokenImage
+        asset={token}
+        iconStyle={this.styles.tokenImage}
+        containerStyle={this.styles.tokenImage}
+      />
+    )
+  )
+
   renderToken = (token, index) => {
     const {
       accounts,
@@ -1046,7 +1077,7 @@ class Amount extends PureComponent {
         onPress={() => this.pickSelectedAsset(token)}
       >
         <View style={styles.assetElement}>
-          {token.isETH ? (
+          {/* {token.isETH ? (
             <NetworkMainAssetLogo big />
           ) : (
             <TokenImage
@@ -1054,7 +1085,8 @@ class Amount extends PureComponent {
               iconStyle={styles.tokenImage}
               containerStyle={styles.tokenImage}
             />
-          )}
+          )} */}
+          <TokenImg token={token} />
           <View style={styles.assetInformationWrapper}>
             <Text style={styles.textAssetTitle}>{symbol}</Text>
             <View style={styles.assetBalanceWrapper}>
@@ -1179,7 +1211,7 @@ class Amount extends PureComponent {
     } = this.state;
 
 
-    const { currentCurrency, onInputBlur, inputWidth, highlighted } = this.props;
+    const { currentCurrency, onInputBlur, inputWidth, highlighted, selectedAsset } = this.props;
     const colors = this.context.colors || mockTheme.colors;
     const themeAppearance = this.context.themeAppearance || 'light';
     const styles = createStyles(colors);
@@ -1214,10 +1246,8 @@ class Amount extends PureComponent {
               // onSubmitEditing={onSubmit}
               />
             </View>
-            <ButtonIcon
-              iconName={IconName.ScanQRCode}
-              size={IconSize.Xl}
-            />
+            {this.renderTokenImg(selectedAsset)}
+
           </View>
         </View>
         {hasExchangeRate && (
@@ -1312,18 +1342,25 @@ class Amount extends PureComponent {
 
     return (
       <View style={styles.inputWrapper}>
-        <View style={[styles.actionBorder, styles.actionMax]}>
-          {!selectedAsset.tokenId && (
-            <TouchableOpacity
-              style={styles.actionMaxTouchable}
-              disabled={!estimatedTotalGas}
-              onPress={this.useMax}
-            >
-              <Text style={styles.maxText}>
-                {strings('transaction.use_max')}
-              </Text>
-            </TouchableOpacity>
-          )}
+        <View style={styles.wrapAmountLabel}>
+          <View style={styles.amoundLabel}>
+            <Text >{`${selectedAsset.symbol} Amount`}</Text>
+          </View>
+          <View style={[styles.actionBorder, styles.actionMax]}>
+
+            {!selectedAsset.tokenId && (
+              <TouchableOpacity
+                style={styles.actionMaxTouchable}
+                disabled={!estimatedTotalGas}
+                onPress={this.useMax}
+              >
+
+                <Text style={styles.maxText}>
+                  {strings('transaction.use_max')}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
         {selectedAsset.tokenId
           ? this.renderCollectibleInput()
