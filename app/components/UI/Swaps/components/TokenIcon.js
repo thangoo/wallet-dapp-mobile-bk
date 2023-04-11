@@ -129,7 +129,6 @@ function TokenIcon({ symbol, icon, medium, big, biggest, style }) {
   }
 
   if (symbol) {
-    const coinName = symbol?.[0] ? symbol?.[0]?.symbol : symbol.symbol;
     return (
       <EmptyIcon medium={medium} big={big} biggest={biggest} style={style}>
         <Text
@@ -140,8 +139,7 @@ function TokenIcon({ symbol, icon, medium, big, biggest, style }) {
             biggest && styles.tokenSymbolBiggest,
           ]}
         >
-           {/* {symbol[0].toUpperCase()} */}
-          {coinName.toUpperCase()}
+          {symbol[0].toUpperCase()}
         </Text>
       </EmptyIcon>
     );

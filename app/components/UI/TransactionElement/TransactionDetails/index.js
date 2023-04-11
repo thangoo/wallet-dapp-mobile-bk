@@ -384,7 +384,14 @@ class TransactionDetails extends PureComponent {
     };
 
     const { rpcBlockExplorer } = this.state;
-
+//  assetSymbol type object from received crypto and type string from transaction
+    const getSymbol = () => {
+      if(typeof assetSymbol === 'object') {
+        return assetSymbol?.[0].symbol
+      }
+      return assetSymbol
+    }
+    console.log(assetSymbol);
     return updatedTransactionDetails ? (
       <ScrollView>
         <View
@@ -394,7 +401,7 @@ class TransactionDetails extends PureComponent {
             alignItems:'center'
           }}
         >
-          <TokenIcon symbol={assetSymbol} style={{ width: 56, height: 56 }} />
+          <TokenIcon symbol={getSymbol()} style={{ width: 56, height: 56 }} />
           <View
             style={{
               flexDirection: 'row',
