@@ -33,4 +33,10 @@ export default {
 
   orangeLinear1: '#DF7B1F',
   orangeLinear2: '#F3BA2F',
+
+
+  orangeLinear:['#DF7B1F','#F3BA2F'],
+  maiWalletLinear:['#7EDDFE','#92A0FE'],
+  receiveLinearBackground:['#159B9B','#37BFBF'],
+  backgroundOnboarding: ['#7EDDFE','#92A0FE'],
 };

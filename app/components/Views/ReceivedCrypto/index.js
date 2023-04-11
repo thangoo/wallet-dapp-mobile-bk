@@ -407,12 +407,7 @@ class ReceivedCrypto extends PureComponent {
           <LinearGradient
             start={{ x: 0.75, y: 0.75 }}
             end={{ x: 0.25, y: 0 }}
-            colors={[
-              // @ts-ignore
-              colors['tvn.green.linear1'],
-              // @ts-ignore
-              colors['tvn.green.linear2']
-            ]}
+            colors={colors.tGradient.receive}
             style={styles.bgGradient}
           />
           <View style={styles.assetItem}>

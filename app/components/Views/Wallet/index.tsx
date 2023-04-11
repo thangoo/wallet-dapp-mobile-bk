@@ -453,12 +453,7 @@ const Wallet = ({ navigation }: any) => {
           <LinearGradient
             start={{ x: 0.75, y: 0.75 }}
             end={{ x: 0.25, y: 0 }}
-            colors={[
-              // @ts-ignore
-              colors['tvn.main.wallet.linear1'],
-              // @ts-ignore
-              colors['tvn.main.wallet.linear2'],
-            ]}
+            colors={colors.tGradient.wallet}
             style={styles.bgGradient}
           />
           <View style={styles.assetItem}>

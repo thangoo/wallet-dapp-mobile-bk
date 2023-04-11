@@ -12,6 +12,7 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     default: colorThango.dark,
     secondary: colorThango.dark02,
     third: colorThango.gray10,
+    fourth: colorThango.gray10,
     defaultHover: '#FAFBFC',
     defaultPressed: '#FAFBFC',
     alternative: colorThango.darkGrayBlue,
@@ -37,4 +38,10 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     ...darkTheme.colors['background'],
     default: colorThango.dark,
   },
+  tGradient : {
+    onBoarding : colorThango.backgroundOnboarding,
+    transaction : colorThango.orangeLinear,
+    receive : colorThango.receiveLinearBackground,
+    wallet: colorThango.maiWalletLinear,
+  }
 };

@@ -14,6 +14,7 @@ const check_box_empty = require('./check_box_empty.png');
 const check_box_blue = require('./check_box_blue.png');
 const chart_line_icon = require('./icon-right-nav-transaction.png');
 const external_icon = require('./external_link.png');
+const external_icon_white = require('./external-link-white.png');
 const plus_icon = require('./plus_icon.png');
 const credit_card_icon = require('./credit_card_icon.png');
 const copy_icon_02 = require('./copy_icon_02.png');
@@ -47,5 +48,6 @@ export {
   imgSecretPhrase,
   chart_line_icon,
   external_icon,
+  external_icon_white,
   plus_icon,
 };

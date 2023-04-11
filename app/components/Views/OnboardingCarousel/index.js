@@ -100,12 +100,12 @@ const createStyles = (colors) =>
       width: 6,
       height: 6,
       borderRadius: 8 / 2,
-      backgroundColor: colors['tvn.gray.04'],
+      backgroundColor: colors.tBackground.fourth,
       marginHorizontal: 4,
     },
     solidCircle: {
       width: 24,
-      backgroundColor: colors['tvn.primary.blue'],
+      backgroundColor: colors.tPrimary.default,
     },
     progessContainer: {
       flexDirection: 'row',
