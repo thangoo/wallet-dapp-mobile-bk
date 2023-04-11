@@ -13,7 +13,7 @@ import Device from '../../../util/device';
 const createStyles = (colors: CustomTheme['colors']) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors['tvn.background.default'],
+      backgroundColor: colors.tBackground.default,
       flex: 1,
     },
     wrapper: {
@@ -33,7 +33,7 @@ const createStyles = (colors: CustomTheme['colors']) =>
       justifyContent: 'center',
       textAlign: 'center',
       ...fontStyles.bold,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
     },
     subtitle: {
       fontSize: 16,
@@ -45,7 +45,7 @@ const createStyles = (colors: CustomTheme['colors']) =>
     subtitle2: {
       fontSize: 14,
       lineHeight: 18,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       textAlign: 'center',
       ...fontStyles.normal,
       paddingTop: 32,

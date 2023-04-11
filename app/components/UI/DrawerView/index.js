@@ -82,6 +82,7 @@ import {
 import { selectTicker } from '../../../selectors/networkController';
 
 import { createAccountSelectorNavDetails } from '../../Views/AccountSelector';
+import { logo } from '../../../images/index';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -93,7 +94,7 @@ const createStyles = (colors) =>
     header: {
       paddingTop: Device.isIphoneX() ? 60 : 24,
       backgroundColor: colors.background.alternative,
-      height: Device.isIphoneX() ? 110 : 74,
+      // height: Device.isIphoneX() ? 110 : 74,
       flexDirection: 'column',
       paddingBottom: 0,
     },
@@ -111,9 +112,9 @@ const createStyles = (colors) =>
     },
     metamaskName: {
       marginTop: 4,
-      width: 90,
-      height: 18,
-      tintColor: colors.text.default,
+      marginLeft: 16,
+      width: 200,
+      height: 50,
     },
     account: {
       flex: 1,
@@ -1173,18 +1174,11 @@ class DrawerView extends PureComponent {
       <View style={styles.wrapper} testID={'drawer-screen'}>
         <ScrollView>
           <View style={styles.header}>
-            <View style={styles.metamaskLogo}>
-              <Image
-                source={metamask_fox}
-                style={styles.metamaskFox}
-                resizeMethod={'auto'}
-              />
-              <Image
-                source={metamask_name}
-                style={styles.metamaskName}
-                resizeMethod={'auto'}
-              />
-            </View>
+            <Image
+              source={logo}
+              style={styles.metamaskName}
+              resizeMethod={'scale'}
+            />
           </View>
           <View style={styles.account}>
             <View style={styles.accountBgOverlay}>

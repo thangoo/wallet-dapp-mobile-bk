@@ -71,20 +71,20 @@ const LoginOptionsSwitch = ({
             {
               borderWidth: 1,
               borderColor: biometryChoiceState
-                ? colors['tvn.primary.blue']
-                : colors['tvn.gray.04'],
+                ? colors.tPrimary.default
+                : colors.tSwitch.default,
             },
           ]}
           trackColor={{
-            true: colors['tvn.white'],
+            true: colors.tBackground.default,
             false: colors.border.muted,
           }}
-          ios_backgroundColor={colors['tvn.white']}
+          ios_backgroundColor={colors.tBackground.default}
           testID={LOGIN_WITH_BIOMETRICS_SWITCH}
           thumbColor={
             biometryChoiceState
-              ? colors['tvn.primary.blue']
-              : colors['tvn.gray.06']
+              ? colors.tPrimary.default
+              : colors.tSwitch.default
           }
         />
       </View>
@@ -103,21 +103,19 @@ const LoginOptionsSwitch = ({
             {
               borderWidth: 1,
               borderColor: rememberMeEnabled
-                ? colors['tvn.primary.blue']
-                : colors['tvn.gray.04'],
+                ? colors.tPrimary.default
+                : colors.tSwitch.default,
             },
           ]}
           trackColor={{
-            true: colors['tvn.white'],
+            true: colors.tBackground.default,
             false: colors.border.muted,
           }}
-          ios_backgroundColor={colors['tvn.white']}
+          ios_backgroundColor={colors.tBackground.default}
           testID={LOGIN_WITH_REMEMBER_ME_SWITCH}
           {...generateTestId(Platform, LOGIN_WITH_REMEMBER_ME_SWITCH)}
           thumbColor={
-            rememberMeEnabled
-              ? colors['tvn.primary.blue']
-              : colors['tvn.gray.06']
+            rememberMeEnabled ? colors.tPrimary.default : colors.tSwitch.default
           }
         />
       </View>

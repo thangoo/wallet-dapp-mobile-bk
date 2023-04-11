@@ -37,13 +37,14 @@ export const thangoLight: ThangoThemeColors = {
   ['tvn.background.asset.action.button']: '#ffffff33',
 
   gray01: colorThango.gray01,
-  
+  gray04: colorThango.gray04,
+
   // DEFINE CONSTANT
   tBackground: {
     default: colorThango.light,
     secondary: colorThango.light,
-    third :colorThango.gray02,
-    fourth:colorThango.gray04,
+    third: colorThango.gray02,
+    fourth: colorThango.gray04,
     defaultHover: '#FAFBFC',
     defaultPressed: '#FAFBFC',
     alternative: colorThango.lightGrayBlue,
@@ -52,9 +53,11 @@ export const thangoLight: ThangoThemeColors = {
   },
   tText: {
     default: colorThango.gray10,
+    secondary: colorThango.gray06,
     alternative: '#535A61',
     muted: '#BBC0C5',
-    address:colorThango.gray12,
+    address: colorThango.gray12,
+    button: colorThango.light,
   },
   tIcon: {
     default: colorThango.gray10,
@@ -135,10 +138,17 @@ export const thangoLight: ThangoThemeColors = {
     default: '#8B45B6',
     inverse: '#FCFCFC',
   },
-  tGradient : {
-    onBoarding : colorThango.backgroundOnboarding,
-    transaction : colorThango.orangeLinear,
-    receive : colorThango.receiveLinearBackground,
+  tGradient: {
+    onBoarding: colorThango.backgroundOnboarding,
+    transaction: colorThango.orangeLinear,
+    receive: colorThango.receiveLinearBackground,
     wallet: colorThango.maiWalletLinear,
-  }
+  },
+  tSwitch: {
+    default: colorThango.gray06,
+  },
+  tButton: {
+    disable: colorThango.darkGrayBlue,
+    secondary: colorThango.light,
+  },
 };

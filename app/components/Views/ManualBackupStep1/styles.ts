@@ -6,7 +6,7 @@ import Device from '../../../util/device';
 export const createStyles = (colors: any) =>
   StyleSheet.create({
     mainWrapper: {
-      backgroundColor: colors.background.default,
+      backgroundColor: colors.tBackground.default,
       flex: 1,
     },
     wrapper: {
@@ -97,7 +97,7 @@ export const createStyles = (colors: any) =>
     wordWrapper: {
       marginBottom: 16,
       height: 48,
-      backgroundColor: colors['tvn.light_gray_blue'],
+      backgroundColor: colors.tBackground.alternative,
       borderRadius: 8,
       paddingHorizontal: 16,
       paddingVertical: 15,
@@ -106,12 +106,12 @@ export const createStyles = (colors: any) =>
       fontSize: 14,
       height: 48,
       alignItems: 'center',
-      color: colors['tvn.gray.06'],
+      color: colors.tText.secondary,
       fontWeight: '600',
     },
     word: {
       fontSize: 16,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       fontWeight: '400',
     },
     confirmPasswordWrapper: {
