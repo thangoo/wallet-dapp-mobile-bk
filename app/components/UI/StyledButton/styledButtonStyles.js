@@ -9,7 +9,7 @@ const createStyles = (colors) =>
       justifyContent: 'center',
     },
     disabledContainer: {
-      backgroundColor: colors['tvn.dark_gray_blue'],
+      backgroundColor: colors.tButton.disable,
     },
     text: {
       fontSize: 14,
@@ -17,10 +17,10 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
     },
     blue: {
-      backgroundColor: colors['tvn.primary.default'],
+      backgroundColor: colors.tPrimary.default,
     },
     blueText: {
-      color: colors['tvn.text.default'],
+      color: colors.tText.button,
       textTransform: 'uppercase',
     },
     orange: {
@@ -34,7 +34,7 @@ const createStyles = (colors) =>
       color: colors.primary.default,
     },
     confirm: {
-      backgroundColor: colors['tvn.primary.default'],
+      backgroundColor: colors.tPrimary.default,
       minHeight: 32,
     },
     confirmText: {
@@ -55,7 +55,7 @@ const createStyles = (colors) =>
       borderColor: colors.primary.default,
     },
     normalText: {
-      color: colors['tvn.primary.default'],
+      color: colors.tPrimary.default,
     },
     tokenList: {
       backgroundColor: colors['tvn.gray.02'],
@@ -125,7 +125,6 @@ const createStyles = (colors) =>
     gray10Text: {
       ...fontStyles.bold,
       fontSize: 16,
-      color: colors['tvn.gray.10'],
     },
     onOverlayText: {
       fontSize: 18,

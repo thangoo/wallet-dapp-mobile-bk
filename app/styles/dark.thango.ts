@@ -15,15 +15,17 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     fourth: colorThango.gray10,
     defaultHover: '#FAFBFC',
     defaultPressed: '#FAFBFC',
-    alternative: colorThango.darkGrayBlue,
+    alternative: colorThango.dark03,
     alternativeHover: '#D6D9DC',
     alternativePressed: '#D6D9DC',
   },
   tText: {
     default: colorThango.light,
+    secondary: colorThango.dark05,
     alternative: '#535A61',
     muted: '#BBC0C5',
     address: colorThango.gray09,
+    button: colorThango.dark07,
   },
   tBorder: {
     default: colorThango.dark05,
@@ -46,5 +48,9 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
   },
   tSwitch: {
     default: colorThango.dark07,
+  },
+  tButton: {
+    disable: colorThango.dark03,
+    secondary: colorThango.gray09,
   },
 };

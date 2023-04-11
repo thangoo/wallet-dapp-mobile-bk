@@ -24,6 +24,7 @@ export interface ThangoThemeColors {
   ['tvn.status.red']?: string;
 
   gray01: string;
+  gray04: string;
   // DEFINE CONSTANT
   tBackground: {
     /**
@@ -68,6 +69,10 @@ export interface ThangoThemeColors {
      */
     default: string;
     /**
+     * {string} text.secondary - For general text that takes main priority in the information hierarchy
+     */
+    secondary: string;
+    /**
      * {string} text.alternative - For a weaker contrast option for neutral text
      */
     alternative: string;
@@ -79,6 +84,7 @@ export interface ThangoThemeColors {
      * {string} text.address - For address
      */
     address: string;
+    button: string;
   };
   tIcon: {
     /**
@@ -317,5 +323,9 @@ export interface ThangoThemeColors {
   };
   tSwitch: {
     default: string;
+  };
+  tButton: {
+    disable: string;
+    secondary: string;
   };
 }

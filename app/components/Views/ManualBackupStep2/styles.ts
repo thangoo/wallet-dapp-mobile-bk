@@ -30,13 +30,13 @@ const createStyles = (colors: CustomTheme['colors']) =>
     },
     info: {
       fontSize: 14,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       textAlign: 'center',
       ...fontStyles.normal,
       paddingHorizontal: 6,
     },
     seedPhraseWrapper: {
-      backgroundColor: colors['tvn.light_gray_blue'],
+      backgroundColor: colors.tBackground.alternative,
       borderRadius: 8,
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -101,8 +101,8 @@ const createStyles = (colors: CustomTheme['colors']) =>
       paddingHorizontal: 12,
       paddingVertical: 6,
       color: colors.text.default,
-      backgroundColor: colors.background.default,
-      borderColor: colors['tvn.gray.04'],
+      backgroundColor: colors.tButton.secondary,
+      // borderColor: 'red',
       borderWidth: 1,
       borderRadius: 8,
       marginBottom: 7,
@@ -112,7 +112,7 @@ const createStyles = (colors: CustomTheme['colors']) =>
       fontSize: 12,
       fontWeight: '400',
       lineHeight: 14,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
     },
     // Selectable list of PassPhrase
     words: {
@@ -133,16 +133,16 @@ const createStyles = (colors: CustomTheme['colors']) =>
       marginLeft: 4,
     },
     selectedWord: {
-      backgroundColor: colors['tvn.light_gray_blue'],
+      backgroundColor: colors.tBackground.alternative,
       borderWidth: 0,
       // borderColor: colors.icon.muted,
     },
     selectedWordText: {
-      color: colors['tvn.gray.05'],
+      color: colors.tText.secondary,
     },
     currentWord: {
       borderWidth: 1,
-      borderColor: colors['tvn.gray.05'],
+      borderColor: colors.tBorder.default,
     },
     confirmedWord: {
       borderWidth: 1,

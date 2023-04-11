@@ -1,4 +1,8 @@
-import { check_box_blue, check_box_empty } from 'images/index';
+import {
+  check_box_blue,
+  check_box_empty,
+  check_box_empty_dark,
+} from 'images/index';
 import _ from 'lodash';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -70,18 +74,7 @@ const ConfirmBackupModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
         <Text style={styles.title}>{strings('secret_phrase.heading')}</Text>
         <Text style={styles.title2}>{strings('secret_phrase.subheading')}</Text>
 
-        <View
-          style={{
-            backgroundColor: colors['tvn.light_gray_blue'],
-            width: '100%',
-            borderRadius: 18,
-            paddingHorizontal: 16,
-            paddingVertical: 32,
-            paddingBottom: 16,
-            marginTop: 32,
-            marginBottom: 64,
-          }}
-        >
+        <View style={styles.wrapItem}>
           {[1, 2, 3].map((index) => (
             <CheckItem
               key={index}
@@ -119,14 +112,15 @@ const CheckItem = ({
   content: string;
   onPress: () => void;
 }) => {
-  const { colors } = useTheme();
+  const { colors, themeAppearance } = useTheme();
   const styles = createStyles(colors);
-
+  const box_empty =
+    themeAppearance === 'light' ? check_box_empty : check_box_empty_dark;
   return (
     <TouchableOpacity onPress={onPress}>
       <HStack style={styles.noteWrap}>
         <Image
-          source={selected ? check_box_blue : check_box_empty}
+          source={selected ? check_box_blue : box_empty}
           style={{ width: 24, height: 24 }}
         />
         <View style={{ flex: 1, marginLeft: 16 }}>
@@ -140,7 +134,7 @@ const CheckItem = ({
 const createStyles = (colors: CustomTheme['colors']) =>
   StyleSheet.create({
     body: {
-      backgroundColor: 'white',
+      backgroundColor: colors.tBackground.secondary,
       paddingHorizontal: 32,
       alignItems: 'center',
       justifyContent: 'flex-start',
@@ -173,7 +167,7 @@ const createStyles = (colors: CustomTheme['colors']) =>
       width: 36,
       height: 5,
       borderRadius: 2.5,
-      backgroundColor: colors['tvn.gray.04'],
+      backgroundColor: colors.gray04,
       marginTop: 6,
       marginBottom: 32,
     },
@@ -181,12 +175,14 @@ const createStyles = (colors: CustomTheme['colors']) =>
       alignItems: 'flex-start',
       marginBottom: 16,
     },
-    indexText: {
-      width: 32,
-      height: 32,
-      backgroundColor: colors['tvn.status.orange'],
-      borderRadius: 8,
-      justifyContent: 'center',
-      alignItems: 'center',
+    wrapItem: {
+      backgroundColor: colors.tBackground.alternative,
+      width: '100%',
+      borderRadius: 18,
+      paddingHorizontal: 16,
+      paddingVertical: 32,
+      paddingBottom: 16,
+      marginTop: 32,
+      marginBottom: 64,
     },
   });
