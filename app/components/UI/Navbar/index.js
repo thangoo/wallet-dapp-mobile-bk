@@ -58,6 +58,7 @@ import { MetaMetricsEvents } from '../../../core/Analytics';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
 import { HeaderBackButton } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
+import NavbarTitleReceivedCrypto from '../NavbarTitleReceivedCrypto';
 
 const trackEvent = (event) => {
   InteractionManager.runAfterInteractions(() => {
@@ -1151,6 +1152,64 @@ export function getNavbarTransaction(
     headerStyle: innerStyles.headerStyle,
   };
 }
+
+export function getNavbarReceivedCrypto(
+  title,
+  translate,
+  navigation,
+  themeColors,
+  onRightPress = undefined,
+  disableNetwork = false,
+) {
+  const innerStyles = StyleSheet.create({
+    headerStyle: {
+      backgroundColor: themeColors.background.default,
+      shadowColor: importedColors.transparent,
+      elevation: 0,
+    },
+    headerIcon: {
+      color: themeColors.primary.default,
+    },
+  });
+  return {
+    headerTitle: () => (
+      <NavbarTitleReceivedCrypto
+        disableNetwork={disableNetwork}
+        title={title}
+        translate={translate}
+      />
+    ),
+    // design UI FIGMA
+    headerTransparent: true,
+    // design UI FIGMA
+    headerLeft: () => (
+      <HeaderBackButton
+        onPress={() => navigation.pop()}
+        labelVisible={false}
+        style={{ marginLeft: 16 }}
+        backImage={() => (
+          <Image
+            source={arrow_right_icon_white}
+            style={{ width: 32, height: 32 }}
+          />
+        )}
+      />
+    ),
+
+    headerRight: onRightPress
+      ? () => (
+          <TouchableOpacity style={styles.backButton} onPress={onRightPress}>
+            <Image source={chart_line_icon} style={{ width: 27, height: 23 }} />
+          </TouchableOpacity>
+          // eslint-disable-next-line no-mixed-spaces-and-tabs
+        )
+      : () => <View />,
+    headerStyle: innerStyles.headerStyle,
+  };
+}
+
+
+
 
 /**
  * Function that returns the navigation options containing title and network indicator

@@ -54,6 +54,8 @@ export interface ThangoThemeColors {
      * {string} background.alternativePressed - For component pressed states that use background/alternative
      */
     alternativePressed: string;
+
+    third: string;
   };
   tText: {
     /**
@@ -68,6 +70,10 @@ export interface ThangoThemeColors {
      * {string} text.muted - For inactive or lowest priority text. (Example: placeholder)
      */
     muted: string;
+    /**
+     * {string} text.address - For address
+     */
+    address:string 
   };
   tIcon: {
     /**

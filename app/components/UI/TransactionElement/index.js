@@ -82,7 +82,7 @@ const createStyles = (colors) =>
     address: {
       fontSize: 12,
       ...fontStyles.normal,
-      color: colors['tvn.address'],
+      color: colors.tText.address,
       width: '80%',
     },
   });
@@ -104,7 +104,9 @@ const transactionIconReceivedFailed = require('../../../images/transaction-icons
  */
 class TransactionElement extends PureComponent {
   static propTypes = {
-    assetSymbol: PropTypes.string,
+    // assetSymbol: PropTypes.string,
+
+    assetSymbol: PropTypes.any,
     /**
      * Asset object (in this case ERC721 token)
      */
@@ -337,7 +339,7 @@ class TransactionElement extends PureComponent {
 
     return (
       <>
-        {accountImportTime > time && this.renderImportTime()}
+        {/* {accountImportTime > time && this.renderImportTime()} */}
         <ListItem>
           {/* <ListItem.Date>{this.renderTxTime()}</ListItem.Date> */}
           <ListItem.Content>
@@ -377,7 +379,7 @@ class TransactionElement extends PureComponent {
             </ListItem.Actions>
           )}
         </ListItem>
-        {accountImportTime <= time && this.renderImportTime()}
+        {/* {accountImportTime <= time && this.renderImportTime()} */}
       </>
     );
   };

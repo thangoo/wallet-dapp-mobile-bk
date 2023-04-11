@@ -109,7 +109,7 @@ const createStyles = (colors) =>
     header: {
       fontSize: 18,
       ...fontStyles.bold,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default
     },
   });
 
@@ -120,7 +120,7 @@ const ROW_HEIGHT = (Device.isIos() ? 95 : 100) + StyleSheet.hairlineWidth;
  */
 class Transactions extends PureComponent {
   static propTypes = {
-    assetSymbol: PropTypes.string,
+    assetSymbol: PropTypes.any,
     /**
      * Map of accounts to information objects including balances
      */

@@ -220,8 +220,11 @@ class AccountOverview extends PureComponent {
      * Current provider ticker
      */
     ticker: PropTypes.string,
+     /**
+     * Current token
+     */
+    token: PropTypes.array,
   };
-
   state = {
     accountLabelEditable: false,
     accountLabel: '',
@@ -322,7 +325,16 @@ class AccountOverview extends PureComponent {
   };
 
   // onReceive = () => this.props.toggleReceiveModal();
-  onReceive = () => this.props.navigation.navigate('ReceiveScreen');
+  // onReceive = () => this.props.navigation.navigate('ReceiveScreen');
+
+
+  onReceive = () => {
+    const {token} = this.props
+    this.props.navigation.navigate('ReceivedCryptoScreen', {
+      ...token
+    })
+  }
+
 
   onSend = () => {
     const { newAssetTransaction, navigation, ticker } = this.props;
@@ -535,6 +547,7 @@ const mapStateToProps = (state) => ({
   ticker: selectTicker(state),
   network: String(selectNetwork(state)),
   swapsIsLive: swapsLivenessSelector(state),
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -548,3 +561,7 @@ const mapDispatchToProps = (dispatch) => ({
 AccountOverview.contextType = ThemeContext;
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountOverview);
+
+
+
+
