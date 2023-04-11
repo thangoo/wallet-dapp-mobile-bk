@@ -12,6 +12,7 @@ const backgroundOnboarding = require('./background1-onboarding.png');
 const imgWalletOnboarding = require('./img-wallet-onboarding.png');
 const imgSecretPhrase = require('./img-secret-phrase-screen.png');
 const check_box_empty = require('./check_box_empty.png');
+const check_box_empty_dark = require('./check_box_empty_dark.png');
 const check_box_blue = require('./check_box_blue.png');
 const chart_line_icon = require('./icon-right-nav-transaction.png');
 const external_icon = require('./external_link.png');
@@ -26,6 +27,7 @@ const icon_tab_03 = require('./icon_tab_03.png');
 const icon_tab_04 = require('./icon_tab_04.png');
 
 export {
+  check_box_empty_dark,
   logo_dark,
   icon_tab_01,
   icon_tab_02,
