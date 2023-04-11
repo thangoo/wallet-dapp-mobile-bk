@@ -165,15 +165,18 @@ class SendFlow extends PureComponent {
     confusableCollection: [],
     inputWidth: { width: '99%' },
     isFromAddressBook: false,
-    // Amount
-    hasExchangeRate: false,
-    estimatedTotalGas: undefined,
+    // // Amount
+    // hasExchangeRate: false,
+    // estimatedTotalGas: undefined,
   };
 
   updateNavBar = () => {
-    const { navigation, route, chainId } = this.props;
+    const { navigation, route, chainId, selectedAsset } = this.props;
+    // const { selectedAsset } = this.state;
+
     const colors = this.context.colors || mockTheme.colors;
-    const rederTitle = `${strings('send.send_to')} ${getNetworkName(chainId)}`;
+    // const rederTitle = `${strings('send.send_to')} ${getNetworkName(chainId)}`;
+    const rederTitle = `${strings('send.send_to')} ${selectedAsset.symbol}`;
 
     navigation.setOptions(tHeaderOptions(route, colors, { title: rederTitle }));
   };
