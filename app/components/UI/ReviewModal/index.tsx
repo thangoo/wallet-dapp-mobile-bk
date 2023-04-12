@@ -71,7 +71,7 @@ const ReviewModal = () => {
 
   const renderReviewContent = () => (
     <View style={styles.contentContainer}>
-      <Image style={styles.fox} source={foxImage} />
+      {/* <Image style={styles.fox} source={foxImage} /> */}
       <Text style={styles.questionLabel}>
         {strings('review_prompt.mobile_sentiment')}
       </Text>

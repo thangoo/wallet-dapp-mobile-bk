@@ -177,11 +177,11 @@ export default class AppInformation extends PureComponent {
       <SafeAreaView style={styles.wrapper} testID={'app-settings-screen'}>
         <ScrollView contentContainerStyle={styles.wrapperContent}>
           <View style={styles.logoWrapper}>
-            <Image
+            {/* <Image
               source={foxImage}
               style={styles.image}
               resizeMethod={'auto'}
-            />
+            /> */}
             <Text style={styles.versionInfo}>{this.state.appInfo}</Text>
             {IS_QA ? (
               <Text style={styles.branchInfo}>
@@ -191,17 +191,17 @@ export default class AppInformation extends PureComponent {
           </View>
           <Text style={styles.title}>{strings('app_information.links')}</Text>
           <View style={styles.links}>
-            <TouchableOpacity onPress={this.onPrivacyPolicy}>
+            <TouchableOpacity>
               <Text style={styles.link}>
                 {strings('app_information.privacy_policy')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.onTermsOfUse}>
+            <TouchableOpacity>
               <Text style={styles.link}>
                 {strings('app_information.terms_of_use')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.onAttributions}>
+            <TouchableOpacity>
               <Text style={styles.link}>
                 {strings('app_information.attributions')}
               </Text>
@@ -209,17 +209,17 @@ export default class AppInformation extends PureComponent {
           </View>
           <View style={styles.division} />
           <View style={styles.links}>
-            <TouchableOpacity onPress={this.onSupportCenter}>
+            <TouchableOpacity>
               <Text style={styles.link}>
                 {strings('app_information.support_center')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.onWebSite}>
+            <TouchableOpacity>
               <Text style={styles.link}>
                 {strings('app_information.web_site')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.onContactUs}>
+            <TouchableOpacity>
               <Text style={styles.link}>
                 {strings('app_information.contact_us')}
               </Text>

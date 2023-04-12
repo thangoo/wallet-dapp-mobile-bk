@@ -124,11 +124,11 @@ export default class PhishingModal extends PureComponent {
 
     return (
       <View style={styles.phishingModalWrapper}>
-        <Image
+        {/* <Image
           source={foxImage}
           style={styles.foxImage}
           resizeMethod={'auto'}
-        />
+        /> */}
         <View style={styles.phishingModalContent}>
           <View style={styles.phishingModalHeader}>
             <Icon name="warning" size={15} style={styles.warningIcon} />

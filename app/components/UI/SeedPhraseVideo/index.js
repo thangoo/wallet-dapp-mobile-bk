@@ -11,12 +11,11 @@ const HEIGHT = scaling.scale(240);
 
 const styles = StyleSheet.create({
   videoContainer: {
-    height: HEIGHT,
+    // height: HEIGHT,
     width: '100%',
   },
   mediaPlayer: {
-    height: HEIGHT,
-    backgroundColor: 'gold',
+    // height: HEIGHT,
   },
 });
 

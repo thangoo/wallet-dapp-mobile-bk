@@ -174,7 +174,7 @@ class ManualBackupStep3 extends PureComponent {
     this.props.navigation.navigate('Webview', {
       screen: 'SimpleWebview',
       params: {
-        url: 'https://support.metamask.io',
+        url: '',
         title: strings('drawer.metamask_support'),
       },
     });

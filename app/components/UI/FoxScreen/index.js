@@ -34,7 +34,7 @@ export default class FoxScreen extends PureComponent {
 
     return (
       <View style={styles.wrapper} testID={'fox-screen'}>
-        <Image source={foxImage} style={styles.image} resizeMethod={'auto'} />
+        {/* <Image source={foxImage} style={styles.image} resizeMethod={'auto'} /> */}
       </View>
     );
   };
