@@ -232,7 +232,8 @@ const GasEducationCarousel = ({
     navigation.navigate('Webview', {
       screen: 'SimpleWebview',
       params: {
-        url: 'https://community.metamask.io/t/what-is-gas-why-do-transactions-take-so-long/3172',
+        // url: 'https://community.metamask.io/t/what-is-gas-why-do-transactions-take-so-long/3172',
+        url: '',
       },
     });
 

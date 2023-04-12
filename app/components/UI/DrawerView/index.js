@@ -803,17 +803,17 @@ class DrawerView extends PureComponent {
 
   submitFeedback = () => {
     this.trackEvent(MetaMetricsEvents.NAVIGATION_TAPS_SEND_FEEDBACK);
-    this.goToBrowserUrl(
-      'https://community.metamask.io/c/feature-requests-ideas/',
-      strings('drawer.request_feature'),
-    );
+    // this.goToBrowserUrl(
+    //   'https://community.metamask.io/c/feature-requests-ideas/',
+    //   strings('drawer.request_feature'),
+    // );
   };
 
   showHelp = () => {
-    this.goToBrowserUrl(
-      'https://support.metamask.io',
-      strings('drawer.metamask_support'),
-    );
+    // this.goToBrowserUrl(
+    //   'https://support.metamask.io',
+    //   strings('drawer.metamask_support'),
+    // );
     this.trackEvent(MetaMetricsEvents.NAVIGATION_TAPS_GET_HELP);
   };
 

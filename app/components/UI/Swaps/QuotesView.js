@@ -2196,7 +2196,7 @@ function SwapsQuotesView({
               <Text bold>{strings('swaps.gas_education_7')} </Text>
               {strings('swaps.gas_education_8')}
             </Text>
-            <TouchableOpacity onPress={openLinkAboutGas}>
+            <TouchableOpacity>
               <Text grey link infoModal>
                 {strings('swaps.gas_education_learn_more')}
               </Text>

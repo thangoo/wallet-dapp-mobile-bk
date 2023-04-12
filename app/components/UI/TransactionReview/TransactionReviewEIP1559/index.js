@@ -411,7 +411,7 @@ const TransactionReviewEIP1559 = ({
                 'transaction_review_eip1559.estimated_gas_fee_tooltip_text_5',
               )}
             </Text>
-            <TouchableOpacity onPress={openLinkAboutGas}>
+            <TouchableOpacity>
               <Text link>
                 {strings('transaction_review_eip1559.learn_more')}
               </Text>

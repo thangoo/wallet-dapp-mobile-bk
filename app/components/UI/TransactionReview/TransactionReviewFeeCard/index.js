@@ -187,7 +187,7 @@ class TransactionReviewFeeCard extends PureComponent {
             <Text grey infoModal>
               {strings('transaction.gas_education_4')}
             </Text>
-            <TouchableOpacity onPress={this.openLinkAboutGas}>
+            <TouchableOpacity>
               <Text grey link infoModal>
                 {strings('transaction.gas_education_learn_more')}
               </Text>
