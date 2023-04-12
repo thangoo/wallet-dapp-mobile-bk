@@ -105,21 +105,21 @@ export async function setLocale(locale) {
 // Get languages
 export function getLanguages() {
   return {
-    de: 'German',
-    el: 'Greek',
     en: 'English',
-    es: 'Spanish',
-    fr: 'French',
-    hi: 'Hindi',
-    id: 'Bahasa Indonesian',
-    ja: 'Japanese',
-    ko: 'Korean',
-    pt: 'Portuguese - Brazil',
-    ru: 'Russian',
-    tl: 'Filipino',
-    tr: 'Turkish',
-    vi: 'Vietnamese',
-    zh: 'Chinese - China',
+    // de: 'German',
+    // el: 'Greek',
+    // es: 'Spanish',
+    // fr: 'French',
+    // hi: 'Hindi',
+    // id: 'Bahasa Indonesian',
+    // ja: 'Japanese',
+    // ko: 'Korean',
+    // pt: 'Portuguese - Brazil',
+    // ru: 'Russian',
+    // tl: 'Filipino',
+    // tr: 'Turkish',
+    // vi: 'Vietnamese',
+    // zh: 'Chinese - China',
   };
 }
 

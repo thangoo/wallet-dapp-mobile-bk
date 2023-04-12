@@ -708,7 +708,7 @@ class PaymentRequest extends PureComponent {
         navigation &&
           navigation.replace('PaymentRequestSuccess', {
             link,
-            qrLink: eth_link,
+            qrLink: selectedAddress,
             amount: cryptoAmount,
             symbol: selectedAsset.symbol,
           });

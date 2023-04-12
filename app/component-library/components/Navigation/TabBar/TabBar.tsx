@@ -2,7 +2,7 @@
 
 // Third party dependencies.
 import React, { useCallback } from 'react';
-import { Platform, View } from 'react-native';
+import { Alert, Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // External dependencies.
@@ -15,10 +15,58 @@ import styleSheet from './TabBar.styles';
 import { ICON_BY_TAB_BAR_ICON_KEY } from './TabBar.constants';
 import generateTestId from '../../../../../wdio/utils/generateTestId';
 import Routes from '../../../../constants/navigation/Routes';
+import { strings } from '../../../../../locales/i18n';
+import { importAccountFromPrivateKey } from '../../../../../app/util/address';
+import SharedDeeplinkManager from '../../../../../app/core/DeeplinkManager';
+import AppConstants from '../../../../../app/core/AppConstants';
 
 const TabBar = ({ state, descriptors, navigation }: TabBarProps) => {
   const { bottom: bottomInset } = useSafeAreaInsets();
   const { styles } = useStyles(styleSheet, { bottomInset });
+
+  const onScanSuccess = (data, content) => {
+    if (data.private_key) {
+      Alert.alert(
+        strings('wallet.private_key_detected'),
+        strings('wallet.do_you_want_to_import_this_account'),
+        [
+          {
+            text: strings('wallet.cancel'),
+            onPress: () => false,
+            style: 'cancel',
+          },
+          {
+            text: strings('wallet.yes'),
+            onPress: async () => {
+              try {
+                await importAccountFromPrivateKey(data.private_key);
+                navigation.navigate('ImportPrivateKeyView', {
+                  screen: 'ImportPrivateKeySuccess',
+                });
+              } catch (e) {
+                Alert.alert(
+                  strings('import_private_key.error_title'),
+                  strings('import_private_key.error_message'),
+                );
+              }
+            },
+          },
+        ],
+        { cancelable: false },
+      );
+    } else if (data.seed) {
+      Alert.alert(
+        strings('wallet.error'),
+        strings('wallet.logout_to_import_seed'),
+      );
+    } else {
+      setTimeout(() => {
+        SharedDeeplinkManager.parse(content, {
+          origin: AppConstants.DEEPLINKS.ORIGIN_QR_CODE,
+        });
+      }, 500);
+    }
+  };
 
   const renderTabBarItem = useCallback(
     (route: { name: string; key: string }, index: number) => {
@@ -42,14 +90,19 @@ const TabBar = ({ state, descriptors, navigation }: TabBarProps) => {
               },
             });
             break;
-          case Routes.BROWSER_VIEW:
-            navigation.navigate(Routes.BROWSER.HOME, {
-              screen: Routes.BROWSER_VIEW,
-            });
-            break;
+          // case Routes.BROWSER_VIEW:
+          //   navigation.navigate(Routes.BROWSER.HOME, {
+          //     screen: Routes.BROWSER_VIEW,
+          //   });
+          //   break;
           case Routes.SETTINGS_VIEW:
             navigation.navigate(Routes.SETTINGS_TAB.HOME, {
               screen: Routes.SETTINGS_TAB.TAB_STACK_FLOW,
+            });
+            break;
+          case Routes.SCAN_VIEW:
+            navigation.navigate('QRScanner', {
+              onScanSuccess,
             });
             break;
         }

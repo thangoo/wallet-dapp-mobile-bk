@@ -18,6 +18,7 @@ export enum TabBarIconKey {
   Wallet = 'Wallet',
   Browser = 'Browser',
   Market = 'Market',
+  Scan = 'Scan',
   Settings = 'Settings',
 }
 

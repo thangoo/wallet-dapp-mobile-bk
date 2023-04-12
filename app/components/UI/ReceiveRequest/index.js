@@ -273,7 +273,7 @@ class ReceiveRequest extends PureComponent {
                   }}
                 >
                   <QRCode
-                    value={`ethereum:${this.props.selectedAddress}@${this.props.chainId}`}
+                    value={this.props.selectedAddress}
                     size={Dimensions.get('window').width / 2}
                   />
                 </TouchableOpacity>

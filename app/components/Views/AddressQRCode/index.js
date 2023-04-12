@@ -153,7 +153,7 @@ class AddressQRCode extends PureComponent {
           <View style={styles.qrCodeContainer}>
             <View style={styles.qrCode}>
               <QRCode
-                value={`ethereum:${this.props.selectedAddress}`}
+                value={this.props.selectedAddress}
                 size={Dimensions.get('window').width - 160}
               />
             </View>

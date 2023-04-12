@@ -405,11 +405,8 @@ export class NetworkList extends PureComponent {
     const { shouldNetworkSwitchPopToWallet } = this.props;
     this.props.onClose(false);
     this.props.navigation.navigate('SettingsView', {
-      screen: 'SettingsFlow',
-      params: {
-        screen: 'NetworkSettings',
-        params: { isFullScreenModal: true, shouldNetworkSwitchPopToWallet },
-      },
+      screen: 'NetworkSettings',
+      params: { isFullScreenModal: true, shouldNetworkSwitchPopToWallet },
     });
   };
 

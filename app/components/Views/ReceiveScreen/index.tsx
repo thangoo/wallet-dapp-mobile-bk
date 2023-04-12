@@ -181,10 +181,7 @@ const ReceiveScreen: FC<Props> = (props) => {
       style={{ flex: 1, paddingHorizontal: 32 }}
     >
       <View style={{ alignSelf: 'center', marginTop: 32 }}>
-        <QRCode
-          value={`ethereum:${props.selectedAddress}@${props.chainId}`}
-          size={240}
-        />
+        <QRCode value={props.selectedAddress} size={240} />
         <View style={styles.wrapQRText}>
           <Text style={{ color: colors.tText.default }}>
             <EthereumAddress address={props.selectedAddress} type={'short'} />

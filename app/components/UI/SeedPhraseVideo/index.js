@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   },
   mediaPlayer: {
     height: HEIGHT,
+    backgroundColor: 'gold',
   },
 });
 
@@ -41,13 +42,14 @@ const SeedPhraseVideo = ({ style, onClose }) => {
   return (
     <View style={styles.videoContainer}>
       {showVideo ? (
-        <MediaPlayer
-          onClose={onClose}
-          uri={video_source_uri}
-          style={[styles.mediaPlayer, style]}
-          textTracks={subtitle_source_tracks}
-          selectedTextTrack={{ type: 'index', value: 0 }}
-        />
+        // <MediaPlayer
+        //   onClose={onClose}
+        //   uri={video_source_uri}
+        //   style={[styles.mediaPlayer, style]}
+        //   textTracks={subtitle_source_tracks}
+        //   selectedTextTrack={{ type: 'index', value: 0 }}
+        // />
+        <View style={[styles.mediaPlayer, style]} />
       ) : null}
     </View>
   );
