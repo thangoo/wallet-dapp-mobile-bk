@@ -458,7 +458,7 @@ const SettingsFlow = () => (
 
 const SettingsModalStack = () => (
   <Stack.Navigator
-    initialRouteName={'SettingsFlow'}
+    initialRouteName={'Settings'}
     // mode={'modal'}
     screenOptions={{
       // headerShown: false,
