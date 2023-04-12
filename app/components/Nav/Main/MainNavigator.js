@@ -74,6 +74,7 @@ import { selectProviderConfig } from '../../../selectors/networkController';
 import { strings } from '../../../../locales/i18n';
 import isUrl from 'is-url';
 import ReceiveScreen from '../../Views/ReceiveScreen';
+import QRScanner from '../../Views/QRScanner';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -276,9 +277,9 @@ const HomeTabs = () => {
       rootScreenName: Routes.BROWSER_VIEW,
     },
     market: {
-      tabBarIconKey: TabBarIconKey.Market,
+      tabBarIconKey: TabBarIconKey.Scan,
       tabBarLabel: 'Scan',
-      rootScreenName: Routes.MARKET_VIEW,
+      rootScreenName: Routes.SCAN_VIEW,
     },
     setting: {
       tabBarIconKey: TabBarIconKey.Settings,
@@ -331,9 +332,9 @@ const HomeTabs = () => {
             component={BrowserFlow}
           />
           <Tab.Screen
-            name={Routes.MARKET.HOME}
+            name={Routes.SCAN.HOME}
             options={options.market}
-            component={BrowserFlow}
+            component={ScanView}
           />
           <Tab.Screen
             name={Routes.SETTINGS_TAB.HOME}
@@ -345,6 +346,12 @@ const HomeTabs = () => {
     </DrawerContext.Provider>
   );
 };
+
+const ScanView = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="ScanView" component={QRScanner} />
+  </Stack.Navigator>
+);
 
 const Webview = () => (
   <Stack.Navigator>

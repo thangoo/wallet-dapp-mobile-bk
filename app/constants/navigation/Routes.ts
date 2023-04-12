@@ -2,6 +2,7 @@ const Routes = {
   WALLET_VIEW: 'WalletView',
   SETTINGS_VIEW: 'SettingsView',
   MARKET_VIEW: 'MarketView',
+  SCAN_VIEW: 'ScanView',
   BROWSER_TAB_HOME: 'BrowserTabHome',
   BROWSER_URL_MODAL: 'BrowserUrlModal',
   BROWSER_VIEW: 'BrowserView',
@@ -77,6 +78,9 @@ const Routes = {
   },
   MARKET: {
     HOME: 'MarketTabHome',
+  },
+  SCAN: {
+    HOME: 'ScanTabHome',
   },
 };
 

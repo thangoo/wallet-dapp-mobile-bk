@@ -16,5 +16,6 @@ export const ICON_BY_TAB_BAR_ICON_KEY: IconByTabBarIconKey = {
   [TabBarIconKey.Wallet]: icon_tab_01,
   [TabBarIconKey.Browser]: icon_tab_02,
   [TabBarIconKey.Market]: icon_tab_03,
+  [TabBarIconKey.Scan]: icon_tab_03,
   [TabBarIconKey.Settings]: icon_tab_04,
 };
