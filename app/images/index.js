@@ -1,4 +1,5 @@
 const logo = require('./logo.png');
+const add_plus_circle = require('./add_plus_circle.png');
 const logo_dark = require('./logo-dark.png');
 const vector = require('./vector.png');
 const shield_warning_icon = require('./shield_warning_icon.png');
@@ -29,6 +30,7 @@ const qr_code_icon = require('./qr_code_icon.png');
 
 export {
   qr_code_icon,
+  add_plus_circle,
   check_box_empty_dark,
   logo_dark,
   icon_tab_01,
