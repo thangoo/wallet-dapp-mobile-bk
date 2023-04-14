@@ -86,7 +86,7 @@ const createStyles = (colors) =>
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors['tvn.gray.02'],
+      backgroundColor: colors.tBackground.third,
       borderRadius: 16,
       height: 70,
       padding: 10,
@@ -105,13 +105,13 @@ const createStyles = (colors) =>
     },
     name: {
       fontSize: 16,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       ...fontStyles.bold,
     },
     balance: {
       flex: 1,
       fontSize: 14,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       ...fontStyles.normal,
       textTransform: 'uppercase',
       alignSelf: 'flex-end',
@@ -119,13 +119,13 @@ const createStyles = (colors) =>
     },
     testNetBalance: {
       fontSize: 14,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       ...fontStyles.normal,
       alignSelf: 'flex-end',
     },
     balanceFiat: {
       fontSize: 14,
-      color: colors['tvn.address'],
+      color: colors.tText.address,
       ...fontStyles.normal,
       textTransform: 'uppercase',
     },
@@ -228,8 +228,6 @@ class Tokens extends PureComponent {
     const styles = createStyles(colors);
     return styles;
   };
-
-
 
   renderEmpty = () => {
     const styles = this.getStyles();
@@ -347,7 +345,9 @@ class Tokens extends PureComponent {
 
           <View style={styles.balances} testID={'balance'}>
             <Text
-              style={isTestNet(chainId) ? styles.testNetBalance : styles.balance}
+              style={
+                isTestNet(chainId) ? styles.testNetBalance : styles.balance
+              }
             >
               {mainBalance}
             </Text>
@@ -414,14 +414,13 @@ class Tokens extends PureComponent {
     const { tokens, hideZeroBalanceTokens, tokenBalances } = this.props;
     const tokensToDisplay = hideZeroBalanceTokens
       ? tokens.filter((token) => {
-        const { address, isETH } = token;
-        return !isZero(tokenBalances[address]) || isETH;
-        // eslint-disable-next-line no-mixed-spaces-and-tabs
-      })
+          const { address, isETH } = token;
+          return !isZero(tokenBalances[address]) || isETH;
+          // eslint-disable-next-line no-mixed-spaces-and-tabs
+        })
       : tokens;
 
     // console.log('#### tokensToDisplay: ', tokensToDisplay);
-
 
     return (
       <View>

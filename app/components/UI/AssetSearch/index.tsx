@@ -8,11 +8,11 @@ import { toLowerCaseEquals } from '../../../util/general';
 import { useSelector } from 'react-redux';
 import { getTokenListArray } from '../../../reducers/tokens';
 import { TokenListToken } from '@metamask/assets-controllers';
-import { useTheme } from '../../../util/theme';
+import { CustomTheme, useTheme } from '../../../util/theme';
 import generateTestId from '../../../../wdio/utils/generateTestId';
 import { TOKEN_INPUT_BOX_ID } from '../../../../wdio/screen-objects/testIDs/Screens/AssetSearch.testIds';
 
-const createStyles = (colors: any) =>
+const createStyles = (colors: CustomTheme['colors']) =>
   StyleSheet.create({
     searchSection: {
       margin: 20,
@@ -23,16 +23,17 @@ const createStyles = (colors: any) =>
       alignItems: 'center',
       borderWidth: 1,
       borderRadius: 12,
-      borderColor: colors['tvn.gray.04'],
-      color: colors.text.default,
+      borderColor: colors.tBorder.secondary,
+      color: colors.tText.default,
+      backgroundColor: colors.tBackground.fifth,
     },
     textInput: {
       ...fontStyles.normal,
       color: colors.text.default,
-    } as StyleSheet.NamedStyles<any>,
+    },
     icon: {
       padding: 12,
-      color: colors.icon.alternative,
+      color: colors.tIcon.default,
     },
   });
 
@@ -122,7 +123,7 @@ const AssetSearch = memo(({ onSearch, onFocus, onBlur }: Props) => {
         onFocus={onFocus}
         onBlur={onBlur}
         placeholder={strings('token.search_tokens_placeholder')}
-        placeholderTextColor={colors.text.muted}
+        placeholderTextColor={colors.tText.secondary}
         onChangeText={handleSearch}
         {...generateTestId(Platform, TOKEN_INPUT_BOX_ID)}
         keyboardAppearance={themeAppearance}

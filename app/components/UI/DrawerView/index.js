@@ -8,6 +8,7 @@ import {
   Text,
   InteractionManager,
   Platform,
+  Appearance,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -82,7 +83,7 @@ import {
 import { selectTicker } from '../../../selectors/networkController';
 
 import { createAccountSelectorNavDetails } from '../../Views/AccountSelector';
-import { logo } from '../../../images/index';
+import { logo, logo_dark } from '../../../images/index';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -113,8 +114,9 @@ const createStyles = (colors) =>
     metamaskName: {
       marginTop: 4,
       marginLeft: 16,
-      width: 200,
+      width: 155,
       height: 50,
+      resizeMode: 'contain',
     },
     account: {
       flex: 1,
@@ -1170,12 +1172,14 @@ class DrawerView extends PureComponent {
       networkOnboarding.showNetworkOnboarding ||
       networkSwitchedAndInWalletView;
 
+    const colorScheme = Appearance.getColorScheme();
+
     return (
       <View style={styles.wrapper} testID={'drawer-screen'}>
         <ScrollView>
           <View style={styles.header}>
             <Image
-              source={logo}
+              source={colorScheme === 'light' ? logo : logo_dark}
               style={styles.metamaskName}
               resizeMethod={'scale'}
             />

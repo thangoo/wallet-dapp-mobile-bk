@@ -24,7 +24,7 @@ const TabBarItem = ({
   const { colors } = useTheme();
   const colorSelect = isSelected
     ? colors.primary.default
-    : colors['tvn.gray.10'];
+    : colors.tText.default;
   const tabColor = useMemo(() => colorSelect, [isSelected, colors]);
 
   return (

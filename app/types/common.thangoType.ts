@@ -62,6 +62,7 @@ export interface ThangoThemeColors {
      * {string} background.fourth - for background circle
      */
     fourth: string;
+    fifth: string;
   };
   tText: {
     /**
@@ -85,6 +86,7 @@ export interface ThangoThemeColors {
      */
     address: string;
     button: string;
+    third: string;
   };
   tIcon: {
     /**
@@ -109,6 +111,8 @@ export interface ThangoThemeColors {
      * {string} border.muted - For a weaker contrast option for neutral borders.
      */
     muted: string;
+    secondary: string;
+    third: string;
   };
   tOverlay: {
     /**

@@ -55,12 +55,14 @@ interface Props {
 /**
  * Component that provides ability to add searched assets with metadata.
  */
-const SearchTokenAutocomplete = ({ navigation, onChangeCustomToken }: Props) => {
+const SearchTokenAutocomplete = ({
+  navigation,
+  onChangeCustomToken,
+}: Props) => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAsset, setSelectedAsset] = useState({});
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  
 
   const { address, symbol, decimals, image } = selectedAsset as any;
   const { colors } = useTheme();
@@ -219,7 +221,7 @@ const SearchTokenAutocomplete = ({ navigation, onChangeCustomToken }: Props) => 
         confirmButtonMode={'confirm'}
         onConfirmPress={onChangeCustomToken}
         isFullScreen
-      // confirmDisabled={!(address && symbol && decimals)}
+        // confirmDisabled={!(address && symbol && decimals)}
       >
         <View style={styles.listTokenWrapper}>
           {renderTokenDetectionBanner()}

@@ -45,6 +45,7 @@ export const thangoLight: ThangoThemeColors = {
     secondary: colorThango.light,
     third: colorThango.gray02,
     fourth: colorThango.gray04,
+    fifth: colorThango.light,
     defaultHover: '#FAFBFC',
     defaultPressed: '#FAFBFC',
     alternative: colorThango.lightGrayBlue,
@@ -58,6 +59,7 @@ export const thangoLight: ThangoThemeColors = {
     muted: '#BBC0C5',
     address: colorThango.gray12,
     button: colorThango.light,
+    third: colorThango.gray05,
   },
   tIcon: {
     default: colorThango.gray10,
@@ -71,6 +73,8 @@ export const thangoLight: ThangoThemeColors = {
   },
   tBorder: {
     default: colorThango.gray06,
+    secondary: colorThango.gray04,
+    third: colorThango.gray04,
     muted: '#D6D9DC',
   },
   tOverlay: {

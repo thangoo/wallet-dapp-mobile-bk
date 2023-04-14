@@ -6,6 +6,7 @@ import { Theme } from '../../../../util/theme/models';
 
 // Internal dependencies.
 import { TabBarStyleSheetVars } from './TabBar.types';
+import { CustomTheme } from '../../../..//util/theme';
 
 /**
  * Style sheet function for TabBar component.
@@ -15,7 +16,10 @@ import { TabBarStyleSheetVars } from './TabBar.types';
  * @param params.vars Inputs that the style sheet depends on.
  * @returns StyleSheet object.
  */
-const styleSheet = (params: { vars: TabBarStyleSheetVars; theme: Theme }) => {
+const styleSheet = (params: {
+  vars: TabBarStyleSheetVars;
+  theme: CustomTheme;
+}) => {
   const {
     vars: { bottomInset },
     theme: { colors },
@@ -29,6 +33,7 @@ const styleSheet = (params: { vars: TabBarStyleSheetVars; theme: Theme }) => {
       marginBottom: bottomInset,
       borderTopWidth: 0.5,
       borderColor: colors.border.muted,
+      backgroundColor: colors.tBackground.default,
     },
   });
 };
