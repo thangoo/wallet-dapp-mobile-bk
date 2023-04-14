@@ -181,7 +181,9 @@ const ReceiveScreen: FC<Props> = (props) => {
       style={{ flex: 1, paddingHorizontal: 32 }}
     >
       <View style={{ alignSelf: 'center', marginTop: 32 }}>
-        <QRCode value={props.selectedAddress} size={240} />
+        <View style={styles.wrapQR}>
+          <QRCode value={props.selectedAddress} size={240} />
+        </View>
         <View style={styles.wrapQRText}>
           <Text style={{ color: colors.tText.default }}>
             <EthereumAddress address={props.selectedAddress} type={'short'} />
@@ -273,7 +275,13 @@ const createStyles = (colors: CustomTheme['colors']) =>
       backgroundColor: colors.tBackground.alternative,
       paddingVertical: 16,
       alignItems: 'center',
-      marginVertical: 32,
+      marginTop: 16,
+      marginBottom: 32,
       borderRadius: 12,
+    },
+    wrapQR: {
+      padding: 16,
+      backgroundColor: colors.gray01,
+      borderRadius: 18,
     },
   });

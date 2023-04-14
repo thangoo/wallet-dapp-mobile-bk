@@ -16,11 +16,13 @@ import {
   TextStyle,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { Theme } from '@metamask/design-tokens';
 import { useDispatch, useSelector } from 'react-redux';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-import { DefaultTabBar } from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {
+  DefaultTabBar,
+} from 'react-native-scrollable-tab-view';
 import { MetaMetricsEvents } from '../../../core/Analytics';
 import { baseStyles } from '../../../styles/common';
 import AccountOverview from '../../UI/AccountOverview';
@@ -37,7 +39,7 @@ import { getTicker } from '../../../util/transactions';
 import OnboardingWizard from '../../UI/OnboardingWizard';
 import ErrorBoundary from '../ErrorBoundary';
 import { DrawerContext } from '../../Nav/Main/MainNavigator';
-import { useTheme } from '../../../util/theme';
+import { CustomTheme, useTheme } from '../../../util/theme';
 import { shouldShowWhatsNewModal } from '../../../util/onboarding';
 import Logger from '../../../util/Logger';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
@@ -64,21 +66,25 @@ import {
   selectTicker,
 } from '../../../selectors/networkController';
 import LinearGradient from 'react-native-linear-gradient';
-import { ThangoThemeColors } from 'app/types/common.thangoType';
+import { add_plus_circle } from '../../../images/index';
 
-const createStyles = ({ colors, typography }: Theme) =>
+const createStyles = ({ colors, typography }: CustomTheme) =>
   StyleSheet.create({
     wrapper: {
       flex: 1,
-      backgroundColor: colors.background.default,
+      backgroundColor: 'transparent',
+      zIndex: 2,
     },
     assetOverviewWrapper: {
-      height: 350,
+      height: 348,
     },
     bgGradient: {
-      flex: 1,
       borderBottomLeftRadius: 56,
       borderBottomRightRadius: 56,
+      position: 'absolute',
+      width: '100%',
+      height: 348,
+      zIndex: 1,
     },
     assetItem: {
       position: 'absolute',
@@ -107,7 +113,7 @@ const createStyles = ({ colors, typography }: Theme) =>
     },
     splitTab: {
       fontSize: 18,
-      color: colors['tvn.gray.05'],
+      color: colors.tText.muted,
       marginRight: 15,
     },
     textStyle: {
@@ -148,9 +154,11 @@ const createStyles = ({ colors, typography }: Theme) =>
       flexDirection: 'row-reverse',
       alignItems: 'center',
     },
-    infoRightButton: {
-      paddingRight: Device.isAndroid() ? 22 : 18,
-      marginTop: 5,
+    iconPlus: {
+      width: 32,
+      height: 32,
+      tintColor: colors.tIcon.default,
+      marginRight: 32,
     },
   });
 
@@ -338,9 +346,7 @@ const Wallet = ({ navigation }: any) => {
     onPressHandler: any,
   ) => {
     // const { activeTextColor, inactiveTextColor, textStyle, } = this.props;
-    const textColor = isTabActive
-      ? colors['tvn.gray.10']
-      : colors['tvn.gray.05'];
+    const textColor = isTabActive ? colors.tText.default : colors.tText.third;
     const fontWeight = isTabActive ? 'bold' : 'normal';
 
     // console.log('#### name: ', name);
@@ -361,16 +367,20 @@ const Wallet = ({ navigation }: any) => {
         <Text style={[{ color: textColor, fontWeight }, styles.textStyle]}>
           {name}
         </Text>
-        <View style={styles.addIconWrapper}>
-          <ButtonIcon
+        <TouchableOpacity
+          onPress={tokensRef.current?.goToAddToken}
+          style={styles.addIconWrapper}
+        >
+          {/* <ButtonIcon
             variant={ButtonIconVariants.Primary}
-            onPress={tokensRef.current?.goToAddToken}
             iconName={IconName.AddPlusCircleAddBlack}
             style={styles.infoRightButton}
             size={IconSize.Xl}
+            iconColor={'red'}
             // disabled={!tokensRef.current?.state.isAddTokenEnabled}
-          />
-        </View>
+          /> */}
+          <Image source={add_plus_circle} style={styles.iconPlus} />
+        </TouchableOpacity>
       </View>
     );
 
@@ -450,18 +460,12 @@ const Wallet = ({ navigation }: any) => {
     return (
       <View style={styles.wrapper}>
         <View style={styles.assetOverviewWrapper}>
-          <LinearGradient
-            start={{ x: 0.75, y: 0.75 }}
-            end={{ x: 0.25, y: 0 }}
-            colors={colors.tGradient.wallet}
-            style={styles.bgGradient}
-          />
           <View style={styles.assetItem}>
             <AccountOverview
               account={account}
               navigation={navigation}
               onRef={onRef}
-            // props token for received crypto
+              // props token for received crypto
               token={assets}
             />
           </View>
@@ -528,6 +532,12 @@ const Wallet = ({ navigation }: any) => {
   return (
     <ErrorBoundary view="Wallet">
       <View style={baseStyles.flexGrow} {...generateTestId('wallet-screen')}>
+        <LinearGradient
+          start={{ x: 0.75, y: 0.75 }}
+          end={{ x: 0.25, y: 0 }}
+          colors={colors.tGradient.wallet}
+          style={styles.bgGradient}
+        />
         <ScrollView
           style={styles.wrapper}
           refreshControl={
@@ -541,6 +551,7 @@ const Wallet = ({ navigation }: any) => {
         >
           {selectedAddress ? renderContent() : renderLoader()}
         </ScrollView>
+
         {renderOnboardingWizard()}
       </View>
     </ErrorBoundary>
