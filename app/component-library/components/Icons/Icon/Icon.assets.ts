@@ -153,6 +153,9 @@ import BellNotificationWhite from './assets/bell-notification-white.svg';
 import AddPlusCircleAddBlack from './assets/add-plus-circle-add-black.svg';
 import MenuItem01White from './assets/menu-item01-white.svg';
 import ScanQRCode from './assets/scan-qrcode.svg';
+import Finger from './assets/finger.svg';
+import XBack from './assets/xBack.svg';
+
 /**
  * Asset stored by icon name
  */
@@ -306,4 +309,6 @@ export const assetByIconName: AssetByIconName = {
   [IconName.AddPlusCircleAddBlack]: AddPlusCircleAddBlack,
   [IconName.MenuItem01White]: MenuItem01White,
   [IconName.ScanQRCode]: ScanQRCode,
+  [IconName.Finger]: Finger,
+  [IconName.XBack]: XBack,
 };

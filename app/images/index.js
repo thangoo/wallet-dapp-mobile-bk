@@ -27,6 +27,8 @@ const icon_tab_02 = require('./icon_tab_02.png');
 const icon_tab_03 = require('./icon_tab_03.png');
 const icon_tab_04 = require('./icon_tab_04.png');
 const qr_code_icon = require('./qr_code_icon.png');
+const finger_icon = require('./finger.png');
+const xBack_icon = require('./xBack.png');
 
 export {
   qr_code_icon,
@@ -58,4 +60,6 @@ export {
   external_icon,
   external_icon_white,
   plus_icon,
+  finger_icon,
+  xBack_icon,
 };

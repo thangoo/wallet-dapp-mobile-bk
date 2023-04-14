@@ -1,14 +1,14 @@
 import { HeaderBackButton } from '@react-navigation/stack';
 import { fontStyles } from '../../../../app/styles/common';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { arrow_right_icon } from 'images/index';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { arrow_right_icon, xBack_icon, finger_icon } from 'images/index';
 
-export function tHeaderOptions(
+const tHeaderOptions = (
   route,
   themeColors,
   { title } = { title: 'Title' },
   rest,
-) {
+) => {
   const innerStyles = StyleSheet.create({
     headerStyle: {
       backgroundColor: themeColors.background.default,
@@ -25,7 +25,7 @@ export function tHeaderOptions(
   });
 
   return {
-    title: 'Legal',
+    title,
     headerStyle: innerStyles.headerStyle,
     headerLeft: (props) => (
       <HeaderBackButton
@@ -55,4 +55,37 @@ export function tHeaderOptions(
     },
     ...rest,
   };
-}
+};
+
+const tXBackHeader = (props) => (
+  <HeaderBackButton
+    {...props}
+    labelVisible={false}
+    style={{ marginLeft: 16 }}
+    backImage={() => (
+      <Image
+        source={xBack_icon}
+        style={{
+          width: 25,
+          height: 25,
+          // tintColor: themeColors.tIcon.default,
+        }}
+      />
+    )}
+  />
+);
+
+const tFingerHeader = (onPress) => (
+  <TouchableOpacity onPress={onPress}>
+    <Image
+      source={finger_icon}
+      style={{
+        width: 25,
+        height: 25,
+        // tintColor: themeColors.tIcon.default,
+      }}
+    />
+  </TouchableOpacity>
+);
+
+export { tHeaderOptions, tXBackHeader, tFingerHeader };

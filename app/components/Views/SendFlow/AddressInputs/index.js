@@ -35,7 +35,7 @@ const createStyles = (colors) =>
   StyleSheet.create({
     wrapper: {
       flexDirection: 'column',
-      marginHorizontal: 8,
+      marginHorizontal: 12,
       // minHeight: 90,
       marginBottom: 50,
     },
@@ -50,13 +50,39 @@ const createStyles = (colors) =>
       marginVertical: 8,
       backgroundColor: colors.tBackground.third,
     },
+
+    wrapperConfirm: {
+      flexDirection: 'row',
+      marginLeft: 20,
+      // minHeight: 90,
+      // marginBottom: 50,
+    },
+
+    detailWrapper: {
+      flex: 1,
+      marginLeft: 8,
+      paddingHorizontal: 10,
+      minHeight: 52,
+      flexDirection: 'row',
+      // borderWidth: 1,
+      // borderRadius: 16,
+      // marginVertical: 8,
+    },
+
+    detailConfirm: {
+      flex: 1,
+      marginLeft: 8,
+      paddingHorizontal: 10,
+      flexDirection: 'row',
+    },
+
     inputWrapper: {
       flex: 1,
       marginLeft: 8,
       padding: 10,
       minHeight: 52,
       flexDirection: 'row',
-      borderWidth: 1,
+      // borderWidth: 1,
       borderRadius: 8,
       marginTop: 8,
       borderColor: colors.border.default,
@@ -104,12 +130,12 @@ const createStyles = (colors) =>
     accountNameLabelText: {
       marginLeft: 4,
       paddingHorizontal: 8,
-      ...fontStyles.bold,
+      ...fontStyles.normal,
       color: colors.text.alternative,
       borderWidth: 1,
       borderRadius: 8,
       borderColor: colors.border.default,
-      fontSize: 10,
+      fontSize: 14,
     },
     textBalance: {
       ...fontStyles.normal,
@@ -121,10 +147,22 @@ const createStyles = (colors) =>
       alignItems: 'center',
       // width: '15%',
     },
+    labelConfirm: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      // width: '15%',
+    },
     labelText: {
       ...fontStyles.normal,
-      color: colors.tText.default,
-      fontSize: 14,
+      color: colors.tText.secondary,
+      flex: 1,
+      fontSize: 12,
+    },
+    labelTextConfirm: {
+      ...fontStyles.normal,
+      color: colors.tText.secondary,
+      fontSize: 12,
+      width: 70,
     },
     addressInfo: {
       flexDirection: 'row',
@@ -192,6 +230,9 @@ const createStyles = (colors) =>
       flexDirection: 'row',
     },
     checkCleanWrapper: { flexDirection: 'row', alignItems: 'center' },
+    toAddressNamef: {
+      fontSize: 14,
+    },
   });
 
 const AddressName = ({ toAddressName, confusableCollection = [] }) => {
@@ -268,18 +309,18 @@ export const AddressTo = (props) => {
   // Adress or name ENS, .bnb, .eth, .crypto..
   if (isConfirmScreen) {
     return (
-      <View style={styles.wrapper}>
-        <View style={styles.label}>
-          <Text style={styles.labelText}>To:</Text>
+      <View style={styles.wrapperConfirm}>
+        <View style={styles.labelConfirm}>
+          <Text style={styles.labelTextConfirm}>TO</Text>
         </View>
         <View
           style={[
-            styles.selectWrapper,
+            styles.detailConfirm,
             highlighted ? styles.borderHighlighted : styles.borderOpaque,
           ]}
         >
           <View style={styles.addressToInformation}>
-            <Identicon address={toSelectedAddress} diameter={30} />
+            {/* <Identicon address={toSelectedAddress} diameter={30} /> */}
             {displayExclamation && (
               <View style={styles.exclamation}>
                 <FontAwesome
@@ -304,9 +345,9 @@ export const AddressTo = (props) => {
                         ? styles.textBalance
                         : styles.textAddress
                     }
-                    numberOfLines={1}
+                    // numberOfLines={1}
                   >
-                    {renderShortAddress(toSelectedAddress)}
+                    {toSelectedAddress}
                   </Text>
                   <View
                     style={
@@ -314,11 +355,11 @@ export const AddressTo = (props) => {
                       isENS(toAddressName) ? {} : { paddingTop: 2 })
                     }
                   >
-                    <AntIcon
+                    {/* <AntIcon
                       name="check"
                       color={colors.success.default}
                       size={15}
-                    />
+                    /> */}
                   </View>
                 </View>
               </View>
@@ -579,31 +620,29 @@ export const AddressFrom = (props) => {
   const styles = createStyles(colors);
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.label}>
-        <Text style={styles.labelText}>From:</Text>
+    <View style={styles.detailConfirm}>
+      <View style={styles.labelConfirm}>
+        <Text style={styles.labelTextConfirm}>FROM</Text>
       </View>
       <View
         style={[
-          styles.inputWrapper,
+          styles.detailConfirm,
           highlighted ? styles.borderHighlighted : styles.borderOpaque,
         ]}
       >
-        <View style={styles.identiconWrapper}>
+        {/* <View style={styles.identiconWrapper}>
           <Identicon address={fromAccountAddress} diameter={30} />
-        </View>
+        </View> */}
         <View style={[baseStyles.flexGrow, styles.address]}>
-          <View style={styles.accountNameLabel}>
+          {/* <View style={styles.accountNameLabel}>
             <Text style={styles.textAddress}>{fromAccountName}</Text>
             {isHardwareAccount && (
               <Text style={styles.accountNameLabelText}>
                 {strings('transaction.hardware')}
               </Text>
             )}
-          </View>
-          <Text style={styles.textBalance}>{`${strings(
-            'transactions.address_from_balance',
-          )} ${fromAccountBalance}`}</Text>
+          </View> */}
+          <Text style={styles.toAddressNamef}>{fromAccountAddress}</Text>
         </View>
 
         {!!onPressIcon && (
