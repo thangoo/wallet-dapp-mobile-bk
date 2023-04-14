@@ -478,6 +478,10 @@ class Amount extends PureComponent {
      * https://github.com/facebook/react-native/issues/9958
      */
     inputWidth: PropTypes.object,
+    /**
+     * Used to get child ref
+     */
+    onRef: PropTypes.func,
   };
 
   state = {
@@ -508,7 +512,11 @@ class Amount extends PureComponent {
       selectedAsset,
       isPaymentRequest,
       onInputBlur,
+      onRef
     } = this.props;
+
+    onRef && onRef(this);
+    
     // For analytics
     // this.updateNavBar();
     // navigation.setParams({ providerType, isPaymentRequest });

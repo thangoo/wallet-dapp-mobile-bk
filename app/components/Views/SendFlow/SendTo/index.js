@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, PureComponent, useRef, useCallback } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -153,6 +153,7 @@ class SendFlow extends PureComponent {
   };
 
   addressToInputRef = React.createRef();
+  amountRef = React.createRef();
 
   state = {
     addressError: undefined,
@@ -185,6 +186,10 @@ class SendFlow extends PureComponent {
     const rederTitle = `${strings('send.send_to')} ${selectedAsset.symbol}`;
 
     navigation.setOptions(tHeaderOptions(route, colors, { title: rederTitle }));
+  };
+
+  onRef = (ref) => {
+    this.amountRef.current = ref;
   };
 
   componentDidMount = async () => {
@@ -485,7 +490,12 @@ class SendFlow extends PureComponent {
         network: providerType,
       });
     });
-    navigation.navigate('Amount');
+    // navigation.navigate('Amount');
+  };
+
+  onTransactionStart = async () => {
+    await this.onTransactionDirectionSet();
+    await this.amountRef.current.onNext();
   };
 
   renderAddToAddressBookModal = () => {
@@ -656,14 +666,14 @@ class SendFlow extends PureComponent {
             onClear={this.onToClear}
             onInputFocus={this.onToInputFocus}
             onInputBlur={this.onToInputFocus}
-            onSubmit={this.onTransactionDirectionSet}
+            onSubmit={this.onTransactionStart}
             inputWidth={inputWidth}
             confusableCollection={
               (!existingContact && confusableCollection) || []
             }
             isFromAddressBook={isFromAddressBook}
           />
-          <Amount {...this.props} />
+          <Amount {...this.props} onRef={this.onRef} />
         </View>
 
         {!toSelectedAddressReady && !!toAccount && (
@@ -695,7 +705,7 @@ class SendFlow extends PureComponent {
                   <ErrorMessage
                     errorMessage={this.renderAddressError(addressError)}
                     errorContinue={!!errorContinue}
-                    onContinue={this.onTransactionDirectionSet}
+                    onContinue={this.onTransactionStart}
                     isOnlyWarning={!!isOnlyWarning}
                   />
                 </View>
@@ -769,7 +779,7 @@ class SendFlow extends PureComponent {
                 <StyledButton
                   type={'confirm'}
                   containerStyle={styles.buttonNext}
-                  onPress={this.onTransactionDirectionSet}
+                  onPress={this.onTransactionStart}
                   testID={ADDRESS_BOOK_NEXT_BUTTON}
                   //To selectedAddressReady needs to be calculated on this component, needing a bigger refactor
                   //Will be here just to ensure that we don't break existing conditions
