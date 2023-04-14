@@ -57,35 +57,66 @@ const tHeaderOptions = (
   };
 };
 
-const tXBackHeader = (props) => (
-  <HeaderBackButton
-    {...props}
-    labelVisible={false}
-    style={{ marginLeft: 16 }}
-    backImage={() => (
-      <Image
-        source={xBack_icon}
-        style={{
-          width: 25,
-          height: 25,
-          // tintColor: themeColors.tIcon.default,
-        }}
-      />
-    )}
+const ImageToken = ({ souceIcon, themeColors }) => (
+  <Image
+    source={souceIcon}
+    style={{
+      width: 25,
+      height: 25,
+      tintColor: themeColors.tIcon.default,
+    }}
   />
 );
 
-const tFingerHeader = (onPress) => (
-  <TouchableOpacity onPress={onPress}>
-    <Image
-      source={finger_icon}
-      style={{
-        width: 25,
-        height: 25,
-        // tintColor: themeColors.tIcon.default,
-      }}
-    />
-  </TouchableOpacity>
-);
+const tHeaderPaymentDetailOptions = (
+  route,
+  themeColors,
+  { title } = { title: 'Title' },
+  rest,
+) => {
+  const innerStyles = StyleSheet.create({
+    headerStyle: {
+      backgroundColor: themeColors.background.default,
+      shadowColor: 'transparent',
+      elevation: 0,
+    },
+    headerTitleStyle: {
+      fontSize: 20,
+      color: themeColors.text.default,
+      textAlign: 'center',
+      ...fontStyles.normal,
+      alignItems: 'center',
+    },
+  });
 
-export { tHeaderOptions, tXBackHeader, tFingerHeader };
+  return {
+    title,
+    headerStyle: innerStyles.headerStyle,
+    headerLeft: (props) => (
+      <HeaderBackButton
+        {...props}
+        labelVisible={false}
+        style={{ marginLeft: 16 }}
+        backImage={() => (
+          <ImageToken souceIcon={xBack_icon} themeColors={themeColors} />
+        )}
+      />
+    ),
+    headerTitle: () => (
+      <Text style={innerStyles.headerTitleStyle}>{title}</Text>
+    ),
+    headerRight: (onPress) => (
+      <TouchableOpacity onPress={onPress}>
+        <ImageToken souceIcon={finger_icon} themeColors={themeColors} />
+      </TouchableOpacity>
+    ),
+    headerTitleStyle: {
+      fontSize: 20,
+      color: themeColors.tText.default,
+      ...fontStyles.normal,
+    },
+    ...rest,
+  };
+};
+
+export { tHeaderOptions, tHeaderPaymentDetailOptions };

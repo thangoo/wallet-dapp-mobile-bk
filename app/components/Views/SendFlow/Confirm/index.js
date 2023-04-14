@@ -72,11 +72,7 @@ import EditGasFee1559 from '../../../UI/EditGasFee1559Update';
 import EditGasFeeLegacy from '../../../UI/EditGasFeeLegacyUpdate';
 import CustomNonce from '../../../UI/CustomNonce';
 import { getSendFlowTitle } from '../../../UI/Navbar';
-import {
-  tHeaderOptions,
-  tXBackHeader,
-  tFingerHeader,
-} from '../../../UI/Navbar/index.thango.js';
+import { tHeaderPaymentDetailOptions } from '../../../UI/Navbar/index.thango.js';
 import { AddressFrom, AddressTo } from '../AddressInputs';
 import AppConstants from '../../../../core/AppConstants';
 import {
@@ -316,17 +312,12 @@ class Confirm extends PureComponent {
 
   updateNavBar = () => {
     const { navigation, route } = this.props;
-    const themeColors = this.context.colors || mockTheme.colors;
+    const colors = this.context.colors || mockTheme.colors;
     const title = strings('send.confirm');
-    // navigation.setOptions(
-    //   getSendFlowTitle('send.confirm', navigation, route, themeColors),
-    // );
-    const rest = {
-      ...navigation,
-      headerLeft: tXBackHeader,
-      headerRight: tFingerHeader,
-    };
-    navigation.setOptions(tHeaderOptions(route, themeColors, { title }, rest));
+    navigation.setOptions(
+      tHeaderPaymentDetailOptions(route, colors, { title }, navigation),
+    );
+
   };
 
   componentWillUnmount = async () => {
