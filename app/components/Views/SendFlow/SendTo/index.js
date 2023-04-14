@@ -5,13 +5,12 @@ import {
   TextInput,
   InteractionManager,
   ScrollView,
-  Alert,
+  Alert as ReactAlert,
   Platform,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { toChecksumAddress } from 'ethereumjs-util';
-import { hexToBN } from '@metamask/controller-utils';
+import { toChecksumAddress, BN } from 'ethereumjs-util';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { MetaMetricsEvents } from '../../../../core/Analytics';
@@ -19,15 +18,17 @@ import Engine from '../../../../core/Engine';
 import AddressList from './../AddressList';
 import { createQRScannerNavDetails } from '../../QRScanner';
 import Text from '../../../Base/Text';
-import { AddressFrom, AddressTo } from './../AddressInputs';
+import { AddressTo } from './../AddressInputs';
+import Amount from './../Amount/index.thango';
 import WarningMessage from '../WarningMessage';
-import { getSendFlowTitle } from '../../../UI/Navbar';
+import { tHeaderOptions } from '../../..//UI/Navbar/index.thango';
+
 import ActionModal from '../../../UI/ActionModal';
 import StyledButton from '../../../UI/StyledButton';
 import { allowedToBuy } from '../../../UI/FiatOnRampAggregator';
 import { trackEvent, trackLegacyEvent } from '../../../../util/analyticsV2';
 import { doENSReverseLookup } from '../../../../util/ENSUtils';
-import { handleNetworkSwitch } from '../../../../util/networks';
+import { handleNetworkSwitch, getNetworkName } from '../../../../util/networks';
 import { renderFromWei } from '../../../../util/number';
 import {
   isENS,
@@ -35,18 +36,11 @@ import {
   validateAddressOrENS,
 } from '../../../../util/address';
 import { getTicker, getEther } from '../../../../util/transactions';
-import {
-  getConfusablesExplanations,
-  hasZeroWidthPoints,
-} from '../../../../util/confusables';
+import { getConfusablesExplanations, hasZeroWidthPoints, } from '../../../../util/confusables';
 import { ThemeContext, mockTheme } from '../../../../util/theme';
 import { showAlert } from '../../../../actions/alert';
 import addRecent from '../../../../actions/recents';
-import {
-  setSelectedAsset,
-  setRecipient,
-  newAssetTransaction,
-} from '../../../../actions/transaction';
+import { setSelectedAsset, setRecipient, newAssetTransaction, } from '../../../../actions/transaction';
 import ErrorMessage from '../ErrorMessage';
 import { strings } from '../../../../../locales/i18n';
 import {
@@ -59,7 +53,7 @@ import {
   SYMBOL_ERROR,
   NetworkSwitchErrorType,
 } from '../../../../constants/error';
-import { baseStyles } from '../../../../styles/common';
+import { baseStyles, fontStyles } from '../../../../styles/common';
 import createStyles from './styles';
 import { ADD_ADDRESS_BUTTON } from '../../../../../wdio/screen-objects/testIDs/Screens/SendScreen.testIds';
 import { ENTER_ALIAS_INPUT_BOX_ID } from '../../../../../wdio/screen-objects/testIDs/Screens/AddressBook.testids';
@@ -70,8 +64,12 @@ import {
   selectProviderType,
   selectTicker,
 } from '../../../../selectors/networkController';
-
+import { } from '../../../../styles/common';
+import TokenImage from '../../../UI/TokenImage';
+import { hexToBN, BNToHex } from '@metamask/controller-utils';
+import Device from '../../../../util/device';
 const dummy = () => true;
+const KEYBOARD_OFFSET = Device.isSmallDevice() ? 80 : 120;
 
 /**
  * View that wraps the wraps the "Send" screen
@@ -167,14 +165,20 @@ class SendFlow extends PureComponent {
     confusableCollection: [],
     inputWidth: { width: '99%' },
     isFromAddressBook: false,
+    // // Amount
+    // hasExchangeRate: false,
+    // estimatedTotalGas: undefined,
   };
 
   updateNavBar = () => {
-    const { navigation, route } = this.props;
+    const { navigation, route, chainId, selectedAsset } = this.props;
+    // const { selectedAsset } = this.state;
+
     const colors = this.context.colors || mockTheme.colors;
-    navigation.setOptions(
-      getSendFlowTitle('send.send_to', navigation, route, colors),
-    );
+    // const rederTitle = `${strings('send.send_to')} ${getNetworkName(chainId)}`;
+    const rederTitle = `${strings('send.send_to')} ${selectedAsset.symbol}`;
+
+    navigation.setOptions(tHeaderOptions(route, colors, { title: rederTitle }));
   };
 
   componentDidMount = async () => {
@@ -278,8 +282,8 @@ class SendFlow extends PureComponent {
     return networkAddressBook[checksummedAddress]
       ? networkAddressBook[checksummedAddress].name
       : identities[checksummedAddress]
-      ? identities[checksummedAddress].name
-      : null;
+        ? identities[checksummedAddress].name
+        : null;
   };
 
   isAddressSaved = () => {
@@ -424,7 +428,7 @@ class SendFlow extends PureComponent {
             chain_id: chainId,
           });
       }
-      Alert.alert(strings('send.network_not_found_title'), alertMessage);
+      ReactAlert.alert(strings('send.network_not_found_title'), alertMessage);
     }
   };
 
@@ -444,6 +448,7 @@ class SendFlow extends PureComponent {
     );
   };
 
+  // Go to amount screen
   onTransactionDirectionSet = async () => {
     const { setRecipient, navigation, providerType, addRecent } = this.props;
     const {
@@ -459,7 +464,9 @@ class SendFlow extends PureComponent {
       if (addressError) return;
     }
     const toAddress = toEnsAddressResolved || toAccount;
+    // Add recent
     addRecent(toAddress);
+
     setRecipient(
       fromSelectedAddress,
       toAddress,
@@ -581,6 +588,8 @@ class SendFlow extends PureComponent {
       addressError
     );
 
+
+
   render = () => {
     const { ticker, addressBook, network } = this.props;
     const {
@@ -626,12 +635,12 @@ class SendFlow extends PureComponent {
         testID={'send-screen'}
       >
         <View style={styles.imputWrapper}>
-          <AddressFrom
+          {/* <AddressFrom
             onPressIcon={this.openAccountSelector}
             fromAccountAddress={fromSelectedAddress}
             fromAccountName={fromAccountName}
             fromAccountBalance={fromAccountBalance}
-          />
+          /> */}
           <AddressTo
             inputRef={this.addressToInputRef}
             highlighted={toInputHighlighted}
@@ -650,6 +659,7 @@ class SendFlow extends PureComponent {
             }
             isFromAddressBook={isFromAddressBook}
           />
+          <Amount {...this.props} />
         </View>
 
         {!toSelectedAddressReady && !!toAccount && (
@@ -781,40 +791,24 @@ class SendFlow extends PureComponent {
 
 SendFlow.contextType = ThemeContext;
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
   accounts: state.engine.backgroundState.AccountTrackerController.accounts,
   addressBook: state.engine.backgroundState.AddressBookController.addressBook,
   chainId: selectChainId(state),
-  selectedAddress:
-    state.engine.backgroundState.PreferencesController.selectedAddress,
+  selectedAddress: state.engine.backgroundState.PreferencesController.selectedAddress,
   selectedAsset: state.transaction.selectedAsset,
   identities: state.engine.backgroundState.PreferencesController.identities,
   ticker: selectTicker(state),
   network: selectNetwork(state),
   providerType: selectProviderType(state),
   isPaymentRequest: state.transaction.paymentRequest,
-  frequentRpcList:
-    state.engine.backgroundState.PreferencesController.frequentRpcList,
+  frequentRpcList: state.engine.backgroundState.PreferencesController.frequentRpcList,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addRecent: (address) => dispatch(addRecent(address)),
-  setRecipient: (
-    from,
-    to,
-    ensRecipient,
-    transactionToName,
-    transactionFromName,
-  ) =>
-    dispatch(
-      setRecipient(
-        from,
-        to,
-        ensRecipient,
-        transactionToName,
-        transactionFromName,
-      ),
-    ),
+  setRecipient: (from, to, ensRecipient, transactionToName, transactionFromName,) =>
+    dispatch(setRecipient(from, to, ensRecipient, transactionToName, transactionFromName,),),
   newAssetTransaction: (selectedAsset) =>
     dispatch(newAssetTransaction(selectedAsset)),
   setSelectedAsset: (selectedAsset) =>

@@ -10,6 +10,11 @@ import { fontStyles, baseStyles } from '../../../../styles/common';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import PropTypes from 'prop-types';
+import ButtonIcon from '../../../../component-library/components/Buttons/ButtonIcon';
+import {
+  IconName,
+  IconSize,
+} from '../../../../component-library/components/Icons/Icon';
 import Identicon from '../../../UI/Identicon';
 import {
   isQRHardwareAccount,
@@ -20,14 +25,18 @@ import {
 import { strings } from '../../../../../locales/i18n';
 import Text from '../../../Base/Text';
 import { hasZeroWidthPoints } from '../../../../util/confusables';
-import { useTheme } from '../../../../util/theme';
+import { useTheme, ThemeContext, mockTheme } from '../../../../util/theme';
 import generateTestId from '../../../../../wdio/utils/generateTestId';
 import { SEND_ADDRESS_INPUT_FIELD } from '../../../../../wdio/screen-objects/testIDs/Screens/SendScreen.testIds';
+
+
 const createStyles = (colors) =>
   StyleSheet.create({
     wrapper: {
-      flexDirection: 'row',
+      flexDirection: 'column',
       marginHorizontal: 8,
+      // minHeight: 90,
+      marginBottom: 50,
     },
     selectWrapper: {
       flex: 1,
@@ -35,9 +44,10 @@ const createStyles = (colors) =>
       paddingHorizontal: 10,
       minHeight: 52,
       flexDirection: 'row',
-      borderWidth: 1,
-      borderRadius: 8,
+      // borderWidth: 1,
+      borderRadius: 16,
       marginVertical: 8,
+      backgroundColor: colors.tInput.backgroundColor.default,
     },
     inputWrapper: {
       flex: 1,
@@ -73,6 +83,7 @@ const createStyles = (colors) =>
       bottom: 8,
       left: 20,
     },
+
     address: {
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -107,19 +118,27 @@ const createStyles = (colors) =>
     label: {
       flexDirection: 'row',
       alignItems: 'center',
-      width: '15%',
+      // width: '15%',
     },
     labelText: {
       ...fontStyles.normal,
-      color: colors.text.default,
-      fontSize: 16,
+      color: colors.tText.default,
+      fontSize: 14,
+    },
+    addressInfo: {
+      flexDirection: 'row',
+      // alignItems: 'flex-start',
+      marginLeft: 20,
+      // width: '15%',
     },
     textInput: {
-      ...fontStyles.normal,
+      ...fontStyles.bold,
       paddingLeft: 0,
       paddingRight: 6,
-      color: colors.text.default,
+      color: colors.tText.color.default,
       flex: 1,
+      fontSize: 14,
+
     },
     addressReadyWrapper: {
       flexDirection: 'row',
@@ -143,10 +162,12 @@ const createStyles = (colors) =>
       color: colors.primary.default,
     },
     borderOpaque: {
-      borderColor: colors.border.default,
+      // borderWidth: 1,
+      // borderColor: colors.border.default,
     },
     borderHighlighted: {
-      borderColor: colors.primary.default,
+      // borderWidth: 1,
+      // borderColor: colors.border.default,
     },
     iconWrapper: {
       flexDirection: 'row',
@@ -175,7 +196,10 @@ const createStyles = (colors) =>
 
 const AddressName = ({ toAddressName, confusableCollection = [] }) => {
   const { colors } = useTheme();
+  // const colors =  mockTheme.colors;
+  // const themeAppearance = this.context.themeAppearance || 'light';
   const styles = createStyles(colors);
+
   if (confusableCollection.length) {
     const texts = toAddressName?.split('').map((char, index) => {
       // if text has a confusable highlight it red
@@ -207,6 +231,8 @@ const AddressName = ({ toAddressName, confusableCollection = [] }) => {
   );
 };
 
+// AddressName.contextType = ThemeContext;
+
 AddressName.propTypes = {
   toAddressName: PropTypes.string,
   confusableCollection: PropTypes.array,
@@ -232,10 +258,14 @@ export const AddressTo = (props) => {
     isFromAddressBook = false,
   } = props;
   const { colors, themeAppearance } = useTheme();
+  // const colors =  mockTheme.colors;
+  // const themeAppearance = this.context.themeAppearance || 'light';
+
   const styles = createStyles(colors);
 
   const isInputFilled = toSelectedAddress?.length;
 
+  // Adress or name ENS, .bnb, .eth, .crypto..
   if (isConfirmScreen) {
     return (
       <View style={styles.wrapper}>
@@ -281,7 +311,7 @@ export const AddressTo = (props) => {
                   <View
                     style={
                       (styles.checkIconWrapper,
-                      isENS(toAddressName) ? {} : { paddingTop: 2 })
+                        isENS(toAddressName) ? {} : { paddingTop: 2 })
                     }
                   >
                     <AntIcon
@@ -301,8 +331,11 @@ export const AddressTo = (props) => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.label}>
+      {/* <View style={styles.label}>
         <Text style={styles.labelText}>To:</Text>
+      </View> */}
+      <View style={styles.addressInfo}>
+        <Text style={styles.labelText}>Adress or name ENS, .bnb, .eth, .crypto..</Text>
       </View>
       {!addressToReady ? (
         <View
@@ -333,13 +366,9 @@ export const AddressTo = (props) => {
           </View>
           {!isInputFilled ? (
             <TouchableOpacity onPress={onScan} style={styles.iconWrapper}>
-              <AntIcon
-                name="scan1"
-                size={20}
-                style={[
-                  styles.inputIcon,
-                  highlighted ? styles.iconHighlighted : styles.inputIconOpaque,
-                ]}
+              <ButtonIcon
+                iconName={IconName.ScanQRCode}
+                size={IconSize.Xl}
               />
             </TouchableOpacity>
           ) : (
@@ -364,11 +393,11 @@ export const AddressTo = (props) => {
           ]}
         >
           <View style={styles.addressToInformation}>
-            <Identicon
+            {/* <Identicon
               address={toSelectedAddress}
               diameter={30}
               customStyle={styles.identIcon}
-            />
+            /> */}
             {displayExclamation && (
               <View style={styles.exclamation}>
                 <FontAwesome
@@ -382,10 +411,10 @@ export const AddressTo = (props) => {
               {isFromAddressBook ? (
                 <View style={styles.toInputWrapper}>
                   <View style={[styles.address, styles.checkAddress]}>
-                    <AddressName
+                    {/* <AddressName
                       toAddressName={toAddressName}
                       confusableCollection={confusableCollection}
-                    />
+                    /> */}
 
                     <View style={styles.addressWrapper}>
                       <Text
@@ -396,19 +425,19 @@ export const AddressTo = (props) => {
                         }
                         numberOfLines={1}
                       >
-                        {renderShortAddress(toSelectedAddress)}
+                        {renderShortAddress(toSelectedAddress, 10)}
                       </Text>
                       <View
                         style={
                           (styles.checkIconWrapper,
-                          isENS(toAddressName) ? {} : { paddingTop: 2 })
+                            isENS(toAddressName) ? {} : { paddingTop: 2 })
                         }
                       >
-                        <AntIcon
+                        {/* <AntIcon
                           name="check"
                           color={colors.success.default}
                           size={15}
-                        />
+                        /> */}
                       </View>
                     </View>
                   </View>
@@ -467,6 +496,8 @@ export const AddressTo = (props) => {
     </View>
   );
 };
+
+// AddressTo.contextType = ThemeContext;
 
 AddressTo.propTypes = {
   /**

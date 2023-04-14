@@ -1,17 +1,23 @@
 import { StyleSheet } from 'react-native';
+import Device from '../../../../util/device';
+
 import { fontStyles } from '../../../../styles/common';
+
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
     wrapper: {
       flex: 1,
       backgroundColor: colors.background.default,
+      flexDirection: 'column',
+      marginTop: 30,
     },
     imputWrapper: {
-      flex: 0,
       borderBottomWidth: 1,
       borderBottomColor: colors.border.muted,
       paddingHorizontal: 8,
+      // flexWrap:'wrap',
+      flex: 0,
     },
     bottomModal: {
       justifyContent: 'flex-end',
@@ -125,5 +131,7 @@ const createStyles = (colors: any) =>
       marginRight: 8,
     },
   });
+
+
 
 export default createStyles;

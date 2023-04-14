@@ -24,6 +24,7 @@ import {
   renderFromWei,
   weiToFiat,
   hexToBN,
+  renderFiat,
 } from '../../../util/number';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
 import { safeToChecksumAddress } from '../../../util/address';
@@ -106,7 +107,7 @@ const createStyles = (colors) =>
     },
     actions: {
       flex: 1,
-      justifyContent: 'space-between',
+      justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
       width: '100%',
@@ -399,9 +400,10 @@ class AssetOverview extends PureComponent {
               </Text>
               {secondaryBalance && (
                 <View style={styles.secondaryBalanceStyle}>
-                  <Text style={styles.amountFiat}>{secondaryBalance}</Text>
+                  <Text style={styles.amountFiat}>{renderFiat(conversionRate, currentCurrency, 2)}</Text>
                   <View style={styles.divider} />
                   <Text style={styles.amountFiat}>{secondaryBalance}</Text>
+                  <Text style={styles.amountFiat}>0%</Text>
                   <View style={styles.divider} />
                   <Text style={styles.amountFiat}>{'COIN'}</Text>
                 </View>
