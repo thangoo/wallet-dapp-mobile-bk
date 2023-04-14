@@ -18,7 +18,7 @@ import Engine from '../../../../core/Engine';
 import AddressList from './../AddressList';
 import { createQRScannerNavDetails } from '../../QRScanner';
 import Text from '../../../Base/Text';
-import { AddressTo } from './../AddressInputs';
+import { AddressFrom, AddressTo } from './../AddressInputs';
 import Amount from './../Amount/index.thango';
 import WarningMessage from '../WarningMessage';
 import { tHeaderOptions } from '../../..//UI/Navbar/index.thango';
@@ -36,11 +36,18 @@ import {
   validateAddressOrENS,
 } from '../../../../util/address';
 import { getTicker, getEther } from '../../../../util/transactions';
-import { getConfusablesExplanations, hasZeroWidthPoints, } from '../../../../util/confusables';
+import {
+  getConfusablesExplanations,
+  hasZeroWidthPoints,
+} from '../../../../util/confusables';
 import { ThemeContext, mockTheme } from '../../../../util/theme';
 import { showAlert } from '../../../../actions/alert';
 import addRecent from '../../../../actions/recents';
-import { setSelectedAsset, setRecipient, newAssetTransaction, } from '../../../../actions/transaction';
+import {
+  setSelectedAsset,
+  setRecipient,
+  newAssetTransaction,
+} from '../../../../actions/transaction';
 import ErrorMessage from '../ErrorMessage';
 import { strings } from '../../../../../locales/i18n';
 import {
@@ -64,7 +71,6 @@ import {
   selectProviderType,
   selectTicker,
 } from '../../../../selectors/networkController';
-import { } from '../../../../styles/common';
 import TokenImage from '../../../UI/TokenImage';
 import { hexToBN, BNToHex } from '@metamask/controller-utils';
 import Device from '../../../../util/device';
@@ -282,8 +288,8 @@ class SendFlow extends PureComponent {
     return networkAddressBook[checksummedAddress]
       ? networkAddressBook[checksummedAddress].name
       : identities[checksummedAddress]
-        ? identities[checksummedAddress].name
-        : null;
+      ? identities[checksummedAddress].name
+      : null;
   };
 
   isAddressSaved = () => {
@@ -588,8 +594,6 @@ class SendFlow extends PureComponent {
       addressError
     );
 
-
-
   render = () => {
     const { ticker, addressBook, network } = this.props;
     const {
@@ -795,20 +799,36 @@ const mapStateToProps = (state, ownProps) => ({
   accounts: state.engine.backgroundState.AccountTrackerController.accounts,
   addressBook: state.engine.backgroundState.AddressBookController.addressBook,
   chainId: selectChainId(state),
-  selectedAddress: state.engine.backgroundState.PreferencesController.selectedAddress,
+  selectedAddress:
+    state.engine.backgroundState.PreferencesController.selectedAddress,
   selectedAsset: state.transaction.selectedAsset,
   identities: state.engine.backgroundState.PreferencesController.identities,
   ticker: selectTicker(state),
   network: selectNetwork(state),
   providerType: selectProviderType(state),
   isPaymentRequest: state.transaction.paymentRequest,
-  frequentRpcList: state.engine.backgroundState.PreferencesController.frequentRpcList,
+  frequentRpcList:
+    state.engine.backgroundState.PreferencesController.frequentRpcList,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addRecent: (address) => dispatch(addRecent(address)),
-  setRecipient: (from, to, ensRecipient, transactionToName, transactionFromName,) =>
-    dispatch(setRecipient(from, to, ensRecipient, transactionToName, transactionFromName,),),
+  setRecipient: (
+    from,
+    to,
+    ensRecipient,
+    transactionToName,
+    transactionFromName,
+  ) =>
+    dispatch(
+      setRecipient(
+        from,
+        to,
+        ensRecipient,
+        transactionToName,
+        transactionFromName,
+      ),
+    ),
   newAssetTransaction: (selectedAsset) =>
     dispatch(newAssetTransaction(selectedAsset)),
   setSelectedAsset: (selectedAsset) =>

@@ -124,7 +124,6 @@ const createStyles = (colors) =>
       marginBottom: 20,
       // height: 200,
       // flexDirection: 'row'
-      
     },
     actionsWrapper: {
       flexDirection: 'row',
@@ -184,7 +183,6 @@ const createStyles = (colors) =>
       // marginVertical: 16,
       alignItems: 'center',
       minHeight: 66,
-
     },
     selectWrapper: {
       flex: 1,
@@ -199,7 +197,7 @@ const createStyles = (colors) =>
       borderRadius: 16,
       marginVertical: 8,
       padding: 6,
-      backgroundColor: colors.tInput.backgroundColor.default,
+      backgroundColor: colors.tBackground.third,
     },
     borderOpaque: {
       // borderWidth: 1,
@@ -213,6 +211,7 @@ const createStyles = (colors) =>
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
+      paddingHorizontal: 8,
     },
     inputCurrencyText: {
       ...fontStyles.light,
@@ -226,12 +225,9 @@ const createStyles = (colors) =>
     },
     textInput: {
       ...fontStyles.bold,
-      paddingLeft: 0,
-      paddingRight: 6,
-      color: colors.tText.color.default,
+      color: colors.tText.default,
       flex: 1,
       fontSize: 16,
-
     },
     switch: {
       flex: 1,
@@ -261,8 +257,8 @@ const createStyles = (colors) =>
       margin: 0,
     },
     tokenImage: {
-      width: 36,
-      height: 36,
+      width: 32,
+      height: 32,
       overflow: 'hidden',
     },
     assetElementWrapper: {
@@ -1025,17 +1021,16 @@ class Amount extends PureComponent {
     return asset.address;
   };
 
-  renderTokenImg = (token) => (
+  renderTokenImg = (token) =>
     token.isETH ? (
-      <NetworkMainAssetLogo big />
+      <NetworkMainAssetLogo style={{ width: 32, height: 32 }} />
     ) : (
       <TokenImage
         asset={token}
         iconStyle={this.styles.tokenImage}
         containerStyle={this.styles.tokenImage}
       />
-    )
-  )
+    );
 
   renderToken = (token, index) => {
     const {
@@ -1210,8 +1205,13 @@ class Amount extends PureComponent {
       currentBalance,
     } = this.state;
 
-
-    const { currentCurrency, onInputBlur, inputWidth, highlighted, selectedAsset } = this.props;
+    const {
+      currentCurrency,
+      onInputBlur,
+      inputWidth,
+      highlighted,
+      selectedAsset,
+    } = this.props;
     const colors = this.context.colors || mockTheme.colors;
     const themeAppearance = this.context.themeAppearance || 'light';
     const styles = createStyles(colors);
@@ -1243,11 +1243,10 @@ class Amount extends PureComponent {
                 {...generateTestId(Platform, TRANSACTION_AMOUNT_INPUT)}
                 numberOfLines={1}
                 onBlur={onInputBlur}
-              // onSubmitEditing={onSubmit}
+                // onSubmitEditing={onSubmit}
               />
+              {this.renderTokenImg(selectedAsset)}
             </View>
-            {this.renderTokenImg(selectedAsset)}
-
           </View>
         </View>
         {hasExchangeRate && (
@@ -1344,17 +1343,15 @@ class Amount extends PureComponent {
       <View style={styles.inputWrapper}>
         <View style={styles.wrapAmountLabel}>
           <View style={styles.amoundLabel}>
-            <Text >{`${selectedAsset.symbol} Amount`}</Text>
+            <Text>{`${selectedAsset.symbol} Amount`}</Text>
           </View>
           <View style={[styles.actionBorder, styles.actionMax]}>
-
             {!selectedAsset.tokenId && (
               <TouchableOpacity
                 style={styles.actionMaxTouchable}
                 disabled={!estimatedTotalGas}
                 onPress={this.useMax}
               >
-
                 <Text style={styles.maxText}>
                   {strings('transaction.use_max')}
                 </Text>

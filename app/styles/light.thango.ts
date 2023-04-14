@@ -52,10 +52,6 @@ export const thangoLight: ThangoThemeColors = {
     alternativePressed: '#D6D9DC',
   },
   tText: {
-    color: {
-      default: colorThango.gray10,
-      gray02: colorThango.gray02,
-    },
     default: colorThango.gray10,
     secondary: colorThango.gray06,
     alternative: '#535A61',
@@ -71,7 +67,7 @@ export const thangoLight: ThangoThemeColors = {
   tInput: {
     backgroundColor: {
       default: colorThango.gray02,
-    }
+    },
   },
   tBorder: {
     default: colorThango.gray06,

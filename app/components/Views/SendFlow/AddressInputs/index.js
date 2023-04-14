@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  Image,
 } from 'react-native';
 import { fontStyles, baseStyles } from '../../../../styles/common';
 import AntIcon from 'react-native-vector-icons/AntDesign';
@@ -28,7 +29,7 @@ import { hasZeroWidthPoints } from '../../../../util/confusables';
 import { useTheme, ThemeContext, mockTheme } from '../../../../util/theme';
 import generateTestId from '../../../../../wdio/utils/generateTestId';
 import { SEND_ADDRESS_INPUT_FIELD } from '../../../../../wdio/screen-objects/testIDs/Screens/SendScreen.testIds';
-
+import { qr_code_icon } from '../../../../images/index';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -47,7 +48,7 @@ const createStyles = (colors) =>
       // borderWidth: 1,
       borderRadius: 16,
       marginVertical: 8,
-      backgroundColor: colors.tInput.backgroundColor.default,
+      backgroundColor: colors.tBackground.third,
     },
     inputWrapper: {
       flex: 1,
@@ -135,10 +136,9 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
       paddingLeft: 0,
       paddingRight: 6,
-      color: colors.tText.color.default,
+      color: colors.tText.default,
       flex: 1,
       fontSize: 14,
-
     },
     addressReadyWrapper: {
       flexDirection: 'row',
@@ -311,7 +311,7 @@ export const AddressTo = (props) => {
                   <View
                     style={
                       (styles.checkIconWrapper,
-                        isENS(toAddressName) ? {} : { paddingTop: 2 })
+                      isENS(toAddressName) ? {} : { paddingTop: 2 })
                     }
                   >
                     <AntIcon
@@ -335,7 +335,9 @@ export const AddressTo = (props) => {
         <Text style={styles.labelText}>To:</Text>
       </View> */}
       <View style={styles.addressInfo}>
-        <Text style={styles.labelText}>Adress or name ENS, .bnb, .eth, .crypto..</Text>
+        <Text style={styles.labelText}>
+          Adress or name ENS, .bnb, .eth, .crypto..
+        </Text>
       </View>
       {!addressToReady ? (
         <View
@@ -366,10 +368,7 @@ export const AddressTo = (props) => {
           </View>
           {!isInputFilled ? (
             <TouchableOpacity onPress={onScan} style={styles.iconWrapper}>
-              <ButtonIcon
-                iconName={IconName.ScanQRCode}
-                size={IconSize.Xl}
-              />
+              <Image source={qr_code_icon} style={{ width: 32, height: 32 }} />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
@@ -430,7 +429,7 @@ export const AddressTo = (props) => {
                       <View
                         style={
                           (styles.checkIconWrapper,
-                            isENS(toAddressName) ? {} : { paddingTop: 2 })
+                          isENS(toAddressName) ? {} : { paddingTop: 2 })
                         }
                       >
                         {/* <AntIcon
