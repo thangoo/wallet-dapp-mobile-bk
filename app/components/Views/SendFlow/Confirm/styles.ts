@@ -15,7 +15,13 @@ const createStyles = (colors: any) =>
     },
     amountWrapper: {
       flexDirection: 'column',
+      alignItems: 'center',
       margin: 24,
+    },
+    assetLogo: {
+      width: 50,
+      height: 50,
+      marginBottom: 10,
     },
     textAmountLabel: {
       ...fontStyles.normal,
@@ -167,7 +173,7 @@ const createStyles = (colors: any) =>
       marginRight: 30,
       marginTop: 20,
       marginBottom: 20,
-    }
+    },
   });
 
 export default createStyles;

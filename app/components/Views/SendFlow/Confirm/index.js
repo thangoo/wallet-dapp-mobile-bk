@@ -72,6 +72,11 @@ import EditGasFee1559 from '../../../UI/EditGasFee1559Update';
 import EditGasFeeLegacy from '../../../UI/EditGasFeeLegacyUpdate';
 import CustomNonce from '../../../UI/CustomNonce';
 import { getSendFlowTitle } from '../../../UI/Navbar';
+import {
+  tHeaderOptions,
+  tXBackHeader,
+  tFingerHeader,
+} from '../../../UI/Navbar/index.thango.js';
 import { AddressFrom, AddressTo } from '../AddressInputs';
 import AppConstants from '../../../../core/AppConstants';
 import {
@@ -99,6 +104,8 @@ import {
 } from '../../../../selectors/networkController';
 import generateTestId from '../../../../../wdio/utils/generateTestId';
 import { COMFIRM_TXN_AMOUNT } from '../../../../../wdio/screen-objects/testIDs/Screens/TransactionConfirm.testIds';
+import NetworkMainAssetLogo from '../../../UI/NetworkMainAssetLogo';
+import TokenImage from '../../../UI/TokenImage';
 
 const EDIT = 'edit';
 const EDIT_NONCE = 'edit_nonce';
@@ -309,10 +316,17 @@ class Confirm extends PureComponent {
 
   updateNavBar = () => {
     const { navigation, route } = this.props;
-    const colors = this.context.colors || mockTheme.colors;
-    navigation.setOptions(
-      getSendFlowTitle('send.confirm', navigation, route, colors),
-    );
+    const themeColors = this.context.colors || mockTheme.colors;
+    const title = strings('send.confirm');
+    // navigation.setOptions(
+    //   getSendFlowTitle('send.confirm', navigation, route, themeColors),
+    // );
+    const rest = {
+      ...navigation,
+      headerLeft: tXBackHeader,
+      headerRight: tFingerHeader,
+    };
+    navigation.setOptions(tHeaderOptions(route, themeColors, { title }, rest));
   };
 
   componentWillUnmount = async () => {
@@ -1212,6 +1226,17 @@ class Confirm extends PureComponent {
         <AdressToComponent />
       );
 
+    renderTokenImg = (token) =>
+      token.isETH ? (
+        <NetworkMainAssetLogo style={styles.assetLogo} />
+      ) : (
+        <TokenImage
+          asset={token}
+          iconStyle={styles.tokenImage}
+          containerStyle={styles.tokenImage}
+        />
+      );
+
     const isTestNetwork = isTestNet(network);
 
     const errorPress = isTestNetwork ? this.goToFaucet : this.buyEth;
@@ -1239,9 +1264,10 @@ class Confirm extends PureComponent {
         <ScrollView style={baseStyles.flexGrow} ref={this.setScrollViewRef}>
           {!selectedAsset.tokenId ? (
             <View style={styles.amountWrapper}>
-              <Text style={styles.textAmountLabel}>
+              {renderTokenImg(selectedAsset)}
+              {/* <Text style={styles.textAmountLabel}>
                 {strings('transaction.amount')}
-              </Text>
+              </Text> */}
               <Text
                 style={styles.textAmount}
                 {...generateTestId(Platform, COMFIRM_TXN_AMOUNT)}
