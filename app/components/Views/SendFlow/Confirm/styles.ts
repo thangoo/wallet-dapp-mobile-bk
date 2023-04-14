@@ -9,9 +9,9 @@ const createStyles = (colors: any) =>
     },
     inputWrapper: {
       flex: 0,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.border.default,
-      paddingHorizontal: 8,
+      // borderBottomWidth: 1,
+      // borderBottomColor: colors.border.default,
+      // paddingHorizontal: 8,
     },
     amountWrapper: {
       flexDirection: 'column',
@@ -26,9 +26,9 @@ const createStyles = (colors: any) =>
       marginVertical: 3,
     },
     textAmount: {
-      ...fontStyles.light,
+      ...fontStyles.bold,
       color: colors.text.default,
-      fontSize: 44,
+      fontSize: 24,
       textAlign: 'center',
     },
     buttonNext: {
@@ -143,6 +143,31 @@ const createStyles = (colors: any) =>
       lineHeight: 20,
       color: colors.text.default,
     },
+    tokenInfoWrapper: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+    tokenTitle: {
+      ...fontStyles.normal,
+      color: colors.tText.secondary,
+      fontSize: 12,
+      width: 70,
+      marginLeft: 20,
+      marginRight: 30,
+    },
+    tokenContent: {
+      ...fontStyles.normal,
+      color: colors.tText.default,
+      fontSize: 14,
+    },
+    seprateLine: {
+      borderBottomColor: colors.tBackground.fourth,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      marginLeft: 10,
+      marginRight: 30,
+      marginTop: 20,
+      marginBottom: 20,
+    }
   });
 
 export default createStyles;

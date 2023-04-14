@@ -105,22 +105,24 @@ const TransactionReviewEIP1559Update = ({
   const valueToWatchAnimation = `${renderableGasFeeMinNative}${renderableGasFeeMaxNative}`;
 
   return (
-    <Summary style={styles.overview(noMargin)}>
+    // <Summary style={styles.overviewTransactionDetail(noMargin)}>
+    <View>
       <Summary.Row>
         <View style={styles.gasRowContainer}>
-          <View style={styles.gasRowContainer}>
+          <View style={styles.gasRowInfoContainer}>
             <Text
-              primary={!originWarning}
-              bold
-              orange={Boolean(originWarning)}
-              noMargin
+              // primary={!originWarning}
+              // // bold
+              // orange={Boolean(originWarning)}
+              // noMargin
+              style={styles.gasFeeText}
             >
               {!origin
                 ? strings('transaction_review_eip1559.estimated_gas_fee')
                 : strings('transaction_review_eip1559.suggested_gas_fee', {
                     origin,
                   })}
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.gasInfoContainer}
                 onPress={() =>
                   originWarning ? showLegacyLearnMore() : toggleLearnMoreModal()
@@ -132,7 +134,7 @@ const TransactionReviewEIP1559Update = ({
                   size={13}
                   style={styles.gasInfoIcon(originWarning)}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </Text>
           </View>
 
@@ -179,16 +181,17 @@ const TransactionReviewEIP1559Update = ({
                 style={[Device.isSmallDevice() && styles.flex]}
               >
                 <Text
-                  primary
-                  bold
-                  upper
-                  grey={!nativeCurrencySelected}
-                  link={nativeCurrencySelected}
-                  underline={nativeCurrencySelected}
-                  right
-                  noMargin
-                  adjustsFontSizeToFit
-                  numberOfLines={2}
+                  // primary
+                  // bold
+                  // upper
+                  // grey={!nativeCurrencySelected}
+                  // link={nativeCurrencySelected}
+                  // underline={nativeCurrencySelected}
+                  // right
+                  // noMargin
+                  // adjustsFontSizeToFit
+                  // numberOfLines={2}
+                  style={styles.amountText}
                 >
                   {legacy
                     ? switchNativeCurrencyDisplayOptions(
@@ -207,7 +210,7 @@ const TransactionReviewEIP1559Update = ({
           )}
         </View>
       </Summary.Row>
-      {!legacy && (
+      {/* {!legacy && (
         <Summary.Row>
           <View style={styles.gasRowContainer}>
             {gasEstimationReady ? (
@@ -265,8 +268,8 @@ const TransactionReviewEIP1559Update = ({
             )}
           </View>
         </Summary.Row>
-      )}
-      {!hideTotal && (
+      )} */}
+      {/* {!hideTotal && (
         <View>
           <Summary.Separator />
           <View style={styles.gasBottomRowContainer}>
@@ -358,7 +361,7 @@ const TransactionReviewEIP1559Update = ({
             </Summary.Row>
           )}
         </View>
-      )}
+      )} */}
       <InfoModal
         isVisible={isVisibleLegacyLearnMore}
         toggleModal={hideLegacyLearnMore}
@@ -411,7 +414,7 @@ const TransactionReviewEIP1559Update = ({
         timeEstimateId={timeEstimateId}
         onHideModal={hideTimeEstimateInfoModal}
       />
-    </Summary>
+    </View>
   );
 };
 

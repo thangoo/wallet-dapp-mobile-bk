@@ -1225,16 +1225,6 @@ class Confirm extends PureComponent {
         style={styles.wrapper}
         testID={'txn-confirm-screen'}
       >
-        <View style={styles.inputWrapper}>
-          <AddressFrom
-            onPressIcon={!paymentRequest ? null : this.openAccountSelector}
-            fromAccountAddress={fromSelectedAddress}
-            fromAccountName={fromAccountName}
-            fromAccountBalance={fromAccountBalance}
-          />
-          <AdressToComponentWrap />
-        </View>
-
         <InfoModal
           isVisible={warningModalVisible}
           toggleModal={this.toggleWarningModal}
@@ -1286,6 +1276,29 @@ class Confirm extends PureComponent {
               </View>
             </View>
           )}
+
+          <View style={styles.tokenInfoWrapper}>
+            <Text style={styles.tokenTitle}>PAYMENT INFO</Text>
+            <Text
+              style={styles.tokenContent}
+            >{`${selectedAsset.symbol} Transfer`}</Text>
+          </View>
+
+          <View style={styles.seprateLine} />
+
+          <AdressToComponentWrap />
+
+          <View style={styles.seprateLine} />
+
+          <AddressFrom
+            onPressIcon={!paymentRequest ? null : this.openAccountSelector}
+            fromAccountAddress={fromSelectedAddress}
+            fromAccountName={fromAccountName}
+            fromAccountBalance={fromAccountBalance}
+          />
+
+          <View style={styles.seprateLine} />
+
           <TransactionReview
             gasSelected={this.state.gasSelected}
             primaryCurrency={primaryCurrency}
