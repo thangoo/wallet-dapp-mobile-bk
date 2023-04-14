@@ -25,8 +25,10 @@ const icon_tab_01 = require('./icon_tab_01.png');
 const icon_tab_02 = require('./icon_tab_02.png');
 const icon_tab_03 = require('./icon_tab_03.png');
 const icon_tab_04 = require('./icon_tab_04.png');
+const qr_code_icon = require('./qr_code_icon.png');
 
 export {
+  qr_code_icon,
   check_box_empty_dark,
   logo_dark,
   icon_tab_01,
