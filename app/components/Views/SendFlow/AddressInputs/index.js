@@ -154,7 +154,7 @@ const createStyles = (colors) =>
     },
     labelText: {
       ...fontStyles.normal,
-      color: colors.tText.secondary,
+      color: colors.tText.default,
       flex: 1,
       fontSize: 12,
     },
@@ -409,7 +409,14 @@ export const AddressTo = (props) => {
           </View>
           {!isInputFilled ? (
             <TouchableOpacity onPress={onScan} style={styles.iconWrapper}>
-              <Image source={qr_code_icon} style={{ width: 32, height: 32 }} />
+              <Image
+                source={qr_code_icon}
+                style={{
+                  width: 32,
+                  height: 32,
+                  tintColor: colors.tIcon.default,
+                }}
+              />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
