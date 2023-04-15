@@ -212,8 +212,6 @@ const SecretPhrase = (props) => {
   );
 };
 
-SecretPhrase.contextType = ThemeContext;
-
 const mapDispatchToProps = (dispatch) => ({
   saveOnboardingEvent: (...eventArgs) =>
     dispatch(saveOnboardingEvent(eventArgs)),

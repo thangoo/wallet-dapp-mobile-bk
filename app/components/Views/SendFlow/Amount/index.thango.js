@@ -512,11 +512,11 @@ class Amount extends PureComponent {
       selectedAsset,
       isPaymentRequest,
       onInputBlur,
-      onRef
+      onRef,
     } = this.props;
 
     onRef && onRef(this);
-    
+
     // For analytics
     // this.updateNavBar();
     // navigation.setParams({ providerType, isPaymentRequest });
@@ -1351,7 +1351,9 @@ class Amount extends PureComponent {
       <View style={styles.inputWrapper}>
         <View style={styles.wrapAmountLabel}>
           <View style={styles.amoundLabel}>
-            <Text>{`${selectedAsset.symbol} Amount`}</Text>
+            <Text
+              style={{ color: colors.tText.default }}
+            >{`${selectedAsset.symbol} Amount`}</Text>
           </View>
           <View style={[styles.actionBorder, styles.actionMax]}>
             {!selectedAsset.tokenId && (
