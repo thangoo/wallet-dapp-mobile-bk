@@ -29,8 +29,12 @@ const icon_tab_04 = require('./icon_tab_04.png');
 const qr_code_icon = require('./qr_code_icon.png');
 const finger_icon = require('./finger.png');
 const xBack_icon = require('./xBack.png');
+const menu_icon = require('./menu_icon.png');
+const bell_icon = require('./bell_icon.png');
 
 export {
+  bell_icon,
+  menu_icon,
   qr_code_icon,
   add_plus_circle,
   check_box_empty_dark,

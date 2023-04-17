@@ -2,11 +2,15 @@ import { HeaderBackButton } from '@react-navigation/stack';
 import { fontStyles } from '../../../../app/styles/common';
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { arrow_right_icon, xBack_icon, finger_icon } from 'images/index';
+import { useNavigation } from '@react-navigation/native';
 
 const tHeaderOptions = (
   route,
   themeColors,
-  { title } = { title: 'Title' },
+  { title, leftImage = arrow_right_icon, onPressLeft } = {
+    title: 'Title',
+    onPressLeft: () => {},
+  },
   rest,
 ) => {
   const innerStyles = StyleSheet.create({
@@ -27,23 +31,26 @@ const tHeaderOptions = (
   return {
     title,
     headerStyle: innerStyles.headerStyle,
-    headerLeft: (props) => (
-      <HeaderBackButton
-        {...props}
-        labelVisible={false}
-        style={{ marginLeft: 16 }}
-        backImage={() => (
-          <Image
-            source={arrow_right_icon}
-            style={{
-              width: 32,
-              height: 32,
-              tintColor: themeColors.tIcon.default,
-            }}
-          />
-        )}
-      />
-    ),
+    headerLeft: (props) => {
+      return (
+        <HeaderBackButton
+          {...props}
+          labelVisible={false}
+          style={{ marginLeft: 16 }}
+          backImage={() => (
+            <Image
+              source={leftImage ? leftImage : arrow_right_icon}
+              style={{
+                width: 32,
+                height: 32,
+                tintColor: themeColors.tIcon.default,
+              }}
+            />
+          )}
+          onPress={Boolean(onPressLeft) ? onPressLeft : props.onPress}
+        />
+      );
+    },
     headerTitle: () => (
       <Text style={innerStyles.headerTitleStyle}>{title}</Text>
     ),

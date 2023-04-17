@@ -52,7 +52,9 @@ import {
 import {
   arrow_right_icon,
   arrow_right_icon_white,
+  bell_icon,
   chart_line_icon,
+  menu_icon,
 } from 'images/index';
 import { MetaMetricsEvents } from '../../../core/Analytics';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
@@ -1002,29 +1004,21 @@ export function getWalletNavbarOptions(
     ),
     headerTransparent: true,
     headerLeft: () => (
-      // <TouchableOpacity
-      //   onPress={openDrawer}
-      //   style={styles.backButton}
-      //   {...generateTestId(Platform, HAMBURGER_MENU_BUTTON)}
-      // >
-      <ButtonIcon
-        variant={ButtonIconVariants.Primary}
-        onPress={openDrawer}
-        iconName={IconName.MenuItem01White}
-        style={styles.infoLeftButton}
-        size={IconSize.Xl}
-      />
-      // </TouchableOpacity>
+      <TouchableOpacity onPress={openDrawer}>
+        <Image
+          source={menu_icon}
+          style={{ marginLeft: 16, tintColor: themeColors.tIcon.default }}
+        />
+      </TouchableOpacity>
     ),
     headerRight: () => (
-      <ButtonIcon
-        variant={ButtonIconVariants.Primary}
-        // onPress={openQRScanner}
-        iconName={IconName.BellNotificationWhite}
-        style={styles.infoRightButton}
-        size={IconSize.Xl}
-        // testID="scan-header-icon"
-      />
+      <TouchableOpacity // onPress={openQRScanner}
+      >
+        <Image
+          source={bell_icon}
+          style={{ marginRight: 16, tintColor: themeColors.tIcon.default }}
+        />
+      </TouchableOpacity>
     ),
     headerStyle: innerStyles.headerStyle,
     headerTintColor: themeColors.primary.default,
@@ -1207,9 +1201,6 @@ export function getNavbarReceivedCrypto(
     headerStyle: innerStyles.headerStyle,
   };
 }
-
-
-
 
 /**
  * Function that returns the navigation options containing title and network indicator

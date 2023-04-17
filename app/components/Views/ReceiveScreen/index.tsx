@@ -1,6 +1,6 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import _ from 'lodash';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 import {
   Alert,
   Image,
@@ -35,14 +35,17 @@ import { strings } from '../../../../locales/i18n';
 import { MetaMetricsEvents } from '../../../core/Analytics';
 import ClipboardManager from '../../../core/ClipboardManager';
 import {
+  bell_icon,
   copy_icon_02,
   credit_card_icon,
+  menu_icon,
   share_icon,
 } from '../../../images/index';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
 import Logger from '../../../util/Logger';
 import { generateUniversalLinkAddress } from '../../../util/payment-link-generator';
 import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
+import { DrawerContext } from '../../../../app/components/Nav/Main/MainNavigator';
 
 const D: {
   icon: ImageSourcePropType;
@@ -90,12 +93,43 @@ const ReceiveScreen: FC<Props> = (props) => {
   const { colors } = useTheme();
   const tColors = colors || mockTheme.colors;
   const styles = createStyles(colors);
+  const { drawerRef } = useContext(DrawerContext);
+
+  const trackEvent = (event: any) => {
+    InteractionManager.runAfterInteractions(() => {
+      trackLegacyEvent(event);
+    });
+  };
+
+  const openDrawer = () => {
+    // @ts-ignore
+    drawerRef.current?.showDrawer?.();
+    trackEvent(MetaMetricsEvents.COMMON_TAPS_HAMBURGER_MENU);
+  };
 
   useEffect(() => {
     navigation.setOptions(
-      tHeaderOptions(navigation, tColors, { title: 'Receive' }),
+      tHeaderOptions(
+        navigation,
+        tColors,
+        {
+          title: `Receive ${getTicker(props.ticker)}`,
+          onPressLeft: () => openDrawer(),
+          leftImage: menu_icon,
+        },
+        {
+          headerRight: () => (
+            <TouchableOpacity>
+              <Image
+                source={bell_icon}
+                style={{ marginRight: 16, tintColor: colors.tIcon.default }}
+              />
+            </TouchableOpacity>
+          ),
+        },
+      ),
     );
-  }, [navigation, route]);
+  }, [navigation, route, props]);
 
   /**
    * Shows an alert message with a coming soon message
