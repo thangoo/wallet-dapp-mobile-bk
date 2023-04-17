@@ -153,11 +153,11 @@ const WalletTabStackFlow = () => (
       component={AssetModalFlow}
       options={{ headerShown: false }}
     />
-    <Stack.Screen
+    {/* <Stack.Screen
       name="AddAsset"
       component={AddAsset}
       options={AddAsset.navigationOptions}
-    />
+    /> */}
     <Stack.Screen
       name="Collectible"
       component={Collectible}
@@ -764,6 +764,11 @@ const MainNavigator = () => (
     <Stack.Screen name="SettingsView" component={SettingsModalStack} />
     <Stack.Screen name="TransactionsHome" component={TransactionsHome} />
     <Stack.Screen name="SendView" component={SendView} />
+    <Stack.Screen
+      name="AddAsset"
+      component={AddAsset}
+      options={{ headerShown: true }}
+    />
     <Stack.Screen name="SendFlowView" component={SendFlowView} />
     <Stack.Screen name="AddBookmarkView" component={AddBookmarkView} />
     <Stack.Screen name="OfflineModeView" component={OfflineModeView} />
