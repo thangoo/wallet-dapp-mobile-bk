@@ -349,7 +349,7 @@ const HomeTabs = () => {
 
 const ScanView = () => (
   <Stack.Navigator>
-    <Stack.Screen name="ScanView" component={QRScanner} />
+    <Stack.Screen name="ScanView" component={ReceiveScreen} />
   </Stack.Navigator>
 );
 
