@@ -44,12 +44,17 @@ import {
 } from '../../../../selectors/networkController';
 import HStack from '../../../Base/HStack';
 import TokenIcon from '../../Swaps/components/TokenIcon';
-import { arrow_right_icon, external_icon, plus_icon,arrow_right_icon_white,external_icon_white } from 'images/index';
+import {
+  arrow_right_icon,
+  external_icon,
+  plus_icon,
+  arrow_right_icon_white,
+  external_icon_white,
+} from 'images/index';
 import { HeaderBackButton } from '@react-navigation/stack';
 
 const infoIcon = require('../../../../images/transaction-icons/info.png');
 const infoIconWhite = require('../../../../images/transaction-icons/info-white.png');
-
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -197,15 +202,18 @@ class TransactionDetails extends PureComponent {
 
   updateNavBar = () => {
     const { navigation } = this.props;
-    const themeAppearance = this.context.themeAppearance 
+    const themeAppearance = this.context.themeAppearance;
     const colors = this.context.colors || mockTheme.colors;
 
     navigation.setOptions({
       title: 'Transfer',
       headerTitleStyle: {
-        color: colors.tText.default
+        color: colors.tText.default,
       },
-      headerStyle: { backgroundColor: colors.tBackground.default, shadowOpacity: 0 },
+      headerStyle: {
+        backgroundColor: colors.tBackground.default,
+        shadowOpacity: 0,
+      },
       headerLeft: (props) => (
         <HeaderBackButton
           {...props}
@@ -213,7 +221,11 @@ class TransactionDetails extends PureComponent {
           style={{ marginLeft: 16 }}
           backImage={() => (
             <Image
-              source={themeAppearance === 'light' ? arrow_right_icon : arrow_right_icon_white }
+              source={
+                themeAppearance === 'light'
+                  ? arrow_right_icon
+                  : arrow_right_icon_white
+              }
               style={{ width: 32, height: 32 }}
             />
           )}
@@ -226,7 +238,14 @@ class TransactionDetails extends PureComponent {
           onPress={this.viewOnEtherscan}
           style={{ marginRight: 16 }}
           backImage={() => (
-            <Image source={themeAppearance === 'light' ? external_icon : external_icon_white} style={{ width: 32, height: 32 }} />
+            <Image
+              source={
+                themeAppearance === 'light'
+                  ? external_icon
+                  : external_icon_white
+              }
+              style={{ width: 32, height: 32 }}
+            />
           )}
         />
       ),
@@ -384,13 +403,13 @@ class TransactionDetails extends PureComponent {
     };
 
     const { rpcBlockExplorer } = this.state;
-//  assetSymbol type object from received crypto and type string from transaction
+    //  assetSymbol type object from received crypto and type string from transaction
     const getSymbol = () => {
-      if(typeof assetSymbol === 'object') {
-        return assetSymbol?.[0].symbol
+      if (typeof assetSymbol === 'object') {
+        return assetSymbol?.[0].symbol;
       }
-      return assetSymbol
-    }
+      return assetSymbol;
+    };
     console.log(assetSymbol);
     return updatedTransactionDetails ? (
       <ScrollView>
@@ -398,7 +417,7 @@ class TransactionDetails extends PureComponent {
           style={{
             justifyContent: 'center',
             marginTop: 22,
-            alignItems:'center'
+            alignItems: 'center',
           }}
         >
           <TokenIcon symbol={getSymbol()} style={{ width: 56, height: 56 }} />
@@ -472,8 +491,7 @@ class TransactionDetails extends PureComponent {
 
 const Item = ({ title, content, showIconInfo }) => {
   const { colors } = useTheme();
-  const themeAppearance = useTheme();
-
+  const { themeAppearance } = useTheme();
 
   return (
     <View
@@ -521,7 +539,11 @@ const Item = ({ title, content, showIconInfo }) => {
         >
           {content}
         </Text>
-        {showIconInfo && <Image source={themeAppearance === 'light' ? infoIcon : infoIconWhite} />}
+        {showIconInfo && (
+          <Image
+            source={themeAppearance === 'light' ? infoIcon : infoIconWhite}
+          />
+        )}
       </View>
     </View>
   );

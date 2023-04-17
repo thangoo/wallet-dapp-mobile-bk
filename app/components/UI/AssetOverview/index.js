@@ -222,11 +222,7 @@ class AssetOverview extends PureComponent {
 
   onReceive = () => {
     const { asset } = this.props;
-    // this.props.toggleReceiveModal(asset);
-
-    // SET ASSET TO REDUX
-    this.props.setReceiveAsset(asset);
-    this.props.navigation.navigate('ReceiveScreen');
+    this.props.toggleReceiveModal(asset);
   };
 
   onBuy = () => {
@@ -340,7 +336,6 @@ class AssetOverview extends PureComponent {
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
 
-
     let mainBalance, secondaryBalance;
     const itemAddress = safeToChecksumAddress(address);
     let balance, balanceFiat;
@@ -400,7 +395,9 @@ class AssetOverview extends PureComponent {
               </Text>
               {secondaryBalance && (
                 <View style={styles.secondaryBalanceStyle}>
-                  <Text style={styles.amountFiat}>{renderFiat(conversionRate, currentCurrency, 2)}</Text>
+                  <Text style={styles.amountFiat}>
+                    {renderFiat(conversionRate, currentCurrency, 2)}
+                  </Text>
                   <View style={styles.divider} />
                   <Text style={styles.amountFiat}>{secondaryBalance}</Text>
                   <Text style={styles.amountFiat}>0%</Text>
