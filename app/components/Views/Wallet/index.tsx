@@ -70,9 +70,16 @@ import { add_plus_circle } from '../../../images/index';
 
 const createStyles = ({ colors, typography }: CustomTheme) =>
   StyleSheet.create({
-    wrapper: {
+    wrapperAccount : {
+      flex: 0.8,
+      zIndex: 3,
+    },
+    wrapperContent : {
       flex: 1,
-      backgroundColor: 'transparent',
+      zIndex: 2,
+    },
+    wrapperTokenList : {
+      flex: 1,
       zIndex: 2,
     },
     assetOverviewWrapper: {
@@ -85,6 +92,7 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       width: '100%',
       height: 348,
       zIndex: 1,
+     
     },
     assetItem: {
       position: 'absolute',
@@ -428,6 +436,62 @@ const Wallet = ({ navigation }: any) => {
     tokensRef.current = ref;
   }, []);
 
+  const renderAccount =  useCallback (() => {
+    let balance: any = 0;
+    let assets = tokens;
+    if (accounts[selectedAddress]) {
+      balance = renderFromWei(accounts[selectedAddress].balance);
+      assets = [
+        {
+          name: 'Ether', // FIXME: use 'Ether' for mainnet only, what should it be for custom networks?
+          symbol: getTicker(ticker),
+          isETH: true,
+          balance,
+          balanceFiat: weiToFiat(
+            hexToBN(accounts[selectedAddress].balance) as any,
+            conversionRate,
+            currentCurrency,
+          ),
+          logo: '../images/eth-logo-new.png',
+        },
+        ...(tokens || []),
+      ];
+    } else {
+      assets = tokens;
+    }
+    const account = {
+      address: selectedAddress,
+      ...identities[selectedAddress],
+      ...accounts[selectedAddress],
+    };
+
+    return (
+      <View style={styles.wrapperAccount}> 
+          <View style={styles.assetItem}>
+            <AccountOverview
+              account={account}
+              navigation={navigation}
+              onRef={onRef}
+              // props token for received crypto
+              token={assets}
+            />
+          </View>
+      </View>
+    );
+  
+  },[renderTabBar,
+    accounts,
+    conversionRate,
+    currentCurrency,
+    identities,
+    navigation,
+    onChangeTab,
+    onRef,
+    selectedAddress,
+    ticker,
+    tokens,
+    styles])
+
   const renderContent = useCallback(() => {
     let balance: any = 0;
     let assets = tokens;
@@ -458,36 +522,24 @@ const Wallet = ({ navigation }: any) => {
     };
 
     return (
-      <View style={styles.wrapper}>
-        <View style={styles.assetOverviewWrapper}>
-          <View style={styles.assetItem}>
-            <AccountOverview
-              account={account}
-              navigation={navigation}
-              onRef={onRef}
-              // props token for received crypto
-              token={assets}
-            />
-          </View>
-        </View>
-
+      <View style={styles.wrapperContent}>
         <ScrollableTabView
           renderTabBar={renderTabBar}
           // eslint-disable-next-line react/jsx-no-bind
           onChangeTab={onChangeTab}
         >
-          <Tokens
-            tabLabel={strings('wallet.tokens')}
-            key={'tokens-tab'}
-            navigation={navigation}
-            tokens={assets}
-            onRef={onTokensRef}
-          />
-          <CollectibleContracts
-            tabLabel={strings('wallet.collectibles')}
-            key={'nfts-tab'}
-            navigation={navigation}
-          />
+            <Tokens
+              tabLabel={strings('wallet.tokens')}
+              key={'tokens-tab'}
+              navigation={navigation}
+              tokens={assets}
+              onRef={onTokensRef}
+            />
+            <CollectibleContracts
+              tabLabel={strings('wallet.collectibles')}
+              key={'nfts-tab'}
+              navigation={navigation}
+            />
         </ScrollableTabView>
       </View>
     );
@@ -504,7 +556,8 @@ const Wallet = ({ navigation }: any) => {
     ticker,
     tokens,
     styles,
-  ]);
+  ]
+  );
 
   const renderLoader = useCallback(
     () => (
@@ -538,8 +591,9 @@ const Wallet = ({ navigation }: any) => {
           colors={colors.tGradient.wallet}
           style={styles.bgGradient}
         />
+          {selectedAddress ? renderAccount() : renderLoader()}
         <ScrollView
-          style={styles.wrapper}
+          style={styles.wrapperContent}
           refreshControl={
             <RefreshControl
               colors={[colors.primary.default]}
@@ -551,7 +605,6 @@ const Wallet = ({ navigation }: any) => {
         >
           {selectedAddress ? renderContent() : renderLoader()}
         </ScrollView>
-
         {renderOnboardingWizard()}
       </View>
     </ErrorBoundary>
