@@ -231,7 +231,7 @@ const createStyles = (colors) =>
     },
     switch: {
       flex: 1,
-      // marginTop: Device.isIos() ? 0 : 2,
+      // marginTop: Device.isIos() ? 0 : 2,1
     },
     actionSwitch: {
       paddingHorizontal: 8,
@@ -245,7 +245,7 @@ const createStyles = (colors) =>
     textSwitch: {
       ...fontStyles.normal,
       fontSize: 14,
-      color: colors.text.alternative,
+      color: colors.tText.color.exchangeRate
       // textTransform: 'uppercase',
     },
     switchWrapper: {

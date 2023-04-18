@@ -60,6 +60,9 @@ export const thangoLight: ThangoThemeColors = {
     address: colorThango.gray12,
     button: colorThango.light,
     third: colorThango.gray05,
+    color: {
+      exchangeRate: colorThango.gray10,
+    }
   },
   tIcon: {
     default: colorThango.gray10,
@@ -155,6 +158,13 @@ export const thangoLight: ThangoThemeColors = {
   },
   tSwitch: {
     default: colorThango.gray06,
+    token: {
+      border: colorThango.primary,
+      backgroundColor: {
+        on: colorThango.gray01,
+        off: colorThango.gray01,
+      }
+    },
   },
   tButton: {
     disable: colorThango.darkGrayBlue,

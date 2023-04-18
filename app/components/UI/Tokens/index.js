@@ -338,7 +338,7 @@ class Tokens extends PureComponent {
                   asset?.balanceError && styles.balanceFiatTokenError,
                 ]}
               >
-                {secondaryBalance}
+                {secondaryBalance} +0%
               </Text>
             ) : null}
           </View>
