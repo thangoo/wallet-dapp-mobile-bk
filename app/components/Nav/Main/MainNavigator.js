@@ -250,6 +250,7 @@ const HomeTabs = () => {
     return permittedAcc;
   }, isEqual);
 
+  // Draw Bottom Tab: Wallet, Market, Scan, Settings
   const options = {
     home: {
       tabBarIconKey: TabBarIconKey.Wallet,

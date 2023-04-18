@@ -64,7 +64,7 @@ const createStyles = (colors) =>
         height: 24,
         borderRadius: 25,
         padding: 5,
-        borderColor: colors.gray01,
+        borderColor: colors.tSwitch.token.border,
         borderWidth: 1,
       },
       circleStyle: {
@@ -188,8 +188,8 @@ const TokenItem = ({ item, id, onToggleAsset, selectedAsset }) => {
         onPress={() => toggleSwitch(item)}
         circleColorOff={colors.tSwitch.default}
         circleColorOn={colors.tPrimary.default}
-        backgroundColorOn={colors.tBackground.fifth}
-        backgroundColorOff={colors.tBackground.fifth}
+        backgroundColorOn={colors.tSwitch.token.backgroundColor.on}
+        backgroundColorOff={colors.tSwitch.token.backgroundColor.off}
         containerStyle={styles.switch.containerStyle}
         circleStyle={styles.switch.circleStyle}
       />

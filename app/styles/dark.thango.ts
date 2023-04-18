@@ -28,6 +28,9 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     address: colorThango.dark06,
     button: colorThango.light,
     third: colorThango.dark05,
+    color: {
+      exchangeRate: colorThango.gray06,
+    }
   },
   tBorder: {
     default: colorThango.dark05,
@@ -52,6 +55,13 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
   },
   tSwitch: {
     default: colorThango.dark07,
+    token: {
+      border: colorThango.primary,
+      backgroundColor: {
+        on: colorThango.gray10,
+        off: colorThango.gray10,
+      }
+    }
   },
   tButton: {
     disable: colorThango.dark03,
