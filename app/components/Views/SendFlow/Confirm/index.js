@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Platform,
+  Image,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
-
 import PropTypes from 'prop-types';
 import { MetaMetricsEvents } from '../../../../core/Analytics';
 
@@ -102,6 +102,8 @@ import generateTestId from '../../../../../wdio/utils/generateTestId';
 import { COMFIRM_TXN_AMOUNT } from '../../../../../wdio/screen-objects/testIDs/Screens/TransactionConfirm.testIds';
 import NetworkMainAssetLogo from '../../../UI/NetworkMainAssetLogo';
 import TokenImage from '../../../UI/TokenImage';
+import {success_send} from '../../../../images/index'
+
 
 const EDIT = 'edit';
 const EDIT_NONCE = 'edit_nonce';
@@ -233,6 +235,7 @@ class Confirm extends PureComponent {
     fromAccountName: this.props.transactionState.transactionFromName,
     fromSelectedAddress: this.props.transactionState.transaction.from,
     hexDataModalVisible: false,
+    successModalVisible: false,
     warningGasPriceHigh: undefined,
     ready: false,
     transactionValue: undefined,
@@ -801,7 +804,9 @@ class Confirm extends PureComponent {
         );
         stopGasPolling();
         resetTransaction();
-        navigation && navigation.dangerouslyGetParent()?.pop();
+        // navigation && navigation.dangerouslyGetParent()?.pop()
+        this.setState({ successModalVisible:  true });
+
       });
     } catch (error) {
       if (!error?.message.startsWith(KEYSTONE_TX_CANCELED)) {
@@ -1159,6 +1164,7 @@ class Confirm extends PureComponent {
       network,
       chainId,
       gasEstimateType,
+      navigation
     } = this.props;
     const { nonce } = this.props.transaction;
     const {
@@ -1182,6 +1188,10 @@ class Confirm extends PureComponent {
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
 
+    // send successful and navigate to main wallet
+    const handlePress = () => {
+        navigation && navigation.dangerouslyGetParent()?.pop()
+    }
     const showFeeMarket =
       !gasEstimateType ||
       gasEstimateType === GAS_ESTIMATE_TYPES.FEE_MARKET ||
@@ -1409,6 +1419,29 @@ class Confirm extends PureComponent {
         {mode === EDIT_NONCE && this.renderCustomNonceModal()}
         {mode === EDIT_EIP1559 && this.renderCustomGasModalEIP1559()}
         {this.renderHexDataModal()}
+        <Modal
+          isVisible={this.state.successModalVisible}
+          swipeDirection={'down'}
+          propagateSwipe
+          style={styles.bottomModal}
+          backdropColor={colors.overlay.default}
+          backdropOpacity={1}
+        >
+            <View style={styles.body}>
+              <View style={styles.dragger} />
+              <Image source={success_send} style={styles.walletImg} />
+              <Text style={styles.title}>{strings('send.success')}</Text>
+              <Text style={styles.title2}>{strings('send.des')}</Text>
+              <StyledButton
+                testID={'success-send-btn'}
+                type={'confirm'}
+                onPress={handlePress}
+                containerStyle={{ width: '100%', marginBottom: 36 }}
+              >
+                {strings('send.close')}
+              </StyledButton>
+            </View>
+        </Modal>
       </SafeAreaView>
     );
   };

@@ -17,6 +17,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  Modal,
 } from 'react-native';
 import { Theme } from '@metamask/design-tokens';
 import { useDispatch, useSelector } from 'react-redux';
@@ -67,6 +68,9 @@ import {
 } from '../../../selectors/networkController';
 import LinearGradient from 'react-native-linear-gradient';
 import { add_plus_circle } from '../../../images/index';
+import SuccessBackupModal from './SuccessBackupModal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { WHATS_NEW_APP_VERSION_SEEN } from '../../../constants/storage';
 
 const createStyles = ({ colors, typography }: CustomTheme) =>
   StyleSheet.create({
@@ -181,6 +185,8 @@ const Wallet = ({ navigation }: any) => {
   const theme = useTheme();
   const styles = createStyles(theme);
   const { colors } = theme;
+
+  
   /**
    * Map of accounts to information objects including balances
    */
@@ -230,6 +236,7 @@ const Wallet = ({ navigation }: any) => {
    * Current onboarding wizard step
    */
   const wizardStep = useSelector((state: any) => state.wizard.step);
+  
   /**
    * Current network
    */
@@ -239,6 +246,7 @@ const Wallet = ({ navigation }: any) => {
     () => getNetworkNameFromProvider(networkProvider),
     [networkProvider],
   );
+  
 
   const networkImageSource = useMemo(
     () =>
@@ -271,6 +279,8 @@ const Wallet = ({ navigation }: any) => {
           navigation.navigate(Routes.MODAL.ROOT_MODAL_FLOW, {
             screen: Routes.MODAL.WHATS_NEW,
           });
+        
+        // return <SuccessBackupModal onNext={() => console.log('111')}  />
         }
       } catch (error) {
         Logger.log(error, "Error while checking What's New modal!");
@@ -573,7 +583,7 @@ const Wallet = ({ navigation }: any) => {
    */
   const renderOnboardingWizard = useCallback(
     () =>
-      [1, 2, 3, 4].includes(wizardStep) && (
+      [0,1,2,3,4,5].includes(wizardStep) && (
         <OnboardingWizard
           navigation={navigation}
           coachmarkRef={accountOverviewRef.current}
@@ -581,6 +591,7 @@ const Wallet = ({ navigation }: any) => {
       ),
     [navigation, wizardStep],
   );
+        
 
   return (
     <ErrorBoundary view="Wallet">

@@ -71,6 +71,7 @@ import {
   selectProviderConfig,
   selectProviderType,
 } from '../../../selectors/networkController';
+import SuccessBackupModal from '../../Views/Wallet/SuccessBackupModal';
 
 const Stack = createStackNavigator();
 
@@ -361,6 +362,7 @@ const Main = (props) => {
           onDismiss={toggleRemindLater}
           navigation={props.navigation}
         />
+        {/* <SuccessBackupModal onNext={() => console.log('next')}  /> */}
         {renderDeprecatedNetworkAlert(
           props.network,
           props.backUpSeedphraseVisible,

@@ -32,6 +32,7 @@ import { useTheme } from '../../../util/theme';
 import { ONBOARDING_WIZARD_SKIP_TUTORIAL_BUTTON } from '../../../../wdio/screen-objects/testIDs/Components/OnboardingWizard.testIds';
 import generateTestId from '../../../../wdio/utils/generateTestId';
 import Device from '../../../util/device';
+import SuccessBackupModal from '../../Views/Wallet/SuccessBackupModal';
 
 const createStyles = ({ colors, typography }) =>
   StyleSheet.create({
@@ -88,6 +89,7 @@ const OnboardingWizard = (props) => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
+
   /**
    * Close onboarding wizard setting step to 0 and closing drawer
    */
@@ -103,7 +105,7 @@ const OnboardingWizard = (props) => {
       trackEvent(MetaMetricsEvents.ONBOARDING_TOUR_COMPLETED);
     });
   };
-
+  
   const onboardingWizardNavigator = (step) => {
     const steps = {
       1: <Step1 onClose={closeOnboardingWizard} />,
@@ -158,7 +160,7 @@ const OnboardingWizard = (props) => {
       style={styles.root}
     >
       <View style={styles.main}>{onboardingWizardNavigator(step)}</View>
-      {step !== 1 && (
+      {/* {step !== 1 && (
         <ElevatedView
           elevation={10}
           style={[
@@ -181,7 +183,7 @@ const OnboardingWizard = (props) => {
             </Text>
           </TouchableOpacity>
         </ElevatedView>
-      )}
+      )} */}
     </Modal>
   );
 };

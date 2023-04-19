@@ -31,6 +31,8 @@ const finger_icon = require('./finger.png');
 const xBack_icon = require('./xBack.png');
 const menu_icon = require('./menu_icon.png');
 const bell_icon = require('./bell_icon.png');
+const wallet_start = require('./wallet-start.png')
+const success_send = require('./success-send.png')
 
 export {
   bell_icon,
@@ -66,4 +68,6 @@ export {
   plus_icon,
   finger_icon,
   xBack_icon,
+  wallet_start,
+  success_send
 };
