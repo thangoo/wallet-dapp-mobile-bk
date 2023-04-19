@@ -1179,7 +1179,7 @@ class DrawerView extends PureComponent {
         <ScrollView>
           <View style={styles.header}>
             <Image
-              source={colorScheme === 'light' ? logo : logo_dark}
+              source={colorScheme === 'light' ? logo_dark : logo}
               style={styles.metamaskName}
               resizeMethod={'scale'}
             />
