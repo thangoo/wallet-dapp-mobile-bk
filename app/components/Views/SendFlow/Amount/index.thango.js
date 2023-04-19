@@ -245,7 +245,7 @@ const createStyles = (colors) =>
     textSwitch: {
       ...fontStyles.normal,
       fontSize: 14,
-      color: colors.tText.color.exchangeRate
+      color: colors.tText.color.exchangeRate,
       // textTransform: 'uppercase',
     },
     switchWrapper: {
@@ -524,9 +524,9 @@ class Amount extends PureComponent {
     this.tokens = [getEther(ticker), ...tokens];
     this.collectibles = this.processCollectibles();
     // Wait until navigation finishes to focus
-    InteractionManager.runAfterInteractions(() =>
-      this.amountInput?.current?.focus?.(),
-    );
+    // InteractionManager.runAfterInteractions(() =>
+    //   // this.amountInput?.current?.focus?.(),
+    // );
     this.onInputChange(readableValue);
     !selectedAsset.tokenId && this.handleSelectedAssetBalance(selectedAsset);
 
@@ -1012,13 +1012,13 @@ class Amount extends PureComponent {
       this.onInputChange(undefined, selectedAsset);
       this.handleSelectedAssetBalance(selectedAsset);
       // Wait for input to mount first
-      setTimeout(
-        () =>
-          this.amountInput &&
-          this.amountInput.current &&
-          this.amountInput.current.focus(),
-        500,
-      );
+      // setTimeout(
+      //   () =>
+      //     this.amountInput &&
+      //     this.amountInput.current &&
+      //     this.amountInput.current.focus(),
+      //   500,
+      // );
     }
   };
 
