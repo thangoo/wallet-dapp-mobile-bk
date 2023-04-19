@@ -70,15 +70,15 @@ import { add_plus_circle } from '../../../images/index';
 
 const createStyles = ({ colors, typography }: CustomTheme) =>
   StyleSheet.create({
-    wrapperAccount : {
-      flex: 0.8,
+    wrapperAccount: {
+      flex: 1,
       zIndex: 3,
     },
-    wrapperContent : {
+    wrapperContent: {
       flex: 1,
       zIndex: 2,
     },
-    wrapperTokenList : {
+    wrapperTokenList: {
       flex: 1,
       zIndex: 2,
     },
@@ -92,7 +92,6 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       width: '100%',
       height: 348,
       zIndex: 1,
-     
     },
     assetItem: {
       position: 'absolute',
@@ -436,7 +435,7 @@ const Wallet = ({ navigation }: any) => {
     tokensRef.current = ref;
   }, []);
 
-  const renderAccount =  useCallback (() => {
+  const renderAccount = useCallback(() => {
     let balance: any = 0;
     let assets = tokens;
     if (accounts[selectedAddress]) {
@@ -466,20 +465,20 @@ const Wallet = ({ navigation }: any) => {
     };
 
     return (
-      <View style={styles.wrapperAccount}> 
-          <View style={styles.assetItem}>
-            <AccountOverview
-              account={account}
-              navigation={navigation}
-              onRef={onRef}
-              // props token for received crypto
-              token={assets}
-            />
-          </View>
+      <View style={styles.wrapperAccount}>
+        <View style={styles.assetItem}>
+          <AccountOverview
+            account={account}
+            navigation={navigation}
+            onRef={onRef}
+            // props token for received crypto
+            token={assets}
+          />
+        </View>
       </View>
     );
-  
-  },[renderTabBar,
+  }, [
+    renderTabBar,
     accounts,
     conversionRate,
     currentCurrency,
@@ -490,7 +489,8 @@ const Wallet = ({ navigation }: any) => {
     selectedAddress,
     ticker,
     tokens,
-    styles])
+    styles,
+  ]);
 
   const renderContent = useCallback(() => {
     let balance: any = 0;
@@ -528,18 +528,18 @@ const Wallet = ({ navigation }: any) => {
           // eslint-disable-next-line react/jsx-no-bind
           onChangeTab={onChangeTab}
         >
-            <Tokens
-              tabLabel={strings('wallet.tokens')}
-              key={'tokens-tab'}
-              navigation={navigation}
-              tokens={assets}
-              onRef={onTokensRef}
-            />
-            <CollectibleContracts
-              tabLabel={strings('wallet.collectibles')}
-              key={'nfts-tab'}
-              navigation={navigation}
-            />
+          <Tokens
+            tabLabel={strings('wallet.tokens')}
+            key={'tokens-tab'}
+            navigation={navigation}
+            tokens={assets}
+            onRef={onTokensRef}
+          />
+          <CollectibleContracts
+            tabLabel={strings('wallet.collectibles')}
+            key={'nfts-tab'}
+            navigation={navigation}
+          />
         </ScrollableTabView>
       </View>
     );
@@ -556,8 +556,7 @@ const Wallet = ({ navigation }: any) => {
     ticker,
     tokens,
     styles,
-  ]
-  );
+  ]);
 
   const renderLoader = useCallback(
     () => (
@@ -591,7 +590,7 @@ const Wallet = ({ navigation }: any) => {
           colors={colors.tGradient.wallet}
           style={styles.bgGradient}
         />
-          {selectedAddress ? renderAccount() : renderLoader()}
+        {selectedAddress ? renderAccount() : renderLoader()}
         <ScrollView
           style={styles.wrapperContent}
           refreshControl={

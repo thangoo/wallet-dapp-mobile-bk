@@ -1007,7 +1007,7 @@ export function getWalletNavbarOptions(
       <TouchableOpacity onPress={openDrawer}>
         <Image
           source={menu_icon}
-          style={{ marginLeft: 16, tintColor: themeColors.tIcon.default }}
+          style={{ marginLeft: 16, tintColor: themeColors.gray01 }}
         />
       </TouchableOpacity>
     ),
@@ -1016,7 +1016,7 @@ export function getWalletNavbarOptions(
       >
         <Image
           source={bell_icon}
-          style={{ marginRight: 16, tintColor: themeColors.tIcon.default }}
+          style={{ marginRight: 16, tintColor: themeColors.gray01 }}
         />
       </TouchableOpacity>
     ),

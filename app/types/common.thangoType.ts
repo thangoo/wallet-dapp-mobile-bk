@@ -327,6 +327,7 @@ export interface ThangoThemeColors {
   };
   tSwitch: {
     default: string;
+    token: object;
   };
   tButton: {
     disable: string;
