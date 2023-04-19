@@ -87,6 +87,10 @@ export interface ThangoThemeColors {
     address: string;
     button: string;
     third: string;
+    /**
+     * {string} text.color - For some text
+     */
+    color: object;
   };
   tIcon: {
     /**
@@ -327,6 +331,9 @@ export interface ThangoThemeColors {
   };
   tSwitch: {
     default: string;
+    /**
+     * {object}  style for switch token
+     */
     token: object;
   };
   tButton: {
