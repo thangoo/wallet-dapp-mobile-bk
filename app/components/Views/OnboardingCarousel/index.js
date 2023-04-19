@@ -115,9 +115,11 @@ const createStyles = (colors) =>
       flexDirection: 'row',
       alignSelf: 'center',
       marginBottom: 30,
+      paddingTop: 10
     },
     tab: {
       marginHorizontal: 32,
+      paddingBottom : 20
     },
     wrapperBg : {
       top : DEVICE_WIDTH < 400 ? -50 : 0,
@@ -299,7 +301,7 @@ class OnboardingCarousel extends PureComponent {
                         <Text style={styles.title}>
                           {strings(`onboarding_carousel.title${key}`)}
                         </Text>
-                        <Text style={styles.subtitle}>
+                        <Text style={styles.subtitle} numberOfLines={3} ellipsizeMode="middle">
                           {strings(`onboarding_carousel.subtitle${key}`)}
                         </Text>
                       </View>
@@ -308,7 +310,10 @@ class OnboardingCarousel extends PureComponent {
                 );
               })}
             </ScrollableTabView>
-            <View style={styles.progessContainer}>
+          
+          </View>
+        </ScrollView>
+        <View style={styles.progessContainer}>
               {[1, 2, 3, 4].map((i) => (
                 <View
                   key={i}
@@ -319,8 +324,6 @@ class OnboardingCarousel extends PureComponent {
                 />
               ))}
             </View>
-          </View>
-        </ScrollView>
         <View style={styles.ctas}>
           <View style={styles.ctaWrapper}>
             <StyledButton

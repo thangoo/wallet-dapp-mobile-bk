@@ -110,9 +110,9 @@ const createStyles = (colors) =>
       marginBottom: 30,
     },
     tab: {
-      marginHorizontal: 32,
+      marginHorizontal: 22,
       flexGrow : 1,
-      marginBottom : 66
+      paddingBottom : 66
     },
    
   });
@@ -179,10 +179,10 @@ const SecretPhrase = (props) => {
             </View>
       </View>
       <View style={styles.tab}>
-          <Text style={styles.title}>
+          <Text  style={styles.title} >
             {strings('secret_phrase.heading2')}
           </Text>
-          <Text style={styles.subtitle}>
+          <Text style={styles.subtitle} numberOfLines={3} ellipsizeMode="middle">
             {strings('secret_phrase.subheading2')}
           </Text>
       </View>
