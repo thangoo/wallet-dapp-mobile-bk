@@ -12,6 +12,7 @@ import HStack from '../../../../app/components/Base/HStack';
 import { strings } from '../../../../locales/i18n';
 import { CustomTheme, useTheme } from '../../../util/theme';
 import StyledButton from '../../UI/StyledButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const NOTES = [
   `${strings('secret_phrase.title1')}`,
@@ -85,15 +86,20 @@ const ConfirmBackupModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
           ))}
         </View>
 
-        <StyledButton
-          testID={'manual-backup-step-1-continue-button'}
-          type={'confirm'}
-          onPress={handlePress}
-          containerStyle={{ width: '100%', marginBottom: 16 }}
-          disabled={_.size(selections) < 3}
+        <SafeAreaView
+          style={{ width: '100%', paddingBottom: 32 }}
+          edges={['bottom']}
         >
-          {strings('manual_backup_step_1.continue')}
-        </StyledButton>
+          <StyledButton
+            testID={'manual-backup-step-1-continue-button'}
+            type={'confirm'}
+            onPress={handlePress}
+            // containerStyle={{ width: '100%', marginBottom: 16 }}
+            disabled={_.size(selections) < 3}
+          >
+            {strings('manual_backup_step_1.continue')}
+          </StyledButton>
+        </SafeAreaView>
       </View>
     </ReactNativeModal>
   );

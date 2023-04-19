@@ -83,15 +83,12 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       flex: 1,
       zIndex: 2,
     },
-    assetOverviewWrapper: {
-      height: 348,
-    },
     bgGradient: {
       borderBottomLeftRadius: 56,
       borderBottomRightRadius: 56,
       position: 'absolute',
       width: '100%',
-      height: 348,
+      height: 362,
       zIndex: -1,
     },
     assetItem: {
@@ -582,7 +579,7 @@ const Wallet = ({ navigation }: any) => {
 
   return (
     <ErrorBoundary view="Wallet">
-      <SafeAreaView edges={['top']} style={{ height: 348 }}>
+      <SafeAreaView edges={['top']} style={{ height: 362 }}>
         {selectedAddress ? renderAccount() : renderLoader()}
         <LinearGradient
           start={{ x: 0.75, y: 0.75 }}

@@ -25,6 +25,10 @@ import {
 } from '../../../constants/test-ids';
 import HStack from '../../Base/HStack';
 import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -103,7 +107,8 @@ const createStyles = (colors) =>
       zIndex: 2,
     },
     ctaWrapper: {
-      marginVertical: 20,
+      marginTop: 20,
+      marginBottom: 16,
     },
     text: {
       flex: 1,
@@ -163,7 +168,6 @@ const Legal = ({ navigation, route }) => {
   };
 
   const styles = createStyles(colors);
-
   return (
     <View style={styles.mainWrapper}>
       <View style={styles.wrapper}>
@@ -236,7 +240,7 @@ const Legal = ({ navigation, route }) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.ctaWrapper}>
+          <SafeAreaView edges={['bottom']} style={styles.ctaWrapper}>
             <StyledButton
               type={'blue'}
               onPress={onPressContinue}
@@ -245,7 +249,7 @@ const Legal = ({ navigation, route }) => {
             >
               {strings('manual_backup_step_1.continue')}
             </StyledButton>
-          </View>
+          </SafeAreaView>
         </View>
       </View>
     </View>
