@@ -1,3 +1,4 @@
+import { strings } from '../../../../locales/i18n';
 import { icon_tab_01 } from 'images/index';
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
@@ -48,11 +49,9 @@ const WalletReadyModal = forwardRef<RefHandle, Props>(({ onConfirm }, ref) => {
       <View style={styles.body}>
         <View style={styles.dragger} />
         <Image source={icon_tab_01} style={styles.icWallet} />
-        <Text style={styles.title}>{'Your Wallet is ready!'}</Text>
+        <Text style={styles.title}>{strings('wallet_restored.wallet_restored_title')}</Text>
         <Text style={styles.title2}>
-          {
-            'Your secret phrase is successfully backed up, and your wallet is ready to use.'
-          }
+          {strings('wallet_restored.wallet_restored_subtitle')}
         </Text>
 
         <SafeAreaView
@@ -64,7 +63,7 @@ const WalletReadyModal = forwardRef<RefHandle, Props>(({ onConfirm }, ref) => {
             type={'confirm'}
             onPress={handlePress}
           >
-            {'Start'}
+            {strings('wallet_restored.wallet_start')}
           </StyledButton>
         </SafeAreaView>
       </View>
@@ -112,7 +111,7 @@ const createStyles = (colors: CustomTheme['colors']) =>
       width: 36,
       height: 5,
       borderRadius: 2.5,
-      backgroundColor: colors.gray04,
+      backgroundColor: colors.tBackground.sixth,
       marginTop: 6,
       marginBottom: 32,
     },
