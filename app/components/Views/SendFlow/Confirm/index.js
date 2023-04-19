@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Platform,
+  Dimensions,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
@@ -102,6 +103,7 @@ import generateTestId from '../../../../../wdio/utils/generateTestId';
 import { COMFIRM_TXN_AMOUNT } from '../../../../../wdio/screen-objects/testIDs/Screens/TransactionConfirm.testIds';
 import NetworkMainAssetLogo from '../../../UI/NetworkMainAssetLogo';
 import TokenImage from '../../../UI/TokenImage';
+import WrapConfirm from './WrapConfirm';
 
 const EDIT = 'edit';
 const EDIT_NONCE = 'edit_nonce';
@@ -317,7 +319,6 @@ class Confirm extends PureComponent {
     navigation.setOptions(
       tHeaderPaymentDetailOptions(route, colors, { title }, navigation),
     );
-
   };
 
   componentWillUnmount = async () => {
@@ -1234,13 +1235,8 @@ class Confirm extends PureComponent {
     const errorLinkText = isTestNetwork
       ? strings('transaction.go_to_faucet')
       : strings('transaction.buy_more');
-
     return (
-      <SafeAreaView
-        edges={['bottom']}
-        style={styles.wrapper}
-        testID={'txn-confirm-screen'}
-      >
+      <WrapConfirm>
         <InfoModal
           isVisible={warningModalVisible}
           toggleModal={this.toggleWarningModal}
@@ -1256,9 +1252,7 @@ class Confirm extends PureComponent {
           {!selectedAsset.tokenId ? (
             <View style={styles.amountWrapper}>
               {renderTokenImg(selectedAsset)}
-              {/* <Text style={styles.textAmountLabel}>
-                {strings('transaction.amount')}
-              </Text> */}
+
               <Text
                 style={styles.textAmount}
                 {...generateTestId(Platform, COMFIRM_TXN_AMOUNT)}
@@ -1343,6 +1337,15 @@ class Confirm extends PureComponent {
             />
           )}
 
+          <View style={styles.seprateLine} />
+        </ScrollView>
+
+        <SafeAreaView
+          edges={['bottom']}
+          style={{
+            marginBottom: Dimensions.get('window').height * 0.2 + 16,
+          }}
+        >
           {errorMessage && (
             <View style={styles.errorWrapper}>
               {isTestNetwork || allowedToBuy(network) ? (
@@ -1369,7 +1372,6 @@ class Confirm extends PureComponent {
               warningMessage={strings('edit_gas_fee_eip1559.low_fee_warning')}
             />
           )}
-
           <View style={styles.actionsWrapper}>
             {showHexData && (
               <TouchableOpacity
@@ -1382,8 +1384,6 @@ class Confirm extends PureComponent {
               </TouchableOpacity>
             )}
           </View>
-        </ScrollView>
-        <View style={styles.buttonNextWrapper}>
           <StyledButton
             type={'confirm'}
             disabled={
@@ -1392,7 +1392,7 @@ class Confirm extends PureComponent {
               Boolean(errorMessage) ||
               isAnimating
             }
-            containerStyle={styles.buttonNext}
+            // containerStyle={styles.buttonNext}
             onPress={this.onNext}
             testID={'txn-confirm-send-button'}
           >
@@ -1404,12 +1404,13 @@ class Confirm extends PureComponent {
               strings('transaction.send')
             )}
           </StyledButton>
-        </View>
+        </SafeAreaView>
+
         {mode === EDIT && this.renderCustomGasModalLegacy()}
         {mode === EDIT_NONCE && this.renderCustomNonceModal()}
         {mode === EDIT_EIP1559 && this.renderCustomGasModalEIP1559()}
         {this.renderHexDataModal()}
-      </SafeAreaView>
+      </WrapConfirm>
     );
   };
 }

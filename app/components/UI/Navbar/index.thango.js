@@ -20,7 +20,7 @@ const tHeaderOptions = (
       elevation: 0,
     },
     headerTitleStyle: {
-      fontSize: 20,
+      fontSize: 22,
       color: themeColors.text.default,
       textAlign: 'center',
       ...fontStyles.normal,
@@ -55,11 +55,6 @@ const tHeaderOptions = (
       <Text style={innerStyles.headerTitleStyle}>{title}</Text>
     ),
     headerRight: () => <View />,
-    headerTitleStyle: {
-      fontSize: 20,
-      color: themeColors.tText.default,
-      ...fontStyles.normal,
-    },
     ...rest,
   };
 };

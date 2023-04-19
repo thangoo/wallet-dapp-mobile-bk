@@ -587,7 +587,7 @@ const SendView = () => (
 );
 
 const SendFlowView = () => (
-  <Stack.Navigator>
+  <Stack.Navigator mode="modal">
     <Stack.Screen
       name="SendTo"
       component={SendTo}
@@ -601,7 +601,12 @@ const SendFlowView = () => (
     <Stack.Screen
       name="Confirm"
       component={Confirm}
-      options={Confirm.navigationOptions}
+      options={{
+        headerShown: false,
+        cardStyle: {
+          backgroundColor: 'transparent',
+        },
+      }}
     />
   </Stack.Navigator>
 );

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Text,
   View,
-  SafeAreaView,
   ActivityIndicator,
   InteractionManager,
   TextInput,
@@ -50,6 +49,7 @@ import { trackLegacyEvent } from '../../../util/analyticsV2';
 import { HeaderBackButton } from '@react-navigation/stack';
 import ReadMoreModal from './ReadMoreModal';
 import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 /**
  * View that's shown during the second step of
@@ -348,14 +348,18 @@ const ManualBackupStep1 = ({ route, navigation, appTheme }) => {
             </Text>
           </HStack>
         </ScrollView>
-        <StyledButton
-          testID={'manual-backup-step-1-continue-button'}
-          type={'confirm'}
-          onPress={goNext}
-          containerStyle={{ marginHorizontal: 32, marginBottom: 16 }}
+        <SafeAreaView
+          edges={['bottom']}
+          style={{ marginHorizontal: 32, marginBottom: 32 }}
         >
-          {strings('manual_backup_step_1.continue')}
-        </StyledButton>
+          <StyledButton
+            testID={'manual-backup-step-1-continue-button'}
+            type={'confirm'}
+            onPress={goNext}
+          >
+            {strings('manual_backup_step_1.continue')}
+          </StyledButton>
+        </SafeAreaView>
       </>
     );
   };

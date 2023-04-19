@@ -7,6 +7,7 @@ import { useToggle } from 'react-use';
 import { CustomTheme, useTheme } from '../../../util/theme';
 import StyledButton from '../../UI/StyledButton';
 import { strings } from '../../../../locales/i18n';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const NOTES = [
   'Your 12-word secret phrase is the master key to your wallet. Anyone that has your secret phrase can access and take your crypto.',
@@ -76,14 +77,18 @@ const ReadMoreModal = forwardRef<RefHandle, Props>(({ onNext }, ref) => {
           </Text>
         </HStack>
 
-        <StyledButton
-          testID={'manual-backup-step-1-continue-button'}
-          type={'confirm'}
-          onPress={handlePress}
-          containerStyle={{ width: '100%', marginBottom: 20 }}
+        <SafeAreaView
+          edges={['bottom']}
+          style={{ width: '100%', paddingBottom: 32 }}
         >
-          {strings('manual_backup_step_1.continue')}
-        </StyledButton>
+          <StyledButton
+            testID={'manual-backup-step-1-continue-button'}
+            type={'confirm'}
+            onPress={handlePress}
+          >
+            {strings('manual_backup_step_1.continue')}
+          </StyledButton>
+        </SafeAreaView>
       </View>
     </ReactNativeModal>
   );
