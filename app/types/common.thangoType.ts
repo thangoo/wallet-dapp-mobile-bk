@@ -87,13 +87,18 @@ export interface ThangoThemeColors {
     address: string;
     button: string;
     third: string;
+    /**
+     * {string} text.color - For some text
+     */
+    color: object;
+    light : string
   };
   tIcon: {
     /**
      * {string} icon.default - For default neutral icons
      */
     default: string;
-    /**
+    /** 
      * {string} icon.alternative - For a weaker contrast option for neutral icons
      */
     alternative: string;
@@ -101,6 +106,7 @@ export interface ThangoThemeColors {
      * {string} icon.muted - For inactive or lowest priority icons
      */
     muted: string;
+    light: string
   };
   tBorder: {
     /**
@@ -327,6 +333,9 @@ export interface ThangoThemeColors {
   };
   tSwitch: {
     default: string;
+    /**
+     * {object}  style for switch token
+     */
     token: object;
   };
   tButton: {

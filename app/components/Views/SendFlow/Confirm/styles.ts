@@ -5,7 +5,7 @@ const createStyles = (colors: any) =>
   StyleSheet.create({
     wrapper: {
       flex: 1,
-      backgroundColor: colors.background.default,
+      backgroundColor: colors.tBackground.secondary,
     },
     inputWrapper: {
       flex: 0,
@@ -16,12 +16,13 @@ const createStyles = (colors: any) =>
     amountWrapper: {
       flexDirection: 'column',
       alignItems: 'center',
-      margin: 24,
+      marginTop: 32,
     },
     assetLogo: {
-      width: 50,
-      height: 50,
-      marginBottom: 10,
+      width: 56,
+      height: 56,
+      borderRadius: 56 / 2,
+      marginBottom: 16,
     },
     textAmountLabel: {
       ...fontStyles.normal,
@@ -45,7 +46,7 @@ const createStyles = (colors: any) =>
     buttonNextWrapper: {
       flexDirection: 'row',
       alignItems: 'flex-end',
-      marginBottom: 16,
+      // marginBottom: 16,
     },
     actionTouchable: {
       padding: 12,
@@ -150,8 +151,8 @@ const createStyles = (colors: any) =>
       color: colors.text.default,
     },
     tokenInfoWrapper: {
-      flex: 1,
       flexDirection: 'row',
+      marginTop: 48,
     },
     tokenTitle: {
       ...fontStyles.normal,
@@ -169,10 +170,7 @@ const createStyles = (colors: any) =>
     seprateLine: {
       borderBottomColor: colors.tBackground.fourth,
       borderBottomWidth: StyleSheet.hairlineWidth,
-      marginLeft: 10,
-      marginRight: 30,
-      marginTop: 20,
-      marginBottom: 20,
+      margin: 16,
     },
   });
 

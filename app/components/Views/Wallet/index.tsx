@@ -67,6 +67,7 @@ import {
 } from '../../../selectors/networkController';
 import LinearGradient from 'react-native-linear-gradient';
 import { add_plus_circle } from '../../../images/index';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const createStyles = ({ colors, typography }: CustomTheme) =>
   StyleSheet.create({
@@ -75,23 +76,20 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       zIndex: 3,
     },
     wrapperContent: {
-      flex: 1,
-      zIndex: 2,
+      // flex: 1,
+      // zIndex: 2,
     },
     wrapperTokenList: {
       flex: 1,
       zIndex: 2,
-    },
-    assetOverviewWrapper: {
-      height: 348,
     },
     bgGradient: {
       borderBottomLeftRadius: 56,
       borderBottomRightRadius: 56,
       position: 'absolute',
       width: '100%',
-      height: 348,
-      zIndex: 1,
+      height: 362,
+      zIndex: -1,
     },
     assetItem: {
       position: 'absolute',
@@ -465,16 +463,14 @@ const Wallet = ({ navigation }: any) => {
     };
 
     return (
-      <View style={styles.wrapperAccount}>
-        <View style={styles.assetItem}>
-          <AccountOverview
-            account={account}
-            navigation={navigation}
-            onRef={onRef}
-            // props token for received crypto
-            token={assets}
-          />
-        </View>
+      <View style={{ flex: 1, marginTop: 50 }}>
+        <AccountOverview
+          account={account}
+          navigation={navigation}
+          onRef={onRef}
+          // props token for received crypto
+          token={assets}
+        />
       </View>
     );
   }, [
@@ -583,20 +579,21 @@ const Wallet = ({ navigation }: any) => {
 
   return (
     <ErrorBoundary view="Wallet">
-      <View style={baseStyles.flexGrow} {...generateTestId('wallet-screen')}>
+      <SafeAreaView edges={['top']} style={{ height: 362 }}>
+        {selectedAddress ? renderAccount() : renderLoader()}
         <LinearGradient
           start={{ x: 0.75, y: 0.75 }}
           end={{ x: 0.25, y: 0 }}
           colors={colors.tGradient.wallet}
           style={styles.bgGradient}
         />
-        {selectedAddress ? renderAccount() : renderLoader()}
+      </SafeAreaView>
+      <View style={{ flex: 1 }}>
         <ScrollView
-          style={styles.wrapperContent}
           refreshControl={
             <RefreshControl
-              colors={[colors.primary.default]}
-              tintColor={colors.icon.default}
+              colors={[colors.tPrimary.default]}
+              tintColor={colors.tIcon.default}
               refreshing={refreshing}
               onRefresh={onRefresh}
             />
@@ -604,8 +601,8 @@ const Wallet = ({ navigation }: any) => {
         >
           {selectedAddress ? renderContent() : renderLoader()}
         </ScrollView>
-        {renderOnboardingWizard()}
       </View>
+      {renderOnboardingWizard()}
     </ErrorBoundary>
   );
 };

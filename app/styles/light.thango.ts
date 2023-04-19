@@ -60,6 +60,7 @@ export const thangoLight: ThangoThemeColors = {
     address: colorThango.gray12,
     button: colorThango.light,
     third: colorThango.gray05,
+    light : colorThango.gray01,
     color: {
       exchangeRate: colorThango.gray10,
     }
@@ -68,6 +69,7 @@ export const thangoLight: ThangoThemeColors = {
     default: colorThango.gray10,
     alternative: '#6A737D',
     muted: '#BBC0C5',
+    light : colorThango.gray01,
   },
   tInput: {
     backgroundColor: {

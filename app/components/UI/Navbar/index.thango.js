@@ -20,10 +20,10 @@ const tHeaderOptions = (
       elevation: 0,
     },
     headerTitleStyle: {
-      fontSize: 20,
+      fontSize: 22,
       color: themeColors.text.default,
       textAlign: 'center',
-      ...fontStyles.normal,
+      ...fontStyles.bold,
       alignItems: 'center',
     },
   });
@@ -55,6 +55,62 @@ const tHeaderOptions = (
       <Text style={innerStyles.headerTitleStyle}>{title}</Text>
     ),
     headerRight: () => <View />,
+    ...rest,
+  };
+};
+
+
+const tHeaderPhraseOptions = (
+  route,
+  themeColors,
+  { title, leftImage = arrow_right_icon, onPressLeft } = {
+    title: 'Title',
+    onPressLeft: () => {},
+  },
+  rest,
+) => {
+  const innerStyles = StyleSheet.create({
+    headerStyle: {
+      backgroundColor: themeColors.background.default,
+      shadowColor: 'transparent',
+      elevation: 0,
+    },
+    headerTitleStyle: {
+      fontSize: 22,
+      color: themeColors.tText.light,
+      textAlign: 'center',
+      ...fontStyles.bold,
+      alignItems: 'center',
+    },
+  });
+
+  return {
+    title,
+    headerStyle: innerStyles.headerStyle,
+    headerLeft: (props) => {
+      return (
+        <HeaderBackButton
+          {...props}
+          labelVisible={false}
+          style={{ marginLeft: 16 }}
+          backImage={() => (
+            <Image
+              source={leftImage ? leftImage : arrow_right_icon}
+              style={{
+                width: 32,
+                height: 32,
+                tintColor: themeColors.tIcon.light,
+              }}
+            />
+          )}
+          onPress={Boolean(onPressLeft) ? onPressLeft : props.onPress}
+        />
+      );
+    },
+    headerTitle: () => (
+      <Text style={innerStyles.headerTitleStyle}>{title}</Text>
+    ),
+    headerRight: () => <View />,
     headerTitleStyle: {
       fontSize: 20,
       color: themeColors.tText.default,
@@ -63,6 +119,7 @@ const tHeaderOptions = (
     ...rest,
   };
 };
+
 
 const ImageToken = ({ souceIcon, themeColors }) => (
   <Image
@@ -88,10 +145,10 @@ const tHeaderPaymentDetailOptions = (
       elevation: 0,
     },
     headerTitleStyle: {
-      fontSize: 20,
+      fontSize: 22,
       color: themeColors.text.default,
       textAlign: 'center',
-      ...fontStyles.normal,
+      ...fontStyles.bold,
       alignItems: 'center',
     },
   });
@@ -126,4 +183,4 @@ const tHeaderPaymentDetailOptions = (
   };
 };
 
-export { tHeaderOptions, tHeaderPaymentDetailOptions };
+export { tHeaderOptions, tHeaderPhraseOptions, tHeaderPaymentDetailOptions };

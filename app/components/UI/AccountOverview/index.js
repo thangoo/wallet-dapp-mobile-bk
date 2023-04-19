@@ -146,11 +146,11 @@ const createStyles = (colors) =>
       justifyContent: 'space-between',
       // alignItems: 'flex-start',
       flexDirection: 'row',
-      marginTop: 40,
+      marginTop: 48,
     },
     actionIcon: {
       marginLeft: 15,
-    }
+    },
   });
 
 /**
@@ -220,7 +220,7 @@ class AccountOverview extends PureComponent {
      * Current provider ticker
      */
     ticker: PropTypes.string,
-     /**
+    /**
      * Current token
      */
     token: PropTypes.array,
@@ -327,14 +327,12 @@ class AccountOverview extends PureComponent {
   // onReceive = () => this.props.toggleReceiveModal();
   // onReceive = () => this.props.navigation.navigate('ReceiveScreen');
 
-
   onReceive = () => {
-    const {token} = this.props
+    const { token } = this.props;
     this.props.navigation.navigate('ReceivedCryptoScreen', {
-      ...token
-    })
-  }
-
+      ...token,
+    });
+  };
 
   onSend = () => {
     const { newAssetTransaction, navigation, ticker } = this.props;
@@ -367,7 +365,7 @@ class AccountOverview extends PureComponent {
       const ens = await doENSReverseLookup(account.address, network);
       this.setState({ ens });
       // eslint-disable-next-line no-empty
-    } catch { }
+    } catch {}
   };
 
   render() {
@@ -456,7 +454,7 @@ class AccountOverview extends PureComponent {
                       style={[
                         styles.label,
                         styles.onboardingWizardLabel,
-                        { borderWidth: 0 }
+                        { borderWidth: 0 },
                         // {
                         //   borderColor: onboardingWizard
                         //     ? colors.primary.default
@@ -547,7 +545,6 @@ const mapStateToProps = (state) => ({
   ticker: selectTicker(state),
   network: String(selectNetwork(state)),
   swapsIsLive: swapsLivenessSelector(state),
-
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -561,7 +558,3 @@ const mapDispatchToProps = (dispatch) => ({
 AccountOverview.contextType = ThemeContext;
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountOverview);
-
-
-
-

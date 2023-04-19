@@ -919,7 +919,7 @@ export function getWalletNavbarOptions(
       flex: 1,
     },
     title: {
-      fontSize: 16,
+      fontSize: 22,
       fontWeight: '600',
       color: themeColors.gray01,
       textAlign: 'center',

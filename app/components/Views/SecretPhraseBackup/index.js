@@ -30,7 +30,7 @@ import {
   imgSecretPhrase,
   imgWalletOnboarding,
 } from 'images/index';
-import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
+import { tHeaderPhraseOptions } from '../../../../app/components/UI/Navbar/index.thango';
 import ConfirmBackupModal from './ConfirmBackupModal';
 
 const IMAGE_3_RATIO = 215 / 315;
@@ -42,12 +42,13 @@ const IMG_PADDING = Device.isIphoneX() ? 100 : Device.isIphone5S() ? 180 : 220;
 
 const createStyles = (colors) =>
   StyleSheet.create({
-    scroll: {
-      flexGrow: 1,
-    },
     wrapper: {
-      flex: 1,
+      flexGrow: 1,
       position: 'relative',
+    },
+    wrapperImage : {
+      flexGrow : 1,
+      marginTop : 30
     },
     title: {
       fontSize: 28,
@@ -69,14 +70,15 @@ const createStyles = (colors) =>
     ctas: {
       paddingHorizontal: 32,
       paddingBottom: Device.isIphoneX() ? 40 : 20,
-      marginTop: 86,
+      flexGrow : 1
+      // marginTop: 86,
     },
-    ctaWrapper: {},
 
     // eslint-disable-next-line react-native/no-unused-styles
     carouselImage: {
-      width: '97%',
-      height: '75%',
+      // width: '94%',
+      // height: '75%',
+      // marginTop: 70
     },
     // eslint-disable-next-line react-native/no-unused-styles
     carouselImage2: {
@@ -89,10 +91,7 @@ const createStyles = (colors) =>
       height: (DEVICE_WIDTH - 60) * IMAGE_3_RATIO,
     },
     carouselImageWrapper: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flex: 1,
+      alignItems: 'center'
     },
     circle: {
       width: 6,
@@ -111,8 +110,11 @@ const createStyles = (colors) =>
       marginBottom: 30,
     },
     tab: {
-      marginHorizontal: 32,
+      marginHorizontal: 22,
+      flexGrow : 1,
+      paddingBottom : 66
     },
+   
   });
 
 const carousel_images = [
@@ -143,7 +145,7 @@ const SecretPhrase = (props) => {
 
   useEffect(() => {
     props.navigation.setOptions(
-      tHeaderOptions(
+      tHeaderPhraseOptions(
         props.navigation,
         colors,
         { title: 'Secret Phrase Backup' },
@@ -159,38 +161,31 @@ const SecretPhrase = (props) => {
   const onNext = () => props.navigation.navigate('ManualBackupStep1');
 
   return (
-    <View style={baseStyles.flexGrow} testID={'secret-phrase-screen--screen'}>
-      <View style={{ top: -50 }}>
+    <View style={styles.wrapper} testID={'secret-phrase-screen--screen'}>
+      <View style={{ top: -90, flexGrow : 1 }}>
         <Image
           source={backgroundOnboarding}
-          style={StyleSheet.absoluteFillObject}
+          style={[StyleSheet.absoluteFillObject]}
         />
       </View>
-      <ScrollView contentContainerStyle={styles.scroll}>
-        <View
-          style={styles.wrapper}
-          {...generateTestId(Platform, WELCOME_SCREEN_CAROUSEL_CONTAINER_ID)}
-        >
-          <View style={[baseStyles.flexGrow]}>
+      <View style={styles.wrapperImage}>
             <View style={styles.carouselImageWrapper}>
               <Image
                 source={imgSecretPhrase}
                 style={styles.carouselImage}
                 resizeMode={'contain'}
-                testID={`carousel-image`}
+                testID={'carousel-image'}
               />
-              <View style={styles.tab}>
-                <Text style={styles.title}>
-                  {strings('secret_phrase.heading2')}
-                </Text>
-                <Text style={styles.subtitle}>
-                  {strings('secret_phrase.subheading2')}
-                </Text>
-              </View>
             </View>
-          </View>
-        </View>
-      </ScrollView>
+      </View>
+      <View style={styles.tab}>
+          <Text  style={styles.title} >
+            {strings('secret_phrase.heading2')}
+          </Text>
+          <Text style={styles.subtitle} numberOfLines={3} ellipsizeMode="middle">
+            {strings('secret_phrase.subheading2')}
+          </Text>
+      </View>
       <View style={styles.ctas}>
         <StyledButton
           type={'blue'}
