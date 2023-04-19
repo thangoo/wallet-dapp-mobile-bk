@@ -41,6 +41,7 @@ import Icon, {
 import { vectorSplashScreen } from 'images/index';
 
 import { ThemeContext, mockTheme } from '../../../util/theme';
+import { setPopupSuccess } from '../../../../app/ultis/async-storage';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -210,6 +211,7 @@ class ManualBackupStep3 extends PureComponent {
   };
 
   done = async () => {
+    await setPopupSuccess('TRUE');
     const onboardingWizard = await DefaultPreference.get(ONBOARDING_WIZARD);
     if (onboardingWizard) {
       this.props.navigation.reset({ routes: [{ name: 'HomeNav' }] });
