@@ -28,6 +28,7 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     address: colorThango.dark06,
     button: colorThango.light,
     third: colorThango.dark05,
+    light : colorThango.gray01,
     color: {
       exchangeRate: colorThango.gray06,
     }
@@ -42,6 +43,8 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     default: colorThango.gray01,
     alternative: '#6A737D',
     muted: '#BBC0C5',
+    light : colorThango.gray01,
+
   },
   background: {
     ...darkTheme.colors['background'],
