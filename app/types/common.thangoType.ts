@@ -63,6 +63,7 @@ export interface ThangoThemeColors {
      */
     fourth: string;
     fifth: string;
+    sixth: string
   };
   tText: {
     /**
