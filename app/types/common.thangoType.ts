@@ -64,6 +64,11 @@ export interface ThangoThemeColors {
     fourth: string;
     fifth: string;
     sixth: string
+    /**
+     * {string} background.send || background.receive - for background transaction element
+     */
+    send : string
+    receive : string
   };
   tText: {
     /**
