@@ -20,6 +20,8 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     alternative: colorThango.dark03,
     alternativeHover: '#D6D9DC',
     alternativePressed: '#D6D9DC',
+    send: colorThango.red,
+    receive : colorThango.primary
   },
   tText: {
     default: colorThango.light,
