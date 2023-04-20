@@ -21,10 +21,10 @@ const tHeaderOptions = (
     },
     headerTitleStyle: {
       fontSize: 22,
-      color: themeColors.text.default,
+      color: themeColors.tText.default,
       textAlign: 'center',
-      ...fontStyles.bold,
       alignItems: 'center',
+      fontWeight: '600',
     },
   });
 
@@ -58,7 +58,6 @@ const tHeaderOptions = (
     ...rest,
   };
 };
-
 
 const tHeaderPhraseOptions = (
   route,
@@ -119,7 +118,6 @@ const tHeaderPhraseOptions = (
     ...rest,
   };
 };
-
 
 const ImageToken = ({ souceIcon, themeColors }) => (
   <Image

@@ -225,7 +225,7 @@ const ReceiveScreen: FC<Props> = (props) => {
           <QRCode value={props.selectedAddress} size={240} />
         </View>
         <View style={styles.wrapQRText}>
-          <Text style={{ color: colors.tText.default }}>
+          <Text style={{ color: colors.tText.fourth }}>
             <EthereumAddress address={props.selectedAddress} type={'short'} />
           </Text>
         </View>
