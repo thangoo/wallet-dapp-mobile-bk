@@ -124,8 +124,8 @@ class NotificationManager {
       const pushData = {
         title,
         message,
-        largeIcon: 'ic_notification',
-        smallIcon: 'ic_notification_small',
+        // largeIcon: 'ic_launcher',
+        // smallIcon: 'ic_launcher',
       };
       const id = data?.transaction?.id || null;
 
