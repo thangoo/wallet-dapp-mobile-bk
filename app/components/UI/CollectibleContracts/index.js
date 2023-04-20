@@ -7,6 +7,7 @@ import {
   InteractionManager,
   Image,
   Platform,
+  ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Engine from '../../../core/Engine';
@@ -65,7 +66,7 @@ const createStyles = (colors) =>
       flex: 1,
       paddingBottom: 30,
       alignItems: 'center',
-      marginTop: 24,
+      marginTop: 5,
     },
     emptyContainer: {
       flex: 1,
@@ -276,8 +277,10 @@ const CollectibleContracts = ({
           />
         </View>
       )}
-      {collectibleContracts.length > 0 ? renderList() : renderEmpty()}
-      {renderFooter()}
+      <ScrollView>
+        {collectibleContracts.length > 0 ? renderList() : renderEmpty()}
+        {renderFooter()}
+      </ScrollView>
     </View>
   );
 };
