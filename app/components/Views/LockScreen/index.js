@@ -62,8 +62,8 @@ const createStyles = (colors) =>
     },
   });
 
-const wordmarkLight = require('../../../animations/wordmark-light.json');
-const wordmarkDark = require('../../../animations/wordmark-dark.json');
+const loadingLight = require('../../../animations/loading-light.json');
+const loadingDark = require('../../../animations/loading-dark.json');
 
 /**
  * Main view component for the Lock screen
@@ -181,11 +181,11 @@ class LockScreen extends PureComponent {
   renderAnimations() {
     const { appTheme } = this.props;
     const osColorScheme = Appearance.getColorScheme();
-    const wordmark = getAssetFromTheme(
+    const loading = getAssetFromTheme(
       appTheme,
       osColorScheme,
-      wordmarkLight,
-      wordmarkDark,
+      loadingLight,
+      loadingDark,
     );
     const styles = this.getStyles();
 
@@ -197,7 +197,7 @@ class LockScreen extends PureComponent {
             this.firstAnimation = animation;
           }}
           style={styles.animation}
-          source={require('../../../animations/bounce.json')}
+          source={loading}
         />
       );
     }
@@ -211,17 +211,8 @@ class LockScreen extends PureComponent {
           }}
           style={styles.animation}
           loop={false}
-          source={require('../../../animations/bounce.json')}
+          source={loading}
           onAnimationFinish={this.onAnimationFinished}
-        />
-        <LottieView
-          // eslint-disable-next-line react/jsx-no-bind
-          ref={(animation) => {
-            this.animationName = animation;
-          }}
-          style={styles.metamaskName}
-          loop={false}
-          source={wordmark}
         />
       </View>
     );
