@@ -5,7 +5,7 @@ const createStyles = (colors: any) =>
   StyleSheet.create({
     wrapper: {
       flex: 1,
-      backgroundColor: colors.tBackground.secondary,
+      backgroundColor: colors.background.default,
     },
     inputWrapper: {
       flex: 0,
@@ -16,13 +16,12 @@ const createStyles = (colors: any) =>
     amountWrapper: {
       flexDirection: 'column',
       alignItems: 'center',
-      marginTop: 32,
+      margin: 24,
     },
     assetLogo: {
-      width: 56,
-      height: 56,
-      borderRadius: 56 / 2,
-      marginBottom: 16,
+      width: 50,
+      height: 50,
+      marginBottom: 10,
     },
     textAmountLabel: {
       ...fontStyles.normal,
@@ -46,7 +45,7 @@ const createStyles = (colors: any) =>
     buttonNextWrapper: {
       flexDirection: 'row',
       alignItems: 'flex-end',
-      // marginBottom: 16,
+      marginBottom: 16,
     },
     actionTouchable: {
       padding: 12,
@@ -151,8 +150,8 @@ const createStyles = (colors: any) =>
       color: colors.text.default,
     },
     tokenInfoWrapper: {
+      flex: 1,
       flexDirection: 'row',
-      marginTop: 48,
     },
     tokenTitle: {
       ...fontStyles.normal,
@@ -170,7 +169,65 @@ const createStyles = (colors: any) =>
     seprateLine: {
       borderBottomColor: colors.tBackground.fourth,
       borderBottomWidth: StyleSheet.hairlineWidth,
-      margin: 16,
+      marginLeft: 10,
+      marginRight: 30,
+      marginTop: 20,
+      marginBottom: 20,
+    },
+    body: {
+      backgroundColor: colors.tBackground.secondary,
+      paddingHorizontal: 22,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+    },
+    modal: {
+      margin: 0,
+      justifyContent: 'flex-end',
+    },
+    walletImg : {
+      marginBottom :  20,
+    },
+    text1: {
+      fontSize: 14,
+      fontWeight: '400',
+      color: colors.tText.default,
+    },
+    title: {
+      marginBottom: 20,
+      fontSize: 24,
+      fontWeight: '600',
+      textAlign: 'center',
+      textTransform: 'capitalize',
+      color: colors.tText.default,
+    },
+    title2: {
+      marginBottom: 30,
+      fontSize: 14,
+      fontWeight: '400',
+      textAlign: 'center',
+      color: colors.tText.default,
+    },
+    dragger: {
+      width: 36,
+      height: 5,
+      borderRadius: 2.5,
+      backgroundColor: colors.tBackground.sixth,
+      marginTop: 6,
+      marginBottom: 32,
+    },
+    noteWrap: {
+      alignItems: 'flex-start',
+      marginBottom: 16,
+    },
+    wrapItem: {
+      backgroundColor: colors.tBackground.alternative,
+      width: '100%',
+      borderRadius: 18,
+      paddingHorizontal: 16,
+      paddingVertical: 32,
+      paddingBottom: 16,
+      marginTop: 32,
+      marginBottom: 64,
     },
   });
 

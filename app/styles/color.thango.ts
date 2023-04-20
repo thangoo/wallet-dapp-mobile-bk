@@ -20,8 +20,10 @@ export default {
   gray09: '#666666',
   gray10: '#333333',
   gray11: '#ffffff33',
+  
 
   gray12: '#afafaf',
+  gray13: '#3c3c434d',
 
   primary: '#277EFF',
 

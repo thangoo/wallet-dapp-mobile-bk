@@ -46,6 +46,7 @@ export const thangoLight: ThangoThemeColors = {
     third: colorThango.gray02,
     fourth: colorThango.gray04,
     fifth: colorThango.light,
+    sixth : colorThango.gray13,
     defaultHover: '#FAFBFC',
     defaultPressed: '#FAFBFC',
     alternative: colorThango.lightGrayBlue,
