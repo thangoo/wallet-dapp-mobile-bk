@@ -188,7 +188,6 @@ const Legal = ({ navigation, route }) => {
                 name={IconName.ArrowRight}
                 size={IconSize.Md}
                 color={IconColor.Default}
-                style={{ marginRight: 10 }}
               />
             </HStack>
           </TouchableOpacity>
@@ -210,7 +209,6 @@ const Legal = ({ navigation, route }) => {
                 name={IconName.ArrowRight}
                 size={IconSize.Md}
                 color={IconColor.Default}
-                style={{ marginRight: 10 }}
               />
             </HStack>
           </TouchableOpacity>

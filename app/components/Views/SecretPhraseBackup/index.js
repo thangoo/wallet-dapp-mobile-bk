@@ -46,9 +46,9 @@ const createStyles = (colors) =>
       flexGrow: 1,
       position: 'relative',
     },
-    wrapperImage : {
-      flexGrow : 1,
-      marginTop : 30
+    wrapperImage: {
+      flexGrow: 1,
+      marginTop: 30,
     },
     title: {
       fontSize: 28,
@@ -70,7 +70,7 @@ const createStyles = (colors) =>
     ctas: {
       paddingHorizontal: 32,
       paddingBottom: Device.isIphoneX() ? 40 : 20,
-      flexGrow : 1
+      flexGrow: 1,
       // marginTop: 86,
     },
 
@@ -91,7 +91,7 @@ const createStyles = (colors) =>
       height: (DEVICE_WIDTH - 60) * IMAGE_3_RATIO,
     },
     carouselImageWrapper: {
-      alignItems: 'center'
+      alignItems: 'center',
     },
     circle: {
       width: 6,
@@ -111,10 +111,9 @@ const createStyles = (colors) =>
     },
     tab: {
       marginHorizontal: 22,
-      flexGrow : 1,
-      paddingBottom : 66
+      flexGrow: 1,
+      paddingBottom: 66,
     },
-   
   });
 
 const carousel_images = [
@@ -162,45 +161,50 @@ const SecretPhrase = (props) => {
 
   return (
     <View style={styles.wrapper} testID={'secret-phrase-screen--screen'}>
-      <View style={{ top: -90, flexGrow : 1 }}>
+      <View style={{ top: -90, flexGrow: 1 }}>
         <Image
           source={backgroundOnboarding}
           style={[StyleSheet.absoluteFillObject]}
         />
       </View>
-      <View style={styles.wrapperImage}>
-            <View style={styles.carouselImageWrapper}>
-              <Image
-                source={imgSecretPhrase}
-                style={styles.carouselImage}
-                resizeMode={'contain'}
-                testID={'carousel-image'}
-              />
-            </View>
-      </View>
-      <View style={styles.tab}>
-          <Text  style={styles.title} >
-            {strings('secret_phrase.heading2')}
-          </Text>
-          <Text style={styles.subtitle} numberOfLines={3} ellipsizeMode="middle">
+      <ScrollView>
+        <View style={styles.wrapperImage}>
+          <View style={styles.carouselImageWrapper}>
+            <Image
+              source={imgSecretPhrase}
+              style={styles.carouselImage}
+              resizeMode={'contain'}
+              testID={'carousel-image'}
+            />
+          </View>
+        </View>
+        <View style={styles.tab}>
+          <Text style={styles.title}>{strings('secret_phrase.heading2')}</Text>
+          <Text
+            style={styles.subtitle}
+            numberOfLines={3}
+            ellipsizeMode="middle"
+          >
             {strings('secret_phrase.subheading2')}
           </Text>
-      </View>
-      <View style={styles.ctas}>
-        <StyledButton
-          type={'blue'}
-          testID={WALLET_SETUP_CREATE_NEW_WALLET_BUTTON_ID}
-        >
-          {strings('secret_phrase.back_up_to_icloud')}
-        </StyledButton>
-        <StyledButton
-          type={'transparent-blue'}
-          onPress={onManually}
-          testID={WELCOME_SCREEN_GET_STARTED_BUTTON_ID}
-        >
-          {strings('secret_phrase.back_up_manual')}
-        </StyledButton>
-      </View>
+        </View>
+        <View style={styles.ctas}>
+          <StyledButton
+            type={'blue'}
+            testID={WALLET_SETUP_CREATE_NEW_WALLET_BUTTON_ID}
+          >
+            {strings('secret_phrase.back_up_to_icloud')}
+          </StyledButton>
+          <StyledButton
+            type={'transparent-blue'}
+            onPress={onManually}
+            testID={WELCOME_SCREEN_GET_STARTED_BUTTON_ID}
+          >
+            {strings('secret_phrase.back_up_manual')}
+          </StyledButton>
+        </View>
+      </ScrollView>
+
       <FadeOutOverlay />
       <ConfirmBackupModal ref={refConfirmBackup} onNext={onNext} />
     </View>
