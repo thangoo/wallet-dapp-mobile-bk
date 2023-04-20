@@ -361,6 +361,7 @@ const Wallet = ({ navigation }: any) => {
       await Promise.all(actions);
       setRefreshing(false);
     });
+    
   }, [setRefreshing]);
 
   const renderTab = (
@@ -622,6 +623,7 @@ const Wallet = ({ navigation }: any) => {
               onRefresh={onRefresh}
             />
           }
+          scrollEnabled={false}
         >
           {selectedAddress ? renderContent() : renderLoader()}
         </ScrollView>
