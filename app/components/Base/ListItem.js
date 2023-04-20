@@ -52,8 +52,9 @@ const createStyles = (colors) =>
     },
     amount: {
       fontSize: 15,
-      color: colors['tvn.text.default'],
+      color: colors.tText.light,
       ...fontStyles.bold,
+      alignItems: 'center'
     },
     fiatAmount: {
       fontSize: 12,

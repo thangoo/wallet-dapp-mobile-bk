@@ -285,7 +285,31 @@ class TransactionElement extends PureComponent {
     }
     return <Image source={icon} style={styles.icon} resizeMode="stretch" />;
   };
-  
+  // define for send and receive
+  renderPlusOrMinus = (transactionElement) => {
+    const { transactionType } = transactionElement;
+    let symbol;
+    switch (transactionType) {
+      case TRANSACTION_TYPES.SENT_TOKEN:
+      case TRANSACTION_TYPES.SENT_COLLECTIBLE:
+      case TRANSACTION_TYPES.SENT:
+        symbol = '-'
+        break;
+      case TRANSACTION_TYPES.RECEIVED_TOKEN:
+      case TRANSACTION_TYPES.RECEIVED_COLLECTIBLE:
+      case TRANSACTION_TYPES.RECEIVED:
+        symbol = '+'
+        break;
+      case TRANSACTION_TYPES.SITE_INTERACTION:
+        symbol = '+'
+        break;
+      case TRANSACTION_TYPES.APPROVE:
+        symbol = '+'
+        break;
+    }
+    return symbol
+  };
+
   renderAddress = (transactionElement) => {
     const { transactionType } = transactionElement;
     const colors = this.context.colors || mockTheme.colors;
@@ -315,6 +339,7 @@ class TransactionElement extends PureComponent {
       </Text>
     );
   };
+  
 
   /**
    * Renders an horizontal bar with basic tx information
@@ -357,11 +382,11 @@ class TransactionElement extends PureComponent {
                 style={{
                   backgroundColor:
                     transactionElement?.transactionType == 'transaction_sent'
-                      ? colors['tvn.status.red']
-                      : colors['tvn.primary.blue'],
+                      ? colors.tBackground.send
+                      : colors.tBackground.receive
                 }}
               >
-                <ListItem.Amount>-{value}</ListItem.Amount>
+                <ListItem.Amount>{this.renderPlusOrMinus(transactionElement)} {value}</ListItem.Amount>
                 {isMainNet(chainId) && (
                   <ListItem.FiatAmount>{fiatValue}</ListItem.FiatAmount>
                 )}
