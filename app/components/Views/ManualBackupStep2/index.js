@@ -28,7 +28,7 @@ import {
 import { tHeaderOptions } from '../../../../app/components/UI/Navbar/index.thango';
 
 const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
-  const { colors } = useTheme();
+  const { colors, themeAppearance } = useTheme();
   const styles = createStyles(colors);
 
   const [confirmedWords, setConfirmedWords] = useState([]);
@@ -195,7 +195,14 @@ const ManualBackupStep2 = ({ navigation, seedphraseBackedUp, route }) => {
         <TouchableOpacity
           // eslint-disable-next-line react/jsx-no-bind
           onPress={() => selectWord(word, i)}
-          style={[styles.selectableWord, selected && styles.selectedWord]}
+          style={[
+            styles.selectableWord,
+            selected && styles.selectedWord,
+            {
+              borderColor:
+                themeAppearance === 'light' ? colors.gray04 : 'transparent',
+            },
+          ]}
           key={`selectableWord_${i}`}
         >
           <Text

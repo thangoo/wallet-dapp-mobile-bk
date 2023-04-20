@@ -68,6 +68,11 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import { add_plus_circle } from '../../../images/index';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  getPopupSuccess,
+  setPopupSuccess,
+} from '../../../../app/ultis/async-storage';
+import WalletReadyModal from './WalletReadyModal';
 
 const createStyles = ({ colors, typography }: CustomTheme) =>
   StyleSheet.create({
@@ -320,6 +325,20 @@ const Wallet = ({ navigation }: any) => {
     selectedAddress,
     identities,
   ]);
+  const refWalletReady = useRef<WalletReadyModal>(null);
+
+  const checkPopup = async () => {
+    const a = await getPopupSuccess();
+    if (a === 'TRUE') {
+      setTimeout(() => {
+        refWalletReady.current?.toggle();
+      }, 500);
+    }
+  };
+
+  useEffect(() => {
+    checkPopup();
+  }, []);
 
   // Refesh: Token, Nft, Account Tracker, Currency Rate, Token Rates
   const onRefresh = useCallback(async () => {
@@ -577,8 +596,13 @@ const Wallet = ({ navigation }: any) => {
     [navigation, wizardStep],
   );
 
+  const onConfirm = async () => {
+    await setPopupSuccess(null);
+  };
+
   return (
     <ErrorBoundary view="Wallet">
+      <WalletReadyModal ref={refWalletReady} onConfirm={onConfirm} />
       <SafeAreaView edges={['top']} style={{ height: 362 }}>
         {selectedAddress ? renderAccount() : renderLoader()}
         <LinearGradient

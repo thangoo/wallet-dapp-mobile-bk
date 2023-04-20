@@ -46,11 +46,14 @@ export const thangoLight: ThangoThemeColors = {
     third: colorThango.gray02,
     fourth: colorThango.gray04,
     fifth: colorThango.light,
+    sixth: colorThango.gray13,
     defaultHover: '#FAFBFC',
     defaultPressed: '#FAFBFC',
     alternative: colorThango.lightGrayBlue,
     alternativeHover: '#D6D9DC',
     alternativePressed: '#D6D9DC',
+    send: colorThango.red,
+    receive : colorThango.primary
   },
   tText: {
     default: colorThango.gray10,
@@ -60,16 +63,17 @@ export const thangoLight: ThangoThemeColors = {
     address: colorThango.gray12,
     button: colorThango.light,
     third: colorThango.gray05,
-    light : colorThango.gray01,
+    light: colorThango.gray01,
     color: {
       exchangeRate: colorThango.gray10,
-    }
+    },
+    fourth: colorThango.gray10,
   },
   tIcon: {
     default: colorThango.gray10,
     alternative: '#6A737D',
     muted: '#BBC0C5',
-    light : colorThango.gray01,
+    light: colorThango.gray01,
   },
   tInput: {
     backgroundColor: {
@@ -165,7 +169,7 @@ export const thangoLight: ThangoThemeColors = {
       backgroundColor: {
         on: colorThango.gray01,
         off: colorThango.gray01,
-      }
+      },
     },
   },
   tButton: {
