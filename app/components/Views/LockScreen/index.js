@@ -64,6 +64,8 @@ const createStyles = (colors) =>
 
 const loadingLight = require('../../../animations/loading-light.json');
 const loadingDark = require('../../../animations/loading-dark.json');
+const unlockedDark = require('../../../animations/unlocked-dark.json');
+const unlockedLight = require('../../../animations/unlocked-light.json');
 
 /**
  * Main view component for the Lock screen
@@ -127,6 +129,7 @@ class LockScreen extends PureComponent {
   };
 
   async unlockKeychain() {
+    // this.firstAnimation?.pause();
     this.unlockAttempts++;
     try {
       // Retreive the credentials
@@ -136,7 +139,7 @@ class LockScreen extends PureComponent {
       this.setState({ ready: true });
       Logger.log('Lockscreen::unlockKeychain - state: ready');
       this.secondAnimation?.play();
-      this.animationName?.play();
+      // this.animationName?.play();
       Logger.log('Lockscreen::unlockKeychain - playing animations');
 
       if (!this.props.passwordSet) {
@@ -187,6 +190,13 @@ class LockScreen extends PureComponent {
       loadingLight,
       loadingDark,
     );
+
+    const unlocked = getAssetFromTheme(
+      appTheme,
+      osColorScheme,
+      unlockedLight,
+      unlockedDark,
+    );
     const styles = this.getStyles();
 
     if (!this.state.ready) {
@@ -211,7 +221,7 @@ class LockScreen extends PureComponent {
           }}
           style={styles.animation}
           loop={false}
-          source={loading}
+          source={unlocked}
           onAnimationFinish={this.onAnimationFinished}
         />
       </View>
