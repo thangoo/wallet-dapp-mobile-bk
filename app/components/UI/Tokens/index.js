@@ -91,7 +91,7 @@ const createStyles = (colors) =>
       backgroundColor: colors.tBackground.third,
       borderRadius: 16,
       height: 70,
-      padding: 10,
+      padding: 16,
       marginLeft: 15,
       marginRight: 15,
     },
@@ -459,7 +459,8 @@ class Tokens extends PureComponent {
           // eslint-disable-next-line no-mixed-spaces-and-tabs
         })
       : tokens;
-// handle scroll
+
+    // handle scroll
     const handleContentSizeChange = () => {
         if (tokensToDisplay.length <= 3) {
           this.setState({ isScrollEnable: false })
@@ -469,22 +470,25 @@ class Tokens extends PureComponent {
       };
     // console.log('#### tokensToDisplay: ', tokensToDisplay);
     return (
-      <ScrollView
-        scrollEnabled={isScrollEnable}
-        onContentSizeChange={handleContentSizeChange}
-        refreshControl={
-          <RefreshControl
-            colors={[colors.tPrimary.default]}
-            tintColor={colors.tIcon.default}
-            refreshing={refreshing}
-            onRefresh={this.onRefresh}
-          />
-        }
-      >
-        {tokensToDisplay.map((item) => this.renderItem(item))}
-        {this.renderTokensDetectedSection()}
-        {/* {this.renderFooter()} */}
-      </ScrollView>
+      <View style={{ height: 400, paddingBottom : 115 }}>
+          <ScrollView
+            scrollEnabled={isScrollEnable}
+            onContentSizeChange={handleContentSizeChange}
+            refreshControl={
+              <RefreshControl
+                colors={[colors.tPrimary.default]}
+                tintColor={colors.tIcon.default}
+                refreshing={refreshing}
+                onRefresh={this.onRefresh}
+              />
+            }
+          >
+            {tokensToDisplay.map((item) => this.renderItem(item))}
+            {this.renderTokensDetectedSection()}
+            {/* {this.renderFooter()} */}
+           </ScrollView>
+      </View>
+    
     );
   }
 
