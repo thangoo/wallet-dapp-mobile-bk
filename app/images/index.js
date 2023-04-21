@@ -31,6 +31,7 @@ const finger_icon = require('./finger.png');
 const xBack_icon = require('./xBack.png');
 const menu_icon = require('./menu_icon.png');
 const bell_icon = require('./bell_icon.png');
+const tron_icon = require('./tron.png');
 
 export {
   bell_icon,
@@ -66,4 +67,5 @@ export {
   plus_icon,
   finger_icon,
   xBack_icon,
+  tron_icon
 };
