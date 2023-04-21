@@ -361,7 +361,6 @@ const Wallet = ({ navigation }: any) => {
       await Promise.all(actions);
       setRefreshing(false);
     });
-    
   }, [setRefreshing]);
 
   const renderTab = (

@@ -156,7 +156,7 @@ const createStyles = (colors) =>
       ...fontStyles.normal,
       color: colors.tText.default,
       flex: 1,
-      fontSize: 12,
+      fontSize: 14,
     },
     labelTextConfirm: {
       ...fontStyles.normal,
