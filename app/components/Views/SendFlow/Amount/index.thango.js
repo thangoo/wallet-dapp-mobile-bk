@@ -119,9 +119,9 @@ const createStyles = (colors) =>
     },
     inputWrapper: {
       // flex: 1,
-      marginTop: 10,
+      marginVertical: 32,
       marginHorizontal: 10,
-      marginBottom: 20,
+      // marginBottom: 20,
       // height: 200,
       // flexDirection: 'row'
     },
