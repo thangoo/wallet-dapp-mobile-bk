@@ -251,8 +251,8 @@ const ReceiveScreen: FC<Props> = (props) => {
       <Text onPress={() => {}} style={styles.howText}>
         {'How this work?'}
       </Text>
-
-      {allowedToBuy(props.network) && (
+      {/* FIX: Replace network to chainID to fix on prod */}
+      {allowedToBuy(props.chainId) && (
         <StyledButton
           testID={'manual-backup-step-1-continue-button'}
           type={'confirm'}
