@@ -6,6 +6,8 @@ import {
   View,
   InteractionManager,
   Platform,
+  ScrollView,
+  RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
 import ActionSheet from 'react-native-actionsheet';
@@ -216,11 +218,47 @@ class Tokens extends PureComponent {
 
   state = {
     isAddTokenEnabled: true,
+    isScrollEnable: true,
+    refreshing: false
   };
+
+// refresh control for token list 
+  onRefresh = async () => {
+    requestAnimationFrame(async () => {
+      this.setState({ refreshing: true });
+      const {
+        TokenDetectionController,
+        NftDetectionController,
+        AccountTrackerController,
+        CurrencyRateController,
+        TokenRatesController,
+      } = Engine.context 
+      const actions = [
+        TokenDetectionController.detectTokens(),
+        NftDetectionController.detectNfts(),
+        AccountTrackerController.refresh(),
+        CurrencyRateController.start(),
+        TokenRatesController.poll(),
+      ];
+      await Promise.all(actions);
+      this.setState({ refreshing: false });
+    });
+  }
 
   componentDidMount = () => {
     const { onRef } = this.props;
     onRef && onRef(this);
+    // update token list
+    requestAnimationFrame(async () => {
+      const {
+        TokenDetectionController,
+        NftDetectionController,
+        AccountTrackerController,
+      } = Engine.context
+      TokenDetectionController.detectTokens();
+      NftDetectionController.detectNfts();
+      AccountTrackerController.refresh();
+    });
   };
 
   getStyles = () => {
@@ -412,6 +450,8 @@ class Tokens extends PureComponent {
 
   renderList() {
     const { tokens, hideZeroBalanceTokens, tokenBalances } = this.props;
+    const colors = this.context.colors || mockTheme.colors;
+    const { isScrollEnable, refreshing } = this.state
     const tokensToDisplay = hideZeroBalanceTokens
       ? tokens.filter((token) => {
           const { address, isETH } = token;
@@ -419,15 +459,32 @@ class Tokens extends PureComponent {
           // eslint-disable-next-line no-mixed-spaces-and-tabs
         })
       : tokens;
-
+// handle scroll
+    const handleContentSizeChange = () => {
+        if (tokensToDisplay.length <= 3) {
+          this.setState({ isScrollEnable: false })
+        } else {
+          this.setState({ isScrollEnable: true })
+        }
+      };
     // console.log('#### tokensToDisplay: ', tokensToDisplay);
-
     return (
-      <View>
+      <ScrollView
+        scrollEnabled={isScrollEnable}
+        onContentSizeChange={handleContentSizeChange}
+        refreshControl={
+          <RefreshControl
+            colors={[colors.tPrimary.default]}
+            tintColor={colors.tIcon.default}
+            refreshing={refreshing}
+            onRefresh={this.onRefresh}
+          />
+        }
+      >
         {tokensToDisplay.map((item) => this.renderItem(item))}
         {this.renderTokensDetectedSection()}
         {/* {this.renderFooter()} */}
-      </View>
+      </ScrollView>
     );
   }
 

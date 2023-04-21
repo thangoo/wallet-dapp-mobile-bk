@@ -63,6 +63,12 @@ export interface ThangoThemeColors {
      */
     fourth: string;
     fifth: string;
+    sixth: string;
+    /**
+     * {string} background.send || background.receive - for background transaction element
+     */
+    send: string;
+    receive: string;
   };
   tText: {
     /**
@@ -87,6 +93,12 @@ export interface ThangoThemeColors {
     address: string;
     button: string;
     third: string;
+    fourth: string;
+    /**
+     * {string} text.color - For some text
+     */
+    color: object;
+    light: string;
   };
   tIcon: {
     /**
@@ -101,6 +113,7 @@ export interface ThangoThemeColors {
      * {string} icon.muted - For inactive or lowest priority icons
      */
     muted: string;
+    light: string;
   };
   tBorder: {
     /**
@@ -327,6 +340,9 @@ export interface ThangoThemeColors {
   };
   tSwitch: {
     default: string;
+    /**
+     * {object}  style for switch token
+     */
     token: object;
   };
   tButton: {

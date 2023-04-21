@@ -67,6 +67,12 @@ import {
 } from '../../../selectors/networkController';
 import LinearGradient from 'react-native-linear-gradient';
 import { add_plus_circle } from '../../../images/index';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  getPopupSuccess,
+  setPopupSuccess,
+} from '../../../../app/ultis/async-storage';
+import WalletReadyModal from './WalletReadyModal';
 
 const createStyles = ({ colors, typography }: CustomTheme) =>
   StyleSheet.create({
@@ -75,23 +81,20 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       zIndex: 3,
     },
     wrapperContent: {
-      flex: 1,
-      zIndex: 2,
+      // flex: 1,
+      // zIndex: 2,
     },
     wrapperTokenList: {
       flex: 1,
       zIndex: 2,
-    },
-    assetOverviewWrapper: {
-      height: 348,
     },
     bgGradient: {
       borderBottomLeftRadius: 56,
       borderBottomRightRadius: 56,
       position: 'absolute',
       width: '100%',
-      height: 348,
-      zIndex: 1,
+      height: 362,
+      zIndex: -1,
     },
     assetItem: {
       position: 'absolute',
@@ -322,6 +325,20 @@ const Wallet = ({ navigation }: any) => {
     selectedAddress,
     identities,
   ]);
+  const refWalletReady = useRef<WalletReadyModal>(null);
+
+  const checkPopup = async () => {
+    const a = await getPopupSuccess();
+    if (a === 'TRUE') {
+      setTimeout(() => {
+        refWalletReady.current?.toggle();
+      }, 500);
+    }
+  };
+
+  useEffect(() => {
+    checkPopup();
+  }, []);
 
   // Refesh: Token, Nft, Account Tracker, Currency Rate, Token Rates
   const onRefresh = useCallback(async () => {
@@ -344,6 +361,7 @@ const Wallet = ({ navigation }: any) => {
       await Promise.all(actions);
       setRefreshing(false);
     });
+    
   }, [setRefreshing]);
 
   const renderTab = (
@@ -465,16 +483,14 @@ const Wallet = ({ navigation }: any) => {
     };
 
     return (
-      <View style={styles.wrapperAccount}>
-        <View style={styles.assetItem}>
-          <AccountOverview
-            account={account}
-            navigation={navigation}
-            onRef={onRef}
-            // props token for received crypto
-            token={assets}
-          />
-        </View>
+      <View style={{ flex: 1, marginTop: 50 }}>
+        <AccountOverview
+          account={account}
+          navigation={navigation}
+          onRef={onRef}
+          // props token for received crypto
+          token={assets}
+        />
       </View>
     );
   }, [
@@ -581,31 +597,38 @@ const Wallet = ({ navigation }: any) => {
     [navigation, wizardStep],
   );
 
+  const onConfirm = async () => {
+    await setPopupSuccess(null);
+  };
+
   return (
     <ErrorBoundary view="Wallet">
-      <View style={baseStyles.flexGrow} {...generateTestId('wallet-screen')}>
+      <WalletReadyModal ref={refWalletReady} onConfirm={onConfirm} />
+      <SafeAreaView edges={['top']} style={{ height: 362 }}>
+        {selectedAddress ? renderAccount() : renderLoader()}
         <LinearGradient
           start={{ x: 0.75, y: 0.75 }}
           end={{ x: 0.25, y: 0 }}
           colors={colors.tGradient.wallet}
           style={styles.bgGradient}
         />
-        {selectedAddress ? renderAccount() : renderLoader()}
+      </SafeAreaView>
+      <View style={{ flex: 1 }}>
         <ScrollView
-          style={styles.wrapperContent}
           refreshControl={
             <RefreshControl
-              colors={[colors.primary.default]}
-              tintColor={colors.icon.default}
+              colors={[colors.tPrimary.default]}
+              tintColor={colors.tIcon.default}
               refreshing={refreshing}
               onRefresh={onRefresh}
             />
           }
+          scrollEnabled={false}
         >
           {selectedAddress ? renderContent() : renderLoader()}
         </ScrollView>
-        {renderOnboardingWizard()}
       </View>
+      {renderOnboardingWizard()}
     </ErrorBoundary>
   );
 };
