@@ -174,6 +174,61 @@ const createStyles = (colors: any) =>
       marginTop: 20,
       marginBottom: 20,
     },
+    body: {
+      backgroundColor: colors.tBackground.secondary,
+      paddingHorizontal: 22,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+    },
+    modal: {
+      margin: 0,
+      justifyContent: 'flex-end',
+    },
+    walletImg : {
+      marginBottom :  20,
+    },
+    text1: {
+      fontSize: 14,
+      fontWeight: '400',
+      color: colors.tText.default,
+    },
+    title: {
+      marginBottom: 20,
+      fontSize: 24,
+      fontWeight: '600',
+      textAlign: 'center',
+      textTransform: 'capitalize',
+      color: colors.tText.default,
+    },
+    title2: {
+      marginBottom: 30,
+      fontSize: 14,
+      fontWeight: '400',
+      textAlign: 'center',
+      color: colors.tText.default,
+    },
+    dragger: {
+      width: 36,
+      height: 5,
+      borderRadius: 2.5,
+      backgroundColor: colors.tBackground.sixth,
+      marginTop: 6,
+      marginBottom: 32,
+    },
+    noteWrap: {
+      alignItems: 'flex-start',
+      marginBottom: 16,
+    },
+    wrapItem: {
+      backgroundColor: colors.tBackground.alternative,
+      width: '100%',
+      borderRadius: 18,
+      paddingHorizontal: 16,
+      paddingVertical: 32,
+      paddingBottom: 16,
+      marginTop: 32,
+      marginBottom: 64,
+    },
   });
 
 export default createStyles;

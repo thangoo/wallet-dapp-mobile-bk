@@ -28,7 +28,7 @@ const styleSheet = (params: {
     base: {
       flexDirection: 'row',
       alignItems: 'center',
-      height: 82,
+      height: 64,
       paddingHorizontal: 16,
       marginBottom: bottomInset,
       borderTopWidth: 0.5,

@@ -60,7 +60,7 @@ const createStyles = (colors) =>
   StyleSheet.create({
     viewOnEtherscan: {
       fontSize: 14,
-      color: colors['tvn.primary.default'],
+      color: colors.tPrimary.default,
       ...fontStyles.bold,
       textAlign: 'center',
     },
@@ -410,7 +410,6 @@ class TransactionDetails extends PureComponent {
       }
       return assetSymbol;
     };
-    console.log(assetSymbol);
     return updatedTransactionDetails ? (
       <ScrollView>
         <View

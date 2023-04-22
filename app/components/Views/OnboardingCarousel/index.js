@@ -42,6 +42,7 @@ const IMAGE_2_RATIO = 222 / 239;
 const IMAGE_1_RATIO = 285 / 203;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
+
 const IMG_PADDING = Device.isIphoneX() ? 100 : Device.isIphone5S() ? 180 : 220;
 
 const createStyles = (colors) =>
@@ -50,8 +51,11 @@ const createStyles = (colors) =>
       flexGrow: 1,
     },
     wrapper: {
-      flex: 1,
+      flexGrow: 1,
       position: 'relative',
+    },
+    wrapperCarousel: {
+      flexGrow: 1,
     },
     title: {
       fontSize: 28,
@@ -77,7 +81,7 @@ const createStyles = (colors) =>
 
     // eslint-disable-next-line react-native/no-unused-styles
     carouselImage: {
-      width: '97%',
+      width: DEVICE_WIDTH > 400 ? '85%' : '97%',
       height: '75%',
     },
     // eslint-disable-next-line react-native/no-unused-styles
@@ -94,7 +98,7 @@ const createStyles = (colors) =>
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      flex: 1,
+      flexGrow: 1,
     },
     circle: {
       width: 6,
@@ -111,11 +115,17 @@ const createStyles = (colors) =>
       flexDirection: 'row',
       alignSelf: 'center',
       marginBottom: 30,
+      paddingTop: 10
     },
     tab: {
       marginHorizontal: 32,
+      paddingBottom : 20
     },
+    wrapperBg : {
+      top : DEVICE_WIDTH < 400 ? -50 : 0,
+    }
   });
+  console.log(Dimensions.get('window').width);
 
 const carousel_images = [
   imgWalletOnboarding,
@@ -251,10 +261,10 @@ class OnboardingCarousel extends PureComponent {
 
     return (
       <View
-        style={baseStyles.flexGrow}
+        style={styles.wrapper}
         testID={'onboarding-carouselcarousel-screen--screen'}
       >
-        <View>
+        <View style={styles.wrapperBg}>
           <Image
             source={backgroundOnboarding}
             style={StyleSheet.absoluteFillObject}
@@ -262,7 +272,7 @@ class OnboardingCarousel extends PureComponent {
         </View>
         <ScrollView contentContainerStyle={styles.scroll}>
           <View
-            style={styles.wrapper}
+           style={styles.wrapperCarousel}
             {...generateTestId(Platform, WELCOME_SCREEN_CAROUSEL_CONTAINER_ID)}
           >
             <ScrollableTabView
@@ -273,7 +283,7 @@ class OnboardingCarousel extends PureComponent {
               {['one', 'two', 'three', 'four'].map((value, index) => {
                 const key = index + 1;
                 return (
-                  <View key={key} style={[baseStyles.flexGrow]}>
+                  <View key={key} style={{flexGrow: 1}}>
                     <View style={styles.carouselImageWrapper}>
                       <Image
                         source={carousel_images[index]}
@@ -291,7 +301,7 @@ class OnboardingCarousel extends PureComponent {
                         <Text style={styles.title}>
                           {strings(`onboarding_carousel.title${key}`)}
                         </Text>
-                        <Text style={styles.subtitle}>
+                        <Text style={styles.subtitle} numberOfLines={3} ellipsizeMode="middle">
                           {strings(`onboarding_carousel.subtitle${key}`)}
                         </Text>
                       </View>
@@ -300,7 +310,10 @@ class OnboardingCarousel extends PureComponent {
                 );
               })}
             </ScrollableTabView>
-            <View style={styles.progessContainer}>
+          
+          </View>
+        </ScrollView>
+        <View style={styles.progessContainer}>
               {[1, 2, 3, 4].map((i) => (
                 <View
                   key={i}
@@ -311,8 +324,6 @@ class OnboardingCarousel extends PureComponent {
                 />
               ))}
             </View>
-          </View>
-        </ScrollView>
         <View style={styles.ctas}>
           <View style={styles.ctaWrapper}>
             <StyledButton

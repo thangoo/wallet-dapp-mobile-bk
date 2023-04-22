@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Platform,
+  Dimensions,
+  Image,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
@@ -102,6 +104,9 @@ import generateTestId from '../../../../../wdio/utils/generateTestId';
 import { COMFIRM_TXN_AMOUNT } from '../../../../../wdio/screen-objects/testIDs/Screens/TransactionConfirm.testIds';
 import NetworkMainAssetLogo from '../../../UI/NetworkMainAssetLogo';
 import TokenImage from '../../../UI/TokenImage';
+import WrapConfirm from './WrapConfirm';
+import { send_success } from 'images/index';
+
 
 const EDIT = 'edit';
 const EDIT_NONCE = 'edit_nonce';
@@ -233,6 +238,8 @@ class Confirm extends PureComponent {
     fromAccountName: this.props.transactionState.transactionFromName,
     fromSelectedAddress: this.props.transactionState.transaction.from,
     hexDataModalVisible: false,
+    successModalVisible: false,
+    detailVisible : true,
     warningGasPriceHigh: undefined,
     ready: false,
     transactionValue: undefined,
@@ -317,7 +324,6 @@ class Confirm extends PureComponent {
     navigation.setOptions(
       tHeaderPaymentDetailOptions(route, colors, { title }, navigation),
     );
-
   };
 
   componentWillUnmount = async () => {
@@ -801,7 +807,9 @@ class Confirm extends PureComponent {
         );
         stopGasPolling();
         resetTransaction();
-        navigation && navigation.dangerouslyGetParent()?.pop();
+        this.setState({ detailVisible:  false });
+        this.setState({ successModalVisible:  true });
+
       });
     } catch (error) {
       if (!error?.message.startsWith(KEYSTONE_TX_CANCELED)) {
@@ -932,7 +940,6 @@ class Confirm extends PureComponent {
 
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
-
     return (
       <Modal
         isVisible
@@ -1159,6 +1166,7 @@ class Confirm extends PureComponent {
       network,
       chainId,
       gasEstimateType,
+      navigation
     } = this.props;
     const { nonce } = this.props.transaction;
     const {
@@ -1174,6 +1182,7 @@ class Confirm extends PureComponent {
       warningGasPriceHigh,
       confusableCollection,
       mode,
+      detailVisible,
       warningModalVisible,
       isAnimating,
       animateOnChange,
@@ -1181,6 +1190,12 @@ class Confirm extends PureComponent {
     } = this.state;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
+
+      // send successful and navigate to main wallet
+    const handlePress = () => {
+        navigation && navigation.dangerouslyGetParent()?.pop()
+       } 
+
 
     const showFeeMarket =
       !gasEstimateType ||
@@ -1234,115 +1249,119 @@ class Confirm extends PureComponent {
     const errorLinkText = isTestNetwork
       ? strings('transaction.go_to_faucet')
       : strings('transaction.buy_more');
-
     return (
-      <SafeAreaView
-        edges={['bottom']}
-        style={styles.wrapper}
-        testID={'txn-confirm-screen'}
-      >
-        <InfoModal
-          isVisible={warningModalVisible}
-          toggleModal={this.toggleWarningModal}
-          title={strings('transaction.confusable_title')}
-          body={
-            <Text style={styles.text}>
-              {strings('transaction.confusable_msg')}
-            </Text>
-          }
-        />
-
-        <ScrollView style={baseStyles.flexGrow} ref={this.setScrollViewRef}>
-          {!selectedAsset.tokenId ? (
-            <View style={styles.amountWrapper}>
-              {renderTokenImg(selectedAsset)}
-              {/* <Text style={styles.textAmountLabel}>
-                {strings('transaction.amount')}
-              </Text> */}
-              <Text
-                style={styles.textAmount}
-                {...generateTestId(Platform, COMFIRM_TXN_AMOUNT)}
-              >
-                {transactionValue}
+      <>
+      {
+        detailVisible && (
+        <WrapConfirm>
+          <InfoModal
+            isVisible={warningModalVisible}
+            toggleModal={this.toggleWarningModal}
+            title={strings('transaction.confusable_title')}
+            body={
+              <Text style={styles.text}>
+                {strings('transaction.confusable_msg')}
               </Text>
-              {isMainnetByChainId(chainId) && (
-                <Text style={styles.textAmountLabel}>
-                  {transactionValueFiat}
-                </Text>
-              )}
-            </View>
-          ) : (
-            <View style={styles.amountWrapper}>
-              <Text style={styles.textAmountLabel}>
-                {strings('transaction.asset')}
-              </Text>
-              <View style={styles.CollectibleMediaWrapper}>
-                <CollectibleMedia
-                  small
-                  iconStyle={styles.CollectibleMedia}
-                  containerStyle={styles.CollectibleMedia}
-                  collectible={selectedAsset}
-                />
-              </View>
-              <View>
-                <Text style={styles.collectibleName}>{selectedAsset.name}</Text>
-                <Text style={styles.collectibleTokenId}>{`#${renderShortText(
-                  selectedAsset.tokenId,
-                  10,
-                )}`}</Text>
-              </View>
-            </View>
-          )}
-
-          <View style={styles.tokenInfoWrapper}>
-            <Text style={styles.tokenTitle}>PAYMENT INFO</Text>
-            <Text
-              style={styles.tokenContent}
-            >{`${selectedAsset.symbol} Transfer`}</Text>
-          </View>
-
-          <View style={styles.seprateLine} />
-
-          <AdressToComponentWrap />
-
-          <View style={styles.seprateLine} />
-
-          <AddressFrom
-            onPressIcon={!paymentRequest ? null : this.openAccountSelector}
-            fromAccountAddress={fromSelectedAddress}
-            fromAccountName={fromAccountName}
-            fromAccountBalance={fromAccountBalance}
-          />
-
-          <View style={styles.seprateLine} />
-
-          <TransactionReview
-            gasSelected={this.state.gasSelected}
-            primaryCurrency={primaryCurrency}
-            onEdit={() => this.edit(!showFeeMarket ? EDIT : EDIT_EIP1559)}
-            onUpdatingValuesStart={this.onUpdatingValuesStart}
-            onUpdatingValuesEnd={this.onUpdatingValuesEnd}
-            animateOnChange={animateOnChange}
-            isAnimating={isAnimating}
-            gasEstimationReady={gasEstimationReady}
-            chainId={chainId}
-            gasObject={
-              !showFeeMarket
-                ? this.state.legacyGasObject
-                : this.state.EIP1559GasObject
             }
-            updateTransactionState={this.updateTransactionState}
-            legacy={!showFeeMarket}
-            onlyGas={false}
-            multiLayerL1FeeTotal={multiLayerL1FeeTotal}
           />
-          {showCustomNonce && (
-            <CustomNonce
-              nonce={nonce}
-              onNonceEdit={() => this.edit(EDIT_NONCE)}
+          <ScrollView style={baseStyles.flexGrow} ref={this.setScrollViewRef}>
+            {!selectedAsset.tokenId ? (
+              <View style={styles.amountWrapper}>
+                {renderTokenImg(selectedAsset)}
+  
+                <Text
+                  style={styles.textAmount}
+                  {...generateTestId(Platform, COMFIRM_TXN_AMOUNT)}
+                >
+                  {transactionValue}
+                </Text>
+                {isMainnetByChainId(chainId) && (
+                  <Text style={styles.textAmountLabel}>
+                    {transactionValueFiat}
+                  </Text>
+                )}
+              </View>
+            ) : (
+              <View style={styles.amountWrapper}>
+                <Text style={styles.textAmountLabel}>
+                  {strings('transaction.asset')}
+                </Text>
+                <View style={styles.CollectibleMediaWrapper}>
+                  <CollectibleMedia
+                    small
+                    iconStyle={styles.CollectibleMedia}
+                    containerStyle={styles.CollectibleMedia}
+                    collectible={selectedAsset}
+                  />
+                </View>
+                <View>
+                  <Text style={styles.collectibleName}>{selectedAsset.name}</Text>
+                  <Text style={styles.collectibleTokenId}>{`#${renderShortText(
+                    selectedAsset.tokenId,
+                    10,
+                  )}`}</Text>
+                </View>
+              </View>
+            )}
+  
+            <View style={styles.tokenInfoWrapper}>
+              <Text style={styles.tokenTitle}>PAYMENT INFO</Text>
+              <Text
+                style={styles.tokenContent}
+              >{`${selectedAsset.symbol} Transfer`}</Text>
+            </View>
+  
+            <View style={styles.seprateLine} />
+  
+            <AdressToComponentWrap />
+  
+            <View style={styles.seprateLine} />
+  
+            <AddressFrom
+              onPressIcon={!paymentRequest ? null : this.openAccountSelector}
+              fromAccountAddress={fromSelectedAddress}
+              fromAccountName={fromAccountName}
+              fromAccountBalance={fromAccountBalance}
             />
-          )}
+  
+            <View style={styles.seprateLine} />
+  
+            <TransactionReview
+              gasSelected={this.state.gasSelected}
+              primaryCurrency={primaryCurrency}
+              onEdit={() => this.edit(!showFeeMarket ? EDIT : EDIT_EIP1559)}
+              onUpdatingValuesStart={this.onUpdatingValuesStart}
+              onUpdatingValuesEnd={this.onUpdatingValuesEnd}
+              animateOnChange={animateOnChange}
+              isAnimating={isAnimating}
+              gasEstimationReady={gasEstimationReady}
+              chainId={chainId}
+              gasObject={
+                !showFeeMarket
+                  ? this.state.legacyGasObject
+                  : this.state.EIP1559GasObject
+              }
+              updateTransactionState={this.updateTransactionState}
+              legacy={!showFeeMarket}
+              onlyGas={false}
+              multiLayerL1FeeTotal={multiLayerL1FeeTotal}
+            />
+            {showCustomNonce && (
+              <CustomNonce
+                nonce={nonce}
+                onNonceEdit={() => this.edit(EDIT_NONCE)}
+              />
+            )}
+  
+            <View style={styles.seprateLine} />
+          </ScrollView>
 
+        <SafeAreaView
+          edges={['bottom']}
+          style={{
+            marginBottom: Dimensions.get('window').height * 0.2 + 16,
+          }}
+        >
           {errorMessage && (
             <View style={styles.errorWrapper}>
               {isTestNetwork || allowedToBuy(network) ? (
@@ -1369,7 +1388,6 @@ class Confirm extends PureComponent {
               warningMessage={strings('edit_gas_fee_eip1559.low_fee_warning')}
             />
           )}
-
           <View style={styles.actionsWrapper}>
             {showHexData && (
               <TouchableOpacity
@@ -1382,8 +1400,6 @@ class Confirm extends PureComponent {
               </TouchableOpacity>
             )}
           </View>
-        </ScrollView>
-        <View style={styles.buttonNextWrapper}>
           <StyledButton
             type={'confirm'}
             disabled={
@@ -1392,7 +1408,7 @@ class Confirm extends PureComponent {
               Boolean(errorMessage) ||
               isAnimating
             }
-            containerStyle={styles.buttonNext}
+            // containerStyle={styles.buttonNext}
             onPress={this.onNext}
             testID={'txn-confirm-send-button'}
           >
@@ -1404,12 +1420,38 @@ class Confirm extends PureComponent {
               strings('transaction.send')
             )}
           </StyledButton>
-        </View>
+        </SafeAreaView>
+
         {mode === EDIT && this.renderCustomGasModalLegacy()}
         {mode === EDIT_NONCE && this.renderCustomNonceModal()}
         {mode === EDIT_EIP1559 && this.renderCustomGasModalEIP1559()}
         {this.renderHexDataModal()}
-      </SafeAreaView>
+        </WrapConfirm> )
+      }
+       <Modal
+        isVisible={this.state.successModalVisible}
+        swipeDirection={'down'}
+        propagateSwipe
+        style={styles.bottomModal}
+        backdropColor={colors.overlay.default}
+        backdropOpacity={1}
+      >
+          <View style={styles.body}>
+            <View style={styles.dragger} />
+            <Image source={send_success} style={styles.walletImg} />
+            <Text style={styles.title}>{strings('send.success')}</Text>
+            <Text style={styles.title2}>{strings('send.des')}</Text>
+            <StyledButton
+              testID={'success-send-btn'}
+              type={'confirm'}
+              onPress={handlePress}
+              containerStyle={{ width: '100%', marginBottom: 36 }}
+            >
+              {strings('send.close')}
+            </StyledButton>
+          </View>
+      </Modal>
+      </>
     );
   };
 }
