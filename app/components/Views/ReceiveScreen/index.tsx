@@ -141,7 +141,7 @@ const ReceiveScreen: FC<Props> = (props) => {
    * Shows an alert message with a coming soon message
    */
   const onBuy = async () => {
-    if (!allowedToBuy(props.network)) {
+    if (!allowedToBuy(props.chainId)) {
       Alert.alert(
         strings('fiat_on_ramp.network_not_supported'),
         strings('fiat_on_ramp.switch_network'),
