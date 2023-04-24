@@ -108,6 +108,21 @@ class Engine {
         }),
       };
 
+      if(!networkControllerOpts.state){
+        networkControllerOpts.state = {
+          "isCustomNetwork": true, 
+          "network": "loading", 
+          "properties": {},
+           "providerConfig": {
+            "chainId": -1, 
+            "nickname": "TRONGRID", 
+            "rpcTarget": "https://api.trongrid.io", 
+            "ticker": "TRX", 
+            "type": "rpc"
+          }
+        }
+      }
+      
       const networkController = new NetworkController(networkControllerOpts);
       networkController.providerConfig = {
         static: {

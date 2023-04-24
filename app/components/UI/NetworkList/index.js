@@ -232,7 +232,7 @@ export class NetworkList extends PureComponent {
     this.handleNetworkSelected(network, networkItem.symbol, networkItem.fullNode);
     const { NetworkController, CurrencyRateController } = Engine.context;
     CurrencyRateController.setNativeCurrency(networkItem.symbol);
-    NetworkController.setRpcTarget(networkItem.fullNode, 1, networkItem.symbol, network);
+    NetworkController.setRpcTarget(networkItem.fullNode, -1, networkItem.symbol, network);
     this.props.thirdPartyApiMode &&
       setTimeout(() => {
         Engine.refreshTransactionHistory();
