@@ -1193,7 +1193,7 @@ class Confirm extends PureComponent {
 
       // send successful and navigate to main wallet
     const handlePress = () => {
-        navigation && navigation.dangerouslyGetParent()?.pop()
+        navigation && navigation.navigate('Home')
        } 
 
 
