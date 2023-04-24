@@ -141,7 +141,7 @@ const ReceiveScreen: FC<Props> = (props) => {
    * Shows an alert message with a coming soon message
    */
   const onBuy = async () => {
-    if (!allowedToBuy(props.network)) {
+    if (!allowedToBuy(props.chainId)) {
       Alert.alert(
         strings('fiat_on_ramp.network_not_supported'),
         strings('fiat_on_ramp.switch_network'),
@@ -251,8 +251,8 @@ const ReceiveScreen: FC<Props> = (props) => {
       <Text onPress={() => {}} style={styles.howText}>
         {'How this work?'}
       </Text>
-
-      {allowedToBuy(props.network) && (
+      {/* FIX: Replace network to chainID to fix on prod */}
+      {allowedToBuy(props.chainId) && (
         <StyledButton
           testID={'manual-backup-step-1-continue-button'}
           type={'confirm'}
