@@ -53,7 +53,7 @@ export const thangoLight: ThangoThemeColors = {
     alternativeHover: '#D6D9DC',
     alternativePressed: '#D6D9DC',
     send: colorThango.red,
-    receive : colorThango.primary
+    receive: colorThango.primary
   },
   tText: {
     default: colorThango.gray10,
@@ -163,12 +163,18 @@ export const thangoLight: ThangoThemeColors = {
     wallet: colorThango.maiWalletLinear,
   },
   tSwitch: {
-    default: colorThango.gray06,
+    circleColor: {
+      on: colorThango.primary,
+      off: colorThango.gray06,
+    },
     token: {
-      border: colorThango.primary,
+      border: {
+        on: colorThango.primary,
+        off: colorThango.gray04
+      },
       backgroundColor: {
         on: colorThango.gray01,
-        off: colorThango.gray01,
+        off: colorThango.gray01
       },
     },
   },

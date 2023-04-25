@@ -60,9 +60,15 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     wallet: colorThango.maiWalletLinear,
   },
   tSwitch: {
-    default: colorThango.dark07,
+    circleColor: {
+      on: colorThango.primary,
+      off: colorThango.gray07,
+    },
     token: {
-      border: colorThango.primary,
+      border: {
+        on: colorThango.primary,
+        off: colorThango.gray04
+      },
       backgroundColor: {
         on: colorThango.gray10,
         off: colorThango.gray10,
