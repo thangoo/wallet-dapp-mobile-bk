@@ -219,10 +219,10 @@ class Tokens extends PureComponent {
   state = {
     isAddTokenEnabled: true,
     isScrollEnable: true,
-    refreshing: false
+    refreshing: false,
   };
 
-// refresh control for token list 
+  // refresh control for token list
   onRefresh = async () => {
     requestAnimationFrame(async () => {
       this.setState({ refreshing: true });
@@ -232,7 +232,7 @@ class Tokens extends PureComponent {
         AccountTrackerController,
         CurrencyRateController,
         TokenRatesController,
-      } = Engine.context 
+      } = Engine.context;
       const actions = [
         TokenDetectionController.detectTokens(),
         NftDetectionController.detectNfts(),
@@ -243,7 +243,7 @@ class Tokens extends PureComponent {
       await Promise.all(actions);
       this.setState({ refreshing: false });
     });
-  }
+  };
 
   componentDidMount = () => {
     const { onRef } = this.props;
@@ -254,7 +254,7 @@ class Tokens extends PureComponent {
         TokenDetectionController,
         NftDetectionController,
         AccountTrackerController,
-      } = Engine.context
+      } = Engine.context;
       TokenDetectionController.detectTokens();
       NftDetectionController.detectNfts();
       AccountTrackerController.refresh();
@@ -451,7 +451,7 @@ class Tokens extends PureComponent {
   renderList() {
     const { tokens, hideZeroBalanceTokens, tokenBalances } = this.props;
     const colors = this.context.colors || mockTheme.colors;
-    const { isScrollEnable, refreshing } = this.state
+    const { isScrollEnable, refreshing } = this.state;
     const tokensToDisplay = hideZeroBalanceTokens
       ? tokens.filter((token) => {
           const { address, isETH } = token;
@@ -462,33 +462,32 @@ class Tokens extends PureComponent {
 
     // handle scroll
     const handleContentSizeChange = () => {
-        if (tokensToDisplay.length <= 3) {
-          this.setState({ isScrollEnable: false })
-        } else {
-          this.setState({ isScrollEnable: true })
-        }
-      };
+      if (tokensToDisplay.length <= 3) {
+        this.setState({ isScrollEnable: false });
+      } else {
+        this.setState({ isScrollEnable: true });
+      }
+    };
     // console.log('#### tokensToDisplay: ', tokensToDisplay);
     return (
-      <View style={{ height: 400, paddingBottom : 115 }}>
-          <ScrollView
-            scrollEnabled={isScrollEnable}
-            onContentSizeChange={handleContentSizeChange}
-            refreshControl={
-              <RefreshControl
-                colors={[colors.tPrimary.default]}
-                tintColor={colors.tIcon.default}
-                refreshing={refreshing}
-                onRefresh={this.onRefresh}
-              />
-            }
-          >
-            {tokensToDisplay.map((item) => this.renderItem(item))}
-            {this.renderTokensDetectedSection()}
-            {/* {this.renderFooter()} */}
-           </ScrollView>
+      <View style={{ height: 400, paddingBottom: 115 }}>
+        <ScrollView
+          scrollEnabled={isScrollEnable}
+          onContentSizeChange={handleContentSizeChange}
+          refreshControl={
+            <RefreshControl
+              colors={[colors.tPrimary.default]}
+              tintColor={colors.tIcon.default}
+              refreshing={refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+        >
+          {tokensToDisplay.map((item) => this.renderItem(item))}
+          {this.renderTokensDetectedSection()}
+          {/* {this.renderFooter()} */}
+        </ScrollView>
       </View>
-    
     );
   }
 
