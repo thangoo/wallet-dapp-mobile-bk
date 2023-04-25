@@ -234,12 +234,14 @@ const AddCustomNetwork = ({
 
   const openHowToUseCustomNetworks = () => {
     Linking.openURL(
-      'https://metamask.zendesk.com/hc/en-us/articles/360056196151',
+      // 'https://metamask.zendesk.com/hc/en-us/articles/360056196151',
+      'https://google.com',
     );
   };
   const openHowToVerifyCustomNetworks = () => {
     Linking.openURL(
-      'https://metamask.zendesk.com/hc/en-us/articles/360057142392',
+      // 'https://metamask.zendesk.com/hc/en-us/articles/360057142392',
+      'https://google.com',
     );
   };
 

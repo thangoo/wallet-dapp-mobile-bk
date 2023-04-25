@@ -60,7 +60,8 @@ const ImportPrivateKey = () => {
     navigation.navigate('Webview', {
       screen: 'SimpleWebview',
       params: {
-        url: 'https://metamask.zendesk.com/hc/en-us/articles/360015289932-What-are-imported-accounts-',
+        // url: 'https://metamask.zendesk.com/hc/en-us/articles/360015289932-What-are-imported-accounts-',
+        url: 'https://google.com',
         title: strings('drawer.metamask_support'),
       },
     });
