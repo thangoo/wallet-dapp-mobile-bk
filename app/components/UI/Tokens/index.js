@@ -90,15 +90,12 @@ const createStyles = (colors) =>
       alignItems: 'center',
       backgroundColor: colors.tBackground.third,
       borderRadius: 16,
-      height: 70,
+      height: 80,
       padding: 16,
-      marginLeft: 15,
-      marginRight: 15,
+      marginHorizontal: 16,
     },
     balances: {
       flex: 1,
-      justifyContent: 'center',
-      alignSelf: 'flex-end',
     },
     nametWrapper: {
       flex: 1,
@@ -108,7 +105,7 @@ const createStyles = (colors) =>
     name: {
       fontSize: 16,
       color: colors.tText.default,
-      ...fontStyles.bold,
+      fontWeight: '600',
     },
     balance: {
       flex: 1,
@@ -117,7 +114,6 @@ const createStyles = (colors) =>
       ...fontStyles.normal,
       textTransform: 'uppercase',
       alignSelf: 'flex-end',
-      marginRight: 15,
     },
     testNetBalance: {
       fontSize: 14,
@@ -135,11 +131,11 @@ const createStyles = (colors) =>
       textTransform: 'capitalize',
     },
     ethLogo: {
-      width: 50,
-      height: 50,
-      borderRadius: 25,
+      width: 48,
+      height: 48,
+      borderRadius: 24,
       overflow: 'hidden',
-      marginRight: 20,
+      marginRight: 16,
     },
     emptyText: {
       color: colors.text.alternative,
@@ -358,11 +354,7 @@ class Tokens extends PureComponent {
       >
         <View style={styles.tokenWrapper}>
           {asset.isETH ? (
-            <NetworkMainAssetLogo
-              big
-              style={styles.ethLogo}
-              testID={'eth-logo'}
-            />
+            <NetworkMainAssetLogo style={styles.ethLogo} testID={'eth-logo'} />
           ) : (
             <TokenImage asset={asset} containerStyle={styles.ethLogo} />
           )}
