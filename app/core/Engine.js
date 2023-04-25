@@ -232,6 +232,9 @@ class Engine {
         messenger: this.controllerMessenger,
         state: initialState.CurrencyRateController,
       });
+      if(!initialState.CurrencyRateController){
+        currencyRateController.setNativeCurrency('TRX')
+      }
       currencyRateController.start();
 
       const gasFeeController = new GasFeeController({
