@@ -88,7 +88,7 @@ const UpdateNeeded = () => {
           variant={ButtonVariants.Primary}
           width={ButtonWidthTypes.Full}
           label={strings('update_needed.primary_action')}
-          onPress={onUpdatePressed}
+          onPress={triggerClose}
           style={styles.actionButton}
         />
         <Button
