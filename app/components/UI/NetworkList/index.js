@@ -18,6 +18,8 @@ import Networks, {
   getAllNetworks,
   getNetworkImageSource,
   isSafeChainId,
+  TronNetworkList,
+  TronNetworkListKeys
 } from '../../../util/networks';
 import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -225,6 +227,18 @@ export class NetworkList extends PureComponent {
       }, 1000);
   };
 
+  onTronNetworkChange = (network) => {
+    const networkItem = TronNetworkList[network];
+    this.handleNetworkSelected(network, networkItem.symbol, networkItem.fullNode);
+    const { NetworkController, CurrencyRateController } = Engine.context;
+    CurrencyRateController.setNativeCurrency(networkItem.symbol);
+    NetworkController.setRpcTarget(networkItem.fullNode, -1, networkItem.symbol, network);
+    this.props.thirdPartyApiMode &&
+      setTimeout(() => {
+        Engine.refreshTransactionHistory();
+      }, 1000);
+  };
+
   closeModal = () => {
     this.props.onClose(true);
   };
@@ -233,6 +247,7 @@ export class NetworkList extends PureComponent {
     const { frequentRpcList } = this.props;
     const { NetworkController, CurrencyRateController } = Engine.context;
     const rpc = frequentRpcList.find(({ rpcUrl }) => rpcUrl === rpcTarget);
+    console.log(rpc)
     const { rpcUrl, chainId, ticker, nickname } = rpc;
     const useRpcName = nickname || sanitizeUrl(rpcUrl);
     const useTicker = ticker || PRIVATENETWORK;
@@ -401,6 +416,31 @@ export class NetworkList extends PureComponent {
     );
   }
 
+  renderTronNetwork() {
+    const { frequentRpcList, providerConfig } = this.props;
+    console.log('providerConfig:',providerConfig)
+    const colors = this.context.colors || mockTheme.colors;
+  
+    return TronNetworkListKeys.map((network, i) => {
+      const { name, imageSource, color, testId } = TronNetworkList[network];
+      const isCustomRpc = true;
+      const selectedIcon =  providerConfig.type === RPC && providerConfig.nickname === network ? (
+          <Icon name="check" size={20} color={colors.icon.default} />
+        ) : null;
+      return this.networkElement(
+        selectedIcon,
+        this.onTronNetworkChange,
+        name,
+        imageSource,
+        i,
+        network,
+        isCustomRpc,
+        color,
+        testId,
+      );
+    });
+  }
+
   goToNetworkSettings = () => {
     const { shouldNetworkSwitchPopToWallet } = this.props;
     this.props.onClose(false);
@@ -435,6 +475,7 @@ export class NetworkList extends PureComponent {
         </View>
         <ScrollView style={styles.networksWrapper} testID={NETWORK_SCROLL_ID}>
           {this.renderMainnet()}
+          {this.renderTronNetwork()}
           {this.renderRpcNetworks()}
           {this.renderOtherNetworks()}
         </ScrollView>

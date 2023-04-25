@@ -35,6 +35,8 @@ const ethLogo = require('../../images/eth-logo-new.png');
 const ropstenLogo = require('../../images/ropsten-logo-dark.png');
 const kovanLogo = require('../../images/kovan-logo-dark.png');
 const rinkebyLogo = require('../../images/rinkeby-logo-dark.png');
+const tronLogo = require('../../images/tron.png');
+
 const goerliLogo = require('../../images/goerli-logo-dark.png');
 /* eslint-enable */
 import PopularList from './customNetworks';
@@ -110,7 +112,59 @@ const NetworkList = {
   },
 };
 
+export const TronNetworkList = {
+  TRONGRID: {
+    name: 'Gird Main Network',
+    shortName: 'Gird',
+    networkId: 1,
+    color: '#3cc29e',
+    networkType: 'mainnet',
+    imageSource: tronLogo,
+    fullNode: 'https://api.trongrid.io',
+    eventServer: 'https://api.trongrid.io',
+    symbol: 'TRX'
+  },
+  TRONSTACK: {
+    name: 'Stack Main Network',
+    shortName: 'Stack',
+    networkId: 2,
+    color: '#3cc29e',
+    networkType: 'mainnet',
+    imageSource: tronLogo,
+    fullNode: 'https://api.tronstack.io',
+    eventServer: 'https://api.tronstack.io',
+    symbol: 'TRX'
+  },
+  TRONSHASTA: {
+    name: 'Shasta Test Network',
+    shortName: 'Shasta',
+    networkId: 3,
+    chainId: 2,
+    hexChainId: '0x2',
+    color: '#7057ff',
+    networkType: 'testnet',
+    imageSource: tronLogo,
+    fullNode: 'https://api.shasta.trongrid.io',
+    eventServer: 'https://api.shasta.trongrid.io',
+    symbol: 'TRX'
+  },
+  TRONNILE: {
+    name: 'Nile Test Network',
+    shortName: 'Nile',
+    networkId: 3,
+    chainId: 2,
+    hexChainId: '0x2',
+    color: '#7057ff',
+    networkType: 'testnet',
+    imageSource: tronLogo,
+    fullNode: 'https://api.nileex.io',
+    eventServer: 'https://event.nileex.io',
+    symbol: 'TRX'
+  }
+};
+
 const NetworkListKeys = Object.keys(NetworkList);
+export const TronNetworkListKeys = Object.keys(TronNetworkList);
 
 export default NetworkList;
 

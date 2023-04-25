@@ -396,7 +396,7 @@ class AssetOverview extends PureComponent {
               {secondaryBalance && (
                 <View style={styles.secondaryBalanceStyle}>
                   <Text style={styles.amountFiat}>
-                    {renderFiat(conversionRate, currentCurrency, 2)}
+                    {renderFiat(conversionRate, currentCurrency, conversionRate > 1 ? 2:5)}
                   </Text>
                   <View style={styles.divider} />
                   <Text style={styles.amountFiat}>{secondaryBalance}</Text>

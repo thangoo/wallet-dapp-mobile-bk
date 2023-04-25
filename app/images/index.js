@@ -34,6 +34,7 @@ const bell_icon = require('./bell_icon.png');
 const close_icon = require('./close_icon.png');
 const finger_print_icon = require('./finger_print_icon.png');
 const send_success = require('./send-success.png')
+const tron_icon = require('./tron.png');
 
 export {
   finger_print_icon,
@@ -71,5 +72,6 @@ export {
   plus_icon,
   finger_icon,
   xBack_icon,
-  send_success
+  send_success,
+  tron_icon
 };
