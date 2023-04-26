@@ -59,7 +59,6 @@ const createStyles = (colors) =>
     wrapper: {
       backgroundColor: colors.background.default,
       flex: 1,
-      paddingHorizontal: 6,
     },
 
     bottomModal: {
@@ -109,7 +108,7 @@ const createStyles = (colors) =>
     header: {
       fontSize: 18,
       ...fontStyles.bold,
-      color: colors.tText.default
+      color: colors.tText.default,
     },
   });
 
@@ -575,26 +574,28 @@ class Transactions extends PureComponent {
     }
   };
   renderItem = ({ item, index }) => (
-    <TransactionElement
-      tx={item}
-      i={index}
-      assetSymbol={this.props.assetSymbol}
-      onSpeedUpAction={this.onSpeedUpAction}
-      isQRHardwareAccount={this.state.isQRHardwareAccount}
-      signQRTransaction={this.signQRTransaction}
-      cancelUnsignedQRTransaction={this.cancelUnsignedQRTransaction}
-      onCancelAction={this.onCancelAction}
-      testID={'txn-item'}
-      onPressItem={this.toggleDetailsView}
-      selectedAddress={this.props.selectedAddress}
-      tokens={this.props.tokens}
-      collectibleContracts={this.props.collectibleContracts}
-      contractExchangeRates={this.props.contractExchangeRates}
-      exchangeRate={this.props.exchangeRate}
-      conversionRate={this.props.conversionRate}
-      currentCurrency={this.props.currentCurrency}
-      navigation={this.props.navigation}
-    />
+    <View style={{ paddingHorizontal: 16 }}>
+      <TransactionElement
+        tx={item}
+        i={index}
+        assetSymbol={this.props.assetSymbol}
+        onSpeedUpAction={this.onSpeedUpAction}
+        isQRHardwareAccount={this.state.isQRHardwareAccount}
+        signQRTransaction={this.signQRTransaction}
+        cancelUnsignedQRTransaction={this.cancelUnsignedQRTransaction}
+        onCancelAction={this.onCancelAction}
+        testID={'txn-item'}
+        onPressItem={this.toggleDetailsView}
+        selectedAddress={this.props.selectedAddress}
+        tokens={this.props.tokens}
+        collectibleContracts={this.props.collectibleContracts}
+        contractExchangeRates={this.props.contractExchangeRates}
+        exchangeRate={this.props.exchangeRate}
+        conversionRate={this.props.conversionRate}
+        currentCurrency={this.props.currentCurrency}
+        navigation={this.props.navigation}
+      />
+    </View>
   );
 
   renderUpdateTxEIP1559Gas = (isCancel) => {
@@ -731,6 +732,9 @@ class Transactions extends PureComponent {
           scrollIndicatorInsets={{ right: 1 }}
         /> */}
         <SectionList
+          initialNumToRender={10}
+          maxToRenderPerBatch={2}
+          onEndReachedThreshold={0.5}
           sections={data}
           keyExtractor={(item, index) => item + index}
           renderItem={this.renderItem}
@@ -741,6 +745,7 @@ class Transactions extends PureComponent {
           )}
           extraData={this.state}
           stickySectionHeadersEnabled={false}
+          contentContainerStyle={{ paddingBottom: 32 }}
         />
 
         {!isSigningQRObject && this.state.cancelIsOpen && (
@@ -788,11 +793,7 @@ class Transactions extends PureComponent {
     const styles = createStyles(colors);
 
     return (
-      <SafeAreaView
-        edges={['bottom']}
-        style={styles.wrapper}
-        testID={'txn-screen'}
-      >
+      <View style={styles.wrapper} testID={'txn-screen'}>
         {!this.state.ready || this.props.loading
           ? this.renderLoader()
           : this.props.transactions.length ||
@@ -801,7 +802,7 @@ class Transactions extends PureComponent {
           : this.renderEmpty()}
         {(this.state.speedUp1559IsOpen || this.state.cancel1559IsOpen) &&
           this.renderUpdateTxEIP1559Gas(this.state.cancel1559IsOpen)}
-      </SafeAreaView>
+      </View>
     );
   };
 }

@@ -70,13 +70,14 @@ export default {
     PRIVACY_POLICY: 'https://consensys.net/privacy-policy/',
     DATA_RETENTION_UPDATE:
       'https://consensys.net/blog/news/consensys-data-retention-update/',
-    CONNECTIVITY_ISSUES:
-      'https://metamask.zendesk.com/hc/en-us/articles/360059386712',
-    NFT: 'https://metamask.zendesk.com/hc/en-us/articles/360058238591-NFT-tokens-in-MetaMask-wallet',
-    SECURITY:
-      'https://metamask.zendesk.com/hc/en-us/articles/360015489591-Basic-Safety-and-Security-Tips-for-MetaMask',
-    TOKEN_BALANCE:
-      'https://metamask.zendesk.com/hc/en-us/articles/360028059272-What-to-do-when-your-balance-of-ETH-and-or-ERC20-tokens-is-incorrect-inaccurate',
+    CONNECTIVITY_ISSUES: 'https://google.com',
+    // 'https://metamask.zendesk.com/hc/en-us/articles/360059386712',
+    // NFT: 'https://metamask.zendesk.com/hc/en-us/articles/360058238591-NFT-tokens-in-MetaMask-wallet',
+    NFT: 'https://google.com',
+    SECURITY: 'https://google.com',
+    // 'https://metamask.zendesk.com/hc/en-us/articles/360015489591-Basic-Safety-and-Security-Tips-for-MetaMask',
+    TOKEN_BALANCE: 'https://google.com',
+    // 'https://metamask.zendesk.com/hc/en-us/articles/360028059272-What-to-do-when-your-balance-of-ETH-and-or-ERC20-tokens-is-incorrect-inaccurate',
     MM_FAUCET: 'https://faucet.metamask.io/',
     WHY_TRANSACTION_TAKE_TIME:
       'https://community.metamask.io/t/what-is-gas-why-do-transactions-take-so-long/3172',
@@ -102,13 +103,14 @@ export default {
     RANGE: 'range',
   },
   REVIEW_PROMPT: {
-    HIGH_GAS_FEES:
-      'https://metamask.zendesk.com/hc/en-us/articles/360058751211-Why-my-gas-fees-are-so-high',
-    MISSING_TOKENS:
-      'https://metamask.zendesk.com/hc/en-us/articles/360015489031-How-to-add-unlisted-tokens-custom-tokens-in-MetaMask',
-    SWAP_ISSUES:
-      'https://metamask.zendesk.com/hc/en-us/articles/360060329612-Error-fetching-quote',
-    SUPPORT: 'https://support.metamask.io',
+    HIGH_GAS_FEES: 'https://google.com',
+    // 'https://metamask.zendesk.com/hc/en-us/articles/360058751211-Why-my-gas-fees-are-so-high',
+    MISSING_TOKENS: 'https://google.com',
+    // 'https://metamask.zendesk.com/hc/en-us/articles/360015489031-How-to-add-unlisted-tokens-custom-tokens-in-MetaMask',
+    SWAP_ISSUES: 'https://google.com',
+    // 'https://metamask.zendesk.com/hc/en-us/articles/360060329612-Error-fetching-quote',
+    SUPPORT: 'https://google.com',
+    // 'https://support.metamask.io',
   },
   BUNDLE_IDS: {
     IOS: 'io.metamask.MetaMask',

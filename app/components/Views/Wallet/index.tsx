@@ -127,8 +127,8 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       marginRight: 15,
     },
     textStyle: {
-      fontSize: 16,
-      ...(typography.HeadingSM as TextStyle),
+      fontSize: 18,
+      fontWeight: '600',
     },
     tabWrapper: {
       paddingLeft: 15,
@@ -361,7 +361,6 @@ const Wallet = ({ navigation }: any) => {
       await Promise.all(actions);
       setRefreshing(false);
     });
-    
   }, [setRefreshing]);
 
   const renderTab = (

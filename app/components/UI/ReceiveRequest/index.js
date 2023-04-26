@@ -181,8 +181,8 @@ class ReceiveRequest extends PureComponent {
    * Shows an alert message with a coming soon message
    */
   onBuy = async () => {
-    const { navigation, toggleReceiveModal, network } = this.props;
-    if (!allowedToBuy(network)) {
+    const { navigation, toggleReceiveModal, network, chainId } = this.props;
+    if (!allowedToBuy(chainId)) {
       Alert.alert(
         strings('fiat_on_ramp.network_not_supported'),
         strings('fiat_on_ramp.switch_network'),
@@ -321,7 +321,7 @@ class ReceiveRequest extends PureComponent {
             </TouchableOpacity>
           </TouchableOpacity>
           <View style={styles.actionRow}>
-            {allowedToBuy(this.props.network) && (
+            {allowedToBuy(this.props.chainId) && (
               <StyledButton
                 type={'blue'}
                 containerStyle={styles.actionButton}

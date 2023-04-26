@@ -114,7 +114,7 @@ const AssetStackFlow = (props) => (
   <Stack.Navigator>
     <Stack.Screen
       name={'Asset'}
-      component={Asset}
+      component={Asset} // transaction screen
       initialParams={props.route.params}
     />
     <Stack.Screen
@@ -122,6 +122,7 @@ const AssetStackFlow = (props) => (
       component={AssetDetails}
       initialParams={{ address: props.route.params?.address }}
     />
+    <Stack.Screen name="TransactionDetail" component={TransactionDetail} />
   </Stack.Navigator>
 );
 
@@ -148,11 +149,11 @@ const WalletTabStackFlow = () => (
       component={WalletModalFlow}
       options={{ headerShown: false }}
     />
-    <Stack.Screen
+    {/* <Stack.Screen
       name="Asset"
       component={AssetModalFlow}
       options={{ headerShown: false }}
-    />
+    /> */}
     {/* <Stack.Screen
       name="AddAsset"
       component={AddAsset}
@@ -168,11 +169,11 @@ const WalletTabStackFlow = () => (
       component={RevealPrivateCredential}
       options={RevealPrivateCredential.navigationOptions}
     />
-    <Stack.Screen
+    {/* <Stack.Screen
       name="TransactionDetail"
       component={TransactionDetail}
       options={TransactionDetail.navigationOptions}
-    />
+    /> */}
   </Stack.Navigator>
 );
 
@@ -327,7 +328,7 @@ const HomeTabs = () => {
             options={options.home}
             component={WalletTabModalFlow}
           />
-          <Tab.Screen
+          {/* <Tab.Screen
             name={Routes.BROWSER.HOME}
             options={options.browser}
             component={BrowserFlow}
@@ -336,7 +337,7 @@ const HomeTabs = () => {
             name={Routes.SCAN.HOME}
             options={options.market}
             component={ScanView}
-          />
+          /> */}
           <Tab.Screen
             name={Routes.SETTINGS_TAB.HOME}
             options={options.setting}
@@ -766,6 +767,7 @@ const MainNavigator = () => (
       }}
     />
     <Stack.Screen name="Home" component={HomeTabs} />
+
     <Stack.Screen name="Webview" component={Webview} />
     <Stack.Screen name="SettingsView" component={SettingsModalStack} />
     <Stack.Screen name="TransactionsHome" component={TransactionsHome} />
@@ -775,6 +777,7 @@ const MainNavigator = () => (
       component={AddAsset}
       options={{ headerShown: true }}
     />
+    <Stack.Screen name="Asset" component={AssetModalFlow} />
     <Stack.Screen name="SendFlowView" component={SendFlowView} />
     <Stack.Screen name="AddBookmarkView" component={AddBookmarkView} />
     <Stack.Screen name="OfflineModeView" component={OfflineModeView} />

@@ -22,7 +22,7 @@ const createStyles = (colors) =>
       flex: 1,
     },
     item: {
-      marginBottom: 5,
+      marginBottom: 8,
       padding: 8,
       borderRadius: 16,
       height: 75,
@@ -59,12 +59,20 @@ const createStyles = (colors) =>
       ...fontStyles.normal,
     },
     switch: {
-      containerStyle: {
+      containerOnStyle: {
         width: 44,
         height: 24,
         borderRadius: 25,
         padding: 5,
-        borderColor: colors.tSwitch.token.border,
+        borderColor: colors.tSwitch.token.border.on,
+        borderWidth: 1,
+      },
+      containerOffStyle: {
+        width: 44,
+        height: 24,
+        borderRadius: 25,
+        padding: 5,
+        borderColor: colors.tSwitch.token.border.off,
         borderWidth: 1,
       },
       circleStyle: {
@@ -168,8 +176,8 @@ const TokenItem = ({ item, id, onToggleAsset, selectedAsset }) => {
   const styles = createStyles(colors);
 
   const toggleSwitch = (item) => {
+    onToggleAsset(item, !isSelected);
     setIsSelected(!isSelected);
-    onToggleAsset(item, isSelected);
   };
 
   return (
@@ -186,11 +194,15 @@ const TokenItem = ({ item, id, onToggleAsset, selectedAsset }) => {
       <SwitchToggle
         switchOn={isSelected}
         onPress={() => toggleSwitch(item)}
-        circleColorOff={colors.tSwitch.default}
-        circleColorOn={colors.tPrimary.default}
+        circleColorOff={colors.tSwitch.circleColor.off}
+        circleColorOn={colors.tSwitch.circleColor.on}
         backgroundColorOn={colors.tSwitch.token.backgroundColor.on}
         backgroundColorOff={colors.tSwitch.token.backgroundColor.off}
-        containerStyle={styles.switch.containerStyle}
+        containerStyle={
+          isSelected
+            ? styles.switch.containerOnStyle
+            : styles.switch.containerOffStyle
+        }
         circleStyle={styles.switch.circleStyle}
       />
     </View>

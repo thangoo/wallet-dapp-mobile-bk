@@ -107,7 +107,6 @@ import TokenImage from '../../../UI/TokenImage';
 import WrapConfirm from './WrapConfirm';
 import { send_success } from 'images/index';
 
-
 const EDIT = 'edit';
 const EDIT_NONCE = 'edit_nonce';
 const EDIT_EIP1559 = 'edit_eip1559';
@@ -239,7 +238,6 @@ class Confirm extends PureComponent {
     fromSelectedAddress: this.props.transactionState.transaction.from,
     hexDataModalVisible: false,
     successModalVisible: false,
-    detailVisible : true,
     warningGasPriceHigh: undefined,
     ready: false,
     transactionValue: undefined,
@@ -807,9 +805,7 @@ class Confirm extends PureComponent {
         );
         stopGasPolling();
         resetTransaction();
-        this.setState({ detailVisible:  false });
-        this.setState({ successModalVisible:  true });
-
+        this.setState({ successModalVisible: true });
       });
     } catch (error) {
       if (!error?.message.startsWith(KEYSTONE_TX_CANCELED)) {
@@ -1155,6 +1151,17 @@ class Confirm extends PureComponent {
     });
   };
 
+  // send successful and navigate to main wallet
+  handlePress = () => {
+    const { navigation } = this.props;
+
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ successModalVisible: false });
+    }).then(() => {
+      navigation && navigation.dangerouslyGetParent()?.pop();
+    });
+  };
+
   render = () => {
     const { transactionToName, selectedAsset, paymentRequest } =
       this.props.transactionState;
@@ -1166,7 +1173,6 @@ class Confirm extends PureComponent {
       network,
       chainId,
       gasEstimateType,
-      navigation
     } = this.props;
     const { nonce } = this.props.transaction;
     const {
@@ -1182,7 +1188,6 @@ class Confirm extends PureComponent {
       warningGasPriceHigh,
       confusableCollection,
       mode,
-      detailVisible,
       warningModalVisible,
       isAnimating,
       animateOnChange,
@@ -1190,12 +1195,6 @@ class Confirm extends PureComponent {
     } = this.state;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
-
-      // send successful and navigate to main wallet
-    const handlePress = () => {
-        navigation && navigation.dangerouslyGetParent()?.pop()
-       } 
-
 
     const showFeeMarket =
       !gasEstimateType ||
@@ -1251,8 +1250,6 @@ class Confirm extends PureComponent {
       : strings('transaction.buy_more');
     return (
       <>
-      {
-        detailVisible && (
         <WrapConfirm>
           <InfoModal
             isVisible={warningModalVisible}
@@ -1268,7 +1265,6 @@ class Confirm extends PureComponent {
             {!selectedAsset.tokenId ? (
               <View style={styles.amountWrapper}>
                 {renderTokenImg(selectedAsset)}
-  
                 <Text
                   style={styles.textAmount}
                   {...generateTestId(Platform, COMFIRM_TXN_AMOUNT)}
@@ -1295,7 +1291,9 @@ class Confirm extends PureComponent {
                   />
                 </View>
                 <View>
-                  <Text style={styles.collectibleName}>{selectedAsset.name}</Text>
+                  <Text style={styles.collectibleName}>
+                    {selectedAsset.name}
+                  </Text>
                   <Text style={styles.collectibleTokenId}>{`#${renderShortText(
                     selectedAsset.tokenId,
                     10,
@@ -1303,29 +1301,29 @@ class Confirm extends PureComponent {
                 </View>
               </View>
             )}
-  
+
             <View style={styles.tokenInfoWrapper}>
               <Text style={styles.tokenTitle}>PAYMENT INFO</Text>
               <Text
                 style={styles.tokenContent}
               >{`${selectedAsset.symbol} Transfer`}</Text>
             </View>
-  
+
             <View style={styles.seprateLine} />
-  
+
             <AdressToComponentWrap />
-  
+
             <View style={styles.seprateLine} />
-  
+
             <AddressFrom
               onPressIcon={!paymentRequest ? null : this.openAccountSelector}
               fromAccountAddress={fromSelectedAddress}
               fromAccountName={fromAccountName}
               fromAccountBalance={fromAccountBalance}
             />
-  
+
             <View style={styles.seprateLine} />
-  
+
             <TransactionReview
               gasSelected={this.state.gasSelected}
               primaryCurrency={primaryCurrency}
@@ -1352,90 +1350,92 @@ class Confirm extends PureComponent {
                 onNonceEdit={() => this.edit(EDIT_NONCE)}
               />
             )}
-  
+
             <View style={styles.seprateLine} />
           </ScrollView>
 
-        <SafeAreaView
-          edges={['bottom']}
-          style={{
-            marginBottom: Dimensions.get('window').height * 0.2 + 16,
-          }}
-        >
-          {errorMessage && (
-            <View style={styles.errorWrapper}>
-              {isTestNetwork || allowedToBuy(network) ? (
-                <TouchableOpacity onPress={errorPress}>
+          <SafeAreaView
+            edges={['bottom']}
+            style={{
+              marginBottom: Dimensions.get('window').height * 0.2 + 16,
+            }}
+          >
+            {errorMessage && (
+              <View style={styles.errorWrapper}>
+                {isTestNetwork || allowedToBuy(network) ? (
+                  <TouchableOpacity onPress={errorPress}>
+                    <Text style={styles.error}>{errorMessage}</Text>
+                    <Text style={[styles.error, styles.underline]}>
+                      {errorLinkText}
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
                   <Text style={styles.error}>{errorMessage}</Text>
-                  <Text style={[styles.error, styles.underline]}>
-                    {errorLinkText}
+                )}
+              </View>
+            )}
+            {!!warningGasPriceHigh && (
+              <View style={styles.errorWrapper}>
+                <Text style={styles.error}>{warningGasPriceHigh}</Text>
+              </View>
+            )}
+
+            {this.state.gasSelected === AppConstants.GAS_OPTIONS.LOW && (
+              <WarningMessage
+                style={styles.actionsWrapper}
+                warningMessage={strings('edit_gas_fee_eip1559.low_fee_warning')}
+              />
+            )}
+            <View style={styles.actionsWrapper}>
+              {showHexData && (
+                <TouchableOpacity
+                  style={styles.actionTouchable}
+                  onPress={this.toggleHexDataModal}
+                >
+                  <Text style={styles.actionText}>
+                    {strings('transaction.hex_data')}
                   </Text>
                 </TouchableOpacity>
-              ) : (
-                <Text style={styles.error}>{errorMessage}</Text>
               )}
             </View>
-          )}
-          {!!warningGasPriceHigh && (
-            <View style={styles.errorWrapper}>
-              <Text style={styles.error}>{warningGasPriceHigh}</Text>
-            </View>
-          )}
+            <StyledButton
+              type={'confirm'}
+              disabled={
+                transactionConfirmed ||
+                !gasEstimationReady ||
+                Boolean(errorMessage) ||
+                isAnimating
+              }
+              // containerStyle={styles.buttonNext}
+              onPress={this.onNext}
+              testID={'txn-confirm-send-button'}
+            >
+              {transactionConfirmed ? (
+                <ActivityIndicator
+                  size="small"
+                  color={colors.primary.inverse}
+                />
+              ) : isQRHardwareWalletDevice ? (
+                strings('transaction.confirm_with_qr_hardware')
+              ) : (
+                strings('transaction.send')
+              )}
+            </StyledButton>
+          </SafeAreaView>
 
-          {this.state.gasSelected === AppConstants.GAS_OPTIONS.LOW && (
-            <WarningMessage
-              style={styles.actionsWrapper}
-              warningMessage={strings('edit_gas_fee_eip1559.low_fee_warning')}
-            />
-          )}
-          <View style={styles.actionsWrapper}>
-            {showHexData && (
-              <TouchableOpacity
-                style={styles.actionTouchable}
-                onPress={this.toggleHexDataModal}
-              >
-                <Text style={styles.actionText}>
-                  {strings('transaction.hex_data')}
-                </Text>
-              </TouchableOpacity>
-            )}
-          </View>
-          <StyledButton
-            type={'confirm'}
-            disabled={
-              transactionConfirmed ||
-              !gasEstimationReady ||
-              Boolean(errorMessage) ||
-              isAnimating
-            }
-            // containerStyle={styles.buttonNext}
-            onPress={this.onNext}
-            testID={'txn-confirm-send-button'}
-          >
-            {transactionConfirmed ? (
-              <ActivityIndicator size="small" color={colors.primary.inverse} />
-            ) : isQRHardwareWalletDevice ? (
-              strings('transaction.confirm_with_qr_hardware')
-            ) : (
-              strings('transaction.send')
-            )}
-          </StyledButton>
-        </SafeAreaView>
-
-        {mode === EDIT && this.renderCustomGasModalLegacy()}
-        {mode === EDIT_NONCE && this.renderCustomNonceModal()}
-        {mode === EDIT_EIP1559 && this.renderCustomGasModalEIP1559()}
-        {this.renderHexDataModal()}
-        </WrapConfirm> )
-      }
-       <Modal
-        isVisible={this.state.successModalVisible}
-        swipeDirection={'down'}
-        propagateSwipe
-        style={styles.bottomModal}
-        backdropColor={colors.overlay.default}
-        backdropOpacity={1}
-      >
+          {mode === EDIT && this.renderCustomGasModalLegacy()}
+          {mode === EDIT_NONCE && this.renderCustomNonceModal()}
+          {mode === EDIT_EIP1559 && this.renderCustomGasModalEIP1559()}
+          {this.renderHexDataModal()}
+        </WrapConfirm>
+        <Modal
+          isVisible={this.state.successModalVisible}
+          swipeDirection={'down'}
+          propagateSwipe
+          style={styles.bottomModal}
+          backdropColor={colors.overlay.default}
+          backdropOpacity={1}
+        >
           <View style={styles.body}>
             <View style={styles.dragger} />
             <Image source={send_success} style={styles.walletImg} />
@@ -1444,13 +1444,13 @@ class Confirm extends PureComponent {
             <StyledButton
               testID={'success-send-btn'}
               type={'confirm'}
-              onPress={handlePress}
+              onPress={this.handlePress}
               containerStyle={{ width: '100%', marginBottom: 36 }}
             >
               {strings('send.close')}
             </StyledButton>
           </View>
-      </Modal>
+        </Modal>
       </>
     );
   };
