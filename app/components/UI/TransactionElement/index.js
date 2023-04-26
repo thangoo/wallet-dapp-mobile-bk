@@ -386,7 +386,7 @@ class TransactionElement extends PureComponent {
                       : colors.tBackground.receive
                 }}
               >
-                <ListItem.Amount>{this.renderPlusOrMinus(transactionElement)} {value}</ListItem.Amount>
+                <ListItem.Amount numberOfLines={1}>{this.renderPlusOrMinus(transactionElement)} {value}</ListItem.Amount>
                 {isMainNet(chainId) && (
                   <ListItem.FiatAmount>{fiatValue}</ListItem.FiatAmount>
                 )}
