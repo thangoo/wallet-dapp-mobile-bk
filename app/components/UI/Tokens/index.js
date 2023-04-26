@@ -8,6 +8,7 @@ import {
   Platform,
   ScrollView,
   RefreshControl,
+  Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
 import ActionSheet from 'react-native-actionsheet';
@@ -443,6 +444,7 @@ class Tokens extends PureComponent {
   renderList() {
     const { tokens, hideZeroBalanceTokens, tokenBalances } = this.props;
     const colors = this.context.colors || mockTheme.colors;
+    const screenHeight = Dimensions.get('screen').height;
     const { isScrollEnable, refreshing } = this.state;
     const tokensToDisplay = hideZeroBalanceTokens
       ? tokens.filter((token) => {
@@ -462,7 +464,7 @@ class Tokens extends PureComponent {
     };
     // console.log('#### tokensToDisplay: ', tokensToDisplay);
     return (
-      <View style={{ height: 400, paddingBottom: 115 }}>
+      <View style={{ height: screenHeight - 362, paddingBottom: 170 }}>
         <ScrollView
           scrollEnabled={isScrollEnable}
           onContentSizeChange={handleContentSizeChange}

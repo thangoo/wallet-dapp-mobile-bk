@@ -66,7 +66,7 @@ const createStyles = (colors) =>
     },
     touchableViewOnEtherscan: {
       marginBottom: 24,
-      marginTop: 32,
+      marginTop: 26,
     },
     summaryWrapper: {
       marginVertical: 8,
@@ -415,8 +415,9 @@ class TransactionDetails extends PureComponent {
         <View
           style={{
             justifyContent: 'center',
-            marginTop: 22,
+            marginTop: 33,
             alignItems: 'center',
+            marginBottom : 32
           }}
         >
           <TokenIcon symbol={getSymbol()} style={{ width: 56, height: 56 }} />
@@ -451,7 +452,7 @@ class TransactionDetails extends PureComponent {
             = {transactionDetails.summarySecondaryTotalAmount}
           </Text>
         </View>
-        <Item title="Date" content={RenderTime(tx.time)} showIconInfo={false} />
+        <Item  title="Date" content={RenderTime(tx.time)} showIconInfo={false} />
         <Item
           title="Status"
           content={RenderStatus(tx?.status)}
@@ -497,7 +498,7 @@ const Item = ({ title, content, showIconInfo }) => {
       style={{
         justifyContent: 'center',
         alignItems: 'flex-start',
-        marginTop: 6,
+        paddingVertical: 6,
         flexDirection: 'column',
         paddingHorizontal: 16,
       }}
@@ -505,7 +506,7 @@ const Item = ({ title, content, showIconInfo }) => {
       <Text
         style={{
           paddingHorizontal: 16,
-          paddingVertical: 8,
+          paddingBottom: 8,
           fontSize: 16,
           color: colors.tText.default,
           ...fontStyles.normal,
