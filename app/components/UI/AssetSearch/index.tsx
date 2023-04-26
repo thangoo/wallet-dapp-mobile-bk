@@ -15,9 +15,6 @@ import { TOKEN_INPUT_BOX_ID } from '../../../../wdio/screen-objects/testIDs/Scre
 const createStyles = (colors: CustomTheme['colors']) =>
   StyleSheet.create({
     searchSection: {
-      margin: 20,
-      marginBottom: 0,
-      // flex: 1,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
@@ -26,6 +23,8 @@ const createStyles = (colors: CustomTheme['colors']) =>
       borderColor: colors.tBorder.secondary,
       color: colors.tText.default,
       backgroundColor: colors.tBackground.fifth,
+      margin: 16,
+      marginBottom: 0,
     },
     textInput: {
       ...fontStyles.normal,
