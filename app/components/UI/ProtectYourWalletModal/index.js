@@ -115,7 +115,7 @@ class ProtectYourWalletModal extends PureComponent {
     this.props.navigation.navigate('Webview', {
       screen: 'SimpleWebview',
       params: {
-        url: 'https://metamask.zendesk.com/hc/en-us/articles/360015489591-Basic-Safety-Tips',
+        url: 'https://google.com',
         title: strings('protect_wallet_modal.title'),
       },
     });

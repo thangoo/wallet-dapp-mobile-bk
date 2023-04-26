@@ -1,7 +1,8 @@
 /* eslint-disable import/prefer-default-export */
+import { CustomTheme } from '../../../../app/util/theme';
 import { StyleSheet } from 'react-native';
 
-export const createStyles = (colors: any) =>
+export const createStyles = (colors: CustomTheme['colors']) =>
   StyleSheet.create({
     screen: {
       flex: 1,
@@ -34,5 +35,6 @@ export const createStyles = (colors: any) =>
       height: undefined,
       marginVertical: 10,
       padding: 8,
+      backgroundColor: colors.tButton.disable,
     },
   });
