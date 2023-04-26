@@ -20,7 +20,7 @@ import { FORMATTED_NETWORK_NAMES } from '../../../constants/on-ramp';
 import NotificationManager from '../../../core/NotificationManager';
 import { useTheme } from '../../../util/theme';
 import { selectChainId } from '../../../selectors/networkController';
-import StyledButton from '../StyledButton';
+import { getDecimalChainId } from '../../../util/networks';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
@@ -108,53 +108,79 @@ const SearchTokenAutocomplete = ({
     [setSearchResults, setSearchQuery],
   );
 
-  const addToken = useCallback(async () => {
-    const { TokensController } = Engine.context as any;
-    await TokensController.addToken(address, symbol, decimals, image);
+  const addToken = useCallback(
+    async (asset) => {
+      const { TokensController } = Engine.context as any;
+      const { address, symbol, decimals, image } = asset;
+      await TokensController.addToken(address, symbol, decimals, image);
 
-    trackEvent(MetaMetricsEvents.TOKEN_ADDED, getAnalyticsParams());
+      trackEvent(MetaMetricsEvents.TOKEN_ADDED, getAnalyticsParams());
 
-    // Clear state before closing
-    // setSearchResults([]);
-    // setSearchQuery('');
-    setSelectedAsset({});
+      // Clear state before closing
+      // setSearchResults([]);
+      // setSearchQuery('');
+      setSelectedAsset({});
 
-    NotificationManager.showSimpleNotification({
-      status: `simple_notification`,
-      duration: 5000,
-      title: strings('wallet.token_toast.token_imported_title'),
-      description: strings('wallet.token_toast.token_imported_desc', {
-        tokenSymbol: symbol,
-      }),
-    });
+      NotificationManager.showSimpleNotification({
+        status: `simple_notification`,
+        duration: 5000,
+        title: strings('wallet.token_toast.token_imported_title'),
+        description: strings('wallet.token_toast.token_imported_desc', {
+          tokenSymbol: symbol,
+        }),
+      });
 
-    // InteractionManager.runAfterInteractions(() => {
-    //   navigation.goBack();
-    //   NotificationManager.showSimpleNotification({
-    //     status: `simple_notification`,
-    //     duration: 5000,
-    //     title: strings('wallet.token_toast.token_imported_title'),
-    //     description: strings('wallet.token_toast.token_imported_desc', {
-    //       tokenSymbol: symbol,
-    //     }),
-    //   });
-    // });
-  }, [
-    address,
-    symbol,
-    decimals,
-    image,
-    setSearchResults,
-    setSearchQuery,
+      // InteractionManager.runAfterInteractions(() => {
+      //   navigation.goBack();
+      //   NotificationManager.showSimpleNotification({
+      //     status: `simple_notification`,
+      //     duration: 5000,
+      //     title: strings('wallet.token_toast.token_imported_title'),
+      //     description: strings('wallet.token_toast.token_imported_desc', {
+      //       tokenSymbol: symbol,
+      //     }),
+      //   });
+      // });
+    }, [
     setSelectedAsset,
-    navigation,
     getAnalyticsParams,
   ]);
+
+  const remvoeToken = useCallback(
+    async (asset) => {
+      const { TokensController, NetworkController } = Engine.context as any;
+      const { address } = asset;
+      await TokensController.ignoreTokens([address]);
+      setSelectedAsset({});
+      NotificationManager.showSimpleNotification({
+        status: `simple_notification`,
+        duration: 5000,
+        title: strings('wallet.token_toast.token_hidden_title'),
+        description: strings('wallet.token_toast.token_hidden_desc', {
+          tokenSymbol: symbol,
+        }),
+      });
+      InteractionManager.runAfterInteractions(() =>
+        trackEvent(MetaMetricsEvents.TOKENS_HIDDEN, {
+          location: 'assets_list',
+          token_standard: 'ERC20',
+          asset_type: 'token',
+          tokens: [`${symbol} - ${address}`],
+          chain_id: getDecimalChainId(
+            NetworkController?.state?.providerConfig?.chainId,
+          ),
+        }),
+      );
+    }, [
+    setSelectedAsset,
+  ]);
+
+
 
   const handleToggleAsset = useCallback(
     (asset, isSelected) => {
       setSelectedAsset(asset);
-      addToken();
+      isSelected ? addToken(asset) : remvoeToken(asset);
     },
     [setSelectedAsset, addToken],
   );
@@ -221,7 +247,7 @@ const SearchTokenAutocomplete = ({
         confirmButtonMode={'confirm'}
         onConfirmPress={onChangeCustomToken}
         isFullScreen
-        // confirmDisabled={!(address && symbol && decimals)}
+      // confirmDisabled={!(address && symbol && decimals)}
       >
         <View style={styles.listTokenWrapper}>
           {renderTokenDetectionBanner()}
@@ -237,7 +263,7 @@ const SearchTokenAutocomplete = ({
             handleToggleAsset={handleToggleAsset}
             selectedAsset={selectedAsset}
             searchQuery={searchQuery}
-            // selectedTokens={selectedTokens}
+          // selectedTokens={selectedTokens}
           />
           {/* <StyledButton
               type={'blue'}

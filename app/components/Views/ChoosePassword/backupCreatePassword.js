@@ -591,8 +591,9 @@ class ChoosePassword extends PureComponent {
     this.props.navigation.push('Webview', {
       screen: 'SimpleWebview',
       params: {
-        url: 'https://metamask.zendesk.com/hc/en-us/articles/360039616872-How-can-I-reset-my-password-',
-        title: 'metamask.zendesk.com',
+        // url: 'https://metamask.zendesk.com/hc/en-us/articles/360039616872-How-can-I-reset-my-password-',
+        url: 'https://google.com',
+        title: 'payme.zendesk.com',
       },
     });
   };

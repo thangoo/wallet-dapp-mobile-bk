@@ -199,8 +199,9 @@ class SignatureRequest extends PureComponent {
     this.props.navigation.navigate('Webview', {
       screen: 'SimpleWebview',
       params: {
-        url: 'https://metamask.zendesk.com/hc/en-us/articles/360015488751',
-        title: 'metamask.zendesk.com',
+        // url: 'https://metamask.zendesk.com/hc/en-us/articles/360015488751',
+        url: 'https://google.com',
+        title: 'payme.zendesk.com',
       },
     });
   };
