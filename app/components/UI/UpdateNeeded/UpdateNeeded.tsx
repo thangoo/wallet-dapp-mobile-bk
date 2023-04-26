@@ -90,6 +90,7 @@ const UpdateNeeded = () => {
           label={strings('update_needed.primary_action')}
           onPress={triggerClose}
           style={styles.actionButton}
+          disabled
         />
         <Button
           variant={ButtonVariants.Link}

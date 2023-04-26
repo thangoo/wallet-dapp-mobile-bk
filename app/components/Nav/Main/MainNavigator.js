@@ -328,7 +328,7 @@ const HomeTabs = () => {
             options={options.home}
             component={WalletTabModalFlow}
           />
-          <Tab.Screen
+          {/* <Tab.Screen
             name={Routes.BROWSER.HOME}
             options={options.browser}
             component={BrowserFlow}
@@ -337,7 +337,7 @@ const HomeTabs = () => {
             name={Routes.SCAN.HOME}
             options={options.market}
             component={ScanView}
-          />
+          /> */}
           <Tab.Screen
             name={Routes.SETTINGS_TAB.HOME}
             options={options.setting}

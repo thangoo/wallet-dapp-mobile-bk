@@ -213,7 +213,21 @@ const SearchTokenAutocomplete = ({
 
   return (
     <View style={styles.wrapper} testID={'search-token-screen'}>
-      <ActionView
+      <AssetSearch
+        onSearch={handleSearch}
+        onFocus={() => {
+          setFocusState(true);
+        }}
+        onBlur={() => setFocusState(false)}
+      />
+      <AssetList
+        searchResults={searchResults}
+        handleToggleAsset={handleToggleAsset}
+        selectedAsset={selectedAsset}
+        searchQuery={searchQuery}
+        // selectedTokens={selectedTokens}
+      />
+      {/* <ActionView
         // cancelText={strings('add_asset.tokens.cancel_add_token')}
         // onCancelPress={cancelAddToken}
         showCancelButton={false}
@@ -225,21 +239,8 @@ const SearchTokenAutocomplete = ({
       >
         <View style={styles.listTokenWrapper}>
           {renderTokenDetectionBanner()}
-          <AssetSearch
-            onSearch={handleSearch}
-            onFocus={() => {
-              setFocusState(true);
-            }}
-            onBlur={() => setFocusState(false)}
-          />
-          <AssetList
-            searchResults={searchResults}
-            handleToggleAsset={handleToggleAsset}
-            selectedAsset={selectedAsset}
-            searchQuery={searchQuery}
-            // selectedTokens={selectedTokens}
-          />
-          {/* <StyledButton
+         
+          <StyledButton
               type={'blue'}
               onPress={addToken}
               testID={'continue-button'}
@@ -250,9 +251,9 @@ const SearchTokenAutocomplete = ({
               containerStyle={{marginHorizontal:16, marginBottom:16}}
             > 
               {strings('manual_backup_step_1.continue')}
-            </StyledButton>*/}
+            </StyledButton>
         </View>
-      </ActionView>
+      </ActionView> */}
     </View>
   );
 };

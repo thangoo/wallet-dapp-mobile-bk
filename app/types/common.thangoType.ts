@@ -339,11 +339,27 @@ export interface ThangoThemeColors {
     wallet: string[];
   };
   tSwitch: {
-    default: string;
+    circleColor: {
+      on: string;
+      off: string;
+    };
+    border: {
+      on: string;
+      off: string;
+    };
     /**
      * {object}  style for switch token
      */
-    token: object;
+    token: {
+      border: {
+        on: string;
+        off: string;
+      };
+      background: {
+        on: string;
+        off: string;
+      }
+    };
   };
   tButton: {
     disable: string;

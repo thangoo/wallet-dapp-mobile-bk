@@ -155,17 +155,24 @@ export default class AppInformation extends PureComponent {
   };
 
   onSupportCenter = () => {
-    const url = 'https://metamask.zendesk.com/hc/en-us';
+    // const url = 'https://metamask.zendesk.com/hc/en-us';
+    const url = 'https://google.com';
+
     this.goTo(url, strings('drawer.metamask_support'));
   };
 
   onWebSite = () => {
-    const url = 'https://metamask.io/';
-    this.goTo(url, 'metamask.io');
+    // const url = 'https://metamask.io/';
+    const url = 'https://google.com';
+
+    // this.goTo(url, 'metamask.io');
+    this.goTo(url, '');
   };
 
   onContactUs = () => {
-    const url = 'https://metamask.zendesk.com/hc/en-us';
+    // const url = 'https://metamask.zendesk.com/hc/en-us';
+    const url = 'https://google.com';
+
     this.goTo(url, strings('drawer.metamask_support'));
   };
 

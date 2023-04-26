@@ -41,7 +41,8 @@ interface Props {
 }
 
 const SUPPORT_URL =
-  'https://metamask.zendesk.com/hc/en-us/articles/4863623238683-My-country-region-isn-t-supported-for-MetaMask-on-ramps';
+  // 'https://metamask.zendesk.com/hc/en-us/articles/4863623238683-My-country-region-isn-t-supported-for-MetaMask-on-ramps';
+  'https://google.com';
 
 const RegionAlert: React.FC<Props> = ({
   isVisible,
