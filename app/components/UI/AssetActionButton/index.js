@@ -35,7 +35,7 @@ const createStyles = (colors) =>
       justifyContent: 'center',
       alignContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors['tvn.background.asset.action.button'],
+      backgroundColor: colors.tBackground.assetButton
     },
     buttonIcon: {
       justifyContent: 'center',
@@ -46,7 +46,7 @@ const createStyles = (colors) =>
     buttonText: {
       marginTop: 8,
       marginHorizontal: 3,
-      color: colors['tvn.text.default'],
+      color: colors.tText.light,
       fontSize: 14,
       ...fontStyles.normal,
     },
