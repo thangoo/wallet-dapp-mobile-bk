@@ -58,22 +58,25 @@ const createStyles = (colors) =>
     wrapper: {
       flex: 1,
       padding: 20,
+      marginTop: 25,
       // borderBottomWidth: StyleSheet.hairlineWidth,
       // borderBottomColor: colors.border.muted,
-      alignContent: 'center',
-      alignItems: 'center',
+      // alignContent: 'center',
+      // alignItems: 'center',
       // paddingBottom: 30,
       backgroundColor: 'transparent',
     },
+    wrapperAsset: {
+        alignItems: 'center'
+    },
     assetLogo: {
-      marginTop: 15,
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 50,
-      marginBottom: 10,
+      marginBottom: 8,
       width: 48,
       height: 48,
-      backgroundColor: colors['tvn.gray.01'],
+      backgroundColor: colors.tText.light,
     },
     ethLogo: {
       width: 70,
@@ -90,27 +93,26 @@ const createStyles = (colors) =>
     },
     amount: {
       fontSize: 32,
-      color: colors['tvn.text.default'],
+      color: colors.tText.light,
       ...fontStyles.bold,
       textTransform: 'uppercase',
     },
     testNetAmount: {
       fontSize: 32,
-      color: colors['tvn.text.default'],
+      color: colors.tText.light,
       ...fontStyles.bold,
     },
     amountFiat: {
       fontSize: 14,
-      color: colors['tvn.text.default'],
+      color: colors.tText.light,
       ...fontStyles.normal,
       textTransform: 'uppercase',
     },
     actions: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: 'space-between',
       alignItems: 'center',
       flexDirection: 'row',
-      width: '100%',
       paddingHorizontal: 22,
       marginTop: 31,
     },
@@ -139,7 +141,7 @@ const createStyles = (colors) =>
     divider: {
       width: 1,
       height: 24,
-      backgroundColor: colors['tvn.text.default'],
+      backgroundColor: colors.tText.light,
     },
   });
 
@@ -379,35 +381,38 @@ class AssetOverview extends PureComponent {
         style={styles.wrapper}
         {...generateTestId(Platform, TOKEN_ASSET_OVERVIEW)}
       >
-        <View style={styles.assetLogo}>{this.renderLogo()}</View>
-        <View style={styles.balance}>
-          {balanceError ? (
-            this.renderWarning()
-          ) : (
-            <>
-              <Text
-                style={
-                  isTestNet(chainId) ? styles.testNetAmount : styles.amount
-                }
-                testID={'token-amount'}
-              >
-                {mainBalance}
-              </Text>
-              {secondaryBalance && (
-                <View style={styles.secondaryBalanceStyle}>
-                  <Text style={styles.amountFiat}>
-                    {renderFiat(conversionRate, currentCurrency, 2)}
-                  </Text>
-                  <View style={styles.divider} />
-                  <Text style={styles.amountFiat}>{secondaryBalance}</Text>
-                  <Text style={styles.amountFiat}>0%</Text>
-                  <View style={styles.divider} />
-                  <Text style={styles.amountFiat}>{'COIN'}</Text>
-                </View>
-              )}
-            </>
-          )}
+        <View style={styles.wrapperAsset}>
+          <View style={styles.assetLogo}>{this.renderLogo()}</View>
+          <View style={styles.balance}>
+            {balanceError ? (
+              this.renderWarning()
+            ) : (
+              <>
+                <Text
+                  style={
+                    isTestNet(chainId) ? styles.testNetAmount : styles.amount
+                  }
+                  testID={'token-amount'}
+                >
+                  {mainBalance}
+                </Text>
+                {secondaryBalance && (
+                  <View style={styles.secondaryBalanceStyle}>
+                    <Text style={styles.amountFiat}>
+                      = {renderFiat(conversionRate, currentCurrency, 2)}
+                    </Text>
+                    <View style={styles.divider} />
+                    <Text style={styles.amountFiat}>{secondaryBalance}</Text>
+                    <Text style={styles.amountFiat}>0%</Text>
+                    <View style={styles.divider} />
+                    <Text style={styles.amountFiat}>{'COIN'}</Text>
+                  </View>
+                )}
+              </>
+            )}
+          </View>
         </View>
+       
 
         {!balanceError && (
           <View style={styles.actions}>

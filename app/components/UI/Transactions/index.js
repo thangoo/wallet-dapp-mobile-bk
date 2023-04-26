@@ -102,7 +102,7 @@ const createStyles = (colors) =>
       textAlign: 'center',
     },
     headerSection: {
-      paddingLeft: 16,
+      paddingLeft: 32,
       paddingBottom: 12,
     },
     header: {

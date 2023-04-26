@@ -53,7 +53,8 @@ export const thangoLight: ThangoThemeColors = {
     alternativeHover: '#D6D9DC',
     alternativePressed: '#D6D9DC',
     send: colorThango.red,
-    receive: colorThango.primary
+    receive : colorThango.primary,
+    assetButton : colorThango.gray11
   },
   tText: {
     default: colorThango.gray10,
