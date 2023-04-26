@@ -22,7 +22,7 @@ const createStyles = (colors) =>
       flex: 1,
     },
     item: {
-      marginBottom: 5,
+      marginBottom: 8,
       padding: 8,
       borderRadius: 16,
       height: 75,
