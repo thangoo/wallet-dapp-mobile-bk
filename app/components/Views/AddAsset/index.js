@@ -142,7 +142,7 @@ class AddAsset extends PureComponent {
     const styles = createStyles(colors);
 
     return (
-      <SafeAreaView style={styles.wrapper} testID={`add-${assetType}-screen`}>
+      <View style={styles.wrapper} testID={`add-${assetType}-screen`}>
         {networkType === MAINNET &&
           assetType !== 'token' &&
           !dismissNftInfo &&
@@ -183,7 +183,7 @@ class AddAsset extends PureComponent {
             testID={'add-custom-collectible'}
           />
         )} */}
-      </SafeAreaView>
+      </View>
     );
   };
 }

@@ -20,7 +20,7 @@ import { FORMATTED_NETWORK_NAMES } from '../../../constants/on-ramp';
 import NotificationManager from '../../../core/NotificationManager';
 import { useTheme } from '../../../util/theme';
 import { selectChainId } from '../../../selectors/networkController';
-import { getDecimalChainId } from '../../../util/networks';
+import StyledButton from '../StyledButton';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
@@ -108,79 +108,53 @@ const SearchTokenAutocomplete = ({
     [setSearchResults, setSearchQuery],
   );
 
-  const addToken = useCallback(
-    async (asset) => {
-      const { TokensController } = Engine.context as any;
-      const { address, symbol, decimals, image } = asset;
-      await TokensController.addToken(address, symbol, decimals, image);
+  const addToken = useCallback(async () => {
+    const { TokensController } = Engine.context as any;
+    await TokensController.addToken(address, symbol, decimals, image);
 
-      trackEvent(MetaMetricsEvents.TOKEN_ADDED, getAnalyticsParams());
+    trackEvent(MetaMetricsEvents.TOKEN_ADDED, getAnalyticsParams());
 
-      // Clear state before closing
-      // setSearchResults([]);
-      // setSearchQuery('');
-      setSelectedAsset({});
+    // Clear state before closing
+    // setSearchResults([]);
+    // setSearchQuery('');
+    setSelectedAsset({});
 
-      NotificationManager.showSimpleNotification({
-        status: `simple_notification`,
-        duration: 5000,
-        title: strings('wallet.token_toast.token_imported_title'),
-        description: strings('wallet.token_toast.token_imported_desc', {
-          tokenSymbol: symbol,
-        }),
-      });
+    NotificationManager.showSimpleNotification({
+      status: `simple_notification`,
+      duration: 5000,
+      title: strings('wallet.token_toast.token_imported_title'),
+      description: strings('wallet.token_toast.token_imported_desc', {
+        tokenSymbol: symbol,
+      }),
+    });
 
-      // InteractionManager.runAfterInteractions(() => {
-      //   navigation.goBack();
-      //   NotificationManager.showSimpleNotification({
-      //     status: `simple_notification`,
-      //     duration: 5000,
-      //     title: strings('wallet.token_toast.token_imported_title'),
-      //     description: strings('wallet.token_toast.token_imported_desc', {
-      //       tokenSymbol: symbol,
-      //     }),
-      //   });
-      // });
-    }, [
+    // InteractionManager.runAfterInteractions(() => {
+    //   navigation.goBack();
+    //   NotificationManager.showSimpleNotification({
+    //     status: `simple_notification`,
+    //     duration: 5000,
+    //     title: strings('wallet.token_toast.token_imported_title'),
+    //     description: strings('wallet.token_toast.token_imported_desc', {
+    //       tokenSymbol: symbol,
+    //     }),
+    //   });
+    // });
+  }, [
+    address,
+    symbol,
+    decimals,
+    image,
+    setSearchResults,
+    setSearchQuery,
     setSelectedAsset,
+    navigation,
     getAnalyticsParams,
   ]);
-
-  const remvoeToken = useCallback(
-    async (asset) => {
-      const { TokensController, NetworkController } = Engine.context as any;
-      const { address } = asset;
-      await TokensController.ignoreTokens([address]);
-      setSelectedAsset({});
-      NotificationManager.showSimpleNotification({
-        status: `simple_notification`,
-        duration: 5000,
-        title: strings('wallet.token_toast.token_hidden_title'),
-        description: strings('wallet.token_toast.token_hidden_desc', {
-          tokenSymbol: symbol,
-        }),
-      });
-      InteractionManager.runAfterInteractions(() =>
-        trackEvent(MetaMetricsEvents.TOKENS_HIDDEN, {
-          location: 'assets_list',
-          token_standard: 'ERC20',
-          asset_type: 'token',
-          tokens: [`${symbol} - ${address}`],
-          chain_id: getDecimalChainId(
-            NetworkController?.state?.providerConfig?.chainId,
-          ),
-        }),
-      );
-    }, [
-    setSelectedAsset,
-  ]);
-
-
 
   const handleToggleAsset = useCallback(
     (asset, isSelected) => {
       setSelectedAsset(asset);
-      isSelected ? addToken(asset) : remvoeToken(asset);
+      addToken();
     },
     [setSelectedAsset, addToken],
   );
@@ -239,7 +213,21 @@ const SearchTokenAutocomplete = ({
 
   return (
     <View style={styles.wrapper} testID={'search-token-screen'}>
-      <ActionView
+      <AssetSearch
+        onSearch={handleSearch}
+        onFocus={() => {
+          setFocusState(true);
+        }}
+        onBlur={() => setFocusState(false)}
+      />
+      <AssetList
+        searchResults={searchResults}
+        handleToggleAsset={handleToggleAsset}
+        selectedAsset={selectedAsset}
+        searchQuery={searchQuery}
+        // selectedTokens={selectedTokens}
+      />
+      {/* <ActionView
         // cancelText={strings('add_asset.tokens.cancel_add_token')}
         // onCancelPress={cancelAddToken}
         showCancelButton={false}
@@ -247,25 +235,12 @@ const SearchTokenAutocomplete = ({
         confirmButtonMode={'confirm'}
         onConfirmPress={onChangeCustomToken}
         isFullScreen
-      // confirmDisabled={!(address && symbol && decimals)}
+        // confirmDisabled={!(address && symbol && decimals)}
       >
         <View style={styles.listTokenWrapper}>
           {renderTokenDetectionBanner()}
-          <AssetSearch
-            onSearch={handleSearch}
-            onFocus={() => {
-              setFocusState(true);
-            }}
-            onBlur={() => setFocusState(false)}
-          />
-          <AssetList
-            searchResults={searchResults}
-            handleToggleAsset={handleToggleAsset}
-            selectedAsset={selectedAsset}
-            searchQuery={searchQuery}
-          // selectedTokens={selectedTokens}
-          />
-          {/* <StyledButton
+         
+          <StyledButton
               type={'blue'}
               onPress={addToken}
               testID={'continue-button'}
@@ -276,9 +251,9 @@ const SearchTokenAutocomplete = ({
               containerStyle={{marginHorizontal:16, marginBottom:16}}
             > 
               {strings('manual_backup_step_1.continue')}
-            </StyledButton>*/}
+            </StyledButton>
         </View>
-      </ActionView>
+      </ActionView> */}
     </View>
   );
 };
