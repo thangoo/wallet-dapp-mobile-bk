@@ -27,7 +27,8 @@ const useMinimumVersions = () => {
   useEffect(() => {
     if (shouldTriggerUpdateFlow) {
       InteractionManager.runAfterInteractions(() => {
-        navigation.navigate(...createUpdateNeededNavDetails());
+        // TODO: DISABLE SHOW POP-UP UPDATE NEW VERSION
+        // navigation.navigate(...createUpdateNeededNavDetails());
       });
     }
   }, [navigation, shouldTriggerUpdateFlow]);
