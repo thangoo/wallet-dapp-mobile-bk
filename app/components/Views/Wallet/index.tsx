@@ -108,67 +108,35 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-
     tabUnderlineStyle: {
       height: 0,
       backgroundColor: colors.primary.default,
     },
-
     tabBar: {
-      borderColor: colors.border.muted,
-      marginTop: 16,
-      justifyContent: 'flex-start',
-      marginLeft: 20,
-      borderBottomWidth: 0,
+      justifyContent: 'space-between',
+      borderWidth: 0,
+      height: 40,
+      paddingHorizontal: 32,
+      marginVertical: 16,
     },
     splitTab: {
       fontSize: 18,
       color: colors.tText.muted,
-      marginRight: 15,
+      marginHorizontal: 16,
     },
     textStyle: {
       fontSize: 18,
       fontWeight: '600',
     },
-    tabWrapper: {
-      paddingLeft: 15,
-    },
-    tabWrapperFinal: {
-      flex: 1,
-      paddingLeft: 15,
-    },
-    tabStyleFirst: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingBottom: 0,
-    },
-    tabStyleSecond: {
-      flex: 1,
-      alignItems: 'center',
-      paddingBottom: 0,
-      flexDirection: 'row',
-    },
-    tabs: {
-      height: 50,
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-
-      borderTopWidth: 0,
-      borderLeftWidth: 0,
-      borderRightWidth: 0,
-      borderColor: '#ccc',
-    },
-    addIconWrapper: {
-      flex: 1,
-      flexDirection: 'row-reverse',
-      alignItems: 'center',
-    },
     iconPlus: {
       width: 32,
       height: 32,
       tintColor: colors.tIcon.default,
-      marginRight: 32,
+    },
+    wrapTab: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
     },
   });
 
@@ -371,55 +339,21 @@ const Wallet = ({ navigation }: any) => {
   ) => {
     // const { activeTextColor, inactiveTextColor, textStyle, } = this.props;
     const textColor = isTabActive ? colors.tText.default : colors.tText.third;
-    const fontWeight = isTabActive ? 'bold' : 'normal';
-
-    // console.log('#### name: ', name);
-
-    // Frist Tab
-    const RenderTokens = () => (
-      <View style={styles.tabStyleFirst}>
-        <Text style={[{ color: textColor, fontWeight }, styles.textStyle]}>
-          {name}
-        </Text>
-      </View>
-    );
-
-    // From Sencond Tab
-    const RenderNFTs = () => (
-      <View style={styles.tabStyleSecond}>
-        <Text style={styles.splitTab}>\</Text>
-        <Text style={[{ color: textColor, fontWeight }, styles.textStyle]}>
-          {name}
-        </Text>
-        <TouchableOpacity
-          onPress={tokensRef.current?.goToAddToken}
-          style={styles.addIconWrapper}
-        >
-          {/* <ButtonIcon
-            variant={ButtonIconVariants.Primary}
-            iconName={IconName.AddPlusCircleAddBlack}
-            style={styles.infoRightButton}
-            size={IconSize.Xl}
-            iconColor={'red'}
-            // disabled={!tokensRef.current?.state.isAddTokenEnabled}
-          /> */}
-          <Image source={add_plus_circle} style={styles.iconPlus} />
-        </TouchableOpacity>
-      </View>
-    );
-
     const isTokens = name === 'Tokens';
 
     return (
-      <TouchableOpacity
-        style={isTokens ? styles.tabWrapper : styles.tabWrapperFinal}
-        key={name}
-        accessible={true}
-        accessibilityLabel={name}
-        onPress={() => onPressHandler(page)}
-      >
-        {isTokens ? <RenderTokens /> : <RenderNFTs />}
-      </TouchableOpacity>
+      <View style={[styles.wrapTab, { flex: !isTokens ? 1 : 0 }]}>
+        <TouchableOpacity onPress={() => onPressHandler(page)}>
+          <Text style={[styles.textStyle, { color: textColor }]}>{name}</Text>
+        </TouchableOpacity>
+        {isTokens && <Text style={styles.splitTab}>\</Text>}
+        {!isTokens && <View style={{ flex: 1 }} />}
+        {!isTokens && (
+          <TouchableOpacity onPress={tokensRef.current?.goToAddToken}>
+            <Image source={add_plus_circle} style={styles.iconPlus} />
+          </TouchableOpacity>
+        )}
+      </View>
     );
   };
 
