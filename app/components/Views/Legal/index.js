@@ -63,7 +63,8 @@ const createStyles = (colors) =>
     },
     title: {
       fontSize: 14,
-      marginVertical: 20,
+      marginTop: 16,
+      marginBottom: 32,
       textAlign: 'center',
       ...fontStyles.normal,
       color: colors.tText.default,
@@ -107,7 +108,7 @@ const createStyles = (colors) =>
       zIndex: 2,
     },
     ctaWrapper: {
-      marginTop: 20,
+      marginTop: 32,
       marginBottom: 16,
     },
     text: {

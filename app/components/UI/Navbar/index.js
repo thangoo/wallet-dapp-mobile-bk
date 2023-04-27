@@ -55,6 +55,7 @@ import {
   bell_icon,
   chart_line_icon,
   menu_icon,
+  qr_code_icon,
 } from 'images/index';
 import { MetaMetricsEvents } from '../../../core/Analytics';
 import { trackLegacyEvent } from '../../../util/analyticsV2';
@@ -906,8 +907,8 @@ export function getWalletNavbarOptions(
 ) {
   const innerStyles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: themeColors.background.default,
-      shadowColor: importedColors.transparent,
+      // backgroundColor: themeColors.background.default,
+      // shadowColor: importedColors.transparent,
       elevation: 0,
     },
     headerIcon: {
@@ -919,7 +920,7 @@ export function getWalletNavbarOptions(
       flex: 1,
     },
     title: {
-      fontSize: 22,
+      fontSize: 18,
       fontWeight: '600',
       color: themeColors.gray01,
       textAlign: 'center',
@@ -929,49 +930,49 @@ export function getWalletNavbarOptions(
     },
   });
 
-  // const onScanSuccess = (data, content) => {
-  //   if (data.private_key) {
-  //     Alert.alert(
-  //       strings('wallet.private_key_detected'),
-  //       strings('wallet.do_you_want_to_import_this_account'),
-  //       [
-  //         {
-  //           text: strings('wallet.cancel'),
-  //           onPress: () => false,
-  //           style: 'cancel',
-  //         },
-  //         {
-  //           text: strings('wallet.yes'),
-  //           onPress: async () => {
-  //             try {
-  //               await importAccountFromPrivateKey(data.private_key);
-  //               navigation.navigate('ImportPrivateKeyView', {
-  //                 screen: 'ImportPrivateKeySuccess',
-  //               });
-  //             } catch (e) {
-  //               Alert.alert(
-  //                 strings('import_private_key.error_title'),
-  //                 strings('import_private_key.error_message'),
-  //               );
-  //             }
-  //           },
-  //         },
-  //       ],
-  //       { cancelable: false },
-  //     );
-  //   } else if (data.seed) {
-  //     Alert.alert(
-  //       strings('wallet.error'),
-  //       strings('wallet.logout_to_import_seed'),
-  //     );
-  //   } else {
-  //     setTimeout(() => {
-  //       DeeplinkManager.parse(content, {
-  //         origin: AppConstants.DEEPLINKS.ORIGIN_QR_CODE,
-  //       });
-  //     }, 500);
-  //   }
-  // };
+  const onScanSuccess = (data, content) => {
+    if (data.private_key) {
+      Alert.alert(
+        strings('wallet.private_key_detected'),
+        strings('wallet.do_you_want_to_import_this_account'),
+        [
+          {
+            text: strings('wallet.cancel'),
+            onPress: () => false,
+            style: 'cancel',
+          },
+          {
+            text: strings('wallet.yes'),
+            onPress: async () => {
+              try {
+                await importAccountFromPrivateKey(data.private_key);
+                navigation.navigate('ImportPrivateKeyView', {
+                  screen: 'ImportPrivateKeySuccess',
+                });
+              } catch (e) {
+                Alert.alert(
+                  strings('import_private_key.error_title'),
+                  strings('import_private_key.error_message'),
+                );
+              }
+            },
+          },
+        ],
+        { cancelable: false },
+      );
+    } else if (data.seed) {
+      Alert.alert(
+        strings('wallet.error'),
+        strings('wallet.logout_to_import_seed'),
+      );
+    } else {
+      setTimeout(() => {
+        DeeplinkManager.parse(content, {
+          origin: AppConstants.DEEPLINKS.ORIGIN_QR_CODE,
+        });
+      }, 500);
+    }
+  };
 
   function openDrawer() {
     drawerRef.current?.showDrawer?.();
@@ -1007,16 +1008,25 @@ export function getWalletNavbarOptions(
       <TouchableOpacity onPress={openDrawer}>
         <Image
           source={menu_icon}
-          style={{ marginLeft: 16, tintColor: themeColors.gray01 }}
+          style={{
+            marginLeft: 16,
+            tintColor: themeColors.gray01,
+            width: 24,
+            height: 24,
+          }}
         />
       </TouchableOpacity>
     ),
     headerRight: () => (
-      <TouchableOpacity // onPress={openQRScanner}
-      >
+      <TouchableOpacity onPress={openQRScanner}>
         <Image
-          source={bell_icon}
-          style={{ marginRight: 16, tintColor: themeColors.gray01 }}
+          source={qr_code_icon}
+          style={{
+            marginRight: 16,
+            tintColor: themeColors.gray01,
+            width: 24,
+            height: 24,
+          }}
         />
       </TouchableOpacity>
     ),

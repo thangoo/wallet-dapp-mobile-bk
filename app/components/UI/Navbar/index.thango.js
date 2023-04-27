@@ -20,7 +20,7 @@ const tHeaderOptions = (
       elevation: 0,
     },
     headerTitleStyle: {
-      fontSize: 22,
+      fontSize: 18,
       color: themeColors.tText.default,
       textAlign: 'center',
       alignItems: 'center',
@@ -41,8 +41,8 @@ const tHeaderOptions = (
             <Image
               source={leftImage ? leftImage : arrow_right_icon}
               style={{
-                width: 32,
-                height: 32,
+                width: 24,
+                height: 24,
                 tintColor: themeColors.tIcon.default,
               }}
             />
@@ -75,7 +75,7 @@ const tHeaderPhraseOptions = (
       elevation: 0,
     },
     headerTitleStyle: {
-      fontSize: 22,
+      fontSize: 18,
       color: themeColors.tText.light,
       textAlign: 'center',
       ...fontStyles.bold,
@@ -96,8 +96,8 @@ const tHeaderPhraseOptions = (
             <Image
               source={leftImage ? leftImage : arrow_right_icon}
               style={{
-                width: 32,
-                height: 32,
+                width: 24,
+                height: 24,
                 tintColor: themeColors.tIcon.light,
               }}
             />
@@ -143,7 +143,7 @@ const tHeaderPaymentDetailOptions = (
       elevation: 0,
     },
     headerTitleStyle: {
-      fontSize: 22,
+      fontSize: 18,
       color: themeColors.text.default,
       textAlign: 'center',
       ...fontStyles.bold,
