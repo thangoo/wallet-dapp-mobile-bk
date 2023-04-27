@@ -146,15 +146,15 @@ class Settings extends PureComponent {
           description={strings('app_settings.fiat_on_ramp.description')}
           onPress={this.onPressOnRamp}
         />
-        <SettingsDrawer
+        {/* <SettingsDrawer
           title={strings('app_settings.experimental_title')}
           description={strings('app_settings.experimental_desc')}
           onPress={this.onPressExperimental}
-        />
-        <SettingsDrawer
+        /> */}
+        {/* <SettingsDrawer
           title={strings('app_settings.info_title')}
           onPress={this.onPressInfo}
-        />
+        /> */}
       </ScrollView>
     );
   };
