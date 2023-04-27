@@ -114,11 +114,11 @@ const AccountSelector = ({ route }: AccountSelectorProps) => {
               testID: IMPORT_ACCOUNT_BUTTON_ID,
               disabled: isLoading,
             },
-            {
-              label: strings('accounts.connect_hardware'),
-              onPress: openConnectHardwareWallet,
-              disabled: isLoading,
-            },
+            // {
+            //   label: strings('accounts.connect_hardware'),
+            //   onPress: openConnectHardwareWallet,
+            //   disabled: isLoading,
+            // },
           ]}
         />
       ),
