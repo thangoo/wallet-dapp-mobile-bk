@@ -9,10 +9,7 @@ const createStyles = (colors) =>
     itemWrapper: {
       flex: 1,
       flexDirection: 'row',
-      // paddingHorizontal: 15,
-      paddingVertical: 5,
-      borderBottomWidth: 0,
-      borderBottomColor: colors.border.muted,
+      marginBottom: 8,
     },
     arrow: {
       flex: 1,

@@ -154,13 +154,13 @@ function LoadingAnimation({
           />
         </View>
       </View>
-      <View style={styles.foxContainer} pointerEvents="none">
+      {/* <View style={styles.foxContainer} pointerEvents="none">
         <Fox
           ref={foxRef}
           customContent={backgroundShapes}
           customStyle={customStyle(colors)}
         />
-      </View>
+      </View> */}
     </View>
   );
 }

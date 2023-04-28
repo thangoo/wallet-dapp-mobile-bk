@@ -985,11 +985,11 @@ class DrawerView extends PureComponent {
           icon: this.getIcon('comments'),
           action: this.showHelp,
         },
-        {
-          name: strings('drawer.request_feature'),
-          icon: this.getFeatherIcon('message-square'),
-          action: this.submitFeedback,
-        },
+        // {
+        //   name: strings('drawer.request_feature'),
+        //   icon: this.getFeatherIcon('message-square'),
+        //   action: this.submitFeedback,
+        // },
         {
           name: strings('drawer.lock'),
           icon: this.getFeatherIcon('log-out'),

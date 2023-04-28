@@ -65,11 +65,11 @@ const AccountConnectMultiSelector = ({
             onPress: () => onUserAction(USER_INTENT.Import),
             disabled: isLoading,
           },
-          {
-            label: strings('accounts.connect_hardware'),
-            onPress: () => onUserAction(USER_INTENT.ConnectHW),
-            disabled: isLoading,
-          },
+          // {
+          //   label: strings('accounts.connect_hardware'),
+          //   onPress: () => onUserAction(USER_INTENT.ConnectHW),
+          //   disabled: isLoading,
+          // },
         ]}
       />
     ),
