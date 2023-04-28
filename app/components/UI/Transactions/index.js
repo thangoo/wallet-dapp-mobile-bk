@@ -86,7 +86,7 @@ const createStyles = (colors) =>
     },
     time: {
       fontSize: 18,
-      color: colors['tvn.gray.10'],
+      color: colors.tText.default,
       ...fontStyles.bold,
       paddingLeft: 8,
       marginBottom: 16,
@@ -102,8 +102,9 @@ const createStyles = (colors) =>
       textAlign: 'center',
     },
     headerSection: {
-      paddingLeft: 16,
+      paddingLeft: 24,
       paddingBottom: 12,
+      marginTop: 24
     },
     header: {
       fontSize: 18,
