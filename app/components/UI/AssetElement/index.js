@@ -9,7 +9,6 @@ const createStyles = (colors) =>
     itemWrapper: {
       flex: 1,
       flexDirection: 'row',
-      marginBottom: 8,
     },
     arrow: {
       flex: 1,

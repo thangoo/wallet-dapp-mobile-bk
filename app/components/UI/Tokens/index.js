@@ -45,7 +45,6 @@ const createStyles = (colors) =>
     wrapper: {
       backgroundColor: colors.background.default,
       flex: 1,
-      minHeight: 500,
     },
     emptyView: {
       backgroundColor: colors.background.default,
@@ -94,6 +93,7 @@ const createStyles = (colors) =>
       height: 80,
       padding: 16,
       marginHorizontal: 16,
+      marginBottom: 8,
     },
     balances: {
       flex: 1,
@@ -464,24 +464,23 @@ class Tokens extends PureComponent {
     };
     // console.log('#### tokensToDisplay: ', tokensToDisplay);
     return (
-      <View style={{ height: screenHeight - 362, paddingBottom: 170 }}>
-        <ScrollView
-          scrollEnabled={isScrollEnable}
-          onContentSizeChange={handleContentSizeChange}
-          refreshControl={
-            <RefreshControl
-              colors={[colors.tPrimary.default]}
-              tintColor={colors.tIcon.default}
-              refreshing={refreshing}
-              onRefresh={this.onRefresh}
-            />
-          }
-        >
-          {tokensToDisplay.map((item) => this.renderItem(item))}
-          {this.renderTokensDetectedSection()}
-          {/* {this.renderFooter()} */}
-        </ScrollView>
-      </View>
+      <ScrollView
+        scrollEnabled={isScrollEnable}
+        onContentSizeChange={handleContentSizeChange}
+        refreshControl={
+          <RefreshControl
+            colors={[colors.tPrimary.default]}
+            tintColor={colors.tIcon.default}
+            refreshing={refreshing}
+            onRefresh={this.onRefresh}
+          />
+        }
+        contentContainerStyle={{ paddingTop: 8 }}
+      >
+        {tokensToDisplay.map((item) => this.renderItem(item))}
+        {this.renderTokensDetectedSection()}
+        {/* {this.renderFooter()} */}
+      </ScrollView>
     );
   }
 
