@@ -81,7 +81,7 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       zIndex: 3,
     },
     wrapperContent: {
-      // flex: 1,
+      flex: 1,
       // zIndex: 2,
     },
     wrapperTokenList: {
@@ -342,7 +342,7 @@ const Wallet = ({ navigation }: any) => {
     const isTokens = name === 'Tokens';
 
     return (
-      <View style={[styles.wrapTab, { flex: !isTokens ? 1 : 0 }]}>
+      <View key={name} style={[styles.wrapTab, { flex: !isTokens ? 1 : 0 }]}>
         <TouchableOpacity onPress={() => onPressHandler(page)}>
           <Text style={[styles.textStyle, { color: textColor }]}>{name}</Text>
         </TouchableOpacity>
@@ -471,26 +471,24 @@ const Wallet = ({ navigation }: any) => {
     };
 
     return (
-      <View style={styles.wrapperContent}>
-        <ScrollableTabView
-          renderTabBar={renderTabBar}
-          // eslint-disable-next-line react/jsx-no-bind
-          onChangeTab={onChangeTab}
-        >
-          <Tokens
-            tabLabel={strings('wallet.tokens')}
-            key={'tokens-tab'}
-            navigation={navigation}
-            tokens={assets}
-            onRef={onTokensRef}
-          />
-          <CollectibleContracts
-            tabLabel={strings('wallet.collectibles')}
-            key={'nfts-tab'}
-            navigation={navigation}
-          />
-        </ScrollableTabView>
-      </View>
+      <ScrollableTabView
+        renderTabBar={renderTabBar}
+        // eslint-disable-next-line react/jsx-no-bind
+        onChangeTab={onChangeTab}
+      >
+        <Tokens
+          tabLabel={strings('wallet.tokens')}
+          key={'tokens-tab'}
+          navigation={navigation}
+          tokens={assets}
+          onRef={onTokensRef}
+        />
+        <CollectibleContracts
+          tabLabel={strings('wallet.collectibles')}
+          key={'nfts-tab'}
+          navigation={navigation}
+        />
+      </ScrollableTabView>
     );
   }, [
     renderTabBar,
@@ -546,20 +544,8 @@ const Wallet = ({ navigation }: any) => {
           style={styles.bgGradient}
         />
       </SafeAreaView>
-      <View style={{ flex: 1 }}>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              colors={[colors.tPrimary.default]}
-              tintColor={colors.tIcon.default}
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          }
-          scrollEnabled={false}
-        >
-          {selectedAddress ? renderContent() : renderLoader()}
-        </ScrollView>
+      <View style={{ flex: 1, flexGrow: 1 }}>
+        {selectedAddress ? renderContent() : renderLoader()}
       </View>
       {renderOnboardingWizard()}
     </ErrorBoundary>
