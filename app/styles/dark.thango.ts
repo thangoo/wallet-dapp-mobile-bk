@@ -42,6 +42,7 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     muted: '#D6D9DC',
     secondary: colorThango.dark05,
     third: colorThango.dark07,
+    fourth: '#E6E6E6'
   },
   tIcon: {
     default: colorThango.gray01,
