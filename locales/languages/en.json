@@ -355,7 +355,7 @@
     "title": "Transactions"
   },
   "add_asset": {
-    "title": "Tokens",
+    "title": " Import Tokens",
     "title_nft": "Import NFT",
     "search_token": "SEARCH",
     "custom_token": "CUSTOM TOKEN",
