@@ -27,6 +27,7 @@ const createStyles = (colors: any) =>
     },
     cancel: {
       marginRight: 8,
+      borderColor: colors.tPrimary.default,
     },
     confirm: {
       marginLeft: 8,
@@ -109,7 +110,7 @@ const WrapActionView: FC<PropsWithChildren<Props>> = (props) => {
           {showCancelButton && (
             <StyledButton
               testID={cancelTestID}
-              type={confirmButtonMode === 'sign' ? 'signingCancel' : 'cancel'}
+              type={confirmButtonMode === 'sign' ? 'signingCancel' : 'normal'}
               onPress={onCancelPress}
               containerStyle={[styles.button, styles.cancel]}
               disabled={confirmed}

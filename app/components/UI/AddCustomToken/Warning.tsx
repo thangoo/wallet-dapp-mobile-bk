@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import { Image, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Alert, { AlertType } from '../../../Base/Alert';
-import { useTheme } from '../../../../util/theme';
-import { shield_warning_icon } from '../../../../images/index';
+import Alert, { AlertType } from '../../Base/Alert';
+import { useTheme } from '../../../util/theme';
+import { shield_warning_icon } from '../../../images/index';
 
 interface Props {
   /**
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const WarningMessage = ({ warningMessage, style }: Props) => {
+const WarningCustomToken = ({ warningMessage, style }: Props) => {
   const { colors } = useTheme();
 
   return (
@@ -28,12 +28,6 @@ const WarningMessage = ({ warningMessage, style }: Props) => {
       type={AlertType.Warning}
       style={style}
       renderIcon={() => (
-        // <FontAwesome
-        //   style={styles.icon}
-        //   name={'exclamation-circle'}
-        //   color={colors.warning.default}
-        //   size={18}
-        // />
         <Image
           source={shield_warning_icon}
           style={{ width: 24, height: 24, marginRight: 16 }}
@@ -46,4 +40,4 @@ const WarningMessage = ({ warningMessage, style }: Props) => {
   );
 };
 
-export default WarningMessage;
+export default WarningCustomToken;
