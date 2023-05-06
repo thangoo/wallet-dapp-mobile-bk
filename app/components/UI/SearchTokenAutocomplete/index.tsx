@@ -5,6 +5,7 @@ import {
   InteractionManager,
   Text,
   LayoutAnimation,
+  ScrollView,
 } from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import AssetSearch from '../AssetSearch';
@@ -52,11 +53,15 @@ interface Props {
  * Component that provides ability to add searched assets with metadata.
  */
 const SearchTokenAutocomplete = ({ navigation }: Props) => {
-  const [searchResults, setSearchResults] = useState([]);
+  const tokens = useSelector(
+    (state: any) => state.engine.backgroundState.TokensController.tokens,
+  );
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [selectedAssets, setSelectedAssets] = useState<any[]>([]);
-  const [selectedAssetsCopy, setSelectedAssetsCopy] = useState<any[]>([]);
+  const [selectedAssets, setSelectedAssets] = useState<any[]>(tokens || []);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [disable, setDisable] = useState<boolean>(true);
 
   const { colors } = useTheme();
   const styles = createStyles(colors);
@@ -94,64 +99,71 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
 
   const handleSearch = useCallback(
     (opts: any) => {
-      setSearchResults(opts.results);
+      const dataTokens = [...opts.results];
+      setSearchResults(dataTokens);
       setSearchQuery(opts.searchQuery);
     },
     [setSearchResults, setSearchQuery],
   );
 
   const handleSelectAsset = useCallback(
-    (asset) => {
-      setSelectedAssetsCopy({ ...selectedAssets });
-      console.log(selectedAssetsCopy);
+    async (asset) => {
       const { address } = asset;
-      const hasAddress = _.includes(selectedAssetsCopy, address);
-
+      const copyAddress = [...selectedAssets];
+      const hasAddress = _.includes(_.map(copyAddress, 'address'), address);
       if (hasAddress) {
-        setSelectedAssets(selectedAssets.filter((i) => i?.address !== address));
+        _.remove(copyAddress, (obj) => obj.address === address);
+        setSelectedAssets(copyAddress);
+        if (_.isEqual(copyAddress, tokens)) {
+          setDisable(true);
+        } else {
+          setDisable(false);
+        }
       } else {
         setSelectedAssets((prev) => [...prev, asset]);
+        setDisable(false);
       }
     },
-    [setSelectedAssets, selectedAssetsCopy, setSelectedAssetsCopy],
+    [setSelectedAssets, selectedAssets, searchResults],
   );
 
   const addToken = useCallback(async () => {
     const { TokensController } = Engine.context as any;
+    setLoading(true);
     await Promise.all(
       selectedAssets.map(({ address, symbol, decimals }) =>
         TokensController.addToken(address, symbol, decimals),
       ),
-    );
+    )
 
-    // trackEvent(MetaMetricsEvents.TOKEN_ADDED, getAnalyticsParams());
+      .then(() => {
+        // trackEvent(MetaMetricsEvents.TOKEN_ADDED, getAnalyticsParams());
 
-    // Clear state before closing
-    setSearchResults([]);
-    setSearchQuery('');
-    setSelectedAssets([]);
+        // Clear state before closing
+        setSearchResults([]);
+        setSearchQuery('');
+        setSelectedAssets([]);
 
-    NotificationManager.showSimpleNotification({
-      status: `simple_notification`,
-      duration: 5000,
-      title: strings('wallet.token_toast.token_imported_title'),
-      // description: strings('wallet.token_toast.token_imported_desc', {
-      //   tokenSymbol: 'symbol',
-      // }),
-    });
+        NotificationManager.showSimpleNotification({
+          status: `simple_notification`,
+          duration: 5000,
+          title: strings('wallet.token_toast.token_imported_title'),
+          description: strings('wallet.token_toast.token_imported_desc1'),
+        });
 
-    InteractionManager.runAfterInteractions(() => {
-      navigation.goBack();
-      NotificationManager.showSimpleNotification({
-        status: `simple_notification`,
-        duration: 5000,
-        title: strings('wallet.token_toast.token_imported_title'),
-        // description: strings('wallet.token_toast.token_imported_desc', {
-        //   tokenSymbol: 'symbol',
-        // }),
-      });
-    });
-  }, [selectedAssets]);
+        InteractionManager.runAfterInteractions(() => {
+          navigation.goBack();
+          NotificationManager.showSimpleNotification({
+            status: `simple_notification`,
+            duration: 5000,
+            title: strings('wallet.token_toast.token_imported_title'),
+            description: strings('wallet.token_toast.token_imported_desc1'),
+          });
+        });
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  }, [selectedAssets, setLoading]);
 
   const renderTokenDetectionBanner = useCallback(() => {
     if (isTokenDetectionEnabled || isSearchFocused) {
@@ -213,7 +225,8 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
         onCancelPress={cancelAddToken}
         onConfirmPress={addToken}
         confirmButtonMode="confirm"
-        // confirmDisabled={!(address && symbol && decimals)}
+        confirmed={loading}
+        confirmDisabled={disable}
       >
         <View>
           {renderTokenDetectionBanner()}
@@ -229,6 +242,7 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
             handleSelectAsset={handleSelectAsset}
             selectedAsset={selectedAssets}
             searchQuery={searchQuery}
+            tokens={tokens}
           />
         </View>
       </WrapActionView>
