@@ -6,6 +6,7 @@ import {
   StyleSheet,
   InteractionManager,
   Platform,
+  Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { isValidAddress } from 'ethereumjs-util';
@@ -33,6 +34,7 @@ import {
 import { NFT_IDENTIFIER_INPUT_BOX_ID } from '../../../../wdio/screen-objects/testIDs/Screens/NFTImportScreen.testIds';
 import WarningCustomToken from './Warning';
 import WrapActionView from '../SearchTokenAutocomplete/WrapActionView';
+import { shield_warning_icon } from 'images/index';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -68,12 +70,13 @@ const createStyles = (colors) =>
       color: colors.error.default,
     },
     tokenDetectionBanner: {
-      marginHorizontal: 20,
+      marginHorizontal: 15,
       marginTop: 20,
       backgroundColor: colors.tWarning.default,
       alignItems: 'flex-start',
       height: 76,
       borderRadius: 14,
+      borderWidth: 0,
     },
     tokenDetectionDescription: {
       color: colors.tText.light,
@@ -281,17 +284,16 @@ export default class AddCustomToken extends PureComponent {
         type={AlertType.Info}
         style={styles.tokenDetectionBanner}
         renderIcon={() => (
-          <FontAwesome
-            style={styles.tokenDetectionIcon}
-            name={'exclamation-circle'}
-            color={colors.primary.default}
-            size={18}
+          <Image
+            source={shield_warning_icon}
+            style={{ width: 24, height: 24, marginRight: 8 }}
+            resizeMode="contain"
           />
         )}
       >
         <>
           <Text style={styles.tokenDetectionDescription}>
-            {strings('add_asset.banners.custom_info_desc')}
+            {strings('add_asset.banners.custom_warning_desc')}
           </Text>
           <Text
             suppressHighlighting

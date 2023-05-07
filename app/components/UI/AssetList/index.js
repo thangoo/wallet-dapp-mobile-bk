@@ -127,7 +127,6 @@ class AssetList extends PureComponent {
         {handleResult.map((_, i) => {
           const { symbol, name, address, iconUrl, selected } =
             handleResult[i] || {};
-          console.log('selected', selected);
           const isSelected = selectedAsset.some(
             (element) => element.address.toUpperCase() == address.toUpperCase(),
           );
