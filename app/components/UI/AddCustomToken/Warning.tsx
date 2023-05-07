@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { Image, StyleProp, StyleSheet, ViewStyle } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Alert, { AlertType } from '../../Base/Alert';
 import { useTheme } from '../../../util/theme';
 import { shield_warning_icon } from '../../../images/index';

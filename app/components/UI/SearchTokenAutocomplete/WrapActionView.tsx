@@ -14,6 +14,9 @@ import { useTheme } from '../../../util/theme';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
+    wrapper: {
+      flex: 1,
+    },
     actionContainer: {
       flex: 0,
       flexDirection: 'row',
@@ -83,7 +86,7 @@ const WrapActionView: FC<PropsWithChildren<Props>> = (props) => {
   const styles = createStyles(colors);
 
   return (
-    <View style={baseStyles.flexGrow}>
+    <View style={styles.wrapper}>
       <KeyboardAwareScrollView
         style={[baseStyles.flexGrow, style]}
         contentContainerStyle={[
