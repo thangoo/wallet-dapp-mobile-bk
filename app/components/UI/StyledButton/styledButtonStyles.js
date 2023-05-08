@@ -135,6 +135,15 @@ const createStyles = (colors) =>
       borderWidth: 1,
       borderColor: colors.overlay.inverse,
     },
+    unselectBackground: {
+      borderColor: 'transparent',
+      backgroundColor: colors.tBackground.third,
+    },
+    selectBackground: {
+      borderColor: colors.tPrimary.default,
+      borderWidth: 1,
+      backgroundColor: colors.tBackground.third,
+    },
     inverseTransparentBackground: {
       backgroundColor: importedColors.transparent,
       borderWidth: 0,
@@ -236,6 +245,12 @@ function getStyles(type, colors) {
     case 'onOverlay':
       fontStyle = styles.onOverlayText;
       containerStyle = styles.onOverlayBackground;
+      break;
+    case 'unselect':
+      containerStyle = styles.unselectBackground;
+      break;
+    case 'selected':
+      containerStyle = styles.selectBackground;
       break;
     default:
       throw new Error('Unknown button type');
