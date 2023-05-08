@@ -1,5 +1,11 @@
 import React, { PureComponent } from 'react';
-import { View, StyleSheet, Platform, Image } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Platform,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import { strings } from '../../../../locales/i18n';
 import StyledButton from '../StyledButton'; // eslint-disable-line  import/no-unresolved
@@ -11,35 +17,41 @@ import { TOKEN_RESULTS_LIST_ID } from '../../../../wdio/screen-objects/testIDs/S
 import { ThemeContext, mockTheme } from '../../../util/theme';
 import { check_blue_none_bg } from '../../../images/index';
 import _ from 'lodash';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const createStyles = (colors) =>
   StyleSheet.create({
     rowWrapper: {
-      padding: 20,
+      marginTop: 16,
     },
     item: {
+      marginHorizontal: 16,
       marginBottom: 12,
-      borderWidth: 2,
-      height: 57,
-      borderRadius: 16,
-      paddingVertical: 9,
+      borderRadius: 12,
+      borderWidth: 1,
+      backgroundColor: colors.tBackground.third,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+    },
+    unselectBackground: {
+      borderColor: 'transparent',
+    },
+    selectBackground: {
+      borderColor: colors.tPrimary.default,
     },
     assetListElement: {
-      flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
     },
     textName: {
       fontSize: 16,
-      ...fontStyles.bold,
-      marginLeft: 16,
+      fontWeight: '600',
       color: colors.tText.default,
     },
     textSymbol: {
       fontSize: 14,
-      ...fontStyles.normal,
-      marginLeft: 16,
-      color: colors.tText.gray12,
+      fontWeight: '600',
+      color: colors.tText.address,
     },
     normalText: {
       ...fontStyles.normal,
@@ -113,7 +125,11 @@ class AssetList extends PureComponent {
     });
 
     return (
-      <View style={styles.rowWrapper} testID={'add-searched-token-screen'}>
+      <ScrollView
+        style={styles.rowWrapper}
+        testID={'add-searched-token-screen'}
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
         {/* {searchResults.length > 0 ? (
           <Text style={styles.normalText} testID={'select-token-title'}>
             {strings('token.select_token')}
@@ -131,35 +147,40 @@ class AssetList extends PureComponent {
             (element) => element.address.toUpperCase() == address.toUpperCase(),
           );
           return (
-            <StyledButton
-              type={isSelected ? 'selected' : 'unselect'}
-              containerStyle={styles.item}
-              onPress={() => handleSelectAsset(searchResults[i])} // eslint-disable-line
+            <TouchableOpacity
               key={i}
-              {...generateTestId(Platform, TOKEN_RESULTS_LIST_ID)}
+              style={[
+                styles.item,
+                isSelected
+                  ? styles.selectBackground
+                  : styles.unselectBackground,
+              ]}
+              onPress={() => handleSelectAsset(searchResults[i])}
               disabled={selected}
-              disabledContainerStyle={styles.disabled}
             >
               <View style={styles.assetListElement}>
                 <AssetIcon
                   address={address}
                   logo={iconUrl}
-                  customStyle={{ height: 40, width: 40 }}
+                  customStyle={{ height: 40, width: 40, marginRight: 16 }}
                 />
-                <View>
+                <View style={{ flex: 1 }}>
                   <Text style={styles.textName}>{name}</Text>
                   <Text style={styles.textSymbol}>{symbol}</Text>
                 </View>
+                {isSelected && (
+                  <View>
+                    <Image
+                      source={check_blue_none_bg}
+                      style={{ width: 24, height: 24 }}
+                    />
+                  </View>
+                )}
               </View>
-              {isSelected && (
-                <View>
-                  <Image source={check_blue_none_bg} />
-                </View>
-              )}
-            </StyledButton>
+            </TouchableOpacity>
           );
         })}
-      </View>
+      </ScrollView>
     );
   };
 }

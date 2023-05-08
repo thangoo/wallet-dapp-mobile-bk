@@ -35,6 +35,9 @@ import { NFT_IDENTIFIER_INPUT_BOX_ID } from '../../../../wdio/screen-objects/tes
 import WarningCustomToken from './Warning';
 import WrapActionView from '../SearchTokenAutocomplete/WrapActionView';
 import { shield_warning_icon } from 'images/index';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import HStack from '../../../../app/components/Base/HStack';
+import StyledButton from '../StyledButton';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -43,40 +46,45 @@ const createStyles = (colors) =>
       flex: 1,
     },
     rowWrapper: {
-      paddingHorizontal: 16,
-      // paddingVertical: 5,
-      marginTop: 16,
+      marginBottom: 16,
+      marginHorizontal: 16,
     },
     textInput: {
-      borderRadius: 16,
-      paddingVertical: 24,
-      paddingHorizontal: 16,
-      ...fontStyles.bold,
-      color: colors.tText.secondary,
+      color: colors.tText.default,
       backgroundColor: colors.tBackground.third,
+      height: 64,
+      marginBottom: 4,
+      borderRadius: 16,
+      paddingHorizontal: 16,
       fontSize: 16,
+      fontWeight: '600',
     },
     inputLabel: {
-      ...fontStyles.normal,
-      color: colors.tText.default,
-      fontSize: 14,
       marginBottom: 8,
-      paddingHorizontal: 16,
+      fontSize: 14,
+      fontWeight: '400',
+      color: colors.tText.default,
+    },
+    warnIcon: {
+      width: 24,
+      height: 24,
+      alignSelf: 'flex-start',
+      marginRight: 16,
     },
     warningText: {
-      ...fontStyles.normal,
-      marginTop: 5,
-      paddingLeft: 16,
+      // ...fontStyles.normal,
+      // marginTop: 4,
+      // paddingLeft: 16,
       color: colors.error.default,
     },
     tokenDetectionBanner: {
-      marginHorizontal: 15,
-      marginTop: 20,
+      marginHorizontal: 16,
+      marginTop: 16,
       backgroundColor: colors.tWarning.default,
-      alignItems: 'flex-start',
-      height: 76,
       borderRadius: 14,
-      borderWidth: 0,
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 16,
     },
     tokenDetectionDescription: {
       color: colors.tText.light,
@@ -280,38 +288,35 @@ export default class AddCustomToken extends PureComponent {
     const styles = createStyles(colors);
 
     return (
-      <Alert
-        type={AlertType.Info}
-        style={styles.tokenDetectionBanner}
-        renderIcon={() => (
-          <Image
-            source={shield_warning_icon}
-            style={{ width: 24, height: 24, marginRight: 8 }}
-            resizeMode="contain"
-          />
-        )}
-      >
-        <>
+      <View style={styles.tokenDetectionBanner}>
+        <Image
+          source={shield_warning_icon}
+          style={styles.warnIcon}
+          resizeMode="contain"
+        />
+        <View style={{ flex: 1 }}>
           <Text style={styles.tokenDetectionDescription}>
             {strings('add_asset.banners.custom_warning_desc')}
+
+            <Text
+              suppressHighlighting
+              onPress={() => {
+                // TODO: This functionality exists in a bunch of other places. We need to unify this into a utils function
+                navigation.navigate('Webview', {
+                  screen: 'SimpleWebview',
+                  params: {
+                    url: AppConstants.URLS.SECURITY,
+                    title: strings('add_asset.banners.custom_security_tips'),
+                  },
+                });
+              }}
+              style={styles.tokenDetectionLink}
+            >
+              {strings('add_asset.banners.custom_info_link')}
+            </Text>
           </Text>
-          <Text
-            suppressHighlighting
-            onPress={() => {
-              navigation.navigate('Webview', {
-                screen: 'SimpleWebview',
-                params: {
-                  url: AppConstants.URLS.SECURITY,
-                  title: strings('add_asset.banners.custom_security_tips'),
-                },
-              });
-            }}
-            style={styles.tokenDetectionLink}
-          >
-            {strings('add_asset.banners.custom_info_link')}
-          </Text>
-        </>
-      </Alert>
+        </View>
+      </View>
     );
   };
 
@@ -321,13 +326,15 @@ export default class AddCustomToken extends PureComponent {
     const styles = createStyles(colors);
 
     return (
-      <WarningCustomToken
-        style={styles.tokenDetectionBanner}
-        warningMessage={
-          <>
-            <Text style={styles.tokenDetectionDescription}>
-              {strings('add_asset.banners.custom_warning_desc')}
-            </Text>
+      <View style={styles.tokenDetectionBanner}>
+        <Image
+          source={shield_warning_icon}
+          style={styles.warnIcon}
+          resizeMode="contain"
+        />
+        <View style={{ flex: 1 }}>
+          <Text style={styles.tokenDetectionDescription}>
+            {strings('add_asset.banners.custom_warning_desc')}
             <Text
               suppressHighlighting
               onPress={() => {
@@ -344,9 +351,9 @@ export default class AddCustomToken extends PureComponent {
             >
               {strings('add_asset.banners.custom_warning_link')}
             </Text>
-          </>
-        }
-      />
+          </Text>
+        </View>
+      </View>
     );
   };
 
@@ -366,92 +373,113 @@ export default class AddCustomToken extends PureComponent {
         style={styles.wrapper}
         {...generateTestId(Platform, CUSTOM_TOKEN_CONTAINER_ID)}
       >
-        <WrapActionView
-          cancelTestID={'add-custom-asset-cancel-button'}
-          confirmTestID={'add-custom-asset-confirm-button'}
-          cancelText={strings('add_asset.tokens.cancel_add_token')}
-          confirmText={strings('add_asset.tokens.add_token')}
-          confirmButtonMode="confirm"
-          onCancelPress={this.cancelAddToken}
-          {...generateTestId(Platform, TOKEN_CANCEL_IMPORT_BUTTON_ID)}
-          onConfirmPress={this.addToken}
-          confirmDisabled={!(address && symbol && decimals)}
+        {this.renderBanner()}
+        <View style={[styles.rowWrapper, { marginTop: 16 }]}>
+          <Text style={styles.inputLabel}>
+            {strings('token.token_address')}
+          </Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder={'0x...'}
+            placeholderTextColor={colors.tText.secondary}
+            value={this.state.address}
+            onChangeText={this.onAddressChange}
+            onBlur={this.onAddressBlur}
+            {...generateTestId(Platform, TOKEN_ADDRESS_INPUT_BOX_ID)}
+            onSubmitEditing={this.jumpToAssetSymbol}
+            returnKeyType={'next'}
+            keyboardAppearance={themeAppearance}
+          />
+          {Boolean(this.state.warningAddress) && (
+            <Text
+              style={styles.warningText}
+              {...generateTestId(Platform, TOKEN_ADDRESS_WARNING_MESSAGE_ID)}
+            >
+              {this.state.warningAddress}
+            </Text>
+          )}
+        </View>
+
+        <View style={styles.rowWrapper}>
+          <Text style={styles.inputLabel}>{strings('token.token_symbol')}</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder={'GNO'}
+            placeholderTextColor={colors.text.muted}
+            value={this.state.symbol}
+            onChangeText={this.onSymbolChange}
+            onBlur={this.validateCustomTokenSymbol}
+            {...generateTestId(Platform, TOKEN_ADDRESS_SYMBOL_ID)}
+            ref={this.assetSymbolInput}
+            onSubmitEditing={this.jumpToAssetPrecision}
+            returnKeyType={'next'}
+            keyboardAppearance={themeAppearance}
+          />
+          {Boolean(this.state.warningSymbol) && (
+            <Text style={styles.warningText}>{this.state.warningSymbol}</Text>
+          )}
+        </View>
+
+        <View style={styles.rowWrapper}>
+          <Text style={styles.inputLabel}>
+            {strings('token.token_decimal')}
+          </Text>
+          <TextInput
+            style={styles.textInput}
+            value={this.state.decimals}
+            keyboardType="numeric"
+            maxLength={2}
+            placeholder={'18'}
+            placeholderTextColor={colors.text.muted}
+            onChangeText={this.onDecimalsChange}
+            onBlur={this.validateCustomTokenDecimals}
+            {...generateTestId(Platform, NFT_IDENTIFIER_INPUT_BOX_ID)}
+            ref={this.assetPrecisionInput}
+            onSubmitEditing={this.addToken}
+            returnKeyType={'done'}
+            keyboardAppearance={themeAppearance}
+          />
+          {Boolean(this.state.warningDecimals) && (
+            <Text
+              style={styles.warningText}
+              {...generateTestId(Platform, TOKEN_PRECISION_WARNING_MESSAGE_ID)}
+            >
+              {this.state.warningDecimals}
+            </Text>
+          )}
+        </View>
+        <View style={{ flex: 1 }} />
+        <SafeAreaView
+          edges={['bottom']}
+          style={{
+            paddingHorizontal: 32,
+            marginBottom: 16,
+            borderTopWidth: 1,
+            paddingTop: 16,
+            borderTopColor: colors.border.default,
+          }}
         >
-          <View style={{ marginBottom: 20 }}>
-            {this.renderBanner()}
-            <View style={styles.rowWrapper}>
-              <Text style={styles.inputLabel}>
-                {strings('token.token_address')}
-              </Text>
-              <TextInput
-                style={styles.textInput}
-                placeholder={'0x...'}
-                placeholderTextColor={colors.tText.secondary}
-                value={this.state.address}
-                onChangeText={this.onAddressChange}
-                onBlur={this.onAddressBlur}
-                {...generateTestId(Platform, TOKEN_ADDRESS_INPUT_BOX_ID)}
-                onSubmitEditing={this.jumpToAssetSymbol}
-                returnKeyType={'next'}
-                keyboardAppearance={themeAppearance}
-              />
-              <Text
-                style={styles.warningText}
-                {...generateTestId(Platform, TOKEN_ADDRESS_WARNING_MESSAGE_ID)}
-              >
-                {this.state.warningAddress}
-              </Text>
-            </View>
-            <View style={styles.rowWrapper}>
-              <Text style={styles.inputLabel}>
-                {strings('token.token_symbol')}
-              </Text>
-              <TextInput
-                style={styles.textInput}
-                placeholder={'GNO'}
-                placeholderTextColor={colors.text.muted}
-                value={this.state.symbol}
-                onChangeText={this.onSymbolChange}
-                onBlur={this.validateCustomTokenSymbol}
-                {...generateTestId(Platform, TOKEN_ADDRESS_SYMBOL_ID)}
-                ref={this.assetSymbolInput}
-                onSubmitEditing={this.jumpToAssetPrecision}
-                returnKeyType={'next'}
-                keyboardAppearance={themeAppearance}
-              />
-              <Text style={styles.warningText}>{this.state.warningSymbol}</Text>
-            </View>
-            <View style={styles.rowWrapper}>
-              <Text style={styles.inputLabel}>
-                {strings('token.token_decimal')}
-              </Text>
-              <TextInput
-                style={styles.textInput}
-                value={this.state.decimals}
-                keyboardType="numeric"
-                maxLength={2}
-                placeholder={'18'}
-                placeholderTextColor={colors.text.muted}
-                onChangeText={this.onDecimalsChange}
-                onBlur={this.validateCustomTokenDecimals}
-                {...generateTestId(Platform, NFT_IDENTIFIER_INPUT_BOX_ID)}
-                ref={this.assetPrecisionInput}
-                onSubmitEditing={this.addToken}
-                returnKeyType={'done'}
-                keyboardAppearance={themeAppearance}
-              />
-              <Text
-                style={styles.warningText}
-                {...generateTestId(
-                  Platform,
-                  TOKEN_PRECISION_WARNING_MESSAGE_ID,
-                )}
-              >
-                {this.state.warningDecimals}
-              </Text>
-            </View>
-          </View>
-        </WrapActionView>
+          <HStack>
+            <StyledButton
+              testID={'cancelTestID'}
+              type={'signingCancel'}
+              onPress={this.cancelAddToken}
+              containerStyle={{ flex: 1 }}
+            >
+              {strings('add_asset.tokens.cancel_add_token')}
+            </StyledButton>
+            <View style={{ width: 16 }} />
+            <StyledButton
+              testID={'confirmTestID'}
+              type={'blue'}
+              onPress={this.addToken}
+              disabled={!(address && symbol && decimals)}
+              containerStyle={{ flex: 1 }}
+            >
+              {strings('add_asset.tokens.add_token')}
+            </StyledButton>
+          </HStack>
+        </SafeAreaView>
       </View>
     );
   };

@@ -6,6 +6,7 @@ import {
   Text,
   LayoutAnimation,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import AssetSearch from '../AssetSearch';
@@ -22,6 +23,9 @@ import { useTheme } from '../../../util/theme';
 import { selectChainId } from '../../../selectors/networkController';
 import _ from 'lodash';
 import WrapActionView from './WrapActionView';
+import HStack from '../../../../app/components/Base/HStack';
+import StyledButton from '../StyledButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
@@ -219,33 +223,57 @@ const SearchTokenAutocomplete = ({ navigation }: Props) => {
 
   return (
     <View style={styles.wrapper} testID={'search-token-screen'}>
-      <WrapActionView
-        cancelText={strings('add_asset.tokens.cancel_add_token')}
-        confirmText={strings('add_asset.tokens.add_token')}
-        onCancelPress={cancelAddToken}
-        onConfirmPress={addToken}
-        confirmButtonMode="confirm"
-        confirmed={loading}
-        confirmDisabled={disable}
+      {renderTokenDetectionBanner()}
+      <AssetSearch
+        onSearch={handleSearch}
+        onFocus={() => {
+          setFocusState(true);
+        }}
+        onBlur={() => setFocusState(false)}
+      />
+      <AssetList
+        searchResults={searchResults}
+        handleSelectAsset={handleSelectAsset}
+        selectedAsset={selectedAssets}
+        searchQuery={searchQuery}
+        tokens={tokens}
+      />
+
+      <SafeAreaView
+        edges={['bottom']}
+        style={{
+          paddingHorizontal: 32,
+          marginBottom: 16,
+          borderTopWidth: 1,
+          paddingTop: 16,
+          borderTopColor: colors.border.default,
+        }}
       >
-        <View>
-          {renderTokenDetectionBanner()}
-          <AssetSearch
-            onSearch={handleSearch}
-            onFocus={() => {
-              setFocusState(true);
-            }}
-            onBlur={() => setFocusState(false)}
-          />
-          <AssetList
-            searchResults={searchResults}
-            handleSelectAsset={handleSelectAsset}
-            selectedAsset={selectedAssets}
-            searchQuery={searchQuery}
-            tokens={tokens}
-          />
-        </View>
-      </WrapActionView>
+        <HStack>
+          <StyledButton
+            testID={'cancelTestID'}
+            type={'signingCancel'}
+            onPress={cancelAddToken}
+            containerStyle={{ flex: 1 }}
+          >
+            {strings('add_asset.tokens.cancel_add_token')}
+          </StyledButton>
+          <View style={{ width: 16 }} />
+          <StyledButton
+            testID={'confirmTestID'}
+            type={'blue'}
+            onPress={addToken}
+            disabled={loading || disable}
+            containerStyle={{ flex: 1 }}
+          >
+            {loading ? (
+              <ActivityIndicator size="small" color={colors.primary.inverse} />
+            ) : (
+              strings('add_asset.tokens.add_token')
+            )}
+          </StyledButton>
+        </HStack>
+      </SafeAreaView>
     </View>
   );
 };
