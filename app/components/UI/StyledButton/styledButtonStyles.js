@@ -7,7 +7,7 @@ const createStyles = (colors) =>
       padding: 15,
       borderRadius: 12,
       justifyContent: 'center',
-      height: 48,
+      minHeight: 48,
     },
     disabledContainer: {
       backgroundColor: colors.tButton.disable,
@@ -15,7 +15,7 @@ const createStyles = (colors) =>
     text: {
       fontSize: 14,
       textAlign: 'center',
-      ...fontStyles.bold,
+      fontWeight: '600',
     },
     blue: {
       backgroundColor: colors.tPrimary.default,
