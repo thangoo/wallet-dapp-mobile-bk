@@ -78,7 +78,7 @@ const createStyles = (colors) =>
     },
     signingCancel: {
       backgroundColor: colors.background.default,
-      borderWidth: 1,
+      borderWidth: 2,
       borderColor: colors.primary.default,
     },
     signingCancelText: {
