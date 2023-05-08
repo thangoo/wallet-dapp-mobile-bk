@@ -6,6 +6,7 @@ import {
   StyleSheet,
   InteractionManager,
   Platform,
+  Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { isValidAddress } from 'ethereumjs-util';
@@ -18,7 +19,6 @@ import { isSmartContractAddress } from '../../../util/transactions';
 import { trackEvent } from '../../../util/analyticsV2';
 import AppConstants from '../../../core/AppConstants';
 import Alert, { AlertType } from '../../Base/Alert';
-import WarningMessage from '../../Views/SendFlow/WarningMessage';
 import { ThemeContext, mockTheme } from '../../../util/theme';
 import { strings } from '../../../../locales/i18n';
 import { fontStyles } from '../../../styles/common';
@@ -32,6 +32,9 @@ import {
   TOKEN_PRECISION_WARNING_MESSAGE_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/AddCustomToken.testIds';
 import { NFT_IDENTIFIER_INPUT_BOX_ID } from '../../../../wdio/screen-objects/testIDs/Screens/NFTImportScreen.testIds';
+import WarningCustomToken from './Warning';
+import WrapActionView from '../SearchTokenAutocomplete/WrapActionView';
+import { shield_warning_icon } from 'images/index';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -40,28 +43,52 @@ const createStyles = (colors) =>
       flex: 1,
     },
     rowWrapper: {
-      padding: 20,
+      paddingHorizontal: 16,
+      // paddingVertical: 5,
+      marginTop: 16,
     },
     textInput: {
-      borderWidth: 1,
-      borderRadius: 4,
-      borderColor: colors.border.default,
-      padding: 16,
-      ...fontStyles.normal,
-      color: colors.text.default,
+      borderRadius: 16,
+      paddingVertical: 24,
+      paddingHorizontal: 16,
+      ...fontStyles.bold,
+      color: colors.tText.secondary,
+      backgroundColor: colors.tBackground.third,
+      fontSize: 16,
     },
     inputLabel: {
       ...fontStyles.normal,
-      color: colors.text.default,
+      color: colors.tText.default,
+      fontSize: 14,
+      marginBottom: 8,
+      paddingHorizontal: 16,
     },
     warningText: {
       ...fontStyles.normal,
-      marginTop: 15,
+      marginTop: 5,
+      paddingLeft: 16,
       color: colors.error.default,
     },
-    tokenDetectionBanner: { marginHorizontal: 20, marginTop: 20 },
-    tokenDetectionDescription: { color: colors.text.default },
-    tokenDetectionLink: { color: colors.primary.default },
+    tokenDetectionBanner: {
+      marginHorizontal: 15,
+      marginTop: 20,
+      backgroundColor: colors.tWarning.default,
+      alignItems: 'flex-start',
+      height: 76,
+      borderRadius: 14,
+      borderWidth: 0,
+    },
+    tokenDetectionDescription: {
+      color: colors.tText.light,
+      fontSize: 14,
+      ...fontStyles.normal,
+    },
+    tokenDetectionLink: {
+      color: colors.tText.light,
+      textDecorationLine: 'underline',
+      fontSize: 14,
+      ...fontStyles.normal,
+    },
     tokenDetectionIcon: {
       paddingTop: 4,
       paddingRight: 8,
@@ -257,17 +284,16 @@ export default class AddCustomToken extends PureComponent {
         type={AlertType.Info}
         style={styles.tokenDetectionBanner}
         renderIcon={() => (
-          <FontAwesome
-            style={styles.tokenDetectionIcon}
-            name={'exclamation-circle'}
-            color={colors.primary.default}
-            size={18}
+          <Image
+            source={shield_warning_icon}
+            style={{ width: 24, height: 24, marginRight: 8 }}
+            resizeMode="contain"
           />
         )}
       >
         <>
           <Text style={styles.tokenDetectionDescription}>
-            {strings('add_asset.banners.custom_info_desc')}
+            {strings('add_asset.banners.custom_warning_desc')}
           </Text>
           <Text
             suppressHighlighting
@@ -295,7 +321,7 @@ export default class AddCustomToken extends PureComponent {
     const styles = createStyles(colors);
 
     return (
-      <WarningMessage
+      <WarningCustomToken
         style={styles.tokenDetectionBanner}
         warningMessage={
           <>
@@ -340,17 +366,18 @@ export default class AddCustomToken extends PureComponent {
         style={styles.wrapper}
         {...generateTestId(Platform, CUSTOM_TOKEN_CONTAINER_ID)}
       >
-        <ActionView
+        <WrapActionView
           cancelTestID={'add-custom-asset-cancel-button'}
           confirmTestID={'add-custom-asset-confirm-button'}
           cancelText={strings('add_asset.tokens.cancel_add_token')}
           confirmText={strings('add_asset.tokens.add_token')}
+          confirmButtonMode="confirm"
           onCancelPress={this.cancelAddToken}
           {...generateTestId(Platform, TOKEN_CANCEL_IMPORT_BUTTON_ID)}
           onConfirmPress={this.addToken}
           confirmDisabled={!(address && symbol && decimals)}
         >
-          <View>
+          <View style={{ marginBottom: 20 }}>
             {this.renderBanner()}
             <View style={styles.rowWrapper}>
               <Text style={styles.inputLabel}>
@@ -359,7 +386,7 @@ export default class AddCustomToken extends PureComponent {
               <TextInput
                 style={styles.textInput}
                 placeholder={'0x...'}
-                placeholderTextColor={colors.text.muted}
+                placeholderTextColor={colors.tText.secondary}
                 value={this.state.address}
                 onChangeText={this.onAddressChange}
                 onBlur={this.onAddressBlur}
@@ -424,7 +451,7 @@ export default class AddCustomToken extends PureComponent {
               </Text>
             </View>
           </View>
-        </ActionView>
+        </WrapActionView>
       </View>
     );
   };

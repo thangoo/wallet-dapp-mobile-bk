@@ -126,6 +126,7 @@ export interface ThangoThemeColors {
     muted: string;
     secondary: string;
     third: string;
+    fourth: string;
   };
   tOverlay: {
     /**

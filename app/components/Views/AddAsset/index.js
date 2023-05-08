@@ -41,8 +41,7 @@ const createStyles = (colors) =>
       paddingBottom: 0,
     },
     textStyle: {
-      fontSize: 16,
-      letterSpacing: 0.5,
+      fontSize: 14,
       ...fontStyles.bold,
     },
   });
@@ -56,7 +55,7 @@ class AddAsset extends PureComponent {
     symbol: '',
     decimals: '',
     dismissNftInfo: false,
-    isSearchToken: true,
+    // isSearchToken: true,
   };
 
   static propTypes = {
@@ -101,22 +100,22 @@ class AddAsset extends PureComponent {
     this.updateNavBar();
   };
 
-  // renderTabBar() {
-  //   const colors = this.context.colors || mockTheme.colors;
-  //   const styles = createStyles(colors);
+  renderTabBar() {
+    const colors = this.context.colors || mockTheme.colors;
+    const styles = createStyles(colors);
 
-  //   return (
-  //     <DefaultTabBar
-  //       underlineStyle={styles.tabUnderlineStyle}
-  //       activeTextColor={colors.primary.default}
-  //       inactiveTextColor={colors.text.alternative}
-  //       backgroundColor={colors.background.default}
-  //       tabStyle={styles.tabStyle}
-  //       textStyle={styles.textStyle}
-  //       style={styles.tabBar}
-  //     />
-  //   );
-  // }
+    return (
+      <DefaultTabBar
+        underlineStyle={styles.tabUnderlineStyle}
+        activeTextColor={colors.tText.default}
+        inactiveTextColor={colors.tText.default}
+        backgroundColor={colors.background.default}
+        tabStyle={styles.tabStyle}
+        textStyle={styles.textStyle}
+        style={styles.tabBar}
+      />
+    );
+  }
 
   dismissNftInfo = async () => {
     this.setState({ dismissNftInfo: true });
@@ -154,35 +153,33 @@ class AddAsset extends PureComponent {
               />
             </View>
           )}
-        {/* {assetType === 'token' ? (
+        {assetType === 'token' ? (
           <ScrollableTabView
             key={chainId}
             renderTabBar={() => this.renderTabBar()}
-          > */}
-        {isTokenDetectionSupported && isSearchToken ? (
-          <SearchTokenAutocomplete
-            navigation={navigation}
-            onChangeCustomToken={this.changeToCustomToken}
-            tabLabel={strings('add_asset.search_token')}
-            testID={'tab-search-token'}
-          />
-        ) : (
-          <AddCustomToken
-            navigation={navigation}
-            tabLabel={strings('add_asset.custom_token')}
-            testID={'tab-add-custom-token'}
-            isTokenDetectionSupported={isTokenDetectionSupported}
-          />
-        )}
-
-        {/*  </ScrollableTabView>
+          >
+            {isTokenDetectionSupported && (
+              <SearchTokenAutocomplete
+                navigation={navigation}
+                // onChangeCustomToken={this.changeToCustomToken}
+                tabLabel={strings('add_asset.search_token')}
+                testID={'tab-search-token'}
+              />
+            )}
+            <AddCustomToken
+              navigation={navigation}
+              tabLabel={strings('add_asset.custom_token')}
+              testID={'tab-add-custom-token'}
+              isTokenDetectionSupported={isTokenDetectionSupported}
+            />
+          </ScrollableTabView>
         ) : (
           <AddCustomCollectible
             navigation={navigation}
             collectibleContract={collectibleContract}
             testID={'add-custom-collectible'}
           />
-        )} */}
+        )}
       </View>
     );
   };
