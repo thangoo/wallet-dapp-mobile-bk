@@ -12,6 +12,7 @@ const vectorSplashScreen = require('./vectorSplash.png');
 const backgroundOnboarding = require('./background1-onboarding.png');
 const imgWalletOnboarding = require('./img-wallet-onboarding.png');
 const imgSecretPhrase = require('./img-secret-phrase-screen.png');
+const check_blue_none_bg = require('./check_blue.png');
 const check_box_empty = require('./check_box_empty.png');
 const check_box_empty_dark = require('./check_box_empty_dark.png');
 const check_box_blue = require('./check_box_blue.png');
@@ -33,7 +34,7 @@ const menu_icon = require('./menu_icon.png');
 const bell_icon = require('./bell_icon.png');
 const close_icon = require('./close_icon.png');
 const finger_print_icon = require('./finger_print_icon.png');
-const send_success = require('./send-success.png')
+const send_success = require('./send-success.png');
 
 export {
   finger_print_icon,
@@ -51,6 +52,7 @@ export {
   share_icon,
   copy_icon_02,
   credit_card_icon,
+  check_blue_none_bg,
   check_box_blue,
   check_box_empty,
   arrow_right_icon,
@@ -71,5 +73,5 @@ export {
   plus_icon,
   finger_icon,
   xBack_icon,
-  send_success
+  send_success,
 };

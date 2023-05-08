@@ -5,9 +5,10 @@ import {
   InteractionManager,
   Text,
   LayoutAnimation,
+  ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { strings } from '../../../../locales/i18n';
-import ActionView from '../ActionView';
 import AssetSearch from '../AssetSearch';
 import AssetList from '../AssetList';
 import Engine from '../../../core/Engine';
@@ -20,15 +21,16 @@ import { FORMATTED_NETWORK_NAMES } from '../../../constants/on-ramp';
 import NotificationManager from '../../../core/NotificationManager';
 import { useTheme } from '../../../util/theme';
 import { selectChainId } from '../../../selectors/networkController';
-import { getDecimalChainId } from '../../../util/networks';
+import _ from 'lodash';
+import WrapActionView from './WrapActionView';
+import HStack from '../../../../app/components/Base/HStack';
+import StyledButton from '../StyledButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
     wrapper: {
       backgroundColor: colors.background.default,
-      flex: 1,
-    },
-    listTokenWrapper: {
       flex: 1,
     },
     tokenDetectionBanner: {
@@ -46,25 +48,25 @@ const createStyles = (colors: any) =>
 
 interface Props {
   /**
-  /* navigation object required to push new views
-  */
+	/* navigation object required to push new views
+	*/
   navigation: any;
-  onChangeCustomToken: any;
 }
 
 /**
  * Component that provides ability to add searched assets with metadata.
  */
-const SearchTokenAutocomplete = ({
-  navigation,
-  onChangeCustomToken,
-}: Props) => {
-  const [searchResults, setSearchResults] = useState([]);
+const SearchTokenAutocomplete = ({ navigation }: Props) => {
+  const tokens = useSelector(
+    (state: any) => state.engine.backgroundState.TokensController.tokens,
+  );
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedAsset, setSelectedAsset] = useState({});
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [selectedAssets, setSelectedAssets] = useState<any[]>(tokens || []);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [disable, setDisable] = useState<boolean>(true);
 
-  const { address, symbol, decimals, image } = selectedAsset as any;
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
@@ -82,108 +84,90 @@ const SearchTokenAutocomplete = ({
     [setIsSearchFocused],
   );
 
-  const getAnalyticsParams = useCallback(() => {
-    try {
-      return {
-        token_address: address,
-        token_symbol: symbol,
-        chain_id: chainId,
-        source: 'Add token dropdown',
-      };
-    } catch (error) {
-      return {};
-    }
-  }, [address, symbol, chainId]);
+  // const getAnalyticsParams = useCallback(() => {
+  //   try {
+  //     return {
+  //       token_address: address,
+  //       token_symbol: symbol,
+  //       chain_id: chainId,
+  //       source: 'Add token dropdown',
+  //     };
+  //   } catch (error) {
+  //     return {};
+  //   }
+  // }, [address, symbol, chainId]);
 
   const cancelAddToken = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
 
-  // Handle UI and don't search anything
   const handleSearch = useCallback(
     (opts: any) => {
-      setSearchResults(opts.results);
+      const dataTokens = [...opts.results];
+      setSearchResults(dataTokens);
       setSearchQuery(opts.searchQuery);
     },
     [setSearchResults, setSearchQuery],
   );
 
-  const addToken = useCallback(
+  const handleSelectAsset = useCallback(
     async (asset) => {
-      const { TokensController } = Engine.context as any;
-      const { address, symbol, decimals, image } = asset;
-      await TokensController.addToken(address, symbol, decimals, image);
-
-      trackEvent(MetaMetricsEvents.TOKEN_ADDED, getAnalyticsParams());
-
-      // Clear state before closing
-      // setSearchResults([]);
-      // setSearchQuery('');
-      setSelectedAsset({});
-
-      NotificationManager.showSimpleNotification({
-        status: `simple_notification`,
-        duration: 5000,
-        title: strings('wallet.token_toast.token_imported_title'),
-        description: strings('wallet.token_toast.token_imported_desc', {
-          tokenSymbol: symbol,
-        }),
-      });
-
-      // InteractionManager.runAfterInteractions(() => {
-      //   navigation.goBack();
-      //   NotificationManager.showSimpleNotification({
-      //     status: `simple_notification`,
-      //     duration: 5000,
-      //     title: strings('wallet.token_toast.token_imported_title'),
-      //     description: strings('wallet.token_toast.token_imported_desc', {
-      //       tokenSymbol: symbol,
-      //     }),
-      //   });
-      // });
-    }, [
-    setSelectedAsset,
-    getAnalyticsParams,
-  ]);
-
-  const remvoeToken = useCallback(
-    async (asset) => {
-      const { TokensController, NetworkController } = Engine.context as any;
-      const { address, symbol } = asset;
-      await TokensController.ignoreTokens([address]);
-      setSelectedAsset({});
-      NotificationManager.showSimpleNotification({
-        status: `simple_notification`,
-        duration: 5000,
-        title: strings('wallet.token_toast.token_hidden_title'),
-        description: strings('wallet.token_toast.token_hidden_desc', {
-          tokenSymbol: symbol,
-        }),
-      });
-      InteractionManager.runAfterInteractions(() =>
-        trackEvent(MetaMetricsEvents.TOKENS_HIDDEN, {
-          location: 'assets_list',
-          token_standard: 'ERC20',
-          asset_type: 'token',
-          tokens: [`${symbol} - ${address}`],
-          chain_id: getDecimalChainId(
-            NetworkController?.state?.providerConfig?.chainId,
-          ),
-        }),
-      );
-    }, [
-    setSelectedAsset,
-  ]);
-
-
-
-  const handleToggleAsset = useCallback(
-    (asset, isSelected) => {
-      setSelectedAsset(asset);
-      isSelected ? addToken(asset) : remvoeToken(asset);
+      const { address } = asset;
+      const copyAddress = [...selectedAssets];
+      const hasAddress = _.includes(_.map(copyAddress, 'address'), address);
+      if (hasAddress) {
+        _.remove(copyAddress, (obj) => obj.address === address);
+        setSelectedAssets(copyAddress);
+        if (_.isEqual(copyAddress, tokens)) {
+          setDisable(true);
+        } else {
+          setDisable(false);
+        }
+      } else {
+        setSelectedAssets((prev) => [...prev, asset]);
+        setDisable(false);
+      }
     },
-    [setSelectedAsset, addToken],
+    [setSelectedAssets, selectedAssets, searchResults],
   );
+
+  const addToken = useCallback(async () => {
+    const { TokensController } = Engine.context as any;
+    setLoading(true);
+    await Promise.all(
+      selectedAssets.map(({ address, symbol, decimals }) =>
+        TokensController.addToken(address, symbol, decimals),
+      ),
+    )
+
+      .then(() => {
+        // trackEvent(MetaMetricsEvents.TOKEN_ADDED, getAnalyticsParams());
+
+        // Clear state before closing
+        setSearchResults([]);
+        setSearchQuery('');
+        setSelectedAssets([]);
+
+        NotificationManager.showSimpleNotification({
+          status: `simple_notification`,
+          duration: 5000,
+          title: strings('wallet.token_toast.token_imported_title'),
+          description: strings('wallet.token_toast.token_imported_desc1'),
+        });
+
+        InteractionManager.runAfterInteractions(() => {
+          navigation.goBack();
+          NotificationManager.showSimpleNotification({
+            status: `simple_notification`,
+            duration: 5000,
+            title: strings('wallet.token_toast.token_imported_title'),
+            description: strings('wallet.token_toast.token_imported_desc1'),
+          });
+        });
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  }, [selectedAssets, setLoading]);
 
   const renderTokenDetectionBanner = useCallback(() => {
     if (isTokenDetectionEnabled || isSearchFocused) {
@@ -239,6 +223,7 @@ const SearchTokenAutocomplete = ({
 
   return (
     <View style={styles.wrapper} testID={'search-token-screen'}>
+      {renderTokenDetectionBanner()}
       <AssetSearch
         onSearch={handleSearch}
         onFocus={() => {
@@ -248,38 +233,47 @@ const SearchTokenAutocomplete = ({
       />
       <AssetList
         searchResults={searchResults}
-        handleToggleAsset={handleToggleAsset}
-        selectedAsset={selectedAsset}
+        handleSelectAsset={handleSelectAsset}
+        selectedAsset={selectedAssets}
         searchQuery={searchQuery}
-      // selectedTokens={selectedTokens}
+        tokens={tokens}
       />
-      {/* <ActionView
-        // cancelText={strings('add_asset.tokens.cancel_add_token')}
-        // onCancelPress={cancelAddToken}
-        showCancelButton={false}
-        confirmText={strings('add_asset.tokens.add_new_token')}
-        confirmButtonMode={'confirm'}
-        onConfirmPress={onChangeCustomToken}
-        isFullScreen
-        // confirmDisabled={!(address && symbol && decimals)}
+
+      <SafeAreaView
+        edges={['bottom']}
+        style={{
+          paddingHorizontal: 32,
+          marginBottom: 16,
+          borderTopWidth: 1,
+          paddingTop: 16,
+          borderTopColor: colors.border.default,
+        }}
       >
-        <View style={styles.listTokenWrapper}>
-          {renderTokenDetectionBanner()}
-         
+        <HStack>
           <StyledButton
-              type={'blue'}
-              onPress={addToken}
-              testID={'continue-button'}
-              // disabled={!canSubmit}
-              disabledContainerStyle={{
-                backgroundColor: colors['tvn.dark_gray_blue'],
-              }}
-              containerStyle={{marginHorizontal:16, marginBottom:16}}
-            > 
-              {strings('manual_backup_step_1.continue')}
-            </StyledButton>
-        </View>
-      </ActionView> */}
+            testID={'cancelTestID'}
+            type={'signingCancel'}
+            onPress={cancelAddToken}
+            containerStyle={{ flex: 1 }}
+          >
+            {strings('add_asset.tokens.cancel_add_token')}
+          </StyledButton>
+          <View style={{ width: 16 }} />
+          <StyledButton
+            testID={'confirmTestID'}
+            type={'blue'}
+            onPress={addToken}
+            disabled={loading || disable}
+            containerStyle={{ flex: 1 }}
+          >
+            {loading ? (
+              <ActivityIndicator size="small" color={colors.primary.inverse} />
+            ) : (
+              strings('add_asset.tokens.add_token')
+            )}
+          </StyledButton>
+        </HStack>
+      </SafeAreaView>
     </View>
   );
 };

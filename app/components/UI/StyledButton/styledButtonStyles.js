@@ -7,6 +7,7 @@ const createStyles = (colors) =>
       padding: 15,
       borderRadius: 12,
       justifyContent: 'center',
+      minHeight: 48,
     },
     disabledContainer: {
       backgroundColor: colors.tButton.disable,
@@ -14,7 +15,7 @@ const createStyles = (colors) =>
     text: {
       fontSize: 14,
       textAlign: 'center',
-      ...fontStyles.bold,
+      fontWeight: '600',
     },
     blue: {
       backgroundColor: colors.tPrimary.default,
@@ -77,7 +78,7 @@ const createStyles = (colors) =>
     },
     signingCancel: {
       backgroundColor: colors.background.default,
-      borderWidth: 1,
+      borderWidth: 2,
       borderColor: colors.primary.default,
     },
     signingCancelText: {
@@ -134,6 +135,15 @@ const createStyles = (colors) =>
     onOverlayBackground: {
       borderWidth: 1,
       borderColor: colors.overlay.inverse,
+    },
+    unselectBackground: {
+      borderColor: 'transparent',
+      backgroundColor: colors.tBackground.third,
+    },
+    selectBackground: {
+      borderColor: colors.tPrimary.default,
+      borderWidth: 1,
+      backgroundColor: colors.tBackground.third,
     },
     inverseTransparentBackground: {
       backgroundColor: importedColors.transparent,
@@ -236,6 +246,12 @@ function getStyles(type, colors) {
     case 'onOverlay':
       fontStyle = styles.onOverlayText;
       containerStyle = styles.onOverlayBackground;
+      break;
+    case 'unselect':
+      containerStyle = styles.unselectBackground;
+      break;
+    case 'selected':
+      containerStyle = styles.selectBackground;
       break;
     default:
       throw new Error('Unknown button type');

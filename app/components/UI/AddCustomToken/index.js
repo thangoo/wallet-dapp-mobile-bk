@@ -6,6 +6,7 @@ import {
   StyleSheet,
   InteractionManager,
   Platform,
+  Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { isValidAddress } from 'ethereumjs-util';
@@ -18,7 +19,6 @@ import { isSmartContractAddress } from '../../../util/transactions';
 import { trackEvent } from '../../../util/analyticsV2';
 import AppConstants from '../../../core/AppConstants';
 import Alert, { AlertType } from '../../Base/Alert';
-import WarningMessage from '../../Views/SendFlow/WarningMessage';
 import { ThemeContext, mockTheme } from '../../../util/theme';
 import { strings } from '../../../../locales/i18n';
 import { fontStyles } from '../../../styles/common';
@@ -32,6 +32,12 @@ import {
   TOKEN_PRECISION_WARNING_MESSAGE_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/AddCustomToken.testIds';
 import { NFT_IDENTIFIER_INPUT_BOX_ID } from '../../../../wdio/screen-objects/testIDs/Screens/NFTImportScreen.testIds';
+import WarningCustomToken from './Warning';
+import WrapActionView from '../SearchTokenAutocomplete/WrapActionView';
+import { shield_warning_icon } from 'images/index';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import HStack from '../../../../app/components/Base/HStack';
+import StyledButton from '../StyledButton';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -40,28 +46,57 @@ const createStyles = (colors) =>
       flex: 1,
     },
     rowWrapper: {
-      padding: 20,
+      marginBottom: 16,
+      marginHorizontal: 16,
     },
     textInput: {
-      borderWidth: 1,
-      borderRadius: 4,
-      borderColor: colors.border.default,
-      padding: 16,
-      ...fontStyles.normal,
-      color: colors.text.default,
+      color: colors.tText.default,
+      backgroundColor: colors.tBackground.third,
+      height: 64,
+      marginBottom: 4,
+      borderRadius: 16,
+      paddingHorizontal: 16,
+      fontSize: 16,
+      fontWeight: '600',
     },
     inputLabel: {
-      ...fontStyles.normal,
-      color: colors.text.default,
+      marginBottom: 8,
+      fontSize: 14,
+      fontWeight: '400',
+      color: colors.tText.default,
+    },
+    warnIcon: {
+      width: 24,
+      height: 24,
+      alignSelf: 'flex-start',
+      marginRight: 16,
     },
     warningText: {
-      ...fontStyles.normal,
-      marginTop: 15,
+      // ...fontStyles.normal,
+      // marginTop: 4,
+      // paddingLeft: 16,
       color: colors.error.default,
     },
-    tokenDetectionBanner: { marginHorizontal: 20, marginTop: 20 },
-    tokenDetectionDescription: { color: colors.text.default },
-    tokenDetectionLink: { color: colors.primary.default },
+    tokenDetectionBanner: {
+      marginHorizontal: 16,
+      marginTop: 16,
+      backgroundColor: colors.tWarning.default,
+      borderRadius: 14,
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 16,
+    },
+    tokenDetectionDescription: {
+      color: colors.tText.light,
+      fontSize: 14,
+      ...fontStyles.normal,
+    },
+    tokenDetectionLink: {
+      color: colors.tText.light,
+      textDecorationLine: 'underline',
+      fontSize: 14,
+      ...fontStyles.normal,
+    },
     tokenDetectionIcon: {
       paddingTop: 4,
       paddingRight: 8,
@@ -253,39 +288,35 @@ export default class AddCustomToken extends PureComponent {
     const styles = createStyles(colors);
 
     return (
-      <Alert
-        type={AlertType.Info}
-        style={styles.tokenDetectionBanner}
-        renderIcon={() => (
-          <FontAwesome
-            style={styles.tokenDetectionIcon}
-            name={'exclamation-circle'}
-            color={colors.primary.default}
-            size={18}
-          />
-        )}
-      >
-        <>
+      <View style={styles.tokenDetectionBanner}>
+        <Image
+          source={shield_warning_icon}
+          style={styles.warnIcon}
+          resizeMode="contain"
+        />
+        <View style={{ flex: 1 }}>
           <Text style={styles.tokenDetectionDescription}>
-            {strings('add_asset.banners.custom_info_desc')}
+            {strings('add_asset.banners.custom_warning_desc')}
+
+            <Text
+              suppressHighlighting
+              onPress={() => {
+                // TODO: This functionality exists in a bunch of other places. We need to unify this into a utils function
+                navigation.navigate('Webview', {
+                  screen: 'SimpleWebview',
+                  params: {
+                    url: AppConstants.URLS.SECURITY,
+                    title: strings('add_asset.banners.custom_security_tips'),
+                  },
+                });
+              }}
+              style={styles.tokenDetectionLink}
+            >
+              {strings('add_asset.banners.custom_info_link')}
+            </Text>
           </Text>
-          <Text
-            suppressHighlighting
-            onPress={() => {
-              navigation.navigate('Webview', {
-                screen: 'SimpleWebview',
-                params: {
-                  url: AppConstants.URLS.SECURITY,
-                  title: strings('add_asset.banners.custom_security_tips'),
-                },
-              });
-            }}
-            style={styles.tokenDetectionLink}
-          >
-            {strings('add_asset.banners.custom_info_link')}
-          </Text>
-        </>
-      </Alert>
+        </View>
+      </View>
     );
   };
 
@@ -295,13 +326,15 @@ export default class AddCustomToken extends PureComponent {
     const styles = createStyles(colors);
 
     return (
-      <WarningMessage
-        style={styles.tokenDetectionBanner}
-        warningMessage={
-          <>
-            <Text style={styles.tokenDetectionDescription}>
-              {strings('add_asset.banners.custom_warning_desc')}
-            </Text>
+      <View style={styles.tokenDetectionBanner}>
+        <Image
+          source={shield_warning_icon}
+          style={styles.warnIcon}
+          resizeMode="contain"
+        />
+        <View style={{ flex: 1 }}>
+          <Text style={styles.tokenDetectionDescription}>
+            {strings('add_asset.banners.custom_warning_desc')}
             <Text
               suppressHighlighting
               onPress={() => {
@@ -318,9 +351,9 @@ export default class AddCustomToken extends PureComponent {
             >
               {strings('add_asset.banners.custom_warning_link')}
             </Text>
-          </>
-        }
-      />
+          </Text>
+        </View>
+      </View>
     );
   };
 
@@ -340,91 +373,113 @@ export default class AddCustomToken extends PureComponent {
         style={styles.wrapper}
         {...generateTestId(Platform, CUSTOM_TOKEN_CONTAINER_ID)}
       >
-        <ActionView
-          cancelTestID={'add-custom-asset-cancel-button'}
-          confirmTestID={'add-custom-asset-confirm-button'}
-          cancelText={strings('add_asset.tokens.cancel_add_token')}
-          confirmText={strings('add_asset.tokens.add_token')}
-          onCancelPress={this.cancelAddToken}
-          {...generateTestId(Platform, TOKEN_CANCEL_IMPORT_BUTTON_ID)}
-          onConfirmPress={this.addToken}
-          confirmDisabled={!(address && symbol && decimals)}
+        {this.renderBanner()}
+        <View style={[styles.rowWrapper, { marginTop: 16 }]}>
+          <Text style={styles.inputLabel}>
+            {strings('token.token_address')}
+          </Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder={'0x...'}
+            placeholderTextColor={colors.tText.secondary}
+            value={this.state.address}
+            onChangeText={this.onAddressChange}
+            onBlur={this.onAddressBlur}
+            {...generateTestId(Platform, TOKEN_ADDRESS_INPUT_BOX_ID)}
+            onSubmitEditing={this.jumpToAssetSymbol}
+            returnKeyType={'next'}
+            keyboardAppearance={themeAppearance}
+          />
+          {Boolean(this.state.warningAddress) && (
+            <Text
+              style={styles.warningText}
+              {...generateTestId(Platform, TOKEN_ADDRESS_WARNING_MESSAGE_ID)}
+            >
+              {this.state.warningAddress}
+            </Text>
+          )}
+        </View>
+
+        <View style={styles.rowWrapper}>
+          <Text style={styles.inputLabel}>{strings('token.token_symbol')}</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder={'GNO'}
+            placeholderTextColor={colors.text.muted}
+            value={this.state.symbol}
+            onChangeText={this.onSymbolChange}
+            onBlur={this.validateCustomTokenSymbol}
+            {...generateTestId(Platform, TOKEN_ADDRESS_SYMBOL_ID)}
+            ref={this.assetSymbolInput}
+            onSubmitEditing={this.jumpToAssetPrecision}
+            returnKeyType={'next'}
+            keyboardAppearance={themeAppearance}
+          />
+          {Boolean(this.state.warningSymbol) && (
+            <Text style={styles.warningText}>{this.state.warningSymbol}</Text>
+          )}
+        </View>
+
+        <View style={styles.rowWrapper}>
+          <Text style={styles.inputLabel}>
+            {strings('token.token_decimal')}
+          </Text>
+          <TextInput
+            style={styles.textInput}
+            value={this.state.decimals}
+            keyboardType="numeric"
+            maxLength={2}
+            placeholder={'18'}
+            placeholderTextColor={colors.text.muted}
+            onChangeText={this.onDecimalsChange}
+            onBlur={this.validateCustomTokenDecimals}
+            {...generateTestId(Platform, NFT_IDENTIFIER_INPUT_BOX_ID)}
+            ref={this.assetPrecisionInput}
+            onSubmitEditing={this.addToken}
+            returnKeyType={'done'}
+            keyboardAppearance={themeAppearance}
+          />
+          {Boolean(this.state.warningDecimals) && (
+            <Text
+              style={styles.warningText}
+              {...generateTestId(Platform, TOKEN_PRECISION_WARNING_MESSAGE_ID)}
+            >
+              {this.state.warningDecimals}
+            </Text>
+          )}
+        </View>
+        <View style={{ flex: 1 }} />
+        <SafeAreaView
+          edges={['bottom']}
+          style={{
+            paddingHorizontal: 32,
+            marginBottom: 16,
+            borderTopWidth: 1,
+            paddingTop: 16,
+            borderTopColor: colors.border.default,
+          }}
         >
-          <View>
-            {this.renderBanner()}
-            <View style={styles.rowWrapper}>
-              <Text style={styles.inputLabel}>
-                {strings('token.token_address')}
-              </Text>
-              <TextInput
-                style={styles.textInput}
-                placeholder={'0x...'}
-                placeholderTextColor={colors.text.muted}
-                value={this.state.address}
-                onChangeText={this.onAddressChange}
-                onBlur={this.onAddressBlur}
-                {...generateTestId(Platform, TOKEN_ADDRESS_INPUT_BOX_ID)}
-                onSubmitEditing={this.jumpToAssetSymbol}
-                returnKeyType={'next'}
-                keyboardAppearance={themeAppearance}
-              />
-              <Text
-                style={styles.warningText}
-                {...generateTestId(Platform, TOKEN_ADDRESS_WARNING_MESSAGE_ID)}
-              >
-                {this.state.warningAddress}
-              </Text>
-            </View>
-            <View style={styles.rowWrapper}>
-              <Text style={styles.inputLabel}>
-                {strings('token.token_symbol')}
-              </Text>
-              <TextInput
-                style={styles.textInput}
-                placeholder={'GNO'}
-                placeholderTextColor={colors.text.muted}
-                value={this.state.symbol}
-                onChangeText={this.onSymbolChange}
-                onBlur={this.validateCustomTokenSymbol}
-                {...generateTestId(Platform, TOKEN_ADDRESS_SYMBOL_ID)}
-                ref={this.assetSymbolInput}
-                onSubmitEditing={this.jumpToAssetPrecision}
-                returnKeyType={'next'}
-                keyboardAppearance={themeAppearance}
-              />
-              <Text style={styles.warningText}>{this.state.warningSymbol}</Text>
-            </View>
-            <View style={styles.rowWrapper}>
-              <Text style={styles.inputLabel}>
-                {strings('token.token_decimal')}
-              </Text>
-              <TextInput
-                style={styles.textInput}
-                value={this.state.decimals}
-                keyboardType="numeric"
-                maxLength={2}
-                placeholder={'18'}
-                placeholderTextColor={colors.text.muted}
-                onChangeText={this.onDecimalsChange}
-                onBlur={this.validateCustomTokenDecimals}
-                {...generateTestId(Platform, NFT_IDENTIFIER_INPUT_BOX_ID)}
-                ref={this.assetPrecisionInput}
-                onSubmitEditing={this.addToken}
-                returnKeyType={'done'}
-                keyboardAppearance={themeAppearance}
-              />
-              <Text
-                style={styles.warningText}
-                {...generateTestId(
-                  Platform,
-                  TOKEN_PRECISION_WARNING_MESSAGE_ID,
-                )}
-              >
-                {this.state.warningDecimals}
-              </Text>
-            </View>
-          </View>
-        </ActionView>
+          <HStack>
+            <StyledButton
+              testID={'cancelTestID'}
+              type={'signingCancel'}
+              onPress={this.cancelAddToken}
+              containerStyle={{ flex: 1 }}
+            >
+              {strings('add_asset.tokens.cancel_add_token')}
+            </StyledButton>
+            <View style={{ width: 16 }} />
+            <StyledButton
+              testID={'confirmTestID'}
+              type={'blue'}
+              onPress={this.addToken}
+              disabled={!(address && symbol && decimals)}
+              containerStyle={{ flex: 1 }}
+            >
+              {strings('add_asset.tokens.add_token')}
+            </StyledButton>
+          </HStack>
+        </SafeAreaView>
       </View>
     );
   };

@@ -85,6 +85,7 @@ export const thangoLight: ThangoThemeColors = {
     secondary: colorThango.gray04,
     third: colorThango.gray04,
     muted: '#D6D9DC',
+    fourth: '#E6E6E6'
   },
   tOverlay: {
     default: '#00000099',

@@ -1,85 +1,68 @@
-import React, { PureComponent, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
-import { View, StyleSheet, Platform, ScrollView } from 'react-native';
+import React, { PureComponent } from 'react';
+import {
+  View,
+  StyleSheet,
+  Platform,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import PropTypes from 'prop-types';
-import SwitchToggle from 'react-native-switch-toggle';
 import { strings } from '../../../../locales/i18n';
 import StyledButton from '../StyledButton'; // eslint-disable-line  import/no-unresolved
 import AssetIcon from '../AssetIcon';
-import { colors as importedColors, fontStyles } from '../../../styles/common';
+import { fontStyles } from '../../../styles/common';
 import Text from '../../Base/Text';
 import generateTestId from '../../../../wdio/utils/generateTestId';
-import { ThemeContext, mockTheme, useTheme } from '../../../util/theme';
 import { TOKEN_RESULTS_LIST_ID } from '../../../../wdio/screen-objects/testIDs/Screens/AssetSearch.testIds';
+import { ThemeContext, mockTheme } from '../../../util/theme';
+import { check_blue_none_bg } from '../../../images/index';
+import _ from 'lodash';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const createStyles = (colors) =>
   StyleSheet.create({
     rowWrapper: {
-      paddingTop: 10,
-      paddingLeft: 20,
-      paddingRight: 20,
-      paddingBottom: 20,
-      flex: 1,
+      marginTop: 16,
     },
     item: {
-      marginBottom: 8,
-      padding: 8,
-      borderRadius: 16,
-      height: 75,
+      marginHorizontal: 16,
+      marginBottom: 12,
+      borderRadius: 12,
+      borderWidth: 1,
       backgroundColor: colors.tBackground.third,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+    },
+    unselectBackground: {
+      borderColor: 'transparent',
+    },
+    selectBackground: {
+      borderColor: colors.tPrimary.default,
     },
     assetListElement: {
-      flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      height: 40,
     },
-    tokenIcon: {
-      width: 32,
-      height: 32,
-    },
-    textWrapper: {
-      flex: 1,
-      flexDirection: 'column',
-      marginLeft: 12,
-    },
-    text: {
-      // padding: 16,
-      fontSize: 14,
+    textName: {
+      fontSize: 16,
+      fontWeight: '600',
       color: colors.tText.default,
-      ...fontStyles.bold,
     },
-    symbol: {
-      // padding: 16,
-      fontSize: 12,
+    textSymbol: {
+      fontSize: 14,
+      fontWeight: '600',
       color: colors.tText.address,
-      ...fontStyles.normal,
     },
     normalText: {
       ...fontStyles.normal,
     },
-    switch: {
-      containerOnStyle: {
-        width: 44,
-        height: 24,
-        borderRadius: 25,
-        padding: 5,
-        borderColor: colors.tSwitch.token.border.on,
-        borderWidth: 1,
-      },
-      containerOffStyle: {
-        width: 44,
-        height: 24,
-        borderRadius: 25,
-        padding: 5,
-        borderColor: colors.tSwitch.token.border.off,
-        borderWidth: 1,
-      },
-      circleStyle: {
-        width: 19,
-        height: 19,
-        borderRadius: 20,
-      },
+    errorImage: {
+      width: 50,
+      height: 50,
+      marginTop: 24,
+    },
+    disabled: {
+      backgroundColor: colors.tBackground.third,
     },
   });
 
@@ -95,124 +78,112 @@ class AssetList extends PureComponent {
     /**
      * Callback triggered when a token is selected
      */
-    handleToggleAsset: PropTypes.func,
+    handleSelectAsset: PropTypes.func,
     /**
      * Object of the currently-selected token
      */
-    selectedAsset: PropTypes.object,
+    selectedAsset: PropTypes.array,
     /**
      * Search query that generated "searchResults"
      */
     searchQuery: PropTypes.string,
-    /**
-     * An array that represents the user tokens
-     */
     tokens: PropTypes.array,
+    selected: PropTypes.bool,
   };
 
-  toggleToken = (key) => {
+  onToggleAsset = (key) => {
     const { searchResults, handleSelectAsset } = this.props;
-    onToggleAsset(searchResults[key]);
+    handleSelectAsset(searchResults[key]);
   };
 
   render = () => {
-    const { searchResults = [], handleSelectAsset, selectedAsset } = this.props;
     const colors = this.context.colors || mockTheme.colors;
     const styles = createStyles(colors);
+    const {
+      searchResults = [],
+      handleSelectAsset,
+      selectedAsset,
+      tokens,
+    } = this.props;
 
-    checkExist = (item) => {
-      const { tokens } = this.props;
-      return tokens.some(
-        (element) =>
-          element.address.toUpperCase() == item.address.toUpperCase(),
-      );
-    };
+    // const dataTokens = [...searchResults];
+    // _.forEach(tokens, (tk) => {
+    //   _.remove(dataTokens, (opt) => opt.symbol === tk.symbol);
+    // });
 
-    const { searchQuery, handleToggleAsset } = this.props;
+    // Disabled token imported
+    const compareTokenList = (obj1, obj2) => obj1.symbol === obj2.symbol;
+    const handleResult = _.map(searchResults.slice(0, 7), (obj) => ({
+      ...obj,
+      selected: false,
+    }));
+    handleResult.forEach((obj2) => {
+      const obj1 = _.find(tokens, _.partial(compareTokenList, obj2));
+      if (obj1) {
+        obj2.selected = true;
+      }
+    });
 
     return (
       <ScrollView
         style={styles.rowWrapper}
         testID={'add-searched-token-screen'}
+        contentContainerStyle={{ flexGrow: 1 }}
       >
         {/* {searchResults.length > 0 ? (
           <Text style={styles.normalText} testID={'select-token-title'}>
             {strings('token.select_token')}
           </Text>
         ) : null} */}
-        {searchResults.length === 0 && searchQuery.length ? (
+        {searchResults.length === 0 && this.props.searchQuery.length ? (
           <Text style={styles.normalText}>
             {strings('token.no_tokens_found')}
           </Text>
         ) : null}
-        {searchResults.slice(0, 6).map((item, i) => {
-          const isExist = checkExist(item);
+        {handleResult.map((_, i) => {
+          const { symbol, name, address, iconUrl, selected } =
+            handleResult[i] || {};
+          const isSelected = selectedAsset.some(
+            (element) => element.address.toUpperCase() == address.toUpperCase(),
+          );
           return (
-            <StyledButton
-              type={'tokenList'}
-              containerStyle={styles.item}
-              // onPress={() => handleSelectAsset(searchResults[i])} // eslint-disable-line
+            <TouchableOpacity
               key={i}
-              {...generateTestId(Platform, TOKEN_RESULTS_LIST_ID)}
+              style={[
+                styles.item,
+                isSelected
+                  ? styles.selectBackground
+                  : styles.unselectBackground,
+              ]}
+              onPress={() => handleSelectAsset(searchResults[i])}
+              disabled={selected}
             >
-              <TokenItem
-                item={item}
-                id={i}
-                onToggleAsset={handleToggleAsset}
-                selectedAsset={isExist}
-              />
-            </StyledButton>
+              <View style={styles.assetListElement}>
+                <AssetIcon
+                  address={address}
+                  logo={iconUrl}
+                  customStyle={{ height: 40, width: 40, marginRight: 16 }}
+                />
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.textName}>{name}</Text>
+                  <Text style={styles.textSymbol}>{symbol}</Text>
+                </View>
+                {isSelected && (
+                  <View>
+                    <Image
+                      source={check_blue_none_bg}
+                      style={{ width: 24, height: 24 }}
+                    />
+                  </View>
+                )}
+              </View>
+            </TouchableOpacity>
           );
         })}
       </ScrollView>
     );
   };
 }
-
-const TokenItem = ({ item, id, onToggleAsset, selectedAsset }) => {
-  const { colors } = useTheme();
-  const [isSelected, setIsSelected] = useState(selectedAsset);
-  const { symbol, name, address, iconUrl } = item || {};
-  const styles = createStyles(colors);
-
-  const toggleSwitch = (item) => {
-    onToggleAsset(item, !isSelected);
-    setIsSelected(!isSelected);
-  };
-
-  return (
-    <View key={id} style={styles.assetListElement}>
-      <AssetIcon
-        address={address}
-        logo={iconUrl}
-        customStyle={styles.tokenIcon}
-      />
-      <View style={styles.textWrapper}>
-        <Text style={styles.text}>{name}</Text>
-        <Text style={styles.symbol}>{symbol}</Text>
-      </View>
-      <SwitchToggle
-        switchOn={isSelected}
-        onPress={() => toggleSwitch(item)}
-        circleColorOff={colors.tSwitch.circleColor.off}
-        circleColorOn={colors.tSwitch.circleColor.on}
-        backgroundColorOn={colors.tSwitch.token.backgroundColor.on}
-        backgroundColorOff={colors.tSwitch.token.backgroundColor.off}
-        containerStyle={
-          isSelected
-            ? styles.switch.containerOnStyle
-            : styles.switch.containerOffStyle
-        }
-        circleStyle={styles.switch.circleStyle}
-      />
-    </View>
-  );
-};
-
-const mapStateToProps = (state) => ({
-  tokens: state.engine.backgroundState.TokensController.tokens,
-});
-
 AssetList.contextType = ThemeContext;
 
-export default connect(mapStateToProps)(AssetList);
+export default AssetList;
