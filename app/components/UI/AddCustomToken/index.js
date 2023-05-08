@@ -451,7 +451,13 @@ export default class AddCustomToken extends PureComponent {
         <View style={{ flex: 1 }} />
         <SafeAreaView
           edges={['bottom']}
-          style={{ marginHorizontal: 32, marginBottom: 16 }}
+          style={{
+            paddingHorizontal: 32,
+            marginBottom: 16,
+            borderTopWidth: 1,
+            paddingTop: 16,
+            borderTopColor: colors.border.default,
+          }}
         >
           <HStack>
             <StyledButton

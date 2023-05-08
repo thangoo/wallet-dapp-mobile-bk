@@ -30,6 +30,8 @@ const createStyles = (colors) =>
       borderRadius: 12,
       borderWidth: 1,
       backgroundColor: colors.tBackground.third,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
     },
     unselectBackground: {
       borderColor: 'transparent',
@@ -40,8 +42,6 @@ const createStyles = (colors) =>
     assetListElement: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: 16,
-      paddingVertical: 8.5,
     },
     textName: {
       fontSize: 16,
