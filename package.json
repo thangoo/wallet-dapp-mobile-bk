@@ -316,7 +316,6 @@
     "stream-browserify": "1.0.0",
     "swappable-obj-proxy": "^1.1.0",
     "through2": "3.0.1",
-    "tiny-secp256k1": "^2.2.1",
     "unicode-confusables": "^0.1.1",
     "url": "0.11.0",
     "url-parse": "1.5.9",
@@ -526,8 +525,7 @@
       "react-native-flipper": false,
       "node-hid": false,
       "usb": false,
-      "dooboolab-welcome": false,
-      "tiny-secp256k1": false
+      "dooboolab-welcome": false
     }
   }
 }
