@@ -48,6 +48,8 @@ import {
   updateAuthTypeStorageFlags,
 } from '../../../util/authentication';
 import { LoginOptionsSwitch } from '../../UI/LoginOptionsSwitch';
+import URLPARSE from 'url-parse';
+import getDecimalChainId from '../../../util/networks/getDecimalChainId';
 
 const PASSCODE_NOT_SET_ERROR = 'Error: Passcode not set.';
 const IOS_REJECTED_BIOMETRICS_ERROR =
@@ -118,6 +120,16 @@ interface Props {
   passwordUnset: () => void;
   selectedAddress: string;
 }
+
+const TrxNetwork = {
+  chainId: '999',
+  nickname: 'Tron Network',
+  rpcUrl: 'https://api.trongrid.io',
+  ticker: 'TRX',
+  rpcPrefs: {
+    blockExplorerUrl: 'https://tronscan.org',
+  },
+};
 
 const ConfirmPassword: FC<Props> = (props) => {
   const route = useRoute<RouteProp<VerifyCodeParamList, 'Detail'>>();
@@ -244,6 +256,14 @@ const ConfirmPassword: FC<Props> = (props) => {
       props.passwordSet();
       props.setLockTime(AppConstants.DEFAULT_LOCK_TIMEOUT);
       setLoading(false);
+
+      try {
+        // handle network TRX
+        await handleSetDefaultTrx();
+      } catch (error) {
+        console.warn(error, 'error');
+      }
+
       // remove screen choose password out of stack navigation
       props.navigation.pop(2);
       props.navigation.replace('SecretPhraseBackup');
@@ -287,6 +307,37 @@ const ConfirmPassword: FC<Props> = (props) => {
           error_type: error.toString(),
         });
       });
+    }
+  };
+
+  const handleSetDefaultTrx = async () => {
+    const { CurrencyRateController, PreferencesController, NetworkController } =
+      Engine.context as any;
+
+    const url = new URLPARSE(TrxNetwork.rpcUrl);
+    const decimalChainId = getDecimalChainId(TrxNetwork.chainId);
+    try {
+      // add custom network
+      await PreferencesController.addToFrequentRpcList(
+        url.href,
+        decimalChainId,
+        TrxNetwork.ticker,
+        TrxNetwork.nickname,
+        {
+          blockExplorerUrl: TrxNetwork.rpcPrefs.blockExplorerUrl,
+        },
+      );
+
+      // switch to default network
+      await CurrencyRateController.setNativeCurrency(TrxNetwork.ticker);
+      return await NetworkController.setRpcTarget(
+        TrxNetwork.rpcUrl,
+        TrxNetwork.chainId,
+        TrxNetwork.ticker,
+        TrxNetwork.nickname,
+      );
+    } catch (error) {
+      console.warn(error, 'err');
     }
   };
 

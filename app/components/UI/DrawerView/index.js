@@ -781,13 +781,18 @@ class DrawerView extends PureComponent {
       selectedAddress,
       network,
       network: {
-        providerConfig: { rpcTarget },
+        providerConfig: { rpcTarget, ticker },
       },
       frequentRpcList,
     } = this.props;
     if (network.providerConfig.type === RPC) {
+      const a = selectedAddress.replace('0x', '');
+
       const blockExplorer = findBlockExplorerForRpc(rpcTarget, frequentRpcList);
-      const url = `${blockExplorer}/address/${selectedAddress}`;
+      const url =
+        ticker === 'TRX'
+          ? `${blockExplorer}/#/address/${a}`
+          : `${blockExplorer}/address/${selectedAddress}`;
       const title = new URL(blockExplorer).hostname;
       this.goToBrowserUrl(url, title);
     } else {

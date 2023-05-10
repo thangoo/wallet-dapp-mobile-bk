@@ -41,6 +41,7 @@ import { ADD_NETWORK_BUTTON } from '../../../../wdio/screen-objects/testIDs/Scre
 import generateTestId from '../../../../wdio/utils/generateTestId';
 import { selectProviderConfig } from '../../../selectors/networkController';
 import AvatarNetwork from '../../../component-library/components/Avatars/Avatar/variants/AvatarNetwork';
+import _ from 'lodash';
 
 const createStyles = (colors) =>
   StyleSheet.create({
@@ -343,8 +344,10 @@ export class NetworkList extends PureComponent {
 
   renderRpcNetworks = () => {
     const { frequentRpcList, providerConfig } = this.props;
+    const a = _.sortBy(frequentRpcList, [(o) => o.chainId !== '999']);
     const colors = this.context.colors || mockTheme.colors;
-    return frequentRpcList.map(({ nickname, rpcUrl, chainId }, i) => {
+
+    return a.map(({ nickname, rpcUrl, chainId }, i) => {
       const { name } = { name: nickname || rpcUrl, chainId, color: null };
       const image = getNetworkImageSource({ chainId });
       const isCustomRpc = true;
@@ -434,8 +437,8 @@ export class NetworkList extends PureComponent {
           />
         </View>
         <ScrollView style={styles.networksWrapper} testID={NETWORK_SCROLL_ID}>
-          {this.renderMainnet()}
           {this.renderRpcNetworks()}
+          {this.renderMainnet()}
           {this.renderOtherNetworks()}
         </ScrollView>
         <View style={styles.footer}>
