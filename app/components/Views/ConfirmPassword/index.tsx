@@ -123,8 +123,8 @@ interface Props {
 
 const TrxNetwork = {
   chainId: '999',
-  nickname: 'Tron Network',
-  rpcUrl: 'https://api.trongrid.io',
+  nickname: 'Tron Main Network',
+  rpcUrl: 'https://api.trongrid.io/jsonrpc',
   ticker: 'TRX',
   rpcPrefs: {
     blockExplorerUrl: 'https://tronscan.org',
@@ -257,12 +257,11 @@ const ConfirmPassword: FC<Props> = (props) => {
       props.setLockTime(AppConstants.DEFAULT_LOCK_TIMEOUT);
       setLoading(false);
 
-      try {
-        // handle network TRX
-        await handleSetDefaultTrx();
-      } catch (error) {
-        console.warn(error, 'error');
-      }
+      // handle network TRX
+      await handleSetDefaultTrx();
+      // } catch (error) {
+      //   console.warn(error, 'error');
+      // }
 
       // remove screen choose password out of stack navigation
       props.navigation.pop(2);
@@ -311,12 +310,15 @@ const ConfirmPassword: FC<Props> = (props) => {
   };
 
   const handleSetDefaultTrx = async () => {
-    const { CurrencyRateController, PreferencesController, NetworkController } =
-      Engine.context as any;
-
-    const url = new URLPARSE(TrxNetwork.rpcUrl);
-    const decimalChainId = getDecimalChainId(TrxNetwork.chainId);
     try {
+      const {
+        CurrencyRateController,
+        PreferencesController,
+        NetworkController,
+      } = Engine.context as any;
+
+      const url = new URLPARSE(TrxNetwork.rpcUrl);
+      const decimalChainId = getDecimalChainId(TrxNetwork.chainId);
       // add custom network
       await PreferencesController.addToFrequentRpcList(
         url.href,
