@@ -4,6 +4,30 @@ const infuraProjectId = InfuraKey === 'null' ? '' : InfuraKey;
 
 const PopularList = [
   {
+    chainId: '999',
+    nickname: 'Tron Main Network',
+    rpcUrl: 'https://api.trongrid.io/jsonrpc',
+    ticker: 'TRX',
+    warning: true,
+    rpcPrefs: {
+      blockExplorerUrl: 'https://tronscan.org/#/',
+      imageUrl: 'TRX',
+      imageSource: require('../../images/trx.png'),
+    },
+  },
+  {
+    chainId: '998',
+    nickname: 'Tron Shasta Testnet',
+    rpcUrl: 'https://api.shasta.trongrid.io/jsonrpc',
+    ticker: 'TRX',
+    warning: true,
+    rpcPrefs: {
+      blockExplorerUrl: 'https://shasta.tronscan.org',
+      imageUrl: 'TRX',
+      imageSource: require('../../images/trx.png'),
+    },
+  },
+  {
     chainId: '43114',
     nickname: 'Avalanche Mainnet C-Chain',
     rpcUrl: 'https://api.avax.network/ext/bc/C/rpc',
