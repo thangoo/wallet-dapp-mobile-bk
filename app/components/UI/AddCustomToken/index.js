@@ -93,7 +93,6 @@ const createStyles = (colors) =>
     },
     tokenDetectionLink: {
       color: colors.tText.light,
-      textDecorationLine: 'underline',
       fontSize: 14,
       ...fontStyles.normal,
     },
@@ -300,16 +299,16 @@ export default class AddCustomToken extends PureComponent {
 
             <Text
               suppressHighlighting
-              onPress={() => {
-                // TODO: This functionality exists in a bunch of other places. We need to unify this into a utils function
-                navigation.navigate('Webview', {
-                  screen: 'SimpleWebview',
-                  params: {
-                    url: AppConstants.URLS.SECURITY,
-                    title: strings('add_asset.banners.custom_security_tips'),
-                  },
-                });
-              }}
+              // onPress={() => {
+              // TODO: This functionality exists in a bunch of other places. We need to unify this into a utils function
+              //   navigation.navigate('Webview', {
+              //     screen: 'SimpleWebview',
+              //     params: {
+              //       url: AppConstants.URLS.SECURITY,
+              //       title: strings('add_asset.banners.custom_security_tips'),
+              //     },
+              //   });
+              // }}
               style={styles.tokenDetectionLink}
             >
               {strings('add_asset.banners.custom_info_link')}
@@ -337,16 +336,16 @@ export default class AddCustomToken extends PureComponent {
             {strings('add_asset.banners.custom_warning_desc')}
             <Text
               suppressHighlighting
-              onPress={() => {
-                // TODO: This functionality exists in a bunch of other places. We need to unify this into a utils function
-                navigation.navigate('Webview', {
-                  screen: 'SimpleWebview',
-                  params: {
-                    url: AppConstants.URLS.SECURITY,
-                    title: strings('add_asset.banners.custom_security_tips'),
-                  },
-                });
-              }}
+              // onPress={() => {
+              // TODO: This functionality exists in a bunch of other places. We need to unify this into a utils function
+              //   navigation.navigate('Webview', {
+              //     screen: 'SimpleWebview',
+              //     params: {
+              //       url: AppConstants.URLS.SECURITY,
+              //       title: strings('add_asset.banners.custom_security_tips'),
+              //     },
+              //   });
+              // }}
               style={styles.tokenDetectionLink}
             >
               {strings('add_asset.banners.custom_warning_link')}
