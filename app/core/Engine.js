@@ -58,6 +58,8 @@ import {
   getPermissionSpecifications,
   unrestrictedMethods,
 } from './Permissions/specifications.js';
+import { Platform } from 'react-native';
+import { Infura } from '../../app/ultis/infura';
 
 const NON_EMPTY = 'NON_EMPTY';
 
@@ -99,7 +101,10 @@ class Engine {
       );
 
       const networkControllerOpts = {
-        infuraProjectId: process.env.MM_INFURA_PROJECT_ID || NON_EMPTY,
+        infuraProjectId:
+          Platform.OS === 'ios'
+            ? Infura.key
+            : process.env.MM_INFURA_PROJECT_ID || NON_EMPTY,
         state: initialState.NetworkController,
         messenger: this.controllerMessenger.getRestricted({
           name: 'NetworkController',
