@@ -189,12 +189,12 @@ const SecretPhrase = (props) => {
           </Text>
         </View>
         <View style={styles.ctas}>
-          <StyledButton
+          {/* <StyledButton
             type={'blue'}
             testID={WALLET_SETUP_CREATE_NEW_WALLET_BUTTON_ID}
           >
             {strings('secret_phrase.back_up_to_icloud')}
-          </StyledButton>
+          </StyledButton> */}
           <StyledButton
             type={'transparent-blue'}
             onPress={onManually}

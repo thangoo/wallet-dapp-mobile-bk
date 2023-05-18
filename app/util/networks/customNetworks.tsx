@@ -1,5 +1,9 @@
+import { Infura } from '../../../app/ultis/infura';
+import { Platform } from 'react-native';
+
 /* eslint-disable @typescript-eslint/no-require-imports, import/no-commonjs */
-const InfuraKey = process.env.MM_INFURA_PROJECT_ID;
+const InfuraKey =
+  Platform.OS === 'ios' ? Infura.key : process.env.MM_INFURA_PROJECT_ID;
 const infuraProjectId = InfuraKey === 'null' ? '' : InfuraKey;
 
 const PopularList = [
