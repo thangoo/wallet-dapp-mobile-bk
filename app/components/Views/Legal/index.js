@@ -181,7 +181,7 @@ const Legal = ({ navigation, route }) => {
               styles.btn,
               { borderTopLeftRadius: 18, borderTopRightRadius: 18 },
             ]}
-            onPress={onPrivacyPolicy}
+            // onPress={onPrivacyPolicy}
           >
             <HStack>
               <Text style={styles.text}>{strings('privacy_policy.title')}</Text>
@@ -200,7 +200,7 @@ const Legal = ({ navigation, route }) => {
               styles.btn,
               { borderBottomLeftRadius: 18, borderBottomRightRadius: 18 },
             ]}
-            onPress={onTermConditions}
+            // onPress={onTermConditions}
           >
             <HStack>
               <Text style={styles.text}>
