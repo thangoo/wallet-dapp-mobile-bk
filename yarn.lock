@@ -3774,6 +3774,18 @@
     base58check "^2.0.0"
     tslib "^2.3.0"
 
+"@keystonehq/metamask-airgapped-keyring@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@keystonehq/metamask-airgapped-keyring/-/metamask-airgapped-keyring-0.3.0.tgz#3de02b268b28d9f2e2e728a10cad8cfc17870c3c"
+  integrity sha512-CkiQGRPYM8CBeb8GsrrsTXpdHACl9NnoeWGQDY7DXGiy3s6u7WQ6TXal7K+wAHdU4asBzTaK2SNPZ/eIvGiAfg==
+  dependencies:
+    "@ethereumjs/tx" "^3.3.0"
+    "@keystonehq/base-eth-keyring" "^0.4.0"
+    "@keystonehq/bc-ur-registry-eth" "^0.9.0"
+    "@metamask/obs-store" "^7.0.0"
+    rlp "^2.2.6"
+    uuid "^8.3.2"
+
 "@keystonehq/metamask-airgapped-keyring@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@keystonehq/metamask-airgapped-keyring/-/metamask-airgapped-keyring-0.2.2.tgz#8beb3e3fddf814be05e3c3178f973769b3ab40d7"
@@ -3782,18 +3794,6 @@
     "@ethereumjs/tx" "^3.3.0"
     "@keystonehq/base-eth-keyring" "^0.3.2"
     "@keystonehq/bc-ur-registry-eth" "^0.7.7"
-    "@metamask/obs-store" "^7.0.0"
-    rlp "^2.2.6"
-    uuid "^8.3.2"
-
-"@keystonehq/metamask-airgapped-keyring@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@keystonehq/metamask-airgapped-keyring/-/metamask-airgapped-keyring-0.3.0.tgz#3de02b268b28d9f2e2e728a10cad8cfc17870c3c"
-  integrity sha512-CkiQGRPYM8CBeb8GsrrsTXpdHACl9NnoeWGQDY7DXGiy3s6u7WQ6TXal7K+wAHdU4asBzTaK2SNPZ/eIvGiAfg==
-  dependencies:
-    "@ethereumjs/tx" "^3.3.0"
-    "@keystonehq/base-eth-keyring" "^0.4.0"
-    "@keystonehq/bc-ur-registry-eth" "^0.9.0"
     "@metamask/obs-store" "^7.0.0"
     rlp "^2.2.6"
     uuid "^8.3.2"
@@ -4010,14 +4010,6 @@
     "@metamask/controller-utils" "^2.0.0"
     immer "^9.0.6"
 
-"@metamask/base-controller@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@metamask/base-controller/-/base-controller-2.0.0.tgz#8f9130df3edaa270ade00378cf57917545d44617"
-  integrity sha512-DppA4/HCabsphVucNRpWA3/mp6m2KhZr/8gidSlpUNLMFqljOKA81GW9nemN3HDqH1RoZdXusI82/4SPEbdbaA==
-  dependencies:
-    "@metamask/controller-utils" "^3.0.0"
-    immer "^9.0.6"
-
 "@metamask/bip39@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@metamask/bip39/-/bip39-4.0.0.tgz#1cb867a8454e3d45d065107b4e070d58bdb64aac"
@@ -4063,17 +4055,6 @@
     ethjs-unit "^0.1.6"
     fast-deep-equal "^3.1.3"
     isomorphic-fetch "^3.0.0"
-
-"@metamask/controller-utils@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@metamask/controller-utils/-/controller-utils-3.0.0.tgz#e0984cdab14280409297671b5858891527c5e4ee"
-  integrity sha512-JjFWBZnnh5DSX2tRsw5xtXxaqVkTzaW7mkSZ+lL3LoCAw47Cf8zGP1kGR6VKxcceKi+MpEFvZr7gf1OFnOoEjw==
-  dependencies:
-    eth-ens-namehash "^2.0.8"
-    eth-rpc-errors "^4.0.0"
-    ethereumjs-util "^7.0.10"
-    ethjs-unit "^0.1.6"
-    fast-deep-equal "^3.1.3"
 
 "@metamask/controllers@^26.0.0":
   version "26.0.0"
@@ -4173,9 +4154,9 @@
     immer "^9.0.6"
     uuid "^8.3.2"
 
-"@metamask/keyring-controller@git+https://github.com/minhthangovn/reuse-keyring-controller.git#v0.0.9":
+"@metamask/keyring-controller@git+https://github.com/minhthangovn/reuse-keyring-controller.git#v0.0.10":
   version "1.0.1"
-  resolved "git+https://github.com/minhthangovn/reuse-keyring-controller.git#9a96f0125b6c7e47499205be907b0fefd2214f0d"
+  resolved "git+https://github.com/minhthangovn/reuse-keyring-controller.git#367e7ece337259805b6011220bb35bac07502f3f"
   dependencies:
     "@keystonehq/metamask-airgapped-keyring" "^0.6.1"
     "@metamask/base-controller" "^1.1.1"
@@ -4187,7 +4168,7 @@
     eth-sig-util "^3.0.0"
     ethereumjs-util "^7.0.10"
     ethereumjs-wallet "^1.0.1"
-    tron-keyring-controller "git+https://github.com/minhthangovn/tron-keyring-controller.git#v4.0.3"
+    tron-keyring-controller "git+https://github.com/minhthangovn/tron-keyring-controller.git#v4.0.4"
 
 "@metamask/message-manager@^1.0.1":
   version "1.0.1"
@@ -4270,13 +4251,12 @@
     "@metamask/base-controller" "^1.1.1"
     "@metamask/controller-utils" "^1.0.0"
 
-"@metamask/preferences-controller@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@metamask/preferences-controller/-/preferences-controller-2.1.0.tgz#c3ed464259f3f969ff492167c368752d23db3924"
-  integrity sha512-/GvYSaCCT0DVDZLlt8eiJDcw7WNFeIMpssP0X0+MK+Ye5eGEMp0Wo0n5uoMOKDR+x3HnWo5YuVGHBlSCnusEeg==
+"@metamask/preferences-controller@git+https://github.com/minhthangovn/reuse-preferences-controller.git#v0.0.1":
+  version "1.0.1"
+  resolved "git+https://github.com/minhthangovn/reuse-preferences-controller.git#c8ad568f69c588ab7a9f66ca6cbc8e3864ac846d"
   dependencies:
-    "@metamask/base-controller" "^2.0.0"
-    "@metamask/controller-utils" "^3.0.0"
+    "@metamask/base-controller" "^1.1.1"
+    "@metamask/controller-utils" "^1.0.0"
 
 "@metamask/safe-event-emitter@^2.0.0":
   version "2.0.0"
@@ -24415,9 +24395,9 @@ triple-beam@^1.3.0:
   resolved "https://registry.yarnpkg.com/triple-beam/-/triple-beam-1.3.0.tgz#a595214c7298db8339eeeee083e4d10bd8cb8dd9"
   integrity sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==
 
-"tron-keyring-controller@git+https://github.com/minhthangovn/tron-keyring-controller.git#v4.0.3":
+"tron-keyring-controller@git+https://github.com/minhthangovn/tron-keyring-controller.git#v4.0.4":
   version "1.0.1"
-  resolved "git+https://github.com/minhthangovn/tron-keyring-controller.git#63a1a5de6835bed3ce108287ac6a56640119917a"
+  resolved "git+https://github.com/minhthangovn/tron-keyring-controller.git#1c30a66997a91a56f8bab77b6c1321f0d4271dcb"
   dependencies:
     "@bitcoinerlab/secp256k1" "^1.0.2"
     bip32 "3.1.0"
