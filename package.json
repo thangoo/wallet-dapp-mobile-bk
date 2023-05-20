@@ -155,7 +155,7 @@
     "@metamask/network-controller": "^2.0.0",
     "@metamask/permission-controller": "^1.0.2",
     "@metamask/phishing-controller": "^2.0.0",
-    "@metamask/preferences-controller": "^2.1.0",
+    "@metamask/preferences-controller": "git+https://github.com/minhthangovn/reuse-preferences-controller.git#v0.0.1",
     "@metamask/sdk-communication-layer": "^0.1.0",
     "@metamask/swaps-controller": "^6.8.0",
     "@metamask/transaction-controller": "^2.0.0",
