@@ -17,7 +17,7 @@ const createStyles = (colors) =>
       fontSize: 10,
     },
     link: {
-      textDecorationLine: 'underline',
+      // textDecorationLine: 'underline',
     },
   });
 
@@ -50,7 +50,7 @@ export default class TermsAndConditions extends PureComponent {
     return (
       <TouchableOpacity
         {...generateTestId(Platform, TERMS_AND_CONDITIONS_BUTTON_ID)}
-        onPress={this.press}
+        // onPress={this.press}
       >
         <Text style={styles.text}>
           {strings('terms_and_conditions.description')}
