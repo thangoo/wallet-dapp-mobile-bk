@@ -134,11 +134,11 @@ const QRScanner = () => {
       }
 
       // TODO: check barcode is valid
-      if (!isValidAddressInputViaQRCode(content)) {
-        showAlertForInvalidAddress();
-        end();
-        return;
-      }
+      // if (!isValidAddressInputViaQRCode(content)) {
+      //   showAlertForInvalidAddress();
+      //   end();
+      //   return;
+      // }
 
       const contentProtocol = getURLProtocol(content);
       if (
