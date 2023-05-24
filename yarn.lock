@@ -4032,10 +4032,9 @@
   resolved "https://registry.yarnpkg.com/@metamask/contract-metadata/-/contract-metadata-2.2.0.tgz#277764d0d56e37180ae7644a9d11eb96295b36fc"
   integrity sha512-SM6A4C7vXNbVpgMTX67kfW8QWvu3eSXxMZlY5PqZBTkvri1s9zgQ0uwRkK5r2VXNEoVmXCDnnEX/tX5EzzgNUQ==
 
-"@metamask/controller-utils@^1.0.0":
+"@metamask/controller-utils@^1.0.0", "@metamask/controller-utils@git+https://github.com/minhthangovn/reuse-controller-utils.git#v0.0.2":
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@metamask/controller-utils/-/controller-utils-1.0.0.tgz#2e2261b65c3f38ba0c5b893743fca8cce764339c"
-  integrity sha512-LXIpnmF/C5/vCBX0u2DiUWA55utZy54guUV+A8qUYmz8PvZrXfK7mdq1zlk8z0aq+aO0rHHfSVbTNacEE3TlAQ==
+  resolved "git+https://github.com/minhthangovn/reuse-controller-utils.git#2ca7ab9ee0040b5bb101107f9ec6964bcb569f3e"
   dependencies:
     eth-ens-namehash "^2.0.8"
     eth-rpc-errors "^4.0.0"
@@ -4154,15 +4153,15 @@
     immer "^9.0.6"
     uuid "^8.3.2"
 
-"@metamask/keyring-controller@git+https://github.com/minhthangovn/reuse-keyring-controller.git#v0.0.10":
+"@metamask/keyring-controller@git+https://github.com/minhthangovn/reuse-keyring-controller.git#v0.0.12":
   version "1.0.1"
-  resolved "git+https://github.com/minhthangovn/reuse-keyring-controller.git#367e7ece337259805b6011220bb35bac07502f3f"
+  resolved "git+https://github.com/minhthangovn/reuse-keyring-controller.git#c3028123f3ffa2cfea09d6d3ef774cd545ff8679"
   dependencies:
     "@keystonehq/metamask-airgapped-keyring" "^0.6.1"
     "@metamask/base-controller" "^1.1.1"
-    "@metamask/controller-utils" "^1.0.0"
+    "@metamask/controller-utils" "git+https://github.com/minhthangovn/reuse-controller-utils.git#v0.0.2"
     "@metamask/message-manager" "^1.0.1"
-    "@metamask/preferences-controller" "^1.0.1"
+    "@metamask/preferences-controller" "git+https://github.com/minhthangovn/reuse-preferences-controller.git#v0.0.2"
     async-mutex "^0.2.6"
     eth-keyring-controller "^7.0.2"
     eth-sig-util "^3.0.0"
@@ -4251,12 +4250,12 @@
     "@metamask/base-controller" "^1.1.1"
     "@metamask/controller-utils" "^1.0.0"
 
-"@metamask/preferences-controller@git+https://github.com/minhthangovn/reuse-preferences-controller.git#v0.0.1":
+"@metamask/preferences-controller@git+https://github.com/minhthangovn/reuse-preferences-controller.git#v0.0.2":
   version "1.0.1"
-  resolved "git+https://github.com/minhthangovn/reuse-preferences-controller.git#c8ad568f69c588ab7a9f66ca6cbc8e3864ac846d"
+  resolved "git+https://github.com/minhthangovn/reuse-preferences-controller.git#879fb5cf57912a496cd4e01f2a2e7d237d86b440"
   dependencies:
     "@metamask/base-controller" "^1.1.1"
-    "@metamask/controller-utils" "^1.0.0"
+    "@metamask/controller-utils" "git+https://github.com/minhthangovn/reuse-controller-utils.git#v0.0.2"
 
 "@metamask/safe-event-emitter@^2.0.0":
   version "2.0.0"
@@ -8896,7 +8895,7 @@ bip39@^2.2.0, bip39@^2.4.0:
 bip66@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/bip66/-/bip66-1.1.5.tgz#01fa8748785ca70955d5011217d1b3139969ca22"
-  integrity sha1-AfqHSHhcpwlV1QESF9GzE5lpyiI=
+  integrity sha512-nemMHz95EmS38a26XbbdxIYj5csHd3RMP3H5bwQknX0WYHF01qhpufP42mLOwVICuH2JmhIhXiWs89MfUGL7Xw==
   dependencies:
     safe-buffer "^5.0.1"
 
@@ -11399,7 +11398,7 @@ download@^8.0.0:
 drbg.js@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/drbg.js/-/drbg.js-1.0.1.tgz#3e36b6c42b37043823cdbc332d58f31e2445480b"
-  integrity sha1-Pja2xCs3BDgjzbwzLVjzHiRFSAs=
+  integrity sha512-F4wZ06PvqxYLFEZKkFxTDcns9oFNk34hvmJSEwdzsxVQ8YI5YaxtACgQatkYgv2VI2CFkUd2Y+xosPQnHv809g==
   dependencies:
     browserify-aes "^1.0.6"
     create-hash "^1.1.2"
@@ -18738,12 +18737,12 @@ mz@^2.7.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nan@^2.0.5, nan@^2.14.0, nan@^2.2.1:
+nan@^2.0.5, nan@^2.14.0:
   version "2.14.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.1.tgz#d7be34dfa3105b91494c3147089315eff8874b01"
   integrity sha512-isWHgVjnFjh2x2yuJ/tj3JbwoHu3UC2dX5G/88Cm24yB6YopVgxvBObDY7n5xW6ExmFhJpSEQqFPvq9zaXc8Jw==
 
-nan@^2.15.0:
+nan@^2.15.0, nan@^2.2.1:
   version "2.17.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.17.0.tgz#c0150a2368a182f033e9aa5195ec76ea41a199cb"
   integrity sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==

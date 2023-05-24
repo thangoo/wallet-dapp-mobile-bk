@@ -1,0 +1,29 @@
+diff --git a/node_modules/ethereumjs-util/dist/index.js b/node_modules/ethereumjs-util/dist/index.js
+index ecfc147..b7da043 100644
+--- a/node_modules/ethereumjs-util/dist/index.js
++++ b/node_modules/ethereumjs-util/dist/index.js
+@@ -381,10 +381,24 @@ exports.isZeroAddress = function (address) {
+     var zeroAddr = exports.zeroAddress();
+     return zeroAddr === exports.addHexPrefix(address);
+ };
++
++/**
++ * Checks if the given address is a valid TRON address.
++ *
++ * @param address The address to check.
++ * @returns Whether the address is a valid TRON address.
++ */
++function isTRONAddress(address) {
++  return /^(T|4)[A-Za-z1-9]{33}$/.test(address);
++}
++
+ /**
+  * Returns a checksummed address.
+  */
+ exports.toChecksumAddress = function (address) {
++    // Tron address
++    if (isTRONAddress(address)) return address;
++
+     address = ethjsUtil.stripHexPrefix(address).toLowerCase();
+     var hash = exports.keccak(address).toString('hex');
+     var ret = '0x';

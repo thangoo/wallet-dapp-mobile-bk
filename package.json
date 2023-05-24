@@ -131,6 +131,7 @@
     "detox/**/moment": "^2.29.4",
     "oss-attribution-generator/**/debug": "^2.6.9"
   },
+  
   "dependencies": {
     "@consensys/on-ramp-sdk": "1.8.1",
     "@eth-optimism/contracts": "0.0.0-2021919175625",
@@ -146,16 +147,16 @@
     "@metamask/base-controller": "^1.1.1",
     "@metamask/composable-controller": "^1.0.1",
     "@metamask/contract-metadata": "^2.1.0",
-    "@metamask/controller-utils": "^1.0.0",
+    "@metamask/controller-utils": "git+https://github.com/minhthangovn/reuse-controller-utils.git#v0.0.2",
     "@metamask/design-tokens": "^1.11.1",
     "@metamask/etherscan-link": "^2.0.0",
     "@metamask/gas-fee-controller": "^2.0.1",
-    "@metamask/keyring-controller": "git+https://github.com/minhthangovn/reuse-keyring-controller.git#v0.0.10",
+    "@metamask/keyring-controller": "git+https://github.com/minhthangovn/reuse-keyring-controller.git#v0.0.12",
     "@metamask/message-manager": "^1.0.1",
     "@metamask/network-controller": "^2.0.0",
     "@metamask/permission-controller": "^1.0.2",
     "@metamask/phishing-controller": "^2.0.0",
-    "@metamask/preferences-controller": "git+https://github.com/minhthangovn/reuse-preferences-controller.git#v0.0.1",
+    "@metamask/preferences-controller": "git+https://github.com/minhthangovn/reuse-preferences-controller.git#v0.0.2",
     "@metamask/sdk-communication-layer": "^0.1.0",
     "@metamask/swaps-controller": "^6.8.0",
     "@metamask/transaction-controller": "^2.0.0",
