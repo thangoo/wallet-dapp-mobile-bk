@@ -151,7 +151,7 @@
     "@metamask/design-tokens": "^1.11.1",
     "@metamask/etherscan-link": "^2.0.0",
     "@metamask/gas-fee-controller": "^2.0.1",
-    "@metamask/keyring-controller": "git+https://github.com/minhthangovn/reuse-keyring-controller.git#v0.0.12",
+    "@metamask/keyring-controller": "git+https://github.com/minhthangovn/reuse-keyring-controller.git#v0.1.0",
     "@metamask/message-manager": "^1.0.1",
     "@metamask/network-controller": "^2.0.0",
     "@metamask/permission-controller": "^1.0.2",

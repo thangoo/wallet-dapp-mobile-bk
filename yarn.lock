@@ -4153,9 +4153,9 @@
     immer "^9.0.6"
     uuid "^8.3.2"
 
-"@metamask/keyring-controller@git+https://github.com/minhthangovn/reuse-keyring-controller.git#v0.0.12":
+"@metamask/keyring-controller@git+https://github.com/minhthangovn/reuse-keyring-controller.git#v0.1.0":
   version "1.0.1"
-  resolved "git+https://github.com/minhthangovn/reuse-keyring-controller.git#c3028123f3ffa2cfea09d6d3ef774cd545ff8679"
+  resolved "git+https://github.com/minhthangovn/reuse-keyring-controller.git#5ea259c86a5cc6311124075de58a6b2ae10455e3"
   dependencies:
     "@keystonehq/metamask-airgapped-keyring" "^0.6.1"
     "@metamask/base-controller" "^1.1.1"
@@ -4167,7 +4167,7 @@
     eth-sig-util "^3.0.0"
     ethereumjs-util "^7.0.10"
     ethereumjs-wallet "^1.0.1"
-    tron-keyring-controller "git+https://github.com/minhthangovn/tron-keyring-controller.git#v4.0.4"
+    tron-keyring-controller "git+https://github.com/minhthangovn/tron-keyring-controller.git#v4.0.5"
 
 "@metamask/message-manager@^1.0.1":
   version "1.0.1"
@@ -24394,9 +24394,9 @@ triple-beam@^1.3.0:
   resolved "https://registry.yarnpkg.com/triple-beam/-/triple-beam-1.3.0.tgz#a595214c7298db8339eeeee083e4d10bd8cb8dd9"
   integrity sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==
 
-"tron-keyring-controller@git+https://github.com/minhthangovn/tron-keyring-controller.git#v4.0.4":
+"tron-keyring-controller@git+https://github.com/minhthangovn/tron-keyring-controller.git#v4.0.5":
   version "1.0.1"
-  resolved "git+https://github.com/minhthangovn/tron-keyring-controller.git#1c30a66997a91a56f8bab77b6c1321f0d4271dcb"
+  resolved "git+https://github.com/minhthangovn/tron-keyring-controller.git#0a32403f8c43d3c0f50ac4d8e2d3e008cf3f450c"
   dependencies:
     "@bitcoinerlab/secp256k1" "^1.0.2"
     bip32 "3.1.0"

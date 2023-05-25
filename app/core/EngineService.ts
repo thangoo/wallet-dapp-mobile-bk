@@ -71,14 +71,9 @@ class EngineService {
       const update_bg_state_cb = () =>
         store.dispatch({ type: UPDATE_BG_STATE_KEY, key: name });
       if (name !== 'NetworkController')
-        !key
-          ? Engine.context[name].subscribe(update_bg_state_cb)
-          : Engine.controllerMessenger.subscribe(key, update_bg_state_cb);
+        !key ? Engine.context[name].subscribe(update_bg_state_cb) : Engine.controllerMessenger.subscribe(key, update_bg_state_cb);
       else
-        Engine.controllerMessenger.subscribe(
-          AppConstants.NETWORK_STATE_CHANGE_EVENT,
-          update_bg_state_cb,
-        );
+        Engine.controllerMessenger.subscribe(AppConstants.NETWORK_STATE_CHANGE_EVENT, update_bg_state_cb,);
     });
   };
 }
