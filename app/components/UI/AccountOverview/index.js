@@ -62,10 +62,11 @@ const createStyles = (colors) =>
       backgroundColor: 'transparent',
     },
     wrapper: {
-      paddingTop: 20,
+      paddingTop: 10,
       paddingHorizontal: 20,
       paddingBottom: 0,
       alignItems: 'center',
+      zIndex: 2,
     },
     info: {
       justifyContent: 'center',
@@ -85,7 +86,9 @@ const createStyles = (colors) =>
       marginBottom: Device.isAndroid() ? -10 : 0,
     },
     labelWrapper: {
-      flexDirection: 'row',
+      // flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     tag: {
       flexDirection: 'row',
@@ -106,24 +109,29 @@ const createStyles = (colors) =>
       color: colors.text.default,
     },
     addressWrapper: {
-      backgroundColor: colors.primary.muted,
-      borderRadius: 40,
-      marginTop: 20,
+      backgroundColor: colors.tText.light,
+      borderRadius: 12,
+      marginTop: 10,
       marginBottom: 20,
-      paddingVertical: 7,
-      paddingHorizontal: 15,
+      paddingVertical: 4,
+      paddingHorizontal: 16,
     },
     address: {
       fontSize: 12,
-      color: colors.text.default,
+      color: colors.tText.fourth,
       ...fontStyles.normal,
       letterSpacing: 0.8,
     },
     amountFiat: {
       fontSize: 40,
-      paddingTop: 5,
-      color: colors['tvn.white'],
+      color: colors.tText.light,
       ...fontStyles.bold,
+    },
+    amountSubFiat: {
+      fontSize: 14,
+      paddingVertical: 8,
+      color: colors.tText.light,
+      ...fontStyles.normal,
     },
     identiconBorder: {
       borderRadius: 80,
@@ -138,7 +146,7 @@ const createStyles = (colors) =>
       paddingHorizontal: Device.isIos() ? 5 : 5,
       top: Device.isIos() ? 0 : -2,
       fontSize: 14,
-      color: colors['tvn.white'],
+      color: colors.tText.light,
       ...fontStyles.normal,
     },
     actions: {
@@ -146,7 +154,7 @@ const createStyles = (colors) =>
       justifyContent: 'space-between',
       // alignItems: 'flex-start',
       flexDirection: 'row',
-      marginTop: 48,
+      // marginTop: 48,
     },
     actionIcon: {
       marginLeft: 15,
@@ -449,7 +457,7 @@ class AccountOverview extends PureComponent {
                 />
               ) : (
                 <View style={styles.labelWrapper}>
-                  <TouchableOpacity onLongPress={this.setAccountLabelEditable}>
+                  {/* <TouchableOpacity onLongPress={this.setAccountLabelEditable}>
                     <Text
                       style={[
                         styles.label,
@@ -469,6 +477,17 @@ class AccountOverview extends PureComponent {
                     >
                       {isDefaultAccountName(name) && ens ? ens : name}
                     </Text>
+                  </TouchableOpacity> */}
+                  <Text style={styles.amountSubFiat}>{fiatBalance}</Text>
+                  <TouchableOpacity
+                    style={styles.addressWrapper}
+                    onPress={this.copyAccountToClipboard}
+                  >
+                    <EthereumAddress
+                      address={address}
+                      style={styles.address}
+                      type={'short'}
+                    />
                   </TouchableOpacity>
                   {isQRHardwareWalletAccount && (
                     <View style={styles.tag}>

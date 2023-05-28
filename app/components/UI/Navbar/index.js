@@ -62,6 +62,7 @@ import { trackLegacyEvent } from '../../../util/analyticsV2';
 import { HeaderBackButton } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 import NavbarTitleReceivedCrypto from '../NavbarTitleReceivedCrypto';
+import PickerNetwork from '../../../component-library/components/Pickers/PickerNetwork';
 
 const trackEvent = (event) => {
   InteractionManager.runAfterInteractions(() => {
@@ -848,7 +849,7 @@ export function getClosableNavigationOptions(
   return {
     title,
     headerTitleStyle: innerStyles.headerTitleStyle,
-    headerLeft: Boolean(hideLeft)
+    headerLeft: hideLeft
       ? null
       : () =>
           Device.isIos() ? (
@@ -987,51 +988,62 @@ export function getWalletNavbarOptions(
   }
 
   return {
-    headerTitle: () => (
-      <TouchableOpacity
-        style={innerStyles.headerTitleWrapper}
-        onPress={onPressTitle}
-      >
-        <View style={innerStyles.headerTitle}>
-          <Text style={innerStyles.title}>Hello, {title}</Text>
-        </View>
-      </TouchableOpacity>
-      // <PickerNetwork
-      //   label={networkName}
-      //   imageSource={networkImageSource}
-      //   onPress={onPressTitle}
-      //   {...generateTestId(Platform, NAVBAR_NETWORK_BUTTON)}
-      // />
-    ),
-    headerTransparent: true,
-    headerLeft: () => (
-      <TouchableOpacity onPress={openDrawer}>
-        <Image
-          source={menu_icon}
-          style={{
-            marginLeft: 16,
-            tintColor: themeColors.gray01,
-            width: 24,
-            height: 24,
-          }}
-        />
-      </TouchableOpacity>
-    ),
-    headerRight: () => (
-      <TouchableOpacity onPress={openQRScanner}>
-        <Image
-          source={qr_code_icon}
-          style={{
-            marginRight: 16,
-            tintColor: themeColors.gray01,
-            width: 24,
-            height: 24,
-          }}
-        />
-      </TouchableOpacity>
-    ),
-    headerStyle: innerStyles.headerStyle,
-    headerTintColor: themeColors.primary.default,
+    // headerTitle: () => (
+    //   <TouchableOpacity
+    //     style={innerStyles.headerTitleWrapper}
+    //     onPress={onPressTitle}
+    //   >
+    //     <View style={innerStyles.headerTitle}>
+    //       <Text style={innerStyles.title}>Hello, {title}</Text>
+    //     </View>
+    // </TouchableOpacity>
+    // <PickerNetwork
+    //   label={networkName}
+    //   imageSource={networkImageSource}
+    //   onPress={onPressTitle}
+    //   {...generateTestId(Platform, NAVBAR_NETWORK_BUTTON)}
+    // />
+    // ),
+    // headerTitle: () => (
+    //   <View style={innerStyles.headerTitle}>
+    //     <PickerNetwork
+    //       colors={themeColors}
+    //       label={networkName}
+    //       imageSource={networkImageSource}
+    //       onPress={onPressTitle}
+    //       {...generateTestId(Platform, NAVBAR_NETWORK_BUTTON)}
+    //     />
+    //   </View>
+    // ),
+    // headerTransparent: true,
+    // headerLeft: () => (
+    //   <TouchableOpacity onPress={openDrawer}>
+    //     <Image
+    //       source={menu_icon}
+    //       style={{
+    //         marginLeft: 16,
+    //         tintColor: themeColors.gray01,
+    //         width: 24,
+    //         height: 24,
+    //       }}
+    //     />
+    //   </TouchableOpacity>
+    // ),
+    // headerRight: () => (
+    //   <TouchableOpacity onPress={openQRScanner}>
+    //     <Image
+    //       source={qr_code_icon}
+    //       style={{
+    //         marginRight: 16,
+    //         tintColor: themeColors.gray01,
+    //         width: 24,
+    //         height: 24,
+    //       }}
+    //     />
+    //   </TouchableOpacity>
+    // ),
+    // headerStyle: innerStyles.headerStyle,
+    // headerTintColor: themeColors.primary.default,
   };
 }
 
