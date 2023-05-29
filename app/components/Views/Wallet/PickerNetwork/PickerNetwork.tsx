@@ -18,6 +18,7 @@ import Avatar, {
   AvatarVariants,
 } from '../../../../component-library/components/Avatars/Avatar';
 import { useStyles } from '../../../../component-library/hooks';
+import { useTheme } from '../../../../util/theme';
 
 interface PickerNetworkProps {
   /**
@@ -46,8 +47,8 @@ const PickerNetwork = ({
   upper = true,
   ...props
 }: PickerNetworkProps) => {
+  const { colors } = useTheme();
   const { styles } = useStyles(stylesheet, { style });
-
   return (
     <TouchableOpacity
       style={[styles.base, upper ? styles.light : styles.dark]}
@@ -67,7 +68,14 @@ const PickerNetwork = ({
       >
         {label}
       </Animated.Text>
-      <Animated.Image source={arrow_down} width={24} height={24} />
+      <Animated.Image
+        source={arrow_down}
+        width={24}
+        style={{
+          tintColor: upper ? colors.gray01 : colors.tIcon.default,
+        }}
+        height={24}
+      />
     </TouchableOpacity>
   );
 };

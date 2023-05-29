@@ -7,7 +7,8 @@ import { MetaMetricsEvents } from '../../../core/Analytics';
 
 import PickerNetwork from './PickerNetwork';
 import { importAccountFromPrivateKey } from '../../../util/address';
-import { colors } from '@metamask/design-tokens';
+import DeeplinkManager from '../../../core/DeeplinkManager';
+import AppConstants from '../../../core/AppConstants';
 
 interface Props {
   networkName: string;
