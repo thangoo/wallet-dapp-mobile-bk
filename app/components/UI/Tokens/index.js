@@ -441,11 +441,51 @@ class Tokens extends PureComponent {
     );
   };
 
+  // renderList() {
+  //   const { tokens, hideZeroBalanceTokens, tokenBalances } = this.props;
+  //   const colors = this.context.colors || mockTheme.colors;
+  //   const screenHeight = Dimensions.get('screen').height;
+  //   const { isScrollEnable, refreshing } = this.state;
+  //   const tokensToDisplay = hideZeroBalanceTokens
+  //     ? tokens.filter((token) => {
+  //         const { address, isETH } = token;
+  //         return !isZero(tokenBalances[address]) || isETH;
+  //         // eslint-disable-next-line no-mixed-spaces-and-tabs
+  //       })
+  //     : tokens;
+
+  //   // handle scroll
+  //   const handleContentSizeChange = () => {
+  //     if (tokensToDisplay.length <= 3) {
+  //       this.setState({ isScrollEnable: false });
+  //     } else {
+  //       this.setState({ isScrollEnable: true });
+  //     }
+  //   };
+  //   // console.log('#### tokensToDisplay: ', tokensToDisplay);
+  //   return (
+  //     <ScrollView
+  //       scrollEnabled={isScrollEnable}
+  //       onContentSizeChange={handleContentSizeChange}
+  //       refreshControl={
+  //         <RefreshControl
+  //           colors={[colors.tPrimary.default]}
+  //           tintColor={colors.tIcon.default}
+  //           refreshing={refreshing}
+  //           onRefresh={this.onRefresh}
+  //         />
+  //       }
+  //       contentContainerStyle={{ paddingTop: 8 }}
+  //     >
+  //       {tokensToDisplay.map((item) => this.renderItem(item))}
+  //       {this.renderTokensDetectedSection()}
+  //       {/* {this.renderFooter()} */}
+  //     </ScrollView>
+  //   );
+  // }
+
   renderList() {
     const { tokens, hideZeroBalanceTokens, tokenBalances } = this.props;
-    const colors = this.context.colors || mockTheme.colors;
-    const screenHeight = Dimensions.get('screen').height;
-    const { isScrollEnable, refreshing } = this.state;
     const tokensToDisplay = hideZeroBalanceTokens
       ? tokens.filter((token) => {
           const { address, isETH } = token;
@@ -454,33 +494,11 @@ class Tokens extends PureComponent {
         })
       : tokens;
 
-    // handle scroll
-    const handleContentSizeChange = () => {
-      if (tokensToDisplay.length <= 3) {
-        this.setState({ isScrollEnable: false });
-      } else {
-        this.setState({ isScrollEnable: true });
-      }
-    };
-    // console.log('#### tokensToDisplay: ', tokensToDisplay);
     return (
-      <ScrollView
-        scrollEnabled={isScrollEnable}
-        onContentSizeChange={handleContentSizeChange}
-        refreshControl={
-          <RefreshControl
-            colors={[colors.tPrimary.default]}
-            tintColor={colors.tIcon.default}
-            refreshing={refreshing}
-            onRefresh={this.onRefresh}
-          />
-        }
-        contentContainerStyle={{ paddingTop: 8 }}
-      >
+      <View style={{ marginBottom: 20 }}>
         {tokensToDisplay.map((item) => this.renderItem(item))}
         {this.renderTokensDetectedSection()}
-        {/* {this.renderFooter()} */}
-      </ScrollView>
+      </View>
     );
   }
 

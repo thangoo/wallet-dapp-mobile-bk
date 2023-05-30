@@ -17,6 +17,8 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  Alert,
+  Animated,
 } from 'react-native';
 import { Theme } from '@metamask/design-tokens';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,8 +44,11 @@ import { DrawerContext } from '../../Nav/Main/MainNavigator';
 import { CustomTheme, useTheme } from '../../../util/theme';
 import { shouldShowWhatsNewModal } from '../../../util/onboarding';
 import Logger from '../../../util/Logger';
-import { trackLegacyEvent } from '../../../util/analyticsV2';
-import { renderAccountName } from '../../../util/address';
+import { trackLegacyEvent, trackEvent } from '../../../util/analyticsV2';
+import {
+  importAccountFromPrivateKey,
+  renderAccountName,
+} from '../../../util/address';
 
 import ButtonIcon, {
   ButtonIconVariants,
@@ -66,19 +71,28 @@ import {
   selectTicker,
 } from '../../../selectors/networkController';
 import LinearGradient from 'react-native-linear-gradient';
-import { add_plus_circle } from '../../../images/index';
+import {
+  add_plus_circle,
+  menu_icon,
+  qr_code_icon,
+} from '../../../images/index';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   getPopupSuccess,
   setPopupSuccess,
 } from '../../../../app/ultis/async-storage';
 import WalletReadyModal from './WalletReadyModal';
+import NavWalletHigher from './NavWalletHigher';
+import NavWalletLower from './NavWalletLower';
 
 const createStyles = ({ colors, typography }: CustomTheme) =>
   StyleSheet.create({
     wrapperAccount: {
       flex: 1,
       zIndex: 3,
+    },
+    wrapper: {
+      flex: 1,
     },
     wrapperContent: {
       flex: 1,
@@ -93,7 +107,7 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       borderBottomRightRadius: 56,
       position: 'absolute',
       width: '100%',
-      height: 362,
+      height: 333,
       zIndex: -1,
     },
     assetItem: {
@@ -115,9 +129,10 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
     tabBar: {
       justifyContent: 'space-between',
       borderWidth: 0,
-      height: 40,
+      height: 30,
       paddingHorizontal: 32,
-      marginVertical: 16,
+      marginBottom: 24,
+      marginTop: 48,
     },
     splitTab: {
       fontSize: 18,
@@ -138,6 +153,18 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       alignItems: 'center',
       justifyContent: 'flex-start',
     },
+    headerHigher: {
+      position: 'absolute',
+      width: '100%',
+      // zIndex: 1,
+      backgroundColor: 'transparent',
+    },
+    headerLower: {
+      backgroundColor: colors.tBackground.default,
+      position: 'absolute',
+      width: '100%',
+      zIndex: 1,
+    },
   });
 
 /**
@@ -146,11 +173,26 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
 const Wallet = ({ navigation }: any) => {
   const { drawerRef } = useContext(DrawerContext);
   const [refreshing, setRefreshing] = useState(false);
+
   const accountOverviewRef = useRef(null);
   const tokensRef = useRef(null);
   const theme = useTheme();
   const styles = createStyles(theme);
   const { colors } = theme;
+
+  // event scroll change header
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  const navOpacity = scrollY.interpolate({
+    inputRange: [0, 100],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: false },
+  );
+
   /**
    * Map of accounts to information objects including balances
    */
@@ -179,6 +221,7 @@ const Wallet = ({ navigation }: any) => {
     (state: any) =>
       state.engine.backgroundState.PreferencesController.identities,
   );
+
   /**
    * A string that represents the selected address
    */
@@ -386,60 +429,103 @@ const Wallet = ({ navigation }: any) => {
     tokensRef.current = ref;
   }, []);
 
-  const renderAccount = useCallback(() => {
-    let balance: any = 0;
-    let assets = tokens;
-    if (accounts[selectedAddress]) {
-      balance = renderFromWei(accounts[selectedAddress].balance);
-      assets = [
-        {
-          name: 'Ether', // FIXME: use 'Ether' for mainnet only, what should it be for custom networks?
-          symbol: getTicker(ticker),
-          isETH: true,
-          balance,
-          balanceFiat: weiToFiat(
-            hexToBN(accounts[selectedAddress].balance) as any,
-            conversionRate,
-            currentCurrency,
-          ),
-          logo: '../images/eth-logo-new.png',
-        },
-        ...(tokens || []),
-      ];
-    } else {
-      assets = tokens;
-    }
-    const account = {
-      address: selectedAddress,
-      ...identities[selectedAddress],
-      ...accounts[selectedAddress],
-    };
+  const renderNavHigher = useCallback(
+    () => (
+      <NavWalletHigher
+        networkName={networkName}
+        networkImageSource={networkImageSource}
+        navigation={navigation}
+        drawerRef={drawerRef}
+        onPressTitle={onTitlePress}
+        themeColors={themeColors}
+      />
+    ),
+    [
+      navigation,
+      themeColors,
+      networkName,
+      networkImageSource,
+      onTitlePress,
+      selectedAddress,
+      ,
+    ],
+  );
+  const renderNavLower = useCallback(
+    () => (
+      <NavWalletLower
+        networkName={networkName}
+        networkImageSource={networkImageSource}
+        navigation={navigation}
+        drawerRef={drawerRef}
+        onPressTitle={onTitlePress}
+        themeColors={themeColors}
+      />
+    ),
+    [
+      navigation,
+      themeColors,
+      networkName,
+      networkImageSource,
+      onTitlePress,
+      selectedAddress,
+      ,
+    ],
+  );
 
-    return (
-      <View style={{ flex: 1, marginTop: 50 }}>
-        <AccountOverview
-          account={account}
-          navigation={navigation}
-          onRef={onRef}
-          // props token for received crypto
-          token={assets}
-        />
-      </View>
-    );
-  }, [
-    renderTabBar,
-    accounts,
-    conversionRate,
-    currentCurrency,
-    identities,
-    navigation,
-    onChangeTab,
-    onRef,
-    selectedAddress,
-    ticker,
-    tokens,
-    styles,
-  ]);
+  // const renderAccount = useCallback(() => {
+  //   let balance: any = 0;
+  //   let assets = tokens;
+  //   if (accounts[selectedAddress]) {
+  //     balance = renderFromWei(accounts[selectedAddress].balance);
+  //     assets = [
+  //       {
+  //         name: 'Ether', // FIXME: use 'Ether' for mainnet only, what should it be for custom networks?
+  //         symbol: getTicker(ticker),
+  //         isETH: true,
+  //         balance,
+  //         balanceFiat: weiToFiat(
+  //           hexToBN(accounts[selectedAddress].balance) as any,
+  //           conversionRate,
+  //           currentCurrency,
+  //         ),
+  //         logo: '../images/eth-logo-new.png',
+  //       },
+  //       ...(tokens || []),
+  //     ];
+  //   } else {
+  //     assets = tokens;
+  //   }
+  //   const account = {
+  //     address: selectedAddress,
+  //     ...identities[selectedAddress],
+  //     ...accounts[selectedAddress],
+  //   };
+
+  //   return (
+  //     <View style={{ flex: 1, marginTop: 100 }}>
+  //       <AccountOverview
+  //         account={account}
+  //         navigation={navigation}
+  //         onRef={onRef}
+  //         // props token for received crypto
+  //         token={assets}
+  //       />
+  //     </View>
+  //   );
+  // }, [
+  //   renderTabBar,
+  //   accounts,
+  //   conversionRate,
+  //   currentCurrency,
+  //   identities,
+  //   navigation,
+  //   onChangeTab,
+  //   onRef,
+  //   selectedAddress,
+  //   ticker,
+  //   tokens,
+  //   styles,
+  // ]);
 
   const renderContent = useCallback(() => {
     let balance: any = 0;
@@ -471,24 +557,33 @@ const Wallet = ({ navigation }: any) => {
     };
 
     return (
-      <ScrollableTabView
-        renderTabBar={renderTabBar}
-        // eslint-disable-next-line react/jsx-no-bind
-        onChangeTab={onChangeTab}
-      >
-        <Tokens
-          tabLabel={strings('wallet.tokens')}
-          key={'tokens-tab'}
+      <View style={{ flex: 1, marginTop: 100 }}>
+        <AccountOverview
+          account={account}
           navigation={navigation}
-          tokens={assets}
-          onRef={onTokensRef}
+          onRef={onRef}
+          // props token for received crypto
+          token={assets}
         />
-        <CollectibleContracts
-          tabLabel={strings('wallet.collectibles')}
-          key={'nfts-tab'}
-          navigation={navigation}
-        />
-      </ScrollableTabView>
+        <ScrollableTabView
+          renderTabBar={renderTabBar}
+          // eslint-disable-next-line react/jsx-no-bind
+          onChangeTab={onChangeTab}
+        >
+          <Tokens
+            tabLabel={strings('wallet.tokens')}
+            key={'tokens-tab'}
+            navigation={navigation}
+            tokens={assets}
+            onRef={onTokensRef}
+          />
+          <CollectibleContracts
+            tabLabel={strings('wallet.collectibles')}
+            key={'nfts-tab'}
+            navigation={navigation}
+          />
+        </ScrollableTabView>
+      </View>
     );
   }, [
     renderTabBar,
@@ -535,18 +630,48 @@ const Wallet = ({ navigation }: any) => {
   return (
     <ErrorBoundary view="Wallet">
       <WalletReadyModal ref={refWalletReady} onConfirm={onConfirm} />
-      <SafeAreaView edges={['top']} style={{ height: 362 }}>
-        {selectedAddress ? renderAccount() : renderLoader()}
-        <LinearGradient
-          start={{ x: 0.75, y: 0.75 }}
-          end={{ x: 0.25, y: 0 }}
-          colors={colors.tGradient.wallet}
-          style={styles.bgGradient}
-        />
-      </SafeAreaView>
-      <View style={{ flex: 1, flexGrow: 1 }}>
-        {selectedAddress ? renderContent() : renderLoader()}
-      </View>
+      <Animated.View style={[styles.headerHigher, { opacity: navOpacity }]}>
+        <SafeAreaView edges={['top']} style={{ height: 333 }}>
+          {renderNavHigher()}
+        </SafeAreaView>
+      </Animated.View>
+      <Animated.View
+        style={[
+          styles.headerLower,
+          {
+            opacity: navOpacity.interpolate({
+              inputRange: [0, 1],
+              outputRange: [1, 0],
+            }),
+          },
+        ]}
+      >
+        <SafeAreaView edges={['top']}>{renderNavLower()}</SafeAreaView>
+      </Animated.View>
+      <LinearGradient
+        start={{ x: 0.75, y: 0.75 }}
+        end={{ x: 0.25, y: 0 }}
+        colors={colors.tGradient.wallet}
+        style={styles.bgGradient}
+      />
+      <ScrollView
+        style={styles.wrapper}
+        refreshControl={
+          <RefreshControl
+            colors={[colors.primary.default]}
+            tintColor={colors.icon.default}
+            progressViewOffset={20}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
+        <View style={{ flex: 1, flexGrow: 1 }}>
+          {selectedAddress ? renderContent() : renderLoader()}
+        </View>
+      </ScrollView>
       {renderOnboardingWizard()}
     </ErrorBoundary>
   );

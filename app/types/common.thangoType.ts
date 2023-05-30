@@ -94,6 +94,7 @@ export interface ThangoThemeColors {
     button: string;
     third: string;
     fourth: string;
+    fifth: string;
     /**
      * {string} text.color - For some text
      */
@@ -359,7 +360,7 @@ export interface ThangoThemeColors {
       background: {
         on: string;
         off: string;
-      }
+      };
     };
   };
   tButton: {

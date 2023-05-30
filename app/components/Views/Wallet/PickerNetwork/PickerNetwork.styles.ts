@@ -34,7 +34,6 @@ const styleSheet = (params: {
         alignItems: 'center',
         backgroundColor: 'transparent',
         alignSelf: 'center',
-        borderColor: colors.tText.light,
         borderWidth: 1,
       } as ViewStyle,
       style,
@@ -42,9 +41,16 @@ const styleSheet = (params: {
     label: {
       marginHorizontal: 8,
       flexShrink: 1,
-      color: colors.tText.light,
       fontSize: 14,
       fontWeight: '400',
+    },
+    navHigher: {
+      borderColor: colors.tText.light,
+      color: colors.tText.light,
+    },
+    navLower: {
+      borderColor: colors.gray04,
+      color: colors.tText.default,
     },
   });
 };

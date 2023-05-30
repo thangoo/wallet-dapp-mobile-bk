@@ -1,3 +1,5 @@
+import { RequiredError } from '@consensys/on-ramp-sdk/dist/API/base';
+
 const logo = require('./logo.png');
 const add_plus_circle = require('./add_plus_circle.png');
 const logo_dark = require('./logo-dark.png');
@@ -35,6 +37,7 @@ const bell_icon = require('./bell_icon.png');
 const close_icon = require('./close_icon.png');
 const finger_print_icon = require('./finger_print_icon.png');
 const send_success = require('./send-success.png');
+const arrow_down = require('./chevron_down.png');
 
 export {
   finger_print_icon,
@@ -74,4 +77,5 @@ export {
   finger_icon,
   xBack_icon,
   send_success,
+  arrow_down,
 };
