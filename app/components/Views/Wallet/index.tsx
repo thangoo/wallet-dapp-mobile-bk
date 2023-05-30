@@ -135,7 +135,7 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       borderWidth: 0,
       height: 30,
       paddingHorizontal: 32,
-      marginVertical: 30,
+      marginVertical: 24,
     },
     splitTab: {
       fontSize: 18,

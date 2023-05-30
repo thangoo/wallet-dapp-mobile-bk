@@ -80,7 +80,7 @@ const NavWalletLower = ({
     navigation.navigate('QRScanner', {
       onScanSuccess,
     });
-    // trackEvent(MetaMetricsEvents.WALLET_QR_SCANNER);
+    trackEvent(MetaMetricsEvents.WALLET_QR_SCANNER);
   };
   return (
     <View
