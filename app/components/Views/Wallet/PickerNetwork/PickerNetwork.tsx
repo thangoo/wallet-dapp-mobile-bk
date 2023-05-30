@@ -36,7 +36,7 @@ interface PickerNetworkProps {
   animatedColor: any;
   animatedColorBorder: any;
   style: any;
-  upper: boolean;
+  higher: boolean;
 }
 
 const PickerNetwork = ({
@@ -44,14 +44,14 @@ const PickerNetwork = ({
   style,
   label,
   imageSource,
-  upper = true,
+  higher = true,
   ...props
 }: PickerNetworkProps) => {
   const { colors } = useTheme();
   const { styles } = useStyles(stylesheet, { style });
   return (
     <TouchableOpacity
-      style={[styles.base, upper ? styles.higher : styles.lower]}
+      style={[styles.base, higher ? styles.navHigher : styles.navLower]}
       onPress={onPress}
       {...props}
     >
@@ -63,7 +63,7 @@ const PickerNetwork = ({
         style={{ backgroundColor: 'transparent' }}
       />
       <Animated.Text
-        style={[styles.label, upper ? styles.higher : styles.lower]}
+        style={[styles.label, higher ? styles.navHigher : styles.navLower]}
         numberOfLines={1}
       >
         {label}
@@ -72,7 +72,7 @@ const PickerNetwork = ({
         source={arrow_down}
         width={24}
         style={{
-          tintColor: upper ? colors.gray01 : colors.tIcon.default,
+          tintColor: higher ? colors.gray01 : colors.tIcon.default,
         }}
         height={24}
       />

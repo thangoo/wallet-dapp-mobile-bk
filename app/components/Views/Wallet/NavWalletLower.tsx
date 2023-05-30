@@ -107,7 +107,7 @@ const NavWalletLower = ({
         label={networkName}
         imageSource={networkImageSource}
         onPress={onPressTitle}
-        upper={false}
+        higher={false}
         // {...generateTestId(Platform, NAVBAR_NETWORK_BUTTON)}
       />
       <TouchableOpacity onPress={openQRScanner}>

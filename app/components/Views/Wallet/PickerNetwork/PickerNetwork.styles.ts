@@ -44,11 +44,11 @@ const styleSheet = (params: {
       fontSize: 14,
       fontWeight: '400',
     },
-    higher: {
+    navHigher: {
       borderColor: colors.tText.light,
       color: colors.tText.light,
     },
-    lower: {
+    navLower: {
       borderColor: colors.gray04,
       color: colors.tText.default,
     },
