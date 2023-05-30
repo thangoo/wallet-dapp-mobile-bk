@@ -3967,21 +3967,20 @@
     immer "^9.0.6"
     nanoid "^3.1.31"
 
-"@metamask/assets-controllers@3.0.1":
+"@metamask/assets-controllers@git+https://github.com/minhthangovn/reuse-assets-controllers-v3.git#v3.0.1":
   version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@metamask/assets-controllers/-/assets-controllers-3.0.1.tgz#0dff14dd0b9f5be5037b45eab9669f16ae5fd302"
-  integrity sha512-QyqLMArbDfQ+YnLmr9CN/dekWI6IZ/D4wf3jpJxPVRrzi1GszHraNBcj1mKxiR4kLSZymLP4Gq3WZlRvMtGopQ==
+  resolved "git+https://github.com/minhthangovn/reuse-assets-controllers-v3.git#8bde26348dfcbe3bd3007b4caa73fd1925c34cbd"
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/bignumber" "^5.7.0"
     "@ethersproject/contracts" "^5.7.0"
     "@ethersproject/providers" "^5.7.0"
-    "@metamask/base-controller" "^1.1.1"
+    "@metamask/base-controller" "1.1.1"
     "@metamask/contract-metadata" "^2.1.0"
-    "@metamask/controller-utils" "^1.0.0"
+    "@metamask/controller-utils" "1.0.0"
     "@metamask/metamask-eth-abis" "3.0.0"
-    "@metamask/network-controller" "^2.0.0"
-    "@metamask/preferences-controller" "^1.0.1"
+    "@metamask/network-controller" "2.0.0"
+    "@metamask/preferences-controller" "1.0.1"
     "@types/uuid" "^8.3.0"
     abort-controller "^3.0.0"
     async-mutex "^0.2.6"
@@ -3994,7 +3993,7 @@
     single-call-balance-checker-abi "^1.0.0"
     uuid "^8.3.2"
 
-"@metamask/base-controller@^1.1.1":
+"@metamask/base-controller@1.1.1", "@metamask/base-controller@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@metamask/base-controller/-/base-controller-1.1.1.tgz#34c2db471328b92a3a46f9c2547bbb9d37803258"
   integrity sha512-erDfd+OcHnixSZObPNHuDn2G3rRT2B9J/JaOmjjQN64o9RqDYid87Zb0z03wK8cbJ/pEHhhDIBn6t2gMWcdwrQ==
@@ -4032,7 +4031,7 @@
   resolved "https://registry.yarnpkg.com/@metamask/contract-metadata/-/contract-metadata-2.2.0.tgz#277764d0d56e37180ae7644a9d11eb96295b36fc"
   integrity sha512-SM6A4C7vXNbVpgMTX67kfW8QWvu3eSXxMZlY5PqZBTkvri1s9zgQ0uwRkK5r2VXNEoVmXCDnnEX/tX5EzzgNUQ==
 
-"@metamask/controller-utils@^1.0.0", "@metamask/controller-utils@git+https://github.com/minhthangovn/reuse-controller-utils.git#v0.0.2":
+"@metamask/controller-utils@1.0.0", "@metamask/controller-utils@^1.0.0", "@metamask/controller-utils@git+https://github.com/minhthangovn/reuse-controller-utils.git#v0.0.2":
   version "1.0.0"
   resolved "git+https://github.com/minhthangovn/reuse-controller-utils.git#2ca7ab9ee0040b5bb101107f9ec6964bcb569f3e"
   dependencies:
@@ -4192,7 +4191,7 @@
   resolved "https://registry.yarnpkg.com/@metamask/mobile-provider/-/mobile-provider-2.1.0.tgz#685b2f6a55d24197af3f26de4dd0bb78e10ac83e"
   integrity sha512-VuVUIZ5jEQmLaU8SJC8692crxtNncsxyR9q5j1J6epyMHUU75WTtQdq7VSsu1ghkmP9NXNAz3inlWOGsbT8lLA==
 
-"@metamask/network-controller@^2.0.0":
+"@metamask/network-controller@2.0.0", "@metamask/network-controller@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@metamask/network-controller/-/network-controller-2.0.0.tgz#ccc90b42c298e93ef42995e16b3e0d5858cffdeb"
   integrity sha512-R5fWgDpitCJqyqXEno1d9fl4CpxQZdATORxk+VBoQk88IfmMqKRY/4fPlD3VP9uZl+UnHVqKCZfJEbski3VuMw==
@@ -4242,7 +4241,7 @@
     isomorphic-fetch "^3.0.0"
     punycode "^2.1.1"
 
-"@metamask/preferences-controller@^1.0.1":
+"@metamask/preferences-controller@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@metamask/preferences-controller/-/preferences-controller-1.0.1.tgz#20f2187be103a1e7f49df4021e39afb12ee422a0"
   integrity sha512-6fAruDd9sag/hwJGKIP0eSdYC92J/wkDnigQo7ONpu7n94giot7vvsR5+4zNjC32tLa5GpHG50PynZaHfYzK0Q==

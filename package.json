@@ -143,7 +143,7 @@
     "@keystonehq/ur-decoder": "^0.6.1",
     "@metamask/address-book-controller": "^1.0.1",
     "@metamask/approval-controller": "^1.0.1",
-    "@metamask/assets-controllers": "3.0.1",
+    "@metamask/assets-controllers": "git+https://github.com/minhthangovn/reuse-assets-controllers-v3.git#v3.0.1",
     "@metamask/base-controller": "^1.1.1",
     "@metamask/composable-controller": "^1.0.1",
     "@metamask/contract-metadata": "^2.1.0",
