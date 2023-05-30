@@ -51,7 +51,7 @@ const PickerNetwork = ({
   const { styles } = useStyles(stylesheet, { style });
   return (
     <TouchableOpacity
-      style={[styles.base, upper ? styles.light : styles.dark]}
+      style={[styles.base, upper ? styles.higher : styles.lower]}
       onPress={onPress}
       {...props}
     >
@@ -63,7 +63,7 @@ const PickerNetwork = ({
         style={{ backgroundColor: 'transparent' }}
       />
       <Animated.Text
-        style={[styles.label, upper ? styles.light : styles.dark]}
+        style={[styles.label, upper ? styles.higher : styles.lower]}
         numberOfLines={1}
       >
         {label}

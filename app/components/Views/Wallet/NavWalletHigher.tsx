@@ -19,7 +19,7 @@ interface Props {
   themeColors: any;
 }
 
-const NavWalletUpper = ({
+const NavWalletHigher = ({
   networkName,
   networkImageSource,
   navigation,
@@ -28,7 +28,7 @@ const NavWalletUpper = ({
   themeColors,
 }: Props) => {
   const openDrawer = () => {
-    drawerRef.current?.showDrawer?.();
+    drawerRef?.current?.showDrawer?.();
     trackEvent(MetaMetricsEvents.COMMON_TAPS_HAMBURGER_MENU);
   };
 
@@ -123,4 +123,4 @@ const NavWalletUpper = ({
   );
 };
 
-export default NavWalletUpper;
+export default NavWalletHigher;

@@ -82,12 +82,8 @@ import {
   setPopupSuccess,
 } from '../../../../app/ultis/async-storage';
 import WalletReadyModal from './WalletReadyModal';
-import DeeplinkManager from '../../../core/DeeplinkManager';
-import AppConstants from '../../../core/AppConstants';
-import NavWallet from './NavWalletUpper';
-import NavWalletUpper from './NavWalletUpper';
+import NavWalletHigher from './NavWalletHigher';
 import NavWalletLower from './NavWalletLower';
-import { isZero } from '../../../util/lodash';
 
 const createStyles = ({ colors, typography }: CustomTheme) =>
   StyleSheet.create({
@@ -135,7 +131,8 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       borderWidth: 0,
       height: 30,
       paddingHorizontal: 32,
-      marginVertical: 24,
+      marginBottom: 24,
+      marginTop: 48,
     },
     splitTab: {
       fontSize: 18,
@@ -156,13 +153,13 @@ const createStyles = ({ colors, typography }: CustomTheme) =>
       alignItems: 'center',
       justifyContent: 'flex-start',
     },
-    header1: {
+    headerHigher: {
       position: 'absolute',
       width: '100%',
       // zIndex: 1,
-      marginTop: 5,
+      backgroundColor: 'transparent',
     },
-    header2: {
+    headerLower: {
       backgroundColor: colors.tBackground.default,
       position: 'absolute',
       width: '100%',
@@ -432,9 +429,9 @@ const Wallet = ({ navigation }: any) => {
     tokensRef.current = ref;
   }, []);
 
-  const renderNavUpper = useCallback(
+  const renderNavHigher = useCallback(
     () => (
-      <NavWalletUpper
+      <NavWalletHigher
         networkName={networkName}
         networkImageSource={networkImageSource}
         navigation={navigation}
@@ -633,14 +630,14 @@ const Wallet = ({ navigation }: any) => {
   return (
     <ErrorBoundary view="Wallet">
       <WalletReadyModal ref={refWalletReady} onConfirm={onConfirm} />
-      <Animated.View style={[styles.header1, { opacity: navOpacity }]}>
+      <Animated.View style={[styles.headerHigher, { opacity: navOpacity }]}>
         <SafeAreaView edges={['top']} style={{ height: 333 }}>
-          {renderNavUpper()}
+          {renderNavHigher()}
         </SafeAreaView>
       </Animated.View>
       <Animated.View
         style={[
-          styles.header2,
+          styles.headerLower,
           {
             opacity: navOpacity.interpolate({
               inputRange: [0, 1],

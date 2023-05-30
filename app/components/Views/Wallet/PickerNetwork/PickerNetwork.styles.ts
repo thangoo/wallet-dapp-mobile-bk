@@ -44,11 +44,11 @@ const styleSheet = (params: {
       fontSize: 14,
       fontWeight: '400',
     },
-    light: {
+    higher: {
       borderColor: colors.tText.light,
       color: colors.tText.light,
     },
-    dark: {
+    lower: {
       borderColor: colors.gray04,
       color: colors.tText.default,
     },

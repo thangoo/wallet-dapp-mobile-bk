@@ -21,7 +21,7 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     alternativeHover: '#D6D9DC',
     alternativePressed: '#D6D9DC',
     send: colorThango.red,
-    receive : colorThango.primary
+    receive: colorThango.primary,
   },
   tText: {
     default: colorThango.light,
@@ -36,13 +36,14 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
       exchangeRate: colorThango.gray06,
     },
     fourth: colorThango.dark07,
+    fifth: colorThango.dark07,
   },
   tBorder: {
     default: colorThango.dark05,
     muted: '#D6D9DC',
     secondary: colorThango.dark05,
     third: colorThango.dark07,
-    fourth: '#E6E6E6'
+    fourth: '#E6E6E6',
   },
   tIcon: {
     default: colorThango.gray01,
@@ -51,7 +52,7 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     light: colorThango.gray01,
   },
   background: {
-    ...darkTheme.colors['background'],
+    ...darkTheme.colors.background,
     default: colorThango.dark,
   },
   tGradient: {
@@ -68,7 +69,7 @@ export const thangoDark: ThangoThemeColors & Theme['colors'] = {
     token: {
       border: {
         on: colorThango.primary,
-        off: colorThango.gray04
+        off: colorThango.gray04,
       },
       backgroundColor: {
         on: colorThango.gray10,
